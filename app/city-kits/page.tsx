@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BadgeCheck, MapPin } from "lucide-react";
 import { PageIntro } from "@/components/PageIntro";
-import { cities, getCityBySlug } from "@/data/cities";
+import { getCityBySlug } from "@/data/cities";
 import { cityKitMeta, cityKitSlugs } from "@/data/kits";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "China City Kits for First-Time Visitors | First China Trip Kit",
   description:
-    "Browse practical China City Kits for Shanghai, Beijing, Xi'an, Chengdu, Hangzhou, and Suzhou with recommended days, best areas, difficulty, attractions, food, and Chinese address support.",
+    "Browse practical China City Kits for Shanghai, Beijing, Xi'an, Chengdu, Hangzhou, Suzhou, Guangzhou, and Shenzhen with days, hotel areas, difficulty, attractions, food, and Chinese address support.",
   path: "/city-kits",
 });
 
@@ -78,31 +78,6 @@ export default function CityKitsPage() {
               </article>
             );
           })}
-        </div>
-      </section>
-      <section className="bg-mist px-4 py-10">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-bold uppercase text-ember">More city guides</p>
-          <h2 className="mt-2 text-3xl font-bold leading-tight text-ink">
-            Need Guangzhou or Shenzhen?
-          </h2>
-          <p className="mt-3 text-base text-ink/68">
-            The City Kits focus on the easiest first-trip route cities first.
-            Full guide pages are still available for all current cities.
-          </p>
-          <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-            {cities
-              .filter((city) => !cityKitSlugs.includes(city.slug as (typeof cityKitSlugs)[number]))
-              .map((city) => (
-                <Link
-                  key={city.id}
-                  href={`/cities/${city.slug}`}
-                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember"
-                >
-                  {city.cityName} guide
-                </Link>
-              ))}
-          </div>
         </div>
       </section>
     </>

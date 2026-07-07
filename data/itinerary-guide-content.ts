@@ -5,9 +5,11 @@ export type ItineraryGuideContent = {
   routeSummary: string[];
   bestForDetails: string[];
   notBestFor: string[];
+  commonMistakes?: string[];
   importantNotice?: string;
   officialSourceLinks?: LinkItem[];
   lastVerified?: string;
+  lastUpdated?: string;
   bookingReminders: string[];
   chineseAddresses: ChineseAddress[];
   skipIfTired: string[];
@@ -24,6 +26,19 @@ export type ItineraryGuideContent = {
 
 export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
   "3-days-in-shanghai": {
+    lastUpdated: "2026-07-08",
+    officialSourceLinks: [
+      {
+        label: "Shanghai municipal information",
+        href: "https://english.shanghai.gov.cn/",
+        note: "Use for current city service and visitor information.",
+      },
+      {
+        label: "Shanghai Metro",
+        href: "https://service.shmetro.com/en/",
+        note: "Use for current metro network and service information.",
+      },
+    ],
     routeSummary: [
       "This route is designed as a polished first China landing itinerary: one skyline evening, one old city and food day, one neighborhood culture day, and one flexible modern Shanghai or water-town option.",
       "It keeps hotel changes at zero, uses the metro for predictable travel, and leaves enough open space for mobile payment setup, jet lag, and weather.",
@@ -39,6 +54,13 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
       "Travelers who want to cover Beijing, Xi'an, or another distant city in the same three days.",
       "Visitors who dislike big-city energy and prefer nature-heavy travel.",
       "Travelers who want every meal and attraction pre-booked with no flexible time.",
+    ],
+    commonMistakes: [
+      "Treating the first arrival day like a full sightseeing day before payment, data, and hotel check-in are working.",
+      "Paying for multiple skyline views instead of choosing one clear-weather Bund or Pudong moment.",
+      "Adding Suzhou, Hangzhou, and a water town into the same three-day Shanghai stay.",
+      "Booking a remote hotel to save money and then losing the savings on taxis and longer transfers.",
+      "Forgetting to confirm whether departure uses Hongqiao Railway Station, Shanghai Railway Station, Pudong Airport, or Hongqiao Airport.",
     ],
     bookingReminders: [
       "Reserve any museum that requires timed entry before your museum day, especially on weekends, holidays, and school vacation periods.",

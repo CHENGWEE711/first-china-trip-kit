@@ -85,7 +85,7 @@ const essentials = [
       "Confirm the hotel can register foreign passport holders.",
     ],
     mistake: "Choosing a cheaper hotel far from transit and spending the savings on taxis.",
-    href: "/cities",
+    href: "/city-kits",
   },
   {
     title: "Food",

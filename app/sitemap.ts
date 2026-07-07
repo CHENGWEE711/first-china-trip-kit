@@ -1,7 +1,5 @@
 import type { MetadataRoute } from "next";
-import { cities } from "@/data/cities";
 import { guides } from "@/data/guides";
-import { itineraries } from "@/data/itineraries";
 import { cityKitSlugs, itineraryKitSlugs, toolKits } from "@/data/kits";
 import { absoluteUrl } from "@/lib/site";
 
@@ -11,8 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/start-here",
     "/city-kits",
     "/itinerary-kits",
-    "/cities",
-    "/itineraries",
     "/travel-essentials",
     "/guides",
     "/tools",
@@ -28,20 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: path === "" ? 1 : 0.8,
-  }));
-
-  const cityRoutes = cities.map((city) => ({
-    url: absoluteUrl(`/cities/${city.slug}`),
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.75,
-  }));
-
-  const itineraryRoutes = itineraries.map((itinerary) => ({
-    url: absoluteUrl(`/itineraries/${itinerary.slug}`),
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.75,
   }));
 
   const guideRoutes = guides.map((guide) => ({
@@ -74,9 +56,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticRoutes,
-    ...cityRoutes,
     ...cityKitRoutes,
-    ...itineraryRoutes,
     ...itineraryKitRoutes,
     ...guideRoutes,
     ...toolRoutes,

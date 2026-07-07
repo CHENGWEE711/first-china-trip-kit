@@ -4,6 +4,26 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/cities",
+        destination: "/city-kits",
+        statusCode: 301,
+      },
+      {
+        source: "/cities/:slug",
+        destination: "/city-kits/:slug",
+        statusCode: 301,
+      },
+      {
+        source: "/itineraries",
+        destination: "/itinerary-kits",
+        statusCode: 301,
+      },
+      {
+        source: "/itineraries/:slug",
+        destination: "/itinerary-kits/:slug",
+        statusCode: 301,
+      },
+      {
         source: "/:path*",
         has: [
           {
@@ -12,7 +32,7 @@ const nextConfig = {
           },
         ],
         destination: "https://www.firstchinatripkit.com/:path*",
-        permanent: true,
+        statusCode: 301,
       },
     ];
   },

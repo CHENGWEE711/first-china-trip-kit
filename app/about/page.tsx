@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ButtonLink";
 import { PageIntro } from "@/components/PageIntro";
 import { buildMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "About First China Trip Kit",
@@ -22,6 +23,29 @@ const trustPoints = [
   "We write routes around real travel friction: jet lag, station transfers, weather, phone setup, payment failures, and hotel address problems.",
   "We prioritize first-time visitor questions over insider shorthand, so pages explain why a decision matters before asking you to book anything.",
   "We keep official-resource links visible on policy-sensitive pages and encourage travelers to verify requirements before making non-refundable plans.",
+];
+
+const credibilityBlocks = [
+  {
+    title: "Built from a China-based perspective",
+    body:
+      "First China Trip Kit is written around the practical friction travelers meet on the ground in China: mobile payment, Chinese addresses, railway stations, hotel registration, QR menus, local apps, and first-day arrival stress.",
+  },
+  {
+    title: "How we research and update guides",
+    body:
+      "We update pages by combining first-time visitor questions, route logic, local logistics, and official-source checks for topics where rules can change. Pages show a last updated date when they are published as guides.",
+  },
+  {
+    title: "Correction policy",
+    body:
+      "If a reader spots outdated, confusing, or incorrect information, we review the issue and update the relevant page when the correction improves trip planning or safety. We prefer clear fixes over quiet edits.",
+  },
+  {
+    title: "Official-source-first policy",
+    body:
+      "For visa, payment, train, and booking information, we treat official or provider sources as the first verification layer. Our pages explain planning decisions, but travelers should verify current requirements before booking.",
+  },
 ];
 
 export default function AboutPage() {
@@ -81,6 +105,37 @@ export default function AboutPage() {
                 <p className="text-base leading-relaxed text-ink/72">{point}</p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+      <section className="px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 max-w-3xl">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Editorial standards</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              How we keep the kit useful and trustworthy
+            </h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {credibilityBlocks.map((block) => (
+              <article key={block.title} className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+                <h3 className="text-2xl font-bold leading-tight text-ink">{block.title}</h3>
+                <p className="mt-3 text-base leading-relaxed text-ink/70">{block.body}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-6 rounded-lg border border-ink/10 bg-sand p-5">
+            <p className="text-sm font-bold uppercase text-ember">Contact</p>
+            <p className="mt-2 text-base leading-relaxed text-ink/70">
+              For corrections, source updates, or traveler questions, email{" "}
+              <a
+                href={`mailto:${siteConfig.contactEmail}`}
+                className="font-semibold text-ember hover:text-[#982F28]"
+              >
+                {siteConfig.contactEmail}
+              </a>
+              .
+            </p>
           </div>
         </div>
       </section>

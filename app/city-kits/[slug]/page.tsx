@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { ExternalLink } from "lucide-react";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
@@ -126,8 +126,36 @@ export default async function CityKitDetailPage({ params }: PageProps) {
 
         <section className="px-4 py-12">
           <div className="mx-auto grid max-w-5xl gap-5">
+            <Section title="Quick answer">
+              <p>
+                {content?.whyVisit?.[0] ||
+                  `${city.cityName} is a practical first China stop for travelers who want a manageable base, clear transport choices, local food, and useful Chinese addresses before adding more complex routes.`}
+              </p>
+            </Section>
+
             <Section title="Overview">
               <p>{city.intro}</p>
+            </Section>
+
+            {content?.whyVisit ? (
+              <Section title="Why visit this city">
+                <ul className="grid gap-3">
+                  {content.whyVisit.map((reason) => (
+                    <li key={reason} className="border-l-2 border-ember/35 pl-3">
+                      {reason}
+                    </li>
+                  ))}
+                </ul>
+              </Section>
+            ) : null}
+
+            <Section title="Step-by-step first-day setup">
+              <ol className="grid list-decimal gap-3 pl-5">
+                <li>Save your hotel name, address, and phone number in Chinese before leaving the airport or railway station.</li>
+                <li>Confirm mobile data, payment app access, and one backup payment method before your first long outing.</li>
+                <li>Choose one anchor neighborhood and one meal goal for the first day instead of crossing the city repeatedly.</li>
+                <li>Keep the next morning flexible if your arrival involves a long-haul flight, late check-in, or train transfer.</li>
+              </ol>
             </Section>
 
             <div className="grid gap-5 md:grid-cols-2">
@@ -205,6 +233,30 @@ export default async function CityKitDetailPage({ params }: PageProps) {
               </ul>
             </Section>
 
+            {content?.arrivalTips ? (
+              <Section title="Arrival and transfer troubleshooting">
+                <ul className="grid gap-3">
+                  {content.arrivalTips.map((tip) => (
+                    <li key={tip} className="border-l-2 border-ember/35 pl-3">
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </Section>
+            ) : null}
+
+            {content?.bookInAdvance ? (
+              <Section title="What to book in advance">
+                <ul className="grid gap-3">
+                  {content.bookInAdvance.map((item) => (
+                    <li key={item} className="border-l-2 border-ember/35 pl-3">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </Section>
+            ) : null}
+
             <Section title="Suggested itinerary">
               <div className="grid gap-4 md:grid-cols-2">
                 {suggestedPlan.map((itinerary) => (
@@ -244,6 +296,28 @@ export default async function CityKitDetailPage({ params }: PageProps) {
                 ))}
               </ul>
             </Section>
+
+            {content?.officialSourceLinks ? (
+              <Section title="Official resources">
+                <div className="grid gap-3">
+                  {content.officialSourceLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="border-l-2 border-ember/35 pl-3 text-base text-ink/70 hover:text-ember"
+                    >
+                      <span className="inline-flex items-center gap-2 font-bold text-ink">
+                        {link.label}
+                        <ExternalLink aria-hidden="true" size={15} />
+                      </span>
+                      {link.note ? <span className="block text-sm text-ink/58">{link.note}</span> : null}
+                    </a>
+                  ))}
+                </div>
+              </Section>
+            ) : null}
           </div>
         </section>
       </article>
@@ -263,19 +337,6 @@ export default async function CityKitDetailPage({ params }: PageProps) {
               <GuideCard key={guide.id} guide={guide} />
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="bg-mist px-4 py-10">
-        <div className="mx-auto max-w-5xl">
-          <p className="text-sm font-bold uppercase text-ember">Classic guide URL</p>
-          <p className="mt-2 text-base text-ink/68">
-            Prefer the original city guide format? The older page remains available at{" "}
-            <Link href={`/cities/${city.slug}`} className="font-semibold text-ember hover:text-[#982F28]">
-              /cities/{city.slug}
-            </Link>
-            .
-          </p>
         </div>
       </section>
 

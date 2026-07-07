@@ -5,10 +5,13 @@ export const cityKitSlugs = [
   "chengdu",
   "hangzhou",
   "suzhou",
+  "guangzhou",
+  "shenzhen",
 ] as const;
 
 export const itineraryKitSlugs = [
   "3-days-in-shanghai",
+  "3-days-in-beijing",
   "4-days-in-beijing",
   "5-days-beijing-and-xian",
   "7-days-shanghai-hangzhou-suzhou",
@@ -83,6 +86,26 @@ export const cityKitMeta: Record<
       "Choose one or two gardens instead of rushing through every famous garden.",
       "Check whether your train uses Suzhou Railway Station or Suzhou North.",
       "Overnighting can make canal streets calmer than a peak-hour day trip.",
+    ],
+  },
+  guangzhou: {
+    kitTitle: "Guangzhou First Trip Kit",
+    difficultyLevel: "Moderate",
+    chineseAddressSupport: "Airport, rail stations, old town, riverfront, food streets, and hotel pickup addresses.",
+    localTips: [
+      "Use Guangzhou for Cantonese food, markets, and a softer South China introduction.",
+      "Confirm whether your train uses Guangzhou South, Guangzhou East, or Guangzhou Railway Station.",
+      "Stay near a metro line because the city is large and spread out.",
+    ],
+  },
+  shenzhen: {
+    kitTitle: "Shenzhen First Trip Kit",
+    difficultyLevel: "Easy",
+    chineseAddressSupport: "Rail stations, border crossings, tech districts, parks, and central hotel addresses.",
+    localTips: [
+      "Shenzhen is easiest when paired with Hong Kong, Guangzhou, or a short business trip.",
+      "Keep border, rail, and airport locations very clear because they are not interchangeable.",
+      "Use it for modern China, design, parks, and tech energy rather than classic historic sights.",
     ],
   },
 };

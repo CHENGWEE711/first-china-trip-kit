@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { ExternalLink } from "lucide-react";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
@@ -74,6 +75,19 @@ const usefulPhrases = [
   },
 ];
 
+function formatDate(value?: string) {
+  if (!value) {
+    return null;
+  }
+
+  return new Intl.DateTimeFormat("en", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
 export default async function ItineraryKitDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const itinerary = getItineraryBySlug(slug);
@@ -85,6 +99,7 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
   const content = getItineraryGuideContent(itinerary.slug);
   const products = getProductsByIds(content?.relatedProductIds || []);
   const bookingReminders = content?.bookingReminders || itinerary.tips;
+  const updatedDate = formatDate(content?.lastUpdated || content?.lastVerified || "2026-07-08");
   const skipItems =
     content?.skipIfTired || [
       "Skip a second major attraction on arrival day if jet lag is heavy.",
@@ -105,6 +120,14 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
             <p className="mt-5 max-w-3xl text-lg leading-relaxed text-ink/70">
               {itinerary.summary}
             </p>
+            {content?.importantNotice ? (
+              <div className="mt-6 rounded-md border border-ember/25 bg-paper p-4">
+                <p className="text-sm font-bold uppercase text-ember">Important notice</p>
+                <p className="mt-2 text-base leading-relaxed text-ink/72">
+                  {content.importantNotice}
+                </p>
+              </div>
+            ) : null}
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
               <div className="rounded-md bg-paper p-4">
                 <p className="text-sm font-bold uppercase text-ink/45">Duration</p>
@@ -119,8 +142,8 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
                 </p>
               </div>
               <div className="rounded-md bg-paper p-4">
-                <p className="text-sm font-bold uppercase text-ink/45">Budget</p>
-                <p className="mt-1 text-base font-semibold text-ink">{itinerary.budgetLevel}</p>
+                <p className="text-sm font-bold uppercase text-ink/45">Last updated</p>
+                <p className="mt-1 text-base font-semibold text-ink">{updatedDate}</p>
               </div>
             </div>
           </div>
@@ -128,6 +151,13 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
 
         <section className="px-4 py-12">
           <div className="mx-auto grid max-w-5xl gap-5">
+            <Section title="Quick answer">
+              <p>
+                {content?.routeSummary?.[0] ||
+                  `${itinerary.title} is a practical first-trip route for ${itinerary.cities.join(", ")} with ${itinerary.durationDays} days of planning structure.`}
+              </p>
+            </Section>
+
             <Section title="Who this itinerary is for">
               <p>{itinerary.targetUser}</p>
               {content?.bestForDetails ? (
@@ -161,6 +191,15 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
                   </li>
                 ))}
               </ul>
+            </Section>
+
+            <Section title="Step-by-step planning flow">
+              <ol className="grid list-decimal gap-3 pl-5">
+                <li>Confirm your arrival point, departure point, and hotel base before adding extra neighborhoods or day trips.</li>
+                <li>Save Chinese addresses for each station, airport, hotel, and main attraction you expect to use.</li>
+                <li>Book time-sensitive tickets first, then leave meals and low-stakes walks flexible for weather and energy.</li>
+                <li>Keep one removable stop each day so the route still works if payment setup, transport, or jet lag takes longer than expected.</li>
+              </ol>
             </Section>
 
             <Section title="Day-by-day plan">
@@ -224,6 +263,36 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
               </ul>
             </Section>
 
+            {content?.commonMistakes ? (
+              <Section title="Common mistakes">
+                <ul className="grid gap-3">
+                  {content.commonMistakes.map((item) => (
+                    <li key={item} className="border-l-2 border-ember/35 pl-3">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </Section>
+            ) : null}
+
+            <Section title="Troubleshooting">
+              <ul className="grid gap-3">
+                <li className="border-l-2 border-ember/35 pl-3">
+                  If transport takes longer than expected, drop the least important
+                  optional stop before shortening meals or sleep.
+                </li>
+                <li className="border-l-2 border-ember/35 pl-3">
+                  If payment or mobile data fails, use cash, hotel Wi-Fi, or staff
+                  help before moving to the next long transfer.
+                </li>
+                <li className="border-l-2 border-ember/35 pl-3">
+                  If weather changes the main plan, move outdoor skyline, garden,
+                  or walking blocks to the clearest day and use museums or malls
+                  as buffers.
+                </li>
+              </ul>
+            </Section>
+
             <Section title="What to skip">
               <ul className="grid gap-3">
                 {skipItems.map((item) => (
@@ -255,6 +324,28 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
                       <p className="mt-1">{address.english}</p>
                       <p className="mt-1 text-lg font-semibold text-ink">{address.chinese}</p>
                     </div>
+                  ))}
+                </div>
+              </Section>
+            ) : null}
+
+            {content?.officialSourceLinks ? (
+              <Section title="Official resources">
+                <div className="grid gap-3">
+                  {content.officialSourceLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="border-l-2 border-ember/35 pl-3 text-base text-ink/70 hover:text-ember"
+                    >
+                      <span className="inline-flex items-center gap-2 font-bold text-ink">
+                        {link.label}
+                        <ExternalLink aria-hidden="true" size={15} />
+                      </span>
+                      {link.note ? <span className="block text-sm text-ink/58">{link.note}</span> : null}
+                    </a>
                   ))}
                 </div>
               </Section>

@@ -6,7 +6,7 @@ This is the first SEO content MVP for first-time China travelers.
 
 - Primary: https://www.firstchinatripkit.com
 - Redirect: https://firstchinatripkit.com -> https://www.firstchinatripkit.com
-- Current Vercel preview/test alias: https://china-travel-kit.vercel.app
+- Production domain: https://www.firstchinatripkit.com
 
 ## Required Vercel Environment Variable
 

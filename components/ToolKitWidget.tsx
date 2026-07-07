@@ -1,5 +1,6 @@
 "use client";
 
+import { AlertTriangle, ExternalLink } from "lucide-react";
 import { useMemo, useState } from "react";
 
 type ToolType = "visa" | "duration" | "apps" | "route";
@@ -9,11 +10,31 @@ type ToolKitWidgetProps = {
 };
 
 const visaChecks = [
-  "My passport nationality is on the current official eligibility list.",
-  "I have a confirmed onward ticket to a third country or region.",
-  "My entry and exit ports match the policy I plan to use.",
-  "My hotel cities stay inside the permitted travel area.",
-  "I will verify official requirements before booking non-refundable travel.",
+  {
+    id: "passport",
+    label: "Passport eligibility",
+    description: "My passport nationality appears on the current official eligibility list.",
+  },
+  {
+    id: "ticket",
+    label: "Onward ticket",
+    description: "I have a confirmed onward ticket to a third country or region.",
+  },
+  {
+    id: "ports",
+    label: "Entry and exit ports",
+    description: "My entry and exit ports match the policy I plan to use.",
+  },
+  {
+    id: "area",
+    label: "Permitted travel area",
+    description: "Every city and hotel in my plan stays inside the permitted travel area.",
+  },
+  {
+    id: "official",
+    label: "Official verification",
+    description: "I will verify official requirements before booking non-refundable travel.",
+  },
 ];
 
 const appChecks = [
@@ -45,39 +66,111 @@ export function ToolKitWidget({ type }: ToolKitWidgetProps) {
 
 function VisaTool() {
   const [checked, setChecked] = useState<string[]>([]);
+  const requiredIds = visaChecks.map((item) => item.id);
+  const missing = visaChecks.filter((item) => !checked.includes(item.id));
   const score = checked.length;
   const result =
-    score === visaChecks.length
-      ? "Good planning shape. Still verify official rules for your nationality, ports, onward ticket, and permitted stay area before booking."
+    score === requiredIds.length
+      ? {
+          title: "Likely worth checking official eligibility",
+          tone: "bg-jade text-white",
+          body:
+            "Your planning shape has the core pieces. Do not book solely from this result: confirm your nationality, ports, onward ticket, and permitted stay area with official sources before paying for travel.",
+        }
       : score >= 3
-        ? "Close, but do not rely on visa-free transit yet. The missing items are exactly the ones that can change eligibility."
-        : "Use this as a planning prompt only. Start with official requirements before building the route.";
+        ? {
+            title: "High risk — verify before booking",
+            tone: "bg-ember text-white",
+            body:
+              "Some important pieces are still missing. Visa-free transit rules are route-specific, so verify the missing items before booking flights, hotels, or trains.",
+          }
+        : {
+            title: "Do not rely on visa-free transit yet",
+            tone: "bg-ink text-white",
+            body:
+              "You do not have enough confirmed information to rely on visa-free transit. Start with official eligibility, onward ticket rules, and permitted travel areas.",
+          };
 
   return (
     <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+      <div className="mb-5 flex gap-3 rounded-md border border-ember/25 bg-sand p-4">
+        <AlertTriangle aria-hidden="true" className="mt-1 shrink-0 text-ember" size={22} />
+        <div>
+          <p className="text-base font-bold text-ink">
+            This is not legal or immigration advice.
+          </p>
+          <p className="mt-1 text-sm leading-relaxed text-ink/68">
+            Use this checker to organize what to verify. Your actual eligibility
+            depends on official rules, your passport, ports, onward ticket, route,
+            and permitted stay area.
+          </p>
+        </div>
+      </div>
       <div className="grid gap-3">
         {visaChecks.map((item) => (
-          <label key={item} className="flex items-start gap-3 rounded-md bg-sand p-3 text-base text-ink/72">
+          <label key={item.id} className="flex items-start gap-3 rounded-md bg-sand p-3 text-base text-ink/72">
             <input
               type="checkbox"
-              checked={checked.includes(item)}
+              checked={checked.includes(item.id)}
               onChange={(event) =>
                 setChecked((current) =>
                   event.target.checked
-                    ? [...current, item]
-                    : current.filter((candidate) => candidate !== item),
+                    ? [...current, item.id]
+                    : current.filter((candidate) => candidate !== item.id),
                 )
               }
               className="mt-1 h-4 w-4 accent-[#B43D35]"
             />
-            <span>{item}</span>
+            <span>
+              <span className="block font-bold text-ink">{item.label}</span>
+              <span className="mt-1 block text-sm leading-relaxed text-ink/64">
+                {item.description}
+              </span>
+            </span>
           </label>
         ))}
       </div>
-      <div className="mt-5 rounded-md bg-ink p-4 text-white">
-        <p className="text-sm font-bold uppercase text-clay">Planning result</p>
-        <p className="mt-2 text-base text-white/78">{result}</p>
+      <div className={`mt-5 rounded-md p-4 ${result.tone}`}>
+        <p className="text-sm font-bold uppercase opacity-80">Planning result</p>
+        <h2 className="mt-2 text-2xl font-bold leading-tight">{result.title}</h2>
+        <p className="mt-2 text-base opacity-85">{result.body}</p>
+        {missing.length > 0 ? (
+          <div className="mt-4 rounded-md bg-white/12 p-3">
+            <p className="text-sm font-bold uppercase opacity-80">Still missing</p>
+            <ul className="mt-2 grid gap-1 text-sm opacity-85">
+              {missing.map((item) => (
+                <li key={item.id}>{item.label}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
+      <section className="mt-5 rounded-md border border-ink/10 bg-paper p-4">
+        <h2 className="text-xl font-bold leading-tight text-ink">Official resources</h2>
+        <div className="mt-3 grid gap-3">
+          {[
+            {
+              label: "China National Immigration Administration",
+              href: "https://en.nia.gov.cn/",
+            },
+            {
+              label: "Chinese embassy or consulate information",
+              href: "https://www.mfa.gov.cn/eng/",
+            },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 text-base font-semibold text-ember hover:text-[#982F28]"
+            >
+              {link.label}
+              <ExternalLink aria-hidden="true" size={16} />
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

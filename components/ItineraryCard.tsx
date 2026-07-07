@@ -26,10 +26,10 @@ export function ItineraryCard({ itinerary }: ItineraryCardProps) {
       </p>
       <p className="mt-4 flex-1 text-base text-ink/68">{itinerary.summary}</p>
       <Link
-        href={`/itineraries/${itinerary.slug}`}
+        href={`/itinerary-kits/${itinerary.slug}`}
         className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md border border-ember bg-paper px-4 py-2 text-base font-semibold text-ember transition hover:bg-ember hover:text-white"
       >
-        Open itinerary
+        Open itinerary kit
       </Link>
     </article>
   );
