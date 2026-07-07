@@ -186,6 +186,40 @@ export function guideJsonLd(guide: Guide, path: string, faqs: FAQ[] = []) {
 
 export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] = []) {
   const url = absoluteUrl(path);
+  const article = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: itinerary.seoTitle,
+    description: itinerary.seoDescription,
+    url,
+    inLanguage: "en",
+    author: {
+      "@type": "Organization",
+      name: siteConfig.name,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.siteUrl,
+    },
+  };
+  const travelGuide = {
+    "@context": "https://schema.org",
+    "@type": "TravelGuide",
+    name: itinerary.title,
+    description: itinerary.seoDescription,
+    url,
+    inLanguage: "en",
+    about: itinerary.cities.map((city) => ({
+      "@type": "TouristDestination",
+      name: city,
+    })),
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.siteUrl,
+    },
+  };
   const trip = {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
@@ -216,5 +250,5 @@ export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] 
   };
   const faq = faqJsonLd(faqs, path);
 
-  return faq ? [trip, itemList, faq] : [trip, itemList];
+  return faq ? [article, travelGuide, trip, itemList, faq] : [article, travelGuide, trip, itemList];
 }

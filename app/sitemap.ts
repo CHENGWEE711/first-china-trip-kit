@@ -2,15 +2,20 @@ import type { MetadataRoute } from "next";
 import { cities } from "@/data/cities";
 import { guides } from "@/data/guides";
 import { itineraries } from "@/data/itineraries";
+import { cityKitSlugs, itineraryKitSlugs, toolKits } from "@/data/kits";
 import { absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "",
+    "/start-here",
+    "/city-kits",
+    "/itinerary-kits",
     "/cities",
     "/itineraries",
     "/travel-essentials",
     "/guides",
+    "/tools",
     "/store",
     "/custom-itinerary",
     "/about",
@@ -46,5 +51,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...cityRoutes, ...itineraryRoutes, ...guideRoutes];
+  const cityKitRoutes = cityKitSlugs.map((slug) => ({
+    url: absoluteUrl(`/city-kits/${slug}`),
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  const itineraryKitRoutes = itineraryKitSlugs.map((slug) => ({
+    url: absoluteUrl(`/itinerary-kits/${slug}`),
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  const toolRoutes = toolKits.map((tool) => ({
+    url: absoluteUrl(`/tools/${tool.slug}`),
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.65,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...cityRoutes,
+    ...cityKitRoutes,
+    ...itineraryRoutes,
+    ...itineraryKitRoutes,
+    ...guideRoutes,
+    ...toolRoutes,
+  ];
 }

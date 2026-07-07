@@ -43,10 +43,15 @@ export default function ThankYouPage() {
               <a
                 href="/china-first-time-visitor-checklist.pdf"
                 download
-                className="inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-5 py-3 text-base font-semibold text-white transition hover:bg-[#982F28]"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-5 py-3 text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-auto"
               >
                 Download PDF checklist
               </a>
+              <p className="text-sm text-ink/58">
+                Includes arrival-day checks, payment backups, app setup, hotel
+                address notes, train reminders, and emergency phrases in
+                English, Chinese characters, and pinyin.
+              </p>
               <ButtonLink href="/travel-essentials" variant="ghost">
                 Open travel essentials
               </ButtonLink>

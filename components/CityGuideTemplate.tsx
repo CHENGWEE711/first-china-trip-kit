@@ -65,6 +65,15 @@ function ListSection({ title, items }: { title: string; items: string[] }) {
   );
 }
 
+function formatUpdatedDate(value: string) {
+  return new Intl.DateTimeFormat("en", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
 export function CityGuideTemplate({
   city,
   content,
@@ -97,6 +106,10 @@ export function CityGuideTemplate({
           </div>
           <aside className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
             <h2 className="text-xl font-bold text-ink">Quick facts</h2>
+            <div className="mt-4 rounded-md bg-sand p-4">
+              <p className="text-sm font-bold uppercase text-ember">Best area to stay</p>
+              <p className="mt-2 text-base font-semibold text-ink/78">{city.whereToStay[0]}</p>
+            </div>
             <dl className="mt-4 grid gap-4">
               <div>
                 <dt className="text-sm font-bold uppercase text-ink/50">Best time to visit</dt>
@@ -105,6 +118,12 @@ export function CityGuideTemplate({
               <div>
                 <dt className="text-sm font-bold uppercase text-ink/50">How many days to stay</dt>
                 <dd className="mt-1 text-base text-ink/72">{city.recommendedDays}</dd>
+              </div>
+              <div>
+                <dt className="text-sm font-bold uppercase text-ink/50">Last updated</dt>
+                <dd className="mt-1 text-base text-ink/72">
+                  {formatUpdatedDate(city.lastUpdated)}
+                </dd>
               </div>
             </dl>
           </aside>

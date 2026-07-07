@@ -11,10 +11,11 @@ export function NewsletterSignup() {
             Newsletter
           </p>
           <h2 className="text-3xl font-bold leading-tight">
-            Get practical China trip updates before you fly.
+            Get the Free China First Trip Checklist
           </h2>
           <p className="mt-3 max-w-2xl text-base text-white/72">
-            Get the free China First-Time Visitor Checklist and practical planning notes.
+            A practical pre-trip checklist for visa, payment, apps, internet,
+            transport, and packing.
           </p>
         </div>
         <NewsletterForm source="newsletter-section" />

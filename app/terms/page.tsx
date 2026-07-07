@@ -32,7 +32,7 @@ export default function TermsPage() {
           </p>
           <h2>Digital products</h2>
           <p>
-            Store products are planned digital downloads. When paid products launch,
+            Travel Kits are planned digital downloads. When paid products launch,
             checkout, refunds, and delivery terms will be provided at purchase.
           </p>
           <h2>Use of content</h2>

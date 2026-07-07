@@ -6,7 +6,7 @@ import { products } from "@/data/products";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "First China Trip Kit Store | Printable China Travel Planning Guides",
+  title: "First China Trip Kit Travel Kits | Printable China Planning Guides",
   description:
     "Browse upcoming First China Trip Kit digital products, including Shanghai planning kits, classic China itineraries, and payment setup guides.",
   path: "/store",
@@ -17,20 +17,48 @@ export default function StorePage() {
     <>
       <PageIntro
         eyebrow="Store"
-        title="Printable China travel planning kits"
-        description="Digital products are being prepared for travelers who want checklists, routes, Chinese addresses, booking reminders, and payment setup help in a compact format."
+        title="Printable China Travel Kits"
+        description="Upcoming digital kits for travelers who want checklists, routes, Chinese addresses, booking reminders, and payment setup help in a compact format."
       />
-      <section className="bg-ink px-4 py-10 text-white">
+      <section id="early-access" className="bg-ink px-4 py-10 text-white">
         <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-[1fr_420px] md:items-center">
           <div>
             <p className="mb-3 text-sm font-bold uppercase text-clay">First kit opening soon</p>
             <h2 className="text-3xl font-bold leading-tight">Get notified when this opens</h2>
             <p className="mt-3 max-w-2xl text-base text-white/72">
               The China Payment & Apps Setup Guide is the first planned paid kit.
-              Join the newsletter for the launch note and practical pre-trip updates.
+              Join the newsletter for early access, the launch note, practical
+              pre-trip updates, and the free China First-Time Visitor Checklist.
             </p>
           </div>
           <NewsletterForm source="store-notify" compact />
+        </div>
+      </section>
+      <section className="bg-mist px-4 py-10">
+        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
+          <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft md:col-span-2">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Free sample</p>
+            <h2 className="text-2xl font-bold leading-tight text-ink">
+              Start with the free first-time visitor checklist
+            </h2>
+            <p className="mt-3 text-base text-ink/68">
+              The paid Travel Kits are still being prepared, but the free PDF
+              checklist is available now and shows the practical style these kits
+              will use: documents, payment, apps, hotel addresses, transport,
+              food, and emergency phrases.
+            </p>
+          </div>
+          <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+            <a
+              href="/china-first-time-visitor-checklist.pdf"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-base font-semibold text-white transition hover:bg-[#982F28]"
+            >
+              Download free sample
+            </a>
+            <p className="mt-3 text-sm text-ink/58">
+              The sample is free and opens as a PDF.
+            </p>
+          </div>
         </div>
       </section>
       <section className="px-4 py-12">

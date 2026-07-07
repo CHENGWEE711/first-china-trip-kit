@@ -306,6 +306,74 @@ export const guides: Guide[] = [
       },
     ],
   },
+  {
+    id: "guide-internet-esim",
+    slug: "china-internet-and-esim-guide",
+    title: "China Internet and eSIM Guide for First-Time Visitors",
+    category: "Internet & eSIM",
+    summary:
+      "How to prepare mobile data, eSIM, roaming, Wi-Fi, offline screenshots, and app access before your first arrival day in China.",
+    updatedAt: "2026-07-08",
+    seoTitle: "China Internet and eSIM Guide for First-Time Visitors",
+    seoDescription:
+      "Prepare internet access for China with this first-time visitor guide to eSIMs, roaming, SIM cards, Wi-Fi, app access, offline backups, and arrival-day setup.",
+    content: [
+      {
+        heading: "Choose your data plan before landing",
+        body:
+          "Your phone will carry payment, maps, translation, hotel addresses, train details, and ride-hailing. Decide before departure whether you will use roaming, a travel eSIM, a local SIM, or pocket Wi-Fi so you are not solving connectivity while tired in the arrival hall.",
+        bullets: [
+          "Roaming is simple if your home plan is affordable and reliable.",
+          "An eSIM can be convenient if your phone supports it and the plan works in mainland China.",
+          "A local SIM can be useful for longer stays but may require passport registration and setup time.",
+        ],
+      },
+      {
+        heading: "Prepare offline backups",
+        body:
+          "Even with a good data plan, stations, basements, hotels, and busy pickup zones can have weak signal. Save your hotel address in Chinese, passport copy, flight details, train confirmations, attraction reservations, and payment backup notes as screenshots.",
+      },
+      {
+        heading: "Arrival-day setup",
+        body:
+          "Before leaving the airport or station, check that maps load, translation works, payment apps open, and ride-hailing can find your hotel. If anything fails, use airport Wi-Fi, hotel staff, or your screenshot folder instead of improvising during a taxi pickup.",
+      },
+    ],
+  },
+  {
+    id: "guide-food-ordering",
+    slug: "china-food-ordering-guide",
+    title: "How to Order Food in China as a First-Time Visitor",
+    category: "Food",
+    summary:
+      "A practical guide to menus, QR ordering, spice levels, dietary phrases, payment, street food, and easy first meals in China.",
+    updatedAt: "2026-07-08",
+    seoTitle: "How to Order Food in China as a First-Time Visitor",
+    seoDescription:
+      "Learn how to order food in China with QR menus, translation apps, useful Chinese phrases, spice levels, payment tips, and first-day meal ideas.",
+    content: [
+      {
+        heading: "Expect QR menus and phone-first ordering",
+        body:
+          "Many restaurants use table QR codes, picture menus, or cashier ordering. If a QR menu is difficult, show staff a translated sentence asking for help or choose a restaurant with pictures, counter ordering, or a mall location for your first meal.",
+        bullets: [
+          "Keep camera translation ready for printed and digital menus.",
+          "Use short phrases for spice level, allergies, and no meat requests.",
+          "Confirm payment before ordering if your wallet setup is still new.",
+        ],
+      },
+      {
+        heading: "Start with easy first meals",
+        body:
+          "Noodle shops, dumpling restaurants, mall food courts, hot pot chains, and hotel-area cafes are good first meals because ordering is more predictable. Save street food adventures for when payment, translation, and your stomach have adjusted.",
+      },
+      {
+        heading: "Useful food phrases",
+        body:
+          "Prepare a few phrases in Chinese characters, not only pinyin: less spicy, not spicy, no peanuts, no meat, bottled water, and the bill. Showing clear Chinese text is often faster than speaking in a noisy restaurant.",
+      },
+    ],
+  },
 ];
 
 export function getGuideBySlug(slug: string) {

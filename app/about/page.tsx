@@ -17,6 +17,13 @@ const principles = [
   "We explain China-specific systems in plain English without making the country feel intimidating.",
 ];
 
+const trustPoints = [
+  "We separate practical planning guidance from official requirements, especially for visas, transit rules, transport policies, and payments.",
+  "We write routes around real travel friction: jet lag, station transfers, weather, phone setup, payment failures, and hotel address problems.",
+  "We prioritize first-time visitor questions over insider shorthand, so pages explain why a decision matters before asking you to book anything.",
+  "We keep official-resource links visible on policy-sensitive pages and encourage travelers to verify requirements before making non-refundable plans.",
+];
+
 export default function AboutPage() {
   return (
     <>
@@ -42,13 +49,36 @@ export default function AboutPage() {
               route, and enough practical detail to avoid common first-day stress.
             </p>
             <div className="mt-6">
-              <ButtonLink href="/itineraries">Browse itineraries</ButtonLink>
+              <ButtonLink href="/itinerary-kits">Browse itinerary kits</ButtonLink>
             </div>
           </div>
           <div className="grid gap-4">
             {principles.map((principle) => (
               <article key={principle} className="rounded-lg border border-ink/10 bg-sand p-5">
                 <p className="text-lg font-semibold leading-relaxed text-ink">{principle}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="bg-mist px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 max-w-3xl">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Why trust us</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              Practical advice, with official checks where they matter
+            </h2>
+            <p className="mt-3 text-base text-ink/68">
+              First China Trip Kit is not a visa office, travel agency, or legal
+              adviser. It is a planning layer built to help first-time visitors
+              ask better questions, avoid common mistakes, and verify the details
+              that can change before booking.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {trustPoints.map((point) => (
+              <article key={point} className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+                <p className="text-base leading-relaxed text-ink/72">{point}</p>
               </article>
             ))}
           </div>

@@ -5,7 +5,7 @@ import { FeedbackCTA } from "@/components/FeedbackCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ProductCard } from "@/components/ProductCard";
 import type { ChineseAddress } from "@/data/cities";
-import type { FAQ } from "@/data/faqs";
+import type { FAQ, LinkItem } from "@/data/faqs";
 import type { Itinerary } from "@/data/itineraries";
 import type { ItineraryGuideContent } from "@/data/itinerary-guide-content";
 import type { Product } from "@/data/products";
@@ -20,6 +20,11 @@ function fallbackContent(itinerary: Itinerary): ItineraryGuideContent {
   return {
     routeSummary: [itinerary.summary],
     bestForDetails: [itinerary.targetUser],
+    notBestFor: [
+      "Travelers who want a fully private, concierge-managed trip with no self-guided planning.",
+      "Visitors who prefer to change cities every day without buffer time.",
+      "Travelers whose arrival or departure times make the first or last day much shorter than shown.",
+    ],
     bookingReminders: itinerary.tips,
     chineseAddresses: [],
     skipIfTired: [
@@ -78,6 +83,45 @@ function AddressBlock({ addresses }: { addresses: ChineseAddress[] }) {
   );
 }
 
+function ResourceBlock({ links }: { links?: LinkItem[] }) {
+  if (!links || links.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+      <h2 className="text-2xl font-bold leading-tight text-ink">Official resources</h2>
+      <div className="mt-4 grid gap-4">
+        {links.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+            className="border-l-2 border-ember/35 pl-3 text-base text-ink/70 hover:text-ember"
+          >
+            <span className="font-bold text-ink">{link.label}</span>
+            {link.note ? <span className="block text-sm text-ink/58">{link.note}</span> : null}
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function formatVerifiedDate(value?: string) {
+  if (!value) {
+    return null;
+  }
+
+  return new Intl.DateTimeFormat("en", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
 export function ItineraryTemplate({ itinerary, content, products }: ItineraryTemplateProps) {
   const guide = content || fallbackContent(itinerary);
   const faqs: FAQ[] = guide.faq;
@@ -92,6 +136,19 @@ export function ItineraryTemplate({ itinerary, content, products }: ItineraryTem
             </p>
             <h1 className="text-4xl font-bold leading-tight text-ink">{itinerary.title}</h1>
             <p className="mt-5 max-w-3xl text-lg text-ink/70">{itinerary.summary}</p>
+            {guide.importantNotice ? (
+              <div className="mt-6 rounded-lg border border-ember/25 bg-paper p-5 shadow-soft">
+                <p className="text-sm font-bold uppercase text-ember">Important notice</p>
+                <p className="mt-2 text-base leading-relaxed text-ink/72">
+                  {guide.importantNotice}
+                </p>
+                {formatVerifiedDate(guide.lastVerified) ? (
+                  <p className="mt-3 text-sm font-semibold text-ink/50">
+                    Last verified: {formatVerifiedDate(guide.lastVerified)}
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
           </div>
           <aside className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
             <h2 className="text-xl font-bold text-ink">Trip basics</h2>
@@ -117,6 +174,7 @@ export function ItineraryTemplate({ itinerary, content, products }: ItineraryTem
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
           <ListBlock title="Route summary" items={guide.routeSummary} />
           <ListBlock title="Who this route is best for" items={guide.bestForDetails} />
+          <ListBlock title="Who should not choose this route" items={guide.notBestFor} />
         </div>
       </section>
 
@@ -194,6 +252,7 @@ export function ItineraryTemplate({ itinerary, content, products }: ItineraryTem
           <ListBlock title="Booking reminders" items={guide.bookingReminders} />
           <ListBlock title="What to skip if tired" items={guide.skipIfTired} />
           <AddressBlock addresses={guide.chineseAddresses} />
+          <ResourceBlock links={guide.officialSourceLinks} />
           <ListBlock
             title="Budget notes"
             items={[
@@ -207,9 +266,9 @@ export function ItineraryTemplate({ itinerary, content, products }: ItineraryTem
       <CTASection
         eyebrow="Travel kit"
         title="Get this route as a travel kit PDF"
-        description="Printable route kits are planned for travelers who want addresses, booking reminders, daily timing, and backup notes in one compact file."
+        description="Printable Travel Kits are planned for travelers who want addresses, booking reminders, daily timing, and backup notes in one compact file."
         primaryHref="/store"
-        primaryLabel="View PDF kits"
+        primaryLabel="View Travel Kits"
         secondaryHref="/custom-itinerary"
         secondaryLabel="Request a custom itinerary"
       />

@@ -23,7 +23,7 @@ export default function PrivacyPage() {
           <h2>Information we collect</h2>
           <p>
             If you subscribe to the newsletter, we collect your email address and
-            the page or form source used for signup. If you contact us, we may
+            the source page or form used for signup. If you contact us, we may
             receive your email address and message content.
           </p>
           <h2>How we use information</h2>

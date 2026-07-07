@@ -468,6 +468,132 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     ],
     relatedProductIds: [],
   },
+  "china-internet-and-esim-guide": {
+    quickAnswer:
+      "For a first China trip, choose your mobile data plan before you fly and prepare offline backups even if you expect data to work. Your phone is not just for messaging; it is your payment wallet, map, translator, hotel address card, train folder, and emergency backup. The safest setup is one primary data option, one backup way to reach Wi-Fi, and a screenshot folder that works without signal.",
+    steps: [
+      "Check whether your phone supports eSIM and whether your home carrier roaming plan works in mainland China at a price you can accept.",
+      "Choose one primary data option: international roaming, a travel eSIM, a local SIM, or pocket Wi-Fi. For short first trips, roaming or an eSIM is usually the least complicated.",
+      "Install and activate anything that can be prepared before departure. Do not leave account login, QR scanning, or plan activation for the airport arrival hall unless the provider requires it.",
+      "Download offline Chinese translation packs and save hotel addresses, train details, attraction reservations, flight information, insurance, and emergency contacts as screenshots.",
+      "Before leaving the airport or railway station, test payment apps, maps, translation, and ride-hailing. If one tool does not load, solve it while you still have public Wi-Fi and staff nearby.",
+      "Keep a paper or offline copy of your first hotel address in Chinese. If data fails completely, this is the detail that gets you safely to your base.",
+    ],
+    commonMistakes: [
+      "Assuming airport Wi-Fi will be enough for the first transfer. It may help at the terminal, but it will not help inside a taxi or while walking to a pickup point.",
+      "Buying an eSIM without checking phone compatibility or whether the plan supports the mainland China apps and access you need.",
+      "Saving travel details only inside email, booking apps, or cloud storage that may require data or a fresh login.",
+      "Waiting until arrival to receive SMS codes for payment, maps, or ride-hailing apps.",
+      "Letting one low phone battery threaten payment, translation, and navigation at the same time.",
+    ],
+    troubleshooting: [
+      "If your eSIM does not connect, toggle airplane mode, check whether data roaming is enabled for that line, and confirm the plan is active for mainland China.",
+      "If payment apps open slowly on weak data, move out of basement levels, connect to hotel or airport Wi-Fi, or use cash for the immediate purchase.",
+      "If maps cannot find a place in English, paste the Chinese name or address from your saved notes.",
+      "If ride-hailing pickup points are confusing, move to a hotel entrance, airport zone, mall gate, or station exit with a clear name.",
+      "If your phone battery drops, stop using video, social apps, and photo uploads until payment and navigation are secure.",
+    ],
+    firstDayChecklist: [
+      "Primary data option chosen and tested where possible.",
+      "Offline translation pack downloaded.",
+      "Hotel address saved in Chinese and English.",
+      "Payment, maps, ride-hailing, and train confirmations screenshotted.",
+      "Power bank charged and cable easy to reach.",
+      "Emergency contacts available without cloud login.",
+    ],
+    faq: [
+      {
+        question: "Should I use roaming, eSIM, or a local SIM in China?",
+        answer:
+          "For short first trips, roaming or a travel eSIM is usually simpler because you can prepare before arrival. A local SIM may be useful for longer stays, but it can take setup time and may require passport registration.",
+      },
+      {
+        question: "Can I rely on hotel and cafe Wi-Fi?",
+        answer:
+          "Use it as a backup, not as your main travel plan. You need data for payment, maps, ride-hailing, and translation while moving between places.",
+      },
+      {
+        question: "What should I screenshot before landing?",
+        answer:
+          "Screenshot your hotel address in Chinese, passport copy, flight and train details, attraction reservations, payment backup notes, insurance, and emergency contacts.",
+      },
+      {
+        question: "Do China travel apps need a local Chinese phone number?",
+        answer:
+          "Some services work with foreign numbers and some are easier through Alipay or WeChat mini programs. Set up core apps before travel and keep hotel staff as a backup for tricky bookings.",
+      },
+    ],
+    officialSourceLinks: [],
+    relatedGuideSlugs: [
+      "best-apps-for-traveling-in-china",
+      "how-to-pay-in-china-as-a-foreigner",
+      "china-travel-packing-list",
+    ],
+    relatedProductIds: ["china-payment-apps-setup-guide"],
+  },
+  "china-food-ordering-guide": {
+    quickAnswer:
+      "The easiest way to order food in China is to combine picture menus or QR menus with camera translation, a few saved Chinese phrases, and a working mobile payment method. Start with simple first meals near your hotel, then expand to street food, hot pot, local breakfast, and regional dishes once payment and translation feel comfortable.",
+    steps: [
+      "Prepare payment before your first restaurant meal. Many casual restaurants expect Alipay or WeChat Pay, and some table QR menus connect directly to mobile payment.",
+      "Use camera translation for menus, but keep requests short. A clear phrase such as 'not spicy' or 'no peanuts' works better than a long paragraph.",
+      "Choose easier first meals: dumplings, noodles, rice bowls, mall food courts, hot pot chains, or restaurants with pictures.",
+      "Save dietary needs in Chinese characters if you have allergies, vegetarian needs, or spice limits. Show the text before ordering, not after food arrives.",
+      "When a restaurant uses a table QR code, scan it, choose dishes, submit the order, and pay if prompted. If the menu is confusing, ask staff for help with one short translated sentence.",
+      "After the meal, ask for the bill or follow the QR/payment flow. In many places, the order may already be paid through the phone.",
+    ],
+    commonMistakes: [
+      "Starting the trip with a complicated local restaurant before payment, data, and translation are working.",
+      "Assuming 'not spicy' means the same thing everywhere. Regional spice levels vary, so be extra clear in Sichuan, Chongqing, Hunan, and some hot pot restaurants.",
+      "Showing only pinyin for allergy or dietary needs. Staff need Chinese characters to understand quickly.",
+      "Ordering too many dishes because portions are unclear. Start smaller and add more if needed.",
+      "Forgetting that table QR codes may require mobile data, app login, or local payment.",
+    ],
+    troubleshooting: [
+      "If the QR menu will not open, ask staff whether they have a paper menu, picture menu, or can take your order directly.",
+      "If translation produces strange dish names, look for photos, ingredient words, or ask staff for popular choices.",
+      "If payment fails after ordering, try the cashier-scans-you flow, another wallet, a backup card if accepted, or cash.",
+      "If spice level is too high, order rice, plain noodles, cucumber, egg dishes, or bottled drinks instead of trying to push through the meal.",
+      "If you have a serious allergy, use a professionally prepared Chinese allergy card and choose simpler restaurants where ingredients are easier to confirm.",
+    ],
+    firstDayChecklist: [
+      "Payment app opens and card is linked.",
+      "Camera translation is ready.",
+      "Hotel area has one easy meal option saved.",
+      "Spice and allergy phrases are saved in Chinese.",
+      "Small cash backup is available.",
+      "Bottled water phrase and bill phrase are saved.",
+    ],
+    faq: [
+      {
+        question: "Can I order food in China without speaking Chinese?",
+        answer:
+          "Yes, especially in major cities, but you should use camera translation, pictures, short Chinese phrases, and a working mobile payment app.",
+      },
+      {
+        question: "What should I eat on my first day in China?",
+        answer:
+          "Choose something predictable near your hotel: noodles, dumplings, rice bowls, mall restaurants, or a casual chain. Save more complex local meals for after payment and translation feel smoother.",
+      },
+      {
+        question: "How do I say not spicy in Chinese?",
+        answer:
+          "You can show 不辣, pronounced bu la. For less spicy, show 少辣, pronounced shao la. In spicy regions, repeat the request clearly.",
+      },
+      {
+        question: "Are QR code menus hard for foreigners?",
+        answer:
+          "They can be confusing at first, especially if they require app login or Chinese-only screens. Ask staff for help, use camera translation, or choose a restaurant with a picture menu if you are tired.",
+      },
+    ],
+    officialSourceLinks: [],
+    relatedGuideSlugs: [
+      "basic-chinese-phrases-for-travelers",
+      "how-to-pay-in-china-as-a-foreigner",
+      "best-apps-for-traveling-in-china",
+    ],
+    relatedProductIds: ["china-payment-apps-setup-guide"],
+  },
 };
 
 export function getGuideDetailContent(slug: string): GuideDetailContent | undefined {

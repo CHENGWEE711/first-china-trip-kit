@@ -15,15 +15,17 @@ export const siteConfig = {
 };
 
 export const navItems = [
-  { href: "/cities", label: "Cities" },
-  { href: "/itineraries", label: "Itineraries" },
+  { href: "/start-here", label: "Start Here" },
+  { href: "/city-kits", label: "City Kits" },
+  { href: "/itinerary-kits", label: "Itinerary Kits" },
   { href: "/travel-essentials", label: "Travel Essentials" },
-  { href: "/guides/how-to-pay-in-china-as-a-foreigner", label: "Payment Guide" },
+  { href: "/tools", label: "Tools" },
+  { href: "/guides", label: "Blog" },
   { href: "/store", label: "Store" },
-  { href: "/about", label: "About" },
 ];
 
 export const footerLegalItems = [
+  { href: "/about", label: "About" },
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Use" },
   { href: "/contact", label: "Contact" },

@@ -20,11 +20,12 @@ declare global {
 export function NewsletterForm({ source = "site", compact = false }: NewsletterFormProps) {
   const router = useRouter();
   const [message, setMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const isSubmitting = status === "loading";
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsSubmitting(true);
+    setStatus("loading");
     setMessage("");
 
     const form = event.currentTarget;
@@ -32,16 +33,16 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
     const email = String(formData.get("email") || "").trim();
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setIsSubmitting(false);
+      setStatus("idle");
       setMessage("Please enter a valid email address.");
       return;
     }
 
     window.dataLayer?.push({
       event: "newsletter_submit",
-      source,
+      source_page: source,
     });
-    window.va?.track?.("newsletter_submit", { source });
+    window.va?.track?.("newsletter_submit", { source_page: source });
 
     const response = await fetch("/api/newsletter", {
       method: "POST",
@@ -49,15 +50,18 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
     });
     const data = (await response.json()) as { message?: string };
 
-    setIsSubmitting(false);
-
     if (!response.ok) {
+      setStatus("idle");
       setMessage(data.message || "Subscription could not be completed.");
       return;
     }
 
+    setStatus("success");
+    setMessage("Success. Your checklist is ready.");
     form.reset();
-    router.push(`/thank-you?email=${encodeURIComponent(email)}`);
+    window.setTimeout(() => {
+      router.push(`/thank-you?email=${encodeURIComponent(email)}`);
+    }, 350);
   }
 
   return (
@@ -65,7 +69,7 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
       onSubmit={handleSubmit}
       className={compact ? "grid gap-3" : "grid gap-3 rounded-lg border border-white/12 bg-white/8 p-4"}
     >
-      <input type="hidden" name="source" value={source} />
+      <input type="hidden" name="source_page" value={source} />
       <label htmlFor={`newsletter-email-${source}`} className="text-sm font-semibold text-white/84">
         Email address
       </label>
@@ -83,7 +87,7 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
           disabled={isSubmitting}
           className="min-h-12 rounded-md bg-clay px-5 text-base font-bold text-white transition hover:bg-ember disabled:cursor-wait disabled:opacity-70"
         >
-          {isSubmitting ? "Subscribing..." : "Get the checklist"}
+          {status === "success" ? "Success" : isSubmitting ? "Saving..." : "Get the checklist"}
         </button>
       </div>
       <p className="text-sm text-white/55">

@@ -46,7 +46,7 @@ export default function CustomItineraryPage() {
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/contact">Contact the team</ButtonLink>
-              <ButtonLink href="/itineraries" variant="secondary">
+              <ButtonLink href="/itinerary-kits" variant="secondary">
                 Browse routes
               </ButtonLink>
             </div>

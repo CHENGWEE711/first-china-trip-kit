@@ -13,6 +13,7 @@ export type City = {
   bestFor: string[];
   recommendedDays: string;
   bestTimeToVisit: string;
+  lastUpdated: string;
   intro: string;
   topAttractions: string[];
   localFoods: string[];
@@ -34,6 +35,7 @@ export const cities: City[] = [
     bestFor: ["First-timers", "Food", "Night views", "Transit stopovers"],
     recommendedDays: "3-4 days",
     bestTimeToVisit: "March to May and October to early December for mild weather and clearer skies.",
+    lastUpdated: "2026-07-08",
     intro:
       "Shanghai is China's easiest first landing point for many foreign travelers: international flights, simple metro connections, excellent hotels, and a mix of historic lanes, futuristic skylines, shopping streets, and day trips to water towns.",
     topAttractions: [
@@ -83,6 +85,16 @@ export const cities: City[] = [
         english: "279 Yuyuan Old Street, Huangpu District, Shanghai",
         chinese: "上海市黄浦区豫园老街279号 豫园",
       },
+      {
+        label: "People's Square",
+        english: "People's Square, Huangpu District, Shanghai",
+        chinese: "上海市黄浦区 人民广场",
+      },
+      {
+        label: "Shanghai Pudong International Airport",
+        english: "Pudong New Area, Shanghai",
+        chinese: "上海市浦东新区 上海浦东国际机场",
+      },
     ],
     seoTitle: "Shanghai Travel Guide for First-Time Visitors | First China Trip Kit",
     seoDescription:
@@ -97,6 +109,7 @@ export const cities: City[] = [
     bestFor: ["History", "Great Wall", "Museums", "Classic China"],
     recommendedDays: "3-5 days",
     bestTimeToVisit: "April, May, September, and October for comfortable weather and better walking conditions.",
+    lastUpdated: "2026-07-08",
     intro:
       "Beijing is the best city for understanding imperial China, modern politics, and grand-scale landmarks. It rewards slower planning because major sights are large, security checks take time, and museum reservations matter.",
     topAttractions: [
@@ -146,6 +159,16 @@ export const cities: City[] = [
         english: "12 Yongwai Avenue, Fengtai District, Beijing",
         chinese: "北京市丰台区永外大街12号 北京南站",
       },
+      {
+        label: "Summer Palace",
+        english: "19 Xinjian Gongmen Road, Haidian District, Beijing",
+        chinese: "北京市海淀区新建宫门路19号 颐和园",
+      },
+      {
+        label: "Mutianyu Great Wall",
+        english: "Mutianyu Village, Bohai Town, Huairou District, Beijing",
+        chinese: "北京市怀柔区渤海镇慕田峪村 慕田峪长城",
+      },
     ],
     seoTitle: "Beijing Travel Guide for Foreign Visitors | First China Trip Kit",
     seoDescription:
@@ -160,6 +183,7 @@ export const cities: City[] = [
     bestFor: ["Terracotta Warriors", "Ancient history", "Street food", "Short add-ons"],
     recommendedDays: "2-3 days",
     bestTimeToVisit: "April to June and September to October for pleasant temperatures and good walking weather.",
+    lastUpdated: "2026-07-08",
     intro:
       "Xi'an is compact, atmospheric, and easy to pair with Beijing. The Terracotta Warriors are the headline, but the city wall, Muslim Quarter, pagodas, and noodle culture make it more than a one-sight stop.",
     topAttractions: [
@@ -208,6 +232,16 @@ export const cities: City[] = [
         english: "Yongning Gate, Beilin District, Xi'an, Shaanxi",
         chinese: "陕西省西安市碑林区永宁门 西安城墙南门",
       },
+      {
+        label: "Big Wild Goose Pagoda",
+        english: "Yanta Road, Yanta District, Xi'an, Shaanxi",
+        chinese: "陕西省西安市雁塔区雁塔路 大雁塔",
+      },
+      {
+        label: "Shaanxi History Museum",
+        english: "91 Xiaozhai East Road, Yanta District, Xi'an, Shaanxi",
+        chinese: "陕西省西安市雁塔区小寨东路91号 陕西历史博物馆",
+      },
     ],
     seoTitle: "Xi'an Travel Guide: Terracotta Warriors, Food, and Itinerary Tips",
     seoDescription:
@@ -222,6 +256,7 @@ export const cities: City[] = [
     bestFor: ["Pandas", "Spicy food", "Tea houses", "Relaxed city life"],
     recommendedDays: "3-4 days",
     bestTimeToVisit: "March to June and September to November for mild weather; winter is quieter but damp.",
+    lastUpdated: "2026-07-08",
     intro:
       "Chengdu is one of China's most enjoyable slow-travel cities. It is famous for pandas and Sichuan food, but its real appeal is the pace: tea houses, parks, hot pot dinners, and easy day trips.",
     topAttractions: [
@@ -270,6 +305,16 @@ export const cities: City[] = [
         english: "12 Shaocheng Road, Qingyang District, Chengdu, Sichuan",
         chinese: "四川省成都市青羊区少城路12号 人民公园",
       },
+      {
+        label: "Wenshu Monastery",
+        english: "66 Wenshuyuan Street, Qingyang District, Chengdu, Sichuan",
+        chinese: "四川省成都市青羊区文殊院街66号 文殊院",
+      },
+      {
+        label: "Taikoo Li Chengdu",
+        english: "8 Zhongshamao Street, Jinjiang District, Chengdu, Sichuan",
+        chinese: "四川省成都市锦江区中纱帽街8号 成都远洋太古里",
+      },
     ],
     seoTitle: "Chengdu Travel Guide for Pandas, Hot Pot, and Easy Day Trips",
     seoDescription:
@@ -284,6 +329,7 @@ export const cities: City[] = [
     bestFor: ["West Lake", "Tea culture", "Romantic walks", "Shanghai add-ons"],
     recommendedDays: "2-3 days",
     bestTimeToVisit: "March to May for spring greenery and September to November for comfortable weather.",
+    lastUpdated: "2026-07-08",
     intro:
       "Hangzhou is a graceful lake city with gardens, temples, tea fields, and refined food. It is one of the easiest high-speed rail add-ons from Shanghai and works well for travelers who want a softer pace.",
     topAttractions: [
@@ -332,6 +378,16 @@ export const cities: City[] = [
         english: "1 Tiancheng Road, Shangcheng District, Hangzhou, Zhejiang",
         chinese: "浙江省杭州市上城区天城路1号 杭州东站",
       },
+      {
+        label: "Longjing Tea Fields",
+        english: "Longjing Village, Xihu District, Hangzhou, Zhejiang",
+        chinese: "浙江省杭州市西湖区 龙井村",
+      },
+      {
+        label: "Hefang Street",
+        english: "Hefang Street, Shangcheng District, Hangzhou, Zhejiang",
+        chinese: "浙江省杭州市上城区 河坊街",
+      },
     ],
     seoTitle: "Hangzhou Travel Guide: West Lake, Tea Fields, and Shanghai Add-On Tips",
     seoDescription:
@@ -346,6 +402,7 @@ export const cities: City[] = [
     bestFor: ["Classical gardens", "Canals", "Slow walks", "Shanghai day trips"],
     recommendedDays: "1-2 days",
     bestTimeToVisit: "April to May and September to November for garden colors and pleasant temperatures.",
+    lastUpdated: "2026-07-08",
     intro:
       "Suzhou is known for classical gardens, canals, silk history, and refined Jiangnan culture. It is close enough to Shanghai for a day trip, but an overnight stay makes the old town feel calmer.",
     topAttractions: [
@@ -394,6 +451,16 @@ export const cities: City[] = [
         english: "Pingjiang Road Historic District, Gusu District, Suzhou, Jiangsu",
         chinese: "江苏省苏州市姑苏区 平江路历史街区",
       },
+      {
+        label: "Suzhou Museum",
+        english: "204 Northeast Street, Gusu District, Suzhou, Jiangsu",
+        chinese: "江苏省苏州市姑苏区东北街204号 苏州博物馆",
+      },
+      {
+        label: "Lingering Garden",
+        english: "338 Liuyuan Road, Gusu District, Suzhou, Jiangsu",
+        chinese: "江苏省苏州市姑苏区留园路338号 留园",
+      },
     ],
     seoTitle: "Suzhou Travel Guide: Gardens, Canals, and Shanghai Day Trip Planning",
     seoDescription:
@@ -408,6 +475,7 @@ export const cities: City[] = [
     bestFor: ["Cantonese food", "Business travel", "Dim sum", "Pearl River views"],
     recommendedDays: "2-3 days",
     bestTimeToVisit: "October to December for drier weather and comfortable temperatures.",
+    lastUpdated: "2026-07-08",
     intro:
       "Guangzhou is one of China's great food capitals and a practical southern gateway. It blends Cantonese heritage, modern towers, leafy neighborhoods, wholesale markets, and easy links to Shenzhen, Hong Kong, and Macau.",
     topAttractions: [
@@ -456,6 +524,16 @@ export const cities: City[] = [
         english: "34 Enlong Li, Liwan District, Guangzhou, Guangdong",
         chinese: "广东省广州市荔湾区恩龙里34号 陈家祠",
       },
+      {
+        label: "Shamian Island",
+        english: "Shamian Island, Liwan District, Guangzhou, Guangdong",
+        chinese: "广东省广州市荔湾区 沙面岛",
+      },
+      {
+        label: "Beijing Road Pedestrian Street",
+        english: "Beijing Road, Yuexiu District, Guangzhou, Guangdong",
+        chinese: "广东省广州市越秀区 北京路步行街",
+      },
     ],
     seoTitle: "Guangzhou Travel Guide: Cantonese Food, Transport, and First-Time Tips",
     seoDescription:
@@ -470,6 +548,7 @@ export const cities: City[] = [
     bestFor: ["Modern China", "Design", "Hong Kong connections", "Theme parks"],
     recommendedDays: "1-2 days",
     bestTimeToVisit: "October to March for lower humidity and comfortable city walks.",
+    lastUpdated: "2026-07-08",
     intro:
       "Shenzhen is a young, fast, design-driven city bordering Hong Kong. It is best for travelers interested in modern China, technology districts, contemporary culture, shopping, and easy Greater Bay Area connections.",
     topAttractions: [
@@ -517,6 +596,16 @@ export const cities: City[] = [
         label: "Shenzhen Bay Park",
         english: "Shenzhen Bay Park, Nanshan District, Shenzhen, Guangdong",
         chinese: "广东省深圳市南山区 深圳湾公园",
+      },
+      {
+        label: "Futian Checkpoint",
+        english: "Futian Port, Futian District, Shenzhen, Guangdong",
+        chinese: "广东省深圳市福田区 福田口岸",
+      },
+      {
+        label: "Sea World Shekou",
+        english: "Sea World, Shekou, Nanshan District, Shenzhen, Guangdong",
+        chinese: "广东省深圳市南山区蛇口 海上世界",
       },
     ],
     seoTitle: "Shenzhen Travel Guide for Modern China, Design, and Hong Kong Add-Ons",

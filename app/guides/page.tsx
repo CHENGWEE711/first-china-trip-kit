@@ -5,9 +5,9 @@ import { guides } from "@/data/guides";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "China Travel Guides and Practical Articles | First China Trip Kit",
+  title: "China Travel Blog and Practical Guides | First China Trip Kit",
   description:
-    "Read practical China travel guides about payment, apps, high-speed trains, Alipay, WeChat Pay, packing, and basic Chinese phrases.",
+    "Read practical China travel articles about payment, apps, high-speed trains, internet, food ordering, packing, and basic Chinese phrases.",
   path: "/guides",
 });
 
@@ -15,8 +15,8 @@ export default function GuidesPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Guides"
-        title="Practical China travel articles"
+        eyebrow="Blog"
+        title="Practical China travel guides"
         description="Clear English answers to the questions that foreign visitors usually ask before their first China trip."
       />
       <section className="px-4 py-12">

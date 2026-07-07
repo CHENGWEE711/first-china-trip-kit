@@ -64,17 +64,14 @@ export function ProductCard({ product }: ProductCardProps) {
         </a>
       ) : (
         <>
-          <button
-            type="button"
-            disabled
-            aria-disabled="true"
-            title="This digital product is not available for purchase yet."
-            className="mt-5 inline-flex min-h-11 cursor-not-allowed items-center justify-center rounded-md border border-ink/12 bg-ink/12 px-4 py-2 text-base font-semibold text-ink/50"
+          <a
+            href="/store#early-access"
+            className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 text-base font-semibold text-white transition hover:bg-[#982F28]"
           >
-            Coming soon
-          </button>
+            Join waitlist
+          </a>
           <p className="mt-3 text-sm text-ink/58">
-            Join the newsletter to get notified.
+            Join the newsletter to get notified when this kit opens.
           </p>
         </>
       )}

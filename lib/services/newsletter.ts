@@ -1,6 +1,6 @@
 type SubscribeInput = {
   email: string;
-  source?: string;
+  sourcePage?: string;
 };
 
 type SubscribeResult = {
@@ -12,22 +12,22 @@ type SubscribeResult = {
 
 export async function subscribeToNewsletter({
   email,
-  source = "site",
+  sourcePage = "site",
 }: SubscribeInput): Promise<SubscribeResult> {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { ok: false, message: "Please enter a valid email address.", status: 400 };
   }
 
   if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    return subscribeWithSupabase({ email, source });
+    return subscribeWithSupabase({ email, sourcePage });
   }
 
   if (process.env.MAILCHIMP_API_KEY && process.env.MAILCHIMP_LIST_ID) {
-    return subscribeWithMailchimp({ email, source });
+    return subscribeWithMailchimp({ email, sourcePage });
   }
 
   if (process.env.RESEND_API_KEY && process.env.RESEND_AUDIENCE_ID) {
-    return subscribeWithResend({ email, source });
+    return subscribeWithResend({ email, sourcePage });
   }
 
   return {
@@ -40,7 +40,7 @@ export async function subscribeToNewsletter({
 
 async function subscribeWithSupabase({
   email,
-  source,
+  sourcePage,
 }: Required<SubscribeInput>): Promise<SubscribeResult> {
   const table = process.env.SUPABASE_NEWSLETTER_TABLE || "newsletter_subscribers";
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
@@ -56,9 +56,8 @@ async function subscribeWithSupabase({
       },
       body: JSON.stringify({
         email,
-        source,
-        status: "subscribed",
-        subscribed_at: new Date().toISOString(),
+        source_page: sourcePage,
+        created_at: new Date().toISOString(),
       }),
     },
   );
@@ -80,7 +79,7 @@ async function subscribeWithSupabase({
 
 async function subscribeWithMailchimp({
   email,
-  source,
+  sourcePage,
 }: Required<SubscribeInput>): Promise<SubscribeResult> {
   const apiKey = process.env.MAILCHIMP_API_KEY || "";
   const listId = process.env.MAILCHIMP_LIST_ID || "";
@@ -103,7 +102,7 @@ async function subscribeWithMailchimp({
     body: JSON.stringify({
       email_address: email,
       status: "subscribed",
-      tags: [source],
+      tags: [sourcePage],
     }),
   });
 
@@ -133,7 +132,7 @@ async function subscribeWithMailchimp({
 
 async function subscribeWithResend({
   email,
-  source,
+  sourcePage,
 }: Required<SubscribeInput>): Promise<SubscribeResult> {
   const response = await fetch(
     `https://api.resend.com/audiences/${process.env.RESEND_AUDIENCE_ID}/contacts`,
@@ -146,7 +145,7 @@ async function subscribeWithResend({
       body: JSON.stringify({
         email,
         unsubscribed: false,
-        firstName: source,
+        firstName: sourcePage,
       }),
     },
   );

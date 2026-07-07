@@ -1,9 +1,13 @@
 import type { ChineseAddress } from "@/data/cities";
-import type { FAQ } from "@/data/faqs";
+import type { FAQ, LinkItem } from "@/data/faqs";
 
 export type ItineraryGuideContent = {
   routeSummary: string[];
   bestForDetails: string[];
+  notBestFor: string[];
+  importantNotice?: string;
+  officialSourceLinks?: LinkItem[];
+  lastVerified?: string;
   bookingReminders: string[];
   chineseAddresses: ChineseAddress[];
   skipIfTired: string[];
@@ -30,6 +34,11 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
       "Couples, solo travelers, and families who want strong city highlights without a packed schedule.",
       "Travelers who care about payment setup, easy transit, food, and a smooth first impression.",
       "Anyone who wants a route that can absorb a delayed flight, rainy skyline day, or slow first morning without collapsing.",
+    ],
+    notBestFor: [
+      "Travelers who want to cover Beijing, Xi'an, or another distant city in the same three days.",
+      "Visitors who dislike big-city energy and prefer nature-heavy travel.",
+      "Travelers who want every meal and attraction pre-booked with no flexible time.",
     ],
     bookingReminders: [
       "Reserve any museum that requires timed entry before your museum day, especially on weekends, holidays, and school vacation periods.",
@@ -121,21 +130,130 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
     ],
     relatedProductIds: ["shanghai-3-day-travel-kit", "china-payment-apps-setup-guide"],
   },
+  "4-days-in-beijing": {
+    routeSummary: [
+      "This route gives Beijing one extra day compared with a compressed 3-day plan, which makes a first visit feel much more realistic.",
+      "It separates the Forbidden City and Great Wall into different days, keeps the first arrival day lighter, and leaves one flexible day for the Summer Palace, hutongs, museums, or weather recovery.",
+      "The best base is usually Dongcheng, Wangfujing, Qianmen, or Sanlitun depending on whether you prefer historic access, metro convenience, or more evening dining choices.",
+    ],
+    bestForDetails: [
+      "First-time visitors who want Beijing's major landmarks without turning every day into a race.",
+      "Travelers who care about Great Wall logistics, attraction reservations, and passport checks.",
+      "Families, couples, and solo travelers who want one flexible day for jet lag, weather, or a missed booking.",
+    ],
+    notBestFor: [
+      "Travelers who only want modern nightlife and shopping.",
+      "Visitors who dislike long walks, security checks, and large historic sites.",
+      "Anyone trying to combine Beijing, Xi'an, and Shanghai inside the same four days.",
+    ],
+    bookingReminders: [
+      "Book Forbidden City access in advance when possible and carry the same passport used for reservation.",
+      "Choose your Great Wall section and transfer style before the trip; Mutianyu is easier for most first-time visitors.",
+      "Confirm whether museums or major sights require timed reservations during your travel dates.",
+      "Save hotel and attraction addresses in Chinese because taxi and ride-hailing pickup points can be confusing near major sights.",
+      "Avoid scheduling a high-speed train or flight immediately after a far northwest attraction such as the Summer Palace.",
+    ],
+    chineseAddresses: [
+      {
+        label: "Forbidden City",
+        english: "4 Jingshan Front Street, Dongcheng District, Beijing",
+        chinese: "北京市东城区景山前街4号 故宫博物院",
+      },
+      {
+        label: "Temple of Heaven",
+        english: "1 Tiantan East Road, Dongcheng District, Beijing",
+        chinese: "北京市东城区天坛东路1号 天坛公园",
+      },
+      {
+        label: "Mutianyu Great Wall",
+        english: "Mutianyu Village, Huairou District, Beijing",
+        chinese: "北京市怀柔区慕田峪村 慕田峪长城",
+      },
+      {
+        label: "Summer Palace",
+        english: "19 Xinjiangongmen Road, Haidian District, Beijing",
+        chinese: "北京市海淀区新建宫门路19号 颐和园",
+      },
+      {
+        label: "Beijing South Railway Station",
+        english: "12 Yongwai Avenue, Fengtai District, Beijing",
+        chinese: "北京市丰台区永外大街12号 北京南站",
+      },
+    ],
+    skipIfTired: [
+      "Skip an evening shopping street after the Forbidden City; the palace and Jingshan already make a full day.",
+      "Skip the Summer Palace if your Great Wall day was physically demanding and choose hutongs or a museum instead.",
+      "Skip a second museum if reservations, security lines, or weather make the day feel heavy.",
+      "Skip long cross-city dinners and eat near your hotel after the Great Wall.",
+    ],
+    faq: [
+      {
+        question: "Is 4 days enough for Beijing?",
+        answer:
+          "Yes. Four days is a strong first Beijing plan because it covers the Forbidden City, Great Wall, Temple of Heaven, and one flexible day without forcing every major sight into a compressed schedule.",
+      },
+      {
+        question: "Which Great Wall section is best for a first visit?",
+        answer:
+          "Mutianyu is usually the easiest first choice because transfers and facilities are more straightforward. Jinshanling can be more scenic for travelers who want a longer hike.",
+      },
+      {
+        question: "Do I need my passport every day in Beijing?",
+        answer:
+          "Carry it for major attractions, train travel, hotel check-in, and any reservation tied to identity. At minimum, keep a secure copy and know which days require the original.",
+      },
+      {
+        question: "Where should I stay for this Beijing route?",
+        answer:
+          "Dongcheng, Wangfujing, Qianmen, and Sanlitun are practical for different travel styles. Avoid saving money with a remote hotel unless you are comfortable spending more time in taxis.",
+      },
+    ],
+    relatedProductIds: ["10-day-classic-china-itinerary", "china-payment-apps-setup-guide"],
+  },
   "240-hour-visa-free-china-itinerary": {
+    importantNotice:
+      "This is a planning guide, not immigration advice. 240-hour visa-free transit eligibility can depend on nationality, entry and exit ports, confirmed onward ticket, third country or region routing, and the permitted stay area for the port you use. Verify official requirements before booking flights or hotels.",
+    lastVerified: "2026-07-08",
+    officialSourceLinks: [
+      {
+        label: "China National Immigration Administration",
+        href: "https://en.nia.gov.cn/n147418/n147463/c183412/content.html",
+        note: "Official English policy information for China's expanded 240-hour visa-free transit rules.",
+      },
+      {
+        label: "National Immigration Administration news",
+        href: "https://en.nia.gov.cn/",
+        note: "Use for current immigration notices and policy updates.",
+      },
+      {
+        label: "Chinese embassy or consulate for your country",
+        href: "https://www.mfa.gov.cn/eng/",
+        note: "Use for local consular notices before booking.",
+      },
+    ],
     routeSummary: [
       "This route is built around Shanghai plus nearby high-speed rail cities that are commonly paired with a visa-free transit stay. It is practical, low-friction, and easy to adjust if eligibility rules or arrival times change.",
       "The plan intentionally includes buffer time because transit immigration rules, onward ticket checks, and airport transfers can take longer than a normal domestic arrival.",
+      "Use it as a route framework only after confirming your nationality, port, onward ticket, third country or region requirement, and allowed travel area.",
     ],
     bestForDetails: [
       "Eligible travelers using Shanghai as a transit entry point.",
       "Visitors who want China highlights without applying for a standard tourist visa.",
       "Travelers who prefer cities connected by short high-speed rail rides rather than long domestic flights.",
     ],
+    notBestFor: [
+      "Travelers without a confirmed onward ticket to a third country or region.",
+      "Visitors whose nationality, port, routing, or stay area is not covered by current official rules.",
+      "Anyone who wants to visit cities outside the permitted administrative travel area for their entry port.",
+      "Travelers who need legal certainty and should apply for a standard visa instead of relying on transit rules.",
+    ],
     bookingReminders: [
-      "Verify current visa-free transit rules with official sources before booking.",
-      "Carry printed or offline proof of onward travel to a third country or region.",
+      "Verify current visa-free transit rules with official sources before booking flights, hotels, or non-refundable trains.",
+      "Confirm your nationality is eligible for the policy that applies to your entry port.",
+      "Carry printed and offline proof of onward travel to a third country or region.",
+      "Check that your arrival port, departure port, and route match the permitted policy conditions.",
       "Book hotels that can register foreign passport holders.",
-      "Keep the route inside the allowed travel area for your entry port and policy category.",
+      "Keep the route inside the allowed stay area for your entry port and policy category.",
     ],
     chineseAddresses: [
       {

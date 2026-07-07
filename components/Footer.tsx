@@ -34,8 +34,7 @@ export function Footer() {
             {siteConfig.contactEmail}
           </a>
           <p className="mt-5 text-sm text-white/52">
-            Travel information can change. Always verify visa, entry, ticket,
-            and payment details before booking.
+            Travel information changes. Always verify official requirements before booking.
           </p>
           <div className="mt-5 flex flex-wrap gap-3 text-sm">
             {footerLegalItems.map((item) => (

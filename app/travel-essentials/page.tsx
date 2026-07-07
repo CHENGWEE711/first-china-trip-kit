@@ -33,7 +33,7 @@ const essentials = [
       "Keep passport details consistent across every booking.",
     ],
     mistake: "Assuming a social media route is valid for your nationality and entry port.",
-    href: "/itineraries/240-hour-visa-free-china-itinerary",
+    href: "/itinerary-kits/240-hour-visa-free-china-itinerary",
   },
   {
     title: "Payment",
@@ -72,7 +72,7 @@ const essentials = [
       "Save hotel addresses and ticket screenshots offline.",
     ],
     mistake: "Waiting until the airport arrival hall to solve data access.",
-    href: "/guides/best-apps-for-traveling-in-china",
+    href: "/guides/china-internet-and-esim-guide",
   },
   {
     title: "Hotels",
@@ -98,7 +98,7 @@ const essentials = [
       "Try local breakfast or noodle shops for easy first meals.",
     ],
     mistake: "Only eating near major attraction exits where prices and quality vary more.",
-    href: "/cities/shanghai",
+    href: "/guides/china-food-ordering-guide",
   },
   {
     title: "Safety",
