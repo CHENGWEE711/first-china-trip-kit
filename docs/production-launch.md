@@ -45,15 +45,20 @@ apex domain to redirect to the primary `www` domain.
 
 ## Namecheap DNS Records
 
-Use Namecheap Advanced DNS:
+Use Namecheap Advanced DNS. Remove any Namecheap parking records or URL redirect
+records for `@` and `www`, then add the records Vercel recommended for this
+project:
 
 | Type | Host | Value | TTL |
 | --- | --- | --- | --- |
-| A Record | @ | 76.76.21.21 | Automatic |
-| CNAME Record | www | cname.vercel-dns.com | Automatic |
+| A Record | @ | 216.198.79.1 | Automatic |
+| A Record | @ | 64.29.17.1 | Automatic |
+| CNAME Record | www | 0b70b409d857d13b.vercel-dns-017.com | Automatic |
 
-Remove conflicting parking, forwarding, or old A/CNAME records for `@` and
-`www` before adding these.
+If the Vercel dashboard shows newer recommended records, use the dashboard
+values. After saving DNS changes, run `vercel domains verify
+firstchinatripkit.com` and `vercel domains verify www.firstchinatripkit.com`
+again.
 
 ## Post-Deploy Verification
 
