@@ -1,0 +1,9 @@
+{
+  "name": "First China Trip Kit",
+  "defaultSiteUrl": "https://www.firstchinatripkit.com",
+  "currentTestSiteUrl": "https://china-travel-kit.vercel.app",
+  "description": "Practical China travel guides, itineraries, payment tips, transport help, food recommendations, visa notes, and Chinese phrases for first-time foreign visitors.",
+  "heroImage": "/china-travel-hero.png",
+  "contactEmail": "china.travel.kit@gmail.com",
+  "reservedContactEmail": "hello@firstchinatripkit.com"
+}
