@@ -1,21 +1,22 @@
 create table if not exists public.newsletter_subscribers (
   id uuid primary key default gen_random_uuid(),
   email text not null unique,
-  source_page text,
+  source text,
+  status text not null default 'subscribed',
   created_at timestamptz not null default now()
 );
 
 alter table public.newsletter_subscribers
-drop column if exists source;
+add column if not exists source text;
 
 alter table public.newsletter_subscribers
-drop column if exists status;
+add column if not exists status text not null default 'subscribed';
+
+alter table public.newsletter_subscribers
+drop column if exists source_page;
 
 alter table public.newsletter_subscribers
 drop column if exists subscribed_at;
-
-alter table public.newsletter_subscribers
-add column if not exists source_page text;
 
 alter table public.newsletter_subscribers enable row level security;
 

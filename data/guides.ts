@@ -24,7 +24,7 @@ export const guides: Guide[] = [
     category: "Payment",
     summary:
       "A practical introduction to mobile payments, cash, cards, and what to set up before your first meal in China.",
-    updatedAt: "2026-07-07",
+    updatedAt: "2026-07-08",
     seoTitle: "How to Pay in China as a Foreigner | First China Trip Kit",
     seoDescription:
       "Learn how foreign visitors can pay in China using Alipay, WeChat Pay, cash, bank cards, and backup payment strategies.",
@@ -83,7 +83,7 @@ export const guides: Guide[] = [
     category: "Apps",
     summary:
       "The essential apps for maps, translation, mobile payment, ride-hailing, trains, restaurants, and staying connected.",
-    updatedAt: "2026-07-07",
+    updatedAt: "2026-07-08",
     seoTitle: "Best Apps for Traveling in China | First China Trip Kit",
     seoDescription:
       "A first-time visitor's app checklist for China, including maps, payment, translation, trains, ride-hailing, and food discovery.",
@@ -138,12 +138,12 @@ export const guides: Guide[] = [
   {
     id: "guide-high-speed-trains",
     slug: "how-to-take-high-speed-trains-in-china",
-    title: "How to Take High-Speed Trains in China",
+    title: "How to Book High-Speed Trains in China",
     category: "Transportation",
     summary:
       "A practical foreign visitor's guide to booking Chinese high-speed trains, choosing the right station, using your passport, boarding, luggage, seat classes, and missed-train backups.",
-    updatedAt: "2026-07-07",
-    seoTitle: "How to Take High-Speed Trains in China",
+    updatedAt: "2026-07-08",
+    seoTitle: "How to Book High-Speed Trains in China",
     seoDescription:
       "Learn how foreign visitors can book and ride China's high-speed trains, including 12306, passports, station names, boarding gates, luggage, seat classes, and transfer timing.",
     content: [
@@ -309,12 +309,12 @@ export const guides: Guide[] = [
   {
     id: "guide-internet-esim",
     slug: "china-internet-and-esim-guide",
-    title: "China Internet and eSIM Guide for First-Time Visitors",
+    title: "China eSIM Guide for Tourists",
     category: "Internet & eSIM",
     summary:
       "How to prepare mobile data, eSIM, roaming, Wi-Fi, offline screenshots, and app access before your first arrival day in China.",
     updatedAt: "2026-07-08",
-    seoTitle: "China Internet and eSIM Guide for First-Time Visitors",
+    seoTitle: "China eSIM Guide for Tourists",
     seoDescription:
       "Prepare internet access for China with this first-time visitor guide to eSIMs, roaming, SIM cards, Wi-Fi, app access, offline backups, and arrival-day setup.",
     content: [
@@ -371,6 +371,206 @@ export const guides: Guide[] = [
         heading: "Useful food phrases",
         body:
           "Prepare a few phrases in Chinese characters, not only pinyin: less spicy, not spicy, no peanuts, no meat, bottled water, and the bill. Showing clear Chinese text is often faster than speaking in a noisy restaurant.",
+      },
+    ],
+  },
+  {
+    id: "guide-americans-travel-china-2026",
+    slug: "can-americans-travel-to-china-in-2026",
+    title: "Can Americans Travel to China in 2026?",
+    category: "Visa & Entry",
+    summary:
+      "A practical planning guide for U.S. passport holders considering China travel in 2026, including visa planning, passport checks, flights, hotels, and official verification.",
+    updatedAt: "2026-07-08",
+    seoTitle: "Can Americans Travel to China in 2026? | First China Trip Kit",
+    seoDescription:
+      "Can Americans travel to China in 2026? Learn the practical steps U.S. travelers should verify before booking, including visa requirements, passport validity, flights, hotels, and official sources.",
+    content: [
+      {
+        heading: "Short answer",
+        body:
+          "Americans can plan travel to China in 2026, but most U.S. tourists should expect to verify visa requirements before booking. Entry rules, document requirements, and travel advisories can change, so treat this page as a planning checklist and confirm official requirements for your exact passport, purpose, and route.",
+      },
+      {
+        heading: "What to verify first",
+        body:
+          "Before paying for flights, check your passport validity, visa category, onward plans, hotel registration, and any current government notices. If your route involves visa-free transit, confirm that your nationality, ports, onward ticket, and permitted stay area match the current policy.",
+        bullets: [
+          "Use official consular or government sources for visa decisions.",
+          "Keep hotel names and Chinese addresses ready for arrival forms and taxis.",
+          "Avoid non-refundable bookings until your entry path is clear.",
+        ],
+      },
+      {
+        heading: "First-trip planning order",
+        body:
+          "Start with entry documents, then choose an arrival city, then build payment and app setup. For many U.S. travelers, Shanghai or Beijing is the easiest first landing city because international flights, hotels, metro systems, and visitor services are more familiar.",
+      },
+    ],
+  },
+  {
+    id: "guide-240-hour-visa-free-transit",
+    slug: "china-240-hour-visa-free-transit-guide",
+    title: "China 240-Hour Visa-Free Transit Guide",
+    category: "Visa & Entry",
+    summary:
+      "A cautious planning guide to China's 240-hour visa-free transit policy, including eligibility checks, onward tickets, permitted areas, ports, and common mistakes.",
+    updatedAt: "2026-07-08",
+    seoTitle: "China 240-Hour Visa-Free Transit Guide | First China Trip Kit",
+    seoDescription:
+      "Understand China's 240-hour visa-free transit as a planning topic, including nationality, ports, onward ticket requirements, permitted stay areas, official checks, and route examples.",
+    content: [
+      {
+        heading: "Use this as a planning guide",
+        body:
+          "China's 240-hour visa-free transit can be useful for eligible travelers, but it is not a universal visa waiver. Eligibility can depend on nationality, entry and exit ports, confirmed onward ticket, third country or region routing, and the allowed stay area for the port you use.",
+      },
+      {
+        heading: "Core checks before booking",
+        body:
+          "Confirm your passport nationality, port, onward ticket, arrival and departure cities, and hotel locations against current official rules. Keep printed and offline proof of onward travel because airline and immigration staff may ask before boarding or entry.",
+        bullets: [
+          "Check that your route is transit to a third country or region.",
+          "Check that every city in your plan is inside the permitted stay area.",
+          "Check official sources again before booking non-refundable hotels or trains.",
+        ],
+      },
+      {
+        heading: "Best use case",
+        body:
+          "For a first China trip, a Shanghai-based route with nearby Hangzhou and Suzhou is often easier than a long domestic loop because the rail distances are short and the city choices are practical for a limited transit stay.",
+      },
+    ],
+  },
+  {
+    id: "guide-alipay-tourist",
+    slug: "how-to-use-alipay-in-china-as-a-tourist",
+    title: "How to Use Alipay in China as a Tourist",
+    category: "Payment",
+    summary:
+      "A tourist-focused Alipay setup guide covering cards, QR codes, ride-hailing, restaurants, small purchases, limits, and backup payment habits.",
+    updatedAt: "2026-07-08",
+    seoTitle: "How to Use Alipay in China as a Tourist | First China Trip Kit",
+    seoDescription:
+      "Learn how tourists can use Alipay in China for QR payments, taxis, restaurants, metro tools, card setup, small test purchases, and payment troubleshooting.",
+    content: [
+      {
+        heading: "Why Alipay should be your first setup",
+        body:
+          "Alipay is often the easiest travel-first wallet for foreign visitors. It can help with everyday QR payments, ride-hailing, small shops, restaurants, and some local travel services. Set it up before departure, then test a small purchase on your first day.",
+      },
+      {
+        heading: "How QR payment works",
+        body:
+          "You may scan a merchant QR code and enter the amount, or show your payment code so the cashier can scan you. Learn both patterns before using Alipay for taxis, restaurants, or station food.",
+        bullets: [
+          "Add one main card and one backup card if possible.",
+          "Keep mobile data active when paying.",
+          "Carry cash for arrival-day or card issuer problems.",
+        ],
+      },
+      {
+        heading: "When Alipay fails",
+        body:
+          "Most problems come from card issuer security, weak data, verification prompts, or a merchant setup that does not accept foreign-linked wallets smoothly. Step aside, try a backup card or cash, and solve account issues later on stable Wi-Fi.",
+      },
+    ],
+  },
+  {
+    id: "guide-wechat-pay-foreigner",
+    slug: "how-to-use-wechat-pay-in-china-as-a-foreigner",
+    title: "How to Use WeChat Pay in China as a Foreigner",
+    category: "Payment",
+    summary:
+      "A practical guide to using WeChat Pay as a foreign visitor, including setup expectations, QR payments, mini programs, restaurants, taxis, and backups.",
+    updatedAt: "2026-07-08",
+    seoTitle: "How to Use WeChat Pay in China as a Foreigner",
+    seoDescription:
+      "Learn how foreign visitors can prepare WeChat Pay for China travel, including QR code payments, mini programs, taxis, restaurants, account setup, and backup options.",
+    content: [
+      {
+        heading: "Use WeChat Pay as a strong backup",
+        body:
+          "WeChat Pay is useful for payments, mini programs, local contacts, and some restaurant or service flows. For many first-time visitors, Alipay is still the easier main wallet, while WeChat Pay is a valuable backup if your account and card setup work smoothly.",
+      },
+      {
+        heading: "Where WeChat Pay helps",
+        body:
+          "WeChat Pay can be helpful for restaurants that use WeChat mini programs, local service QR codes, some taxis, and situations where a merchant's QR flow works better inside WeChat than inside Alipay.",
+        bullets: [
+          "Set it up before you need it.",
+          "Test a small purchase before relying on it.",
+          "Keep Alipay, a card, and cash as backups.",
+        ],
+      },
+      {
+        heading: "Common setup friction",
+        body:
+          "Foreign phone numbers, card verification, identity prompts, or account security checks can slow setup. Do not make WeChat Pay your only payment plan until you have tested it in China.",
+      },
+    ],
+  },
+  {
+    id: "guide-3-days-shanghai-first-time",
+    slug: "3-days-in-shanghai-for-first-time-visitors",
+    title: "3 Days in Shanghai for First-Time Visitors",
+    category: "Itinerary",
+    summary:
+      "A practical first-time Shanghai plan with arrival setup, The Bund, Yu Garden, French Concession, food, metro tips, rainy-day backups, and what to skip.",
+    updatedAt: "2026-07-08",
+    seoTitle: "3 Days in Shanghai for First-Time Visitors | First China Trip Kit",
+    seoDescription:
+      "Plan 3 days in Shanghai with a first-time visitor route covering The Bund, Yu Garden, French Concession, local food, transport, payment setup, and realistic pacing.",
+    content: [
+      {
+        heading: "Best 3-day shape",
+        body:
+          "Use day one for arrival, payment setup, Yu Garden, and The Bund if the weather is clear. Use day two for a museum, the Former French Concession, and local food. Use day three for Pudong views, West Bund, Xintiandi, or a light water-town add-on if you have energy.",
+      },
+      {
+        heading: "Where to stay",
+        body:
+          "People's Square, Jing'an, and the Former French Concession are practical first bases. They keep food, metro access, taxis, and hotel returns easier than a remote bargain hotel.",
+      },
+      {
+        heading: "What to skip",
+        body:
+          "Skip extra skyline viewpoints if you already had a clear Bund evening. Skip a water town if rain, heat, jet lag, or payment setup makes the day feel heavy. Shanghai is better when you leave room to wander.",
+      },
+    ],
+  },
+  {
+    id: "guide-checklist-before-you-fly",
+    slug: "china-travel-checklist-before-you-fly",
+    title: "China Travel Checklist Before You Fly",
+    category: "Planning",
+    summary:
+      "A pre-flight checklist for first-time China visitors covering documents, visa checks, payment, apps, eSIM, hotel addresses, transport, food, packing, and emergency phrases.",
+    updatedAt: "2026-07-08",
+    seoTitle: "China Travel Checklist Before You Fly | First China Trip Kit",
+    seoDescription:
+      "Use this China travel checklist before you fly: documents, visa or visa-free checks, Alipay, WeChat Pay, apps, eSIM, hotel addresses, transport, packing, and emergency phrases.",
+    content: [
+      {
+        heading: "Before you book",
+        body:
+          "Check your passport validity, visa or visa-free eligibility, arrival city, onward plans, and whether your hotels can register foreign guests. Do this before paying for non-refundable flights or hotels.",
+      },
+      {
+        heading: "Before you fly",
+        body:
+          "Install payment apps, add cards, prepare mobile data, download offline translation, screenshot hotel addresses in Chinese, save train or flight confirmations, and pack a power bank.",
+        bullets: [
+          "Alipay or WeChat Pay prepared.",
+          "eSIM, roaming, or SIM plan chosen.",
+          "Hotel addresses saved in Chinese.",
+          "Emergency phrases saved offline.",
+        ],
+      },
+      {
+        heading: "Arrival day",
+        body:
+          "Before leaving the airport or station, check that data, payment, maps, translation, and ride-hailing work. If something fails, use Wi-Fi or staff help before you move into a taxi pickup zone.",
       },
     ],
   },

@@ -57,7 +57,7 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
     }
 
     setStatus("success");
-    setMessage("Success. Your checklist is ready.");
+    setMessage(data.message || "Thanks! Your China First Trip Checklist is on the way.");
     form.reset();
     window.setTimeout(() => {
       router.push(`/thank-you?email=${encodeURIComponent(email)}`);

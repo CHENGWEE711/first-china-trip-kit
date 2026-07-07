@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     ok: true,
-    message: "Thanks for subscribing to First China Trip Kit.",
+    message: result.message,
     provider: result.provider,
   });
 }

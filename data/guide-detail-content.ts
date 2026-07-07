@@ -594,6 +594,377 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     ],
     relatedProductIds: ["china-payment-apps-setup-guide"],
   },
+  "can-americans-travel-to-china-in-2026": {
+    quickAnswer:
+      "Yes, U.S. passport holders can plan China travel in 2026, but most tourist trips require checking visa requirements before booking. Treat entry planning as the first step: verify your passport, visa path, route, hotels, flights, and current official notices before paying for non-refundable travel.",
+    steps: [
+      "Check your passport validity and make sure the passport name matches flights, hotels, trains, and any visa application.",
+      "Confirm the correct entry path for your purpose of travel. Most ordinary sightseeing trips should start by checking tourist visa requirements through official consular sources.",
+      "If considering visa-free transit, verify nationality, entry port, exit port, onward ticket to a third country or region, and the permitted stay area.",
+      "Choose an arrival city that makes first-day logistics easier. Shanghai, Beijing, and Guangzhou have strong international connections and practical hotel options.",
+      "Prepare payment, mobile data, maps, translation, hotel addresses in Chinese, and emergency contact details before departure.",
+      "Check official sources again shortly before travel because entry rules and advisories can change.",
+    ],
+    commonMistakes: [
+      "Assuming a social media visa-free route applies to U.S. passport holders without checking current official rules.",
+      "Booking non-refundable flights or hotels before confirming the entry path.",
+      "Forgetting that visa-free transit rules may depend on a third country or region onward ticket.",
+      "Saving only English hotel names instead of Chinese addresses.",
+      "Leaving payment and app setup until after landing.",
+    ],
+    troubleshooting: [
+      "If your route depends on visa-free transit, simplify the route and confirm every city is inside the allowed stay area.",
+      "If official information is unclear, ask the relevant Chinese embassy or consulate before booking.",
+      "If your flight routing changes, re-check whether the new route still matches the entry plan.",
+      "If your hotel cannot register foreign passport holders, switch before arrival.",
+    ],
+    firstDayChecklist: [
+      "Passport and entry documents accessible.",
+      "First hotel address saved in Chinese.",
+      "Onward flight or itinerary proof saved offline.",
+      "Alipay or WeChat Pay setup attempted.",
+      "Mobile data plan active or ready.",
+      "Emergency contact and embassy information saved.",
+    ],
+    faq: [
+      {
+        question: "Do Americans need a visa to visit China in 2026?",
+        answer:
+          "For ordinary tourism, U.S. travelers should expect to verify visa requirements before booking. Some transit routes may qualify for visa-free transit, but eligibility depends on the current policy and the exact route.",
+      },
+      {
+        question: "Can Americans use China visa-free transit?",
+        answer:
+          "Possibly, but only if the current policy covers the traveler, port, onward ticket, third country or region routing, and permitted stay area. Verify official sources before relying on it.",
+      },
+      {
+        question: "What should U.S. travelers prepare before arrival?",
+        answer:
+          "Prepare entry documents, hotel addresses in Chinese, mobile payment, data access, translation, transport plans, and offline copies of flights and hotels.",
+      },
+    ],
+    officialSourceLinks: [
+      {
+        label: "U.S. Department of State China travel information",
+        href: "https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/China.html",
+        note: "Use for U.S. government travel information and advisory context.",
+      },
+      {
+        label: "Embassy of the People's Republic of China in the United States",
+        href: "http://us.china-embassy.gov.cn/eng/",
+        note: "Use for current consular and visa information for U.S. applicants.",
+      },
+    ],
+    relatedGuideSlugs: [
+      "china-240-hour-visa-free-transit-guide",
+      "china-travel-checklist-before-you-fly",
+      "how-to-pay-in-china-as-a-foreigner",
+    ],
+    relatedProductIds: [],
+  },
+  "china-240-hour-visa-free-transit-guide": {
+    quickAnswer:
+      "China's 240-hour visa-free transit is a planning option for eligible travelers, not a universal visa replacement. Before using it, verify nationality, entry and exit ports, onward ticket to a third country or region, permitted stay area, and current official rules for your exact route.",
+    steps: [
+      "Start with official policy pages, not a sample itinerary. Confirm your passport nationality is currently eligible.",
+      "Check that your arrival and departure ports are covered by the policy you plan to use.",
+      "Confirm you have a ticket onward to a third country or region within the allowed time window.",
+      "Map every hotel city and day trip against the permitted stay area for your entry port.",
+      "Carry printed and offline proof of onward travel, hotels, and route details.",
+      "Use a flexible itinerary with buffer time because airline checks, immigration checks, and flight changes can affect the plan.",
+    ],
+    commonMistakes: [
+      "Treating 240-hour transit as permission to travel anywhere in China.",
+      "Forgetting the third country or region requirement.",
+      "Booking cities outside the permitted stay area.",
+      "Assuming all ports follow the same practical process.",
+      "Using a tight arrival day with no buffer for document checks.",
+    ],
+    troubleshooting: [
+      "If your airline questions eligibility, show official policy information and onward ticket proof.",
+      "If your routing changes, re-check the entire transit logic before flying.",
+      "If a city is outside the permitted area, remove it from the route instead of hoping it will be accepted.",
+      "If you need certainty, apply for the appropriate visa rather than relying on transit rules.",
+    ],
+    firstDayChecklist: [
+      "Passport nationality checked against official rules.",
+      "Entry and exit ports checked.",
+      "Onward ticket saved offline and printed.",
+      "Hotel cities inside permitted area.",
+      "Official resources saved offline.",
+      "Backup plan ready if routing changes.",
+    ],
+    faq: [
+      {
+        question: "Is 240-hour visa-free transit the same as a tourist visa?",
+        answer:
+          "No. It is a transit policy with conditions. It can work for eligible routes, but it is not open-ended tourist permission for all travelers or all China cities.",
+      },
+      {
+        question: "Do I need an onward ticket?",
+        answer:
+          "Yes, travelers relying on transit rules should expect to show confirmed onward travel to a third country or region. Keep offline and printed copies.",
+      },
+      {
+        question: "Can I visit Beijing, Shanghai, and Xi'an on 240-hour transit?",
+        answer:
+          "Do not assume that. Allowed areas depend on the entry port and current policy. Check the permitted stay area before adding any city.",
+      },
+    ],
+    officialSourceLinks: [
+      {
+        label: "China National Immigration Administration",
+        href: "https://en.nia.gov.cn/",
+        note: "Use for current immigration policy notices.",
+      },
+      {
+        label: "Chinese embassy or consulate information",
+        href: "https://www.mfa.gov.cn/eng/",
+        note: "Use to locate official consular information before booking.",
+      },
+    ],
+    relatedGuideSlugs: [
+      "can-americans-travel-to-china-in-2026",
+      "3-days-in-shanghai-for-first-time-visitors",
+      "china-travel-checklist-before-you-fly",
+    ],
+    relatedProductIds: ["10-day-classic-china-itinerary"],
+  },
+  "how-to-use-alipay-in-china-as-a-tourist": {
+    quickAnswer:
+      "Tourists should set up Alipay before departure, add at least one international card, keep mobile data active, and test a small purchase on day one. Use Alipay as your main payment tool, but keep WeChat Pay, a physical card, and some RMB cash as backups.",
+    steps: [
+      "Install Alipay before travel and complete as much account setup as the app allows.",
+      "Add your main card and a backup card from a different bank if possible.",
+      "Learn the two QR flows: scan the merchant QR, or show your payment code for the cashier to scan.",
+      "Test a small convenience store or cafe purchase before using Alipay for taxis or restaurants.",
+      "Use Alipay for ride-hailing or local services only after basic payment works.",
+      "Keep cash for late arrivals, data problems, or card issuer blocks.",
+    ],
+    commonMistakes: [
+      "Waiting until the first meal to set up Alipay.",
+      "Adding only one card and having no backup.",
+      "Confusing receive-money QR codes with payment codes.",
+      "Trying repeated payments on weak data instead of stepping aside.",
+      "Assuming a hotel card deposit can always be paid through Alipay.",
+    ],
+    troubleshooting: [
+      "If the card fails, try another card and check your bank's security alerts.",
+      "If merchant QR scanning fails, ask whether the cashier can scan your payment code.",
+      "If Alipay asks for verification, move to stable Wi-Fi before retrying.",
+      "If a taxi payment fails, use cash or hotel help instead of troubleshooting in traffic.",
+    ],
+    firstDayChecklist: [
+      "Alipay opens successfully.",
+      "One main card and one backup are added if possible.",
+      "Payment code is easy to find.",
+      "Small RMB cash backup is available.",
+      "Hotel address saved in Chinese.",
+    ],
+    faq: [
+      {
+        question: "Can tourists use Alipay in China?",
+        answer:
+          "Many tourists can use Alipay with supported international cards, but setup and limits can vary. Prepare before departure and test a small purchase after arrival.",
+      },
+      {
+        question: "Can I use Alipay for taxis?",
+        answer:
+          "Often yes, especially through ride-hailing. For street taxis, keep cash and your destination in Chinese as backups.",
+      },
+      {
+        question: "Should I still carry cash?",
+        answer:
+          "Yes. A small RMB backup is useful for arrival day, weak mobile data, or card verification problems.",
+      },
+    ],
+    officialSourceLinks: [
+      {
+        label: "Alipay",
+        href: "https://www.alipay.com/",
+        note: "Use for current product and service information.",
+      },
+    ],
+    relatedGuideSlugs: [
+      "how-to-pay-in-china-as-a-foreigner",
+      "how-to-use-wechat-pay-in-china-as-a-foreigner",
+      "best-apps-for-traveling-in-china",
+    ],
+    relatedProductIds: ["china-payment-apps-setup-guide"],
+  },
+  "how-to-use-wechat-pay-in-china-as-a-foreigner": {
+    quickAnswer:
+      "Foreign visitors should treat WeChat Pay as an important backup wallet and mini-program tool. Set it up before relying on it, test a small transaction, and keep Alipay, cash, and a physical card ready because account and card verification can vary.",
+    steps: [
+      "Install WeChat and complete account setup before travel where possible.",
+      "Try to activate WeChat Pay and add a supported card.",
+      "Test a small purchase before depending on WeChat Pay for restaurants, taxis, or mini programs.",
+      "Use WeChat Pay where a restaurant, local service, or mini program works better through WeChat.",
+      "Keep Alipay as your main travel wallet if it is working more smoothly.",
+      "Save checkout phrases in Chinese in case a cashier needs to switch payment flows.",
+    ],
+    commonMistakes: [
+      "Relying on WeChat Pay as the only payment method before testing it.",
+      "Forgetting that some setup steps may require verification.",
+      "Trying to solve account issues at a busy restaurant counter.",
+      "Not having Alipay or cash ready as a fallback.",
+    ],
+    troubleshooting: [
+      "If WeChat Pay will not activate, use Alipay and revisit setup on hotel Wi-Fi.",
+      "If a merchant QR fails, ask whether they can scan your payment code.",
+      "If card verification fails, try another card or contact your bank.",
+      "If a mini program is confusing, ask hotel staff or use a simpler restaurant or service.",
+    ],
+    firstDayChecklist: [
+      "WeChat opens and account is accessible.",
+      "WeChat Pay setup attempted.",
+      "Payment code location is known.",
+      "Alipay and cash backup ready.",
+      "Hotel address saved in Chinese.",
+    ],
+    faq: [
+      {
+        question: "Is WeChat Pay necessary for tourists?",
+        answer:
+          "It is not always necessary, but it is useful. Alipay is often easier as the main wallet, while WeChat Pay helps with mini programs and backup payment flows.",
+      },
+      {
+        question: "Can foreigners link cards to WeChat Pay?",
+        answer:
+          "Many visitors can try to link supported cards, but availability can vary by card, country, phone number, and current app requirements.",
+      },
+      {
+        question: "Should I install both Alipay and WeChat?",
+        answer:
+          "Yes for most first trips. Having both gives you more options when a merchant or service works better in one app.",
+      },
+    ],
+    officialSourceLinks: [
+      {
+        label: "WeChat Pay",
+        href: "https://pay.weixin.qq.com/",
+        note: "Use for current wallet and service information.",
+      },
+    ],
+    relatedGuideSlugs: [
+      "how-to-use-alipay-in-china-as-a-tourist",
+      "how-to-pay-in-china-as-a-foreigner",
+      "best-apps-for-traveling-in-china",
+    ],
+    relatedProductIds: ["china-payment-apps-setup-guide"],
+  },
+  "3-days-in-shanghai-for-first-time-visitors": {
+    quickAnswer:
+      "Three days is enough for a strong first Shanghai visit if you keep the plan focused: arrival setup and The Bund, one culture and neighborhood day, and one flexible modern Shanghai or water-town option. Do not overload the route before payment, data, and jet lag are under control.",
+    steps: [
+      "Choose a practical hotel base such as People's Square, Jing'an, or the Former French Concession.",
+      "Use day one for airport transfer, payment setup, Yu Garden or a light walk, and The Bund if the sky is clear.",
+      "Use day two for a museum, Former French Concession walk, local lunch, and a relaxed dinner.",
+      "Use day three for Pudong views, West Bund, Xintiandi, shopping, or Zhujiajiao if you have energy.",
+      "Keep rainy-day backups ready: museums, malls, cafes, and indoor food plans.",
+      "Confirm your departure station or airport the night before leaving.",
+    ],
+    commonMistakes: [
+      "Trying to add Suzhou or Hangzhou inside a tight three-day Shanghai stay.",
+      "Booking paid skyline views before checking weather.",
+      "Staying far from metro lines to save a small amount on hotels.",
+      "Leaving payment app setup until the first restaurant bill.",
+    ],
+    troubleshooting: [
+      "If arrival day runs late, skip Yu Garden and go straight to hotel setup and a simple dinner.",
+      "If The Bund is rainy, move the skyline walk to the clearest evening.",
+      "If you are tired on day three, skip the water town and stay central.",
+      "If a restaurant queue is too long, choose a mall branch or local noodle shop nearby.",
+    ],
+    firstDayChecklist: [
+      "Hotel address saved in Chinese.",
+      "Alipay tested with a small purchase.",
+      "Metro or ride-hailing route from hotel checked.",
+      "Bund weather checked.",
+      "Departure station confirmed.",
+    ],
+    faq: [
+      {
+        question: "Is 3 days enough in Shanghai?",
+        answer:
+          "Yes for a first visit. Three days covers skyline, old city, food, neighborhoods, and one flexible modern or cultural stop.",
+      },
+      {
+        question: "Where should I stay for 3 days in Shanghai?",
+        answer:
+          "People's Square, Jing'an, and the Former French Concession are practical first choices because they balance transport, food, and easy hotel returns.",
+      },
+      {
+        question: "Should I do a water town in 3 days?",
+        answer:
+          "Only if you have energy and weather is good. For many first-time visitors, central Shanghai is enough for a three-day stay.",
+      },
+    ],
+    officialSourceLinks: [],
+    relatedGuideSlugs: [
+      "how-to-pay-in-china-as-a-foreigner",
+      "best-apps-for-traveling-in-china",
+      "how-to-take-high-speed-trains-in-china",
+    ],
+    relatedProductIds: ["shanghai-3-day-travel-kit"],
+  },
+  "china-travel-checklist-before-you-fly": {
+    quickAnswer:
+      "Before you fly to China, prepare entry documents, payment, apps, internet, hotel addresses in Chinese, transport confirmations, packing basics, and emergency phrases. The goal is to make your first arrival day boring in the best possible way.",
+    steps: [
+      "Check passport validity, visa or visa-free eligibility, flights, and first hotel details.",
+      "Install Alipay and WeChat, add cards where possible, and prepare a cash backup.",
+      "Choose roaming, eSIM, SIM, or pocket Wi-Fi before landing.",
+      "Download offline translation and save Chinese hotel addresses.",
+      "Screenshot flights, trains, hotels, attractions, insurance, and emergency contacts.",
+      "Pack passport, power bank, adapter, comfortable shoes, basic medicine, tissues, and weather layers.",
+    ],
+    commonMistakes: [
+      "Saving everything only inside cloud apps that may need data.",
+      "Packing clothes carefully but forgetting payment and phone setup.",
+      "Not saving hotel addresses in Chinese.",
+      "Booking trains without checking the exact station name.",
+      "Arriving with no small cash backup.",
+    ],
+    troubleshooting: [
+      "If mobile data fails, use the screenshot folder and airport or hotel Wi-Fi.",
+      "If payment setup fails, use cash for urgent purchases and fix apps later on stable Wi-Fi.",
+      "If a taxi driver is confused, show the Chinese address and hotel phone number.",
+      "If you miss a train, go to a service counter with your passport and booking details.",
+    ],
+    firstDayChecklist: [
+      "Passport and entry papers accessible.",
+      "First hotel address saved in Chinese.",
+      "Payment app and cash backup ready.",
+      "Mobile data plan ready.",
+      "Transport from airport or station planned.",
+      "Emergency phrases saved offline.",
+    ],
+    faq: [
+      {
+        question: "What is the most important thing to prepare before China?",
+        answer:
+          "Entry documents come first, then payment, mobile data, hotel addresses in Chinese, and offline confirmations.",
+      },
+      {
+        question: "Do I need a printed checklist?",
+        answer:
+          "A printed or PDF checklist helps because it keeps documents, payment, apps, transport, and emergency phrases visible while you pack.",
+      },
+      {
+        question: "When should I set up payment apps?",
+        answer:
+          "Before you fly. You can test a small purchase after arrival, but account setup is calmer at home than in a busy airport.",
+      },
+    ],
+    officialSourceLinks: [],
+    relatedGuideSlugs: [
+      "how-to-pay-in-china-as-a-foreigner",
+      "china-internet-and-esim-guide",
+      "basic-chinese-phrases-for-travelers",
+    ],
+    relatedProductIds: [],
+  },
 };
 
 export function getGuideDetailContent(slug: string): GuideDetailContent | undefined {

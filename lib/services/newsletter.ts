@@ -18,7 +18,7 @@ export async function subscribeToNewsletter({
     return { ok: false, message: "Please enter a valid email address.", status: 400 };
   }
 
-  if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
     return subscribeWithSupabase({ email, sourcePage });
   }
 
@@ -45,34 +45,45 @@ async function subscribeWithSupabase({
   const table = process.env.SUPABASE_NEWSLETTER_TABLE || "newsletter_subscribers";
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
   const response = await fetch(
-    `${process.env.SUPABASE_URL}/rest/v1/${table}?on_conflict=email`,
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/${table}`,
     {
       method: "POST",
       headers: {
         apikey: key || "",
         Authorization: `Bearer ${key}`,
         "Content-Type": "application/json",
-        Prefer: "resolution=merge-duplicates,return=minimal",
+        Prefer: "return=minimal",
       },
       body: JSON.stringify({
         email,
-        source_page: sourcePage,
+        source: sourcePage,
+        status: "subscribed",
         created_at: new Date().toISOString(),
       }),
     },
   );
+
+  if (response.status === 409) {
+    return {
+      ok: false,
+      message: "You’re already subscribed.",
+      provider: "supabase",
+      status: 409,
+    };
+  }
 
   if (!response.ok) {
     return {
       ok: false,
       message: "Subscription could not be saved. Please try again later.",
       provider: "supabase",
+      status: response.status,
     };
   }
 
   return {
     ok: true,
-    message: "Thanks for subscribing.",
+    message: "Thanks! Your China First Trip Checklist is on the way.",
     provider: "supabase",
   };
 }
@@ -110,9 +121,10 @@ async function subscribeWithMailchimp({
     const text = await response.text();
     if (response.status === 400 && text.toLowerCase().includes("already")) {
       return {
-        ok: true,
-        message: "You are already subscribed.",
+        ok: false,
+        message: "You’re already subscribed.",
         provider: "mailchimp",
+        status: 409,
       };
     }
 
@@ -125,7 +137,7 @@ async function subscribeWithMailchimp({
 
   return {
     ok: true,
-    message: "Thanks for subscribing.",
+    message: "Thanks! Your China First Trip Checklist is on the way.",
     provider: "mailchimp",
   };
 }
@@ -150,17 +162,27 @@ async function subscribeWithResend({
     },
   );
 
-  if (!response.ok && response.status !== 409) {
+  if (response.status === 409) {
+    return {
+      ok: false,
+      message: "You’re already subscribed.",
+      provider: "resend",
+      status: 409,
+    };
+  }
+
+  if (!response.ok) {
     return {
       ok: false,
       message: "Subscription could not be completed. Please try again later.",
       provider: "resend",
+      status: response.status,
     };
   }
 
   return {
     ok: true,
-    message: response.status === 409 ? "You are already subscribed." : "Thanks for subscribing.",
+    message: "Thanks! Your China First Trip Checklist is on the way.",
     provider: "resend",
   };
 }
