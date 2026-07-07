@@ -46,14 +46,16 @@ If the environment variable is not set, the default reserved domain is
 `https://www.firstchinatripkit.com`. The downloadable checklist PDF is regenerated
 from the same site URL during `npm run build`.
 
-For the first SEO content MVP, the only required production environment variable is:
+The only required production environment variable is:
 
 ```bash
 NEXT_PUBLIC_SITE_URL=https://www.firstchinatripkit.com
 ```
 
-Newsletter, payments, AI itinerary generation, and CMS migration are optional
-future integrations and are not required for the first deployment.
+Newsletter signup is wired for Supabase and becomes active when the Supabase
+environment variables are added in Vercel. The table SQL lives at
+`supabase/newsletter_subscribers.sql`. Payments, AI itinerary generation, and CMS
+migration remain optional future integrations.
 
 ## Future integrations
 

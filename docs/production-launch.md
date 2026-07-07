@@ -17,8 +17,23 @@ NEXT_PUBLIC_SITE_URL=https://www.firstchinatripkit.com
 This value controls canonical URLs, Open Graph URLs, robots, sitemap, JSON-LD,
 and the generated checklist PDF links.
 
-No backend, login, payment, AI itinerary generator, or CMS environment variables
-are required for the first deployment.
+## Optional Newsletter Environment Variables
+
+Newsletter signup is wired to Supabase when these variables are present. Without
+them, the API returns a friendly "not connected yet" message and does not pretend
+the visitor subscribed.
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+SUPABASE_NEWSLETTER_TABLE=newsletter_subscribers
+```
+
+Create the Supabase table with `supabase/newsletter_subscribers.sql`.
+
+Login, payment, AI itinerary generator, and CMS environment variables are not
+required for the current SEO content deployment.
 
 ## Build Commands
 
@@ -71,8 +86,9 @@ curl https://www.firstchinatripkit.com/robots.txt
 Expected state:
 
 - Homepage returns `200`.
-- `/cities`, `/itineraries`, `/travel-essentials`, and guide detail pages open.
-- Sitemap includes static pages, city pages, itinerary pages, and guide pages.
+- `/city-kits`, `/itinerary-kits`, `/travel-essentials`, and guide detail pages open.
+- `/cities` and `/itineraries` redirect to the new kit paths.
+- Sitemap includes only canonical kit paths, static pages, guide pages, legal pages, and tools.
 - Robots allows crawling and points to the sitemap.
 - Canonical and Open Graph URLs use `https://www.firstchinatripkit.com`.
 - Mobile navigation, product cards, and newsletter sections do not overflow.
