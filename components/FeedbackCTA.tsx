@@ -20,7 +20,7 @@ export function FeedbackCTA({ sourceLabel = "guide" }: FeedbackCTAProps) {
         </div>
         <div className="sm:shrink-0">
           <ButtonLink href={`/contact?source=${sourceLabel}`} variant="ghost">
-            Send feedback
+            Ask a China Trip Question
           </ButtonLink>
         </div>
       </div>

@@ -52,11 +52,23 @@ The only required production environment variable is:
 NEXT_PUBLIC_SITE_URL=https://www.firstchinatripkit.com
 ```
 
-Newsletter signup is wired for Supabase and becomes active when the Supabase
-environment variables are added in Vercel. The table SQL lives at
-`supabase/newsletter_subscribers.sql`. Contact form messages use
-`supabase/contact_messages.sql`. Payments, AI itinerary generation, and CMS
-migration remain optional future integrations.
+Newsletter signup and contact messages are wired for Supabase and become active
+when the Supabase environment variables are added in Vercel. The table SQL lives
+at `supabase/newsletter_subscribers.sql` and `supabase/contact_messages.sql`.
+
+Optional production environment variables:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+SUPABASE_NEWSLETTER_TABLE=newsletter_subscribers
+SUPABASE_CONTACT_TABLE=contact_messages
+NEXT_PUBLIC_GA_ID=
+```
+
+Payments, AI itinerary generation, and CMS migration remain optional future
+integrations.
 
 ## Future integrations
 

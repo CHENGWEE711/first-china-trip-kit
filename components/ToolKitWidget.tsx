@@ -61,29 +61,43 @@ export function ToolKitWidget({ type }: ToolKitWidgetProps) {
 
 function VisaTool() {
   const [checked, setChecked] = useState<string[]>([]);
-  const requiredIds = visaChecks.map((item) => item.id);
   const missing = visaChecks.filter((item) => !checked.includes(item.id));
+  const criticalMissing = visaChecks.filter(
+    (item) => item.id !== "official" && !checked.includes(item.id),
+  );
   const score = checked.length;
+  const hasOfficialVerification = checked.includes("official");
   const result =
-    score === requiredIds.length
+    score === visaChecks.length
       ? {
           title: "Likely worth checking official eligibility",
           tone: "bg-jade text-white",
+          nextStep: "Compare your exact route with official immigration and airline information before purchase.",
           body:
             "Your planning shape has the core pieces. Do not book solely from this result: confirm your nationality, ports, onward ticket, and permitted stay area with official sources before paying for travel.",
         }
-      : score >= 3
+      : !hasOfficialVerification || score <= 2
+        ? {
+            title: "Do not rely on visa-free transit yet",
+            tone: "bg-ink text-white",
+            nextStep: "Start with official eligibility, then confirm your ticket route, ports, and permitted travel area.",
+            body:
+              "You do not have enough confirmed information to rely on visa-free transit. This route may still work later, but it is not ready to book around yet.",
+          }
+        : criticalMissing.length > 0
         ? {
             title: "High risk — verify before booking",
             tone: "bg-ember text-white",
+            nextStep: "Resolve every missing item before booking flights, hotels, trains, or non-refundable plans.",
             body:
               "Some important pieces are still missing. Visa-free transit rules are route-specific, so verify the missing items before booking flights, hotels, or trains.",
           }
         : {
-            title: "Do not rely on visa-free transit yet",
-            tone: "bg-ink text-white",
+            title: "High risk — verify before booking",
+            tone: "bg-ember text-white",
+            nextStep: "Official verification is still required before you treat this as a workable route.",
             body:
-              "You do not have enough confirmed information to rely on visa-free transit. Start with official eligibility, onward ticket rules, and permitted travel areas.",
+              "The main route pieces appear present, but you still need a final official check. Do not rely on a third-party summary alone.",
           };
 
   return (
@@ -126,6 +140,10 @@ function VisaTool() {
         <p className="text-sm font-bold uppercase opacity-80">Planning result</p>
         <h2 className="mt-2 text-2xl font-bold leading-tight">{result.title}</h2>
         <p className="mt-2 text-base opacity-85">{result.body}</p>
+        <div className="mt-4 rounded-md bg-white/12 p-3">
+          <p className="text-sm font-bold uppercase opacity-80">Official verification reminder</p>
+          <p className="mt-2 text-sm opacity-85">{result.nextStep}</p>
+        </div>
         {missing.length > 0 ? (
           <div className="mt-4 rounded-md bg-white/12 p-3">
             <p className="text-sm font-bold uppercase opacity-80">Still missing</p>

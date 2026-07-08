@@ -34,6 +34,15 @@ SUPABASE_CONTACT_TABLE=contact_messages
 Create the Supabase tables with `supabase/newsletter_subscribers.sql` and
 `supabase/contact_messages.sql`.
 
+## Optional Analytics Environment Variable
+
+Google Analytics is only loaded when this variable is set. If it is blank or
+missing, the site builds normally and no analytics script is added.
+
+```bash
+NEXT_PUBLIC_GA_ID=
+```
+
 Login, payment, AI itinerary generator, and CMS environment variables are not
 required for the current SEO content deployment.
 
@@ -94,3 +103,8 @@ Expected state:
 - Robots allows crawling and points to the sitemap.
 - Canonical and Open Graph URLs use `https://www.firstchinatripkit.com`.
 - Mobile navigation, product cards, and newsletter sections do not overflow.
+
+## Google Search Console
+
+Submit `https://www.firstchinatripkit.com/sitemap.xml`. A short list of priority
+URLs for first inspection lives in `docs/search-console-priority-urls.md`.

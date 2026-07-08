@@ -116,7 +116,9 @@ export default function StartHerePage() {
               while you book flights, hotels, trains, and apps.
             </p>
             <div className="mt-5">
-              <ButtonLink href="/thank-you" variant="ghost">Get Free Checklist</ButtonLink>
+              <ButtonLink href="/thank-you" variant="ghost">
+                Get the Free China First Trip Checklist
+              </ButtonLink>
             </div>
           </div>
         </div>

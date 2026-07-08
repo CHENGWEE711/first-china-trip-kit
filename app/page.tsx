@@ -64,7 +64,7 @@ export default function HomePage() {
               recommendations, and ready-to-use itineraries for foreign visitors.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="#free-checklist">Get Free China Checklist</ButtonLink>
+              <ButtonLink href="#free-checklist">Get the Free China First Trip Checklist</ButtonLink>
               <ButtonLink href="/city-kits" variant="secondary">
                 Browse City Kits
               </ButtonLink>

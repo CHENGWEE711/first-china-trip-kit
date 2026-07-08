@@ -31,6 +31,11 @@ export default function StorePage() {
               Join the newsletter for early access, the launch note, practical
               pre-trip updates, and the free China First-Time Visitor Checklist.
             </p>
+            <div className="mt-5">
+              <ButtonLink href="#upcoming-travel-kits" variant="secondary">
+                View Upcoming Travel Kits
+              </ButtonLink>
+            </div>
           </div>
           <NewsletterForm source="store-notify" compact />
         </div>
@@ -81,7 +86,7 @@ export default function StorePage() {
           </div>
         </div>
       </section>
-      <section className="px-4 py-12">
+      <section id="upcoming-travel-kits" className="px-4 py-12">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />

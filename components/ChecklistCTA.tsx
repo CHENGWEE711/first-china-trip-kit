@@ -34,7 +34,7 @@ export function ChecklistCTA({
           </ul>
           <div className="mt-5">
             <ButtonLink href="/thank-you" variant="secondary">
-              Get the checklist
+              Get the Free China First Trip Checklist
             </ButtonLink>
           </div>
         </div>
