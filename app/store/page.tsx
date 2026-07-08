@@ -15,13 +15,96 @@ export const metadata: Metadata = buildMetadata({
   path: "/store",
 });
 
+const freeVsPaidRows = [
+  {
+    feature: "Pre-flight checklist",
+    free: "Yes",
+    paid: "Yes",
+  },
+  {
+    feature: "Arrival day checklist",
+    free: "Yes",
+    paid: "Yes",
+  },
+  {
+    feature: "Alipay setup details",
+    free: "Basic reminder",
+    paid: "Detailed checklist",
+  },
+  {
+    feature: "WeChat Pay backup plan",
+    free: "Basic reminder",
+    paid: "Detailed checklist",
+  },
+  {
+    feature: "Payment failure troubleshooting",
+    free: "No",
+    paid: "Yes",
+  },
+  {
+    feature: "Essential app stack",
+    free: "Basic list",
+    paid: "Detailed app table",
+  },
+  {
+    feature: "Chinese payment phrases",
+    free: "Basic",
+    paid: "Expanded phrase cards",
+  },
+  {
+    feature: "Printable offline cards",
+    free: "Limited",
+    paid: "Yes",
+  },
+  {
+    feature: "Decision tree",
+    free: "No",
+    paid: "Yes",
+  },
+  {
+    feature: "Best for",
+    free: "Quick prep",
+    paid: "Anxious first-time travelers",
+  },
+];
+
 const insideGuideCards = [
-  "Alipay setup checklist",
-  "WeChat Pay backup checklist",
-  "Payment failure decision tree",
-  "Essential app stack",
-  "Taxi and checkout phrase cards",
-  "First-day test plan",
+  {
+    title: "Alipay setup checklist",
+    description:
+      "Prepare your passport, card, phone number, bank app, and first-day test plan.",
+  },
+  {
+    title: "WeChat Pay backup checklist",
+    description:
+      "Understand where WeChat is useful and what to do if payment setup does not work.",
+  },
+  {
+    title: "Payment failure decision tree",
+    description:
+      "Know what to try when your card cannot be added, a QR payment fails, or you lose internet access.",
+  },
+  {
+    title: "Essential China app stack",
+    description:
+      "See which apps to install before arrival and which ones can wait until later.",
+  },
+  {
+    title: "Taxi and checkout phrase cards",
+    description:
+      "Show simple Chinese phrases when paying, taking taxis, or asking for help.",
+  },
+  {
+    title: "First-day test plan",
+    description:
+      "Use a small convenience store purchase to test your payment setup before relying on it.",
+  },
+];
+
+const previewCards = [
+  "Cover",
+  "Payment decision tree",
+  "Phrase card page",
 ];
 
 export default function StorePage() {
@@ -58,13 +141,9 @@ export default function StorePage() {
               <ProductActionButton
                 canBuy={Boolean(paymentGuideBuyUrl)}
                 className="mt-0 border border-ink/12 bg-paper text-ink hover:border-ember/35 hover:bg-paper hover:text-ember"
-                href={paymentGuideBuyUrl || "/store#upcoming-travel-kits"}
+                href={paymentGuideBuyUrl || "/store#early-access"}
                 isExternal={Boolean(paymentGuideBuyUrl)}
-                label={
-                  paymentGuideBuyUrl
-                    ? "Buy Payment & Apps Guide — $7"
-                    : "Join Payment & Apps Waitlist"
-                }
+                label={paymentGuideBuyUrl ? "Buy Payment & Apps Guide — $7" : "Join waitlist"}
                 productId="china-payment-apps-setup-guide"
               />
             </div>
@@ -112,18 +191,90 @@ export default function StorePage() {
       <section className="bg-mist px-4 py-12">
         <div className="mx-auto max-w-7xl">
           <div className="mb-7 max-w-3xl">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Compare</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              Free checklist vs. paid setup guide
+            </h2>
+          </div>
+          <div className="overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft">
+            <div className="hidden grid-cols-[1.1fr_0.9fr_1fr] gap-4 border-b border-ink/10 bg-ink px-5 py-4 text-sm font-bold uppercase text-white md:grid">
+              <span>Feature</span>
+              <span>Free Checklist</span>
+              <span>Payment & Apps Setup Guide</span>
+            </div>
+            <div className="divide-y divide-ink/10">
+              {freeVsPaidRows.map((row) => (
+                <div
+                  key={row.feature}
+                  className="grid gap-3 px-5 py-4 text-base text-ink/70 md:grid-cols-[1.1fr_0.9fr_1fr] md:gap-4"
+                >
+                  <div>
+                    <p className="text-xs font-bold uppercase text-ink/42 md:hidden">Feature</p>
+                    <p className="font-semibold text-ink">{row.feature}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase text-ink/42 md:hidden">
+                      Free Checklist
+                    </p>
+                    <p>{row.free}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase text-ink/42 md:hidden">
+                      Payment & Apps Setup Guide
+                    </p>
+                    <p>{row.paid}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="inside-the-guide" className="bg-paper px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-7 max-w-3xl">
             <p className="mb-2 text-sm font-bold uppercase text-ember">Inside the guide</p>
             <h2 className="text-3xl font-bold leading-tight text-ink">
-              What the $7 setup guide is designed to solve
+              Inside the Payment & Apps Setup Guide
             </h2>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {insideGuideCards.map((card) => (
-              <div key={card} className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
-                <h3 className="text-xl font-bold leading-tight text-ink">{card}</h3>
+              <div key={card.title} className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+                <h3 className="text-xl font-bold leading-tight text-ink">{card.title}</h3>
                 <p className="mt-3 text-base leading-relaxed text-ink/68">
-                  A printable, offline-friendly section you can review before
-                  flying and keep available during your first days in China.
+                  {card.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-sand px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-7 max-w-3xl">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Preview</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              Preview pages coming soon
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-ink/68">
+              We are adding sample preview images so you can see the printable
+              checklists, phrase cards, and decision tree before purchase.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {previewCards.map((card) => (
+              <div
+                key={card}
+                className="flex min-h-48 flex-col justify-between rounded-lg border border-dashed border-ember/35 bg-paper p-5 shadow-soft"
+              >
+                <p className="text-sm font-bold uppercase text-ember">Sample preview</p>
+                <h3 className="mt-8 text-2xl font-bold leading-tight text-ink">{card}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink/58">
+                  Styled placeholder. Real preview image will be added before the
+                  next product-page update.
                 </p>
               </div>
             ))}
@@ -135,10 +286,9 @@ export default function StorePage() {
         <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-[1fr_420px] md:items-center">
           <div>
             <p className="mb-3 text-sm font-bold uppercase text-clay">Product updates</p>
-            <h2 className="text-3xl font-bold leading-tight">Get kit updates by email</h2>
+            <h2 className="text-3xl font-bold leading-tight">Want future travel kits?</h2>
             <p className="mt-3 max-w-2xl text-base text-white/72">
-              Join the newsletter for the free checklist, Payhip product updates,
-              future city kits, and practical pre-trip notes.
+              Join the list for new city kits, route packs, and China travel updates.
             </p>
           </div>
           <NewsletterForm source="store-notify" compact />

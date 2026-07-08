@@ -48,11 +48,6 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <ShoppingBag aria-hidden="true" className="mt-1 text-ember" size={24} />
         <div className="flex flex-wrap justify-end gap-2 text-right">
-          {product.isNextLaunch ? (
-            <span className="rounded-md bg-ember px-3 py-1 text-xs font-bold uppercase text-white">
-              {hasExternalPurchaseUrl ? "First kit now available" : "First kit waitlist"}
-            </span>
-          ) : null}
           <span className="rounded-md bg-mist px-3 py-1 text-xs font-bold uppercase text-ink/58">
             {statusLabel}
           </span>

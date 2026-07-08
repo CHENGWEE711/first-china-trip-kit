@@ -108,14 +108,32 @@ function PaymentAppsGuideCta() {
           Get the China Payment & Apps Setup Guide with checklists, offline cards,
           and troubleshooting tables for your first days in China.
         </p>
-        <ProductActionButton
-          href={isAvailable ? paymentAppsGuideBuyUrl : "/store#early-access"}
-          className="mt-5"
-          isExternal={isAvailable}
-          canBuy={isAvailable}
-          label={isAvailable ? "Buy the $7 Guide" : "Join the waitlist"}
-          productId="china-payment-apps-setup-guide"
-        />
+        <ul className="mt-5 grid gap-2 text-base text-white/76 sm:grid-cols-2">
+          {[
+            "Alipay and WeChat Pay setup checklists",
+            "Payment backup decision tree",
+            "Essential apps stack",
+            "Taxi and checkout phrase cards",
+            "First-day payment test",
+          ].map((item) => (
+            <li key={item} className="border-l-2 border-clay/60 pl-3">
+              {item}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <ProductActionButton
+            href={isAvailable ? paymentAppsGuideBuyUrl : "/store#early-access"}
+            className="mt-0"
+            isExternal={isAvailable}
+            canBuy={isAvailable}
+            label={isAvailable ? "Buy the $7 Guide" : "Join the waitlist"}
+            productId="china-payment-apps-setup-guide"
+          />
+          <ButtonLink href="/store#inside-the-guide" variant="secondary" className="w-full sm:w-auto">
+            View what&apos;s inside
+          </ButtonLink>
+        </div>
       </div>
     </section>
   );
