@@ -1,4 +1,9 @@
 export type ChineseAddress = {
+  englishName?: string;
+  chineseName?: string;
+  chineseAddress?: string;
+  bestUseCase?: string;
+  taxiOrMetroNote?: string;
   label: string;
   english: string;
   chinese: string;

@@ -6,6 +6,13 @@ export type GuideDetailContent = {
   importantNotice?: string;
   quickAnswer: string;
   whoThisGuideIsFor?: string[];
+  featureSections?: {
+    title: string;
+    body?: string;
+    items?: string[];
+    columns?: string[];
+    rows?: string[][];
+  }[];
   steps: string[];
   commonMistakes: string[];
   troubleshooting: string[];
@@ -33,6 +40,60 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Travelers planning to pay for restaurants, cafes, taxis, metro rides, hotels, train tickets, attractions, and small local shops.",
       "Visitors staying 3-14 days who want a simple payment stack and backup plan.",
       "Travelers whose bank card, phone number, or identity verification may not work smoothly on the first attempt.",
+    ],
+    featureSections: [
+      {
+        title: "Payment stack diagram",
+        body:
+          "Think in layers instead of one magic app. Your goal is not to guarantee every payment will work, but to make sure one failure does not stop the day.",
+        items: [
+          "Primary layer: Alipay with at least one supported international card, installed before departure and tested on day one.",
+          "Backup wallet layer: WeChat Pay if setup works for your account, plus WeChat for mini programs and local communication.",
+          "Hotel and larger purchase layer: physical Visa or Mastercard for international hotels, deposits, and card-friendly merchants.",
+          "Emergency layer: small RMB cash, hotel front desk support, Chinese address screenshots, and a second bank card.",
+        ],
+      },
+      {
+        title: "First-day payment test card",
+        body:
+          "Before relying on mobile payment for taxis, dinner, or station transfers, run a small controlled test near your hotel.",
+        items: [
+          "Choose a convenience store or cafe close to your hotel.",
+          "Buy water or a small snack, then try Alipay first.",
+          "Check whether your bank app shows the transaction or security alert.",
+          "Try WeChat Pay only after Alipay is working, and keep cash ready.",
+          "Do not test your first payment inside a taxi or at a busy restaurant counter.",
+        ],
+      },
+      {
+        title: "If your card is declined",
+        items: [
+          "Try another card from a different bank if you prepared one.",
+          "Open your bank app and check travel controls, fraud alerts, online payment settings, and overseas transaction limits.",
+          "Wait before repeated retries. Too many failed attempts may trigger temporary security blocks.",
+          "Use cash or physical card for the immediate purchase, then troubleshoot later on stable Wi-Fi.",
+        ],
+      },
+      {
+        title: "If QR payment fails",
+        items: [
+          "Switch flows: if scanning the merchant QR fails, ask whether the cashier can scan your payment code.",
+          "Check mobile data and battery before assuming the wallet or card is the problem.",
+          "Use a simpler merchant for testing, such as a convenience store, before trying taxis or table QR ordering.",
+          "Save screenshots of the merchant, amount, and error if you need support later.",
+        ],
+      },
+      {
+        title: "Common payment scenarios",
+        columns: ["Scenario", "Likely payment flow", "Backup"],
+        rows: [
+          ["Airport arrival", "Taxi, metro, ride-hailing, or airport shops may prefer QR payment", "Cash, hotel transfer, physical card where accepted"],
+          ["Hotel check-in", "International hotels may use physical card pre-authorization", "Keep passport and booking card accessible"],
+          ["Taxi", "Ride-hailing app payment or driver QR code", "Cash and Chinese destination note"],
+          ["Restaurant", "Table QR, cashier QR, or cashier scans your code", "Try another QR flow, cash, or card if accepted"],
+          ["Train station", "App payment or QR at shops", "Cash for snacks and screenshots for tickets"],
+        ],
+      },
     ],
     steps: [
       "Install Alipay before departure, create your account, and complete identity or card verification as far as the app allows. Do not leave the first login for the airport arrival hall, where roaming, SMS codes, and fatigue make every small issue harder.",
@@ -128,7 +189,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     officialSourceLinks: [
       {
         label: "China government payment service guidance for overseas visitors",
-        href: "https://english.www.gov.cn/",
+        href: "https://english.www.gov.cn/news/202404/11/content_WS6617c858c6d0868f4e8e5f4d.html",
         note: "Use for current official payment service guidance and policy updates for overseas visitors.",
       },
       {
@@ -164,9 +225,9 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         note: "Tell us your country, travel month, payment concern, and backup options.",
       },
       {
-        label: "View Upcoming Travel Kits",
-        href: "/store",
-        note: "See the upcoming Payment & Apps Setup Guide and other trip kits.",
+        label: "Compare Free vs Paid Setup Help",
+        href: "/store#free-vs-paid",
+        note: "See what the free checklist covers and what the $7 Payment & Apps Setup Guide adds.",
       },
     ],
     relatedGuideSlugs: [
@@ -186,6 +247,49 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Travelers who need payment, maps, translation, taxis, train support, mobile data, and offline backups ready before arrival.",
       "Visitors who do not read Chinese and need to know which apps are essential, useful later, or optional.",
       "Travelers who want to avoid app login, SMS, payment, and map problems on arrival day.",
+    ],
+    featureSections: [
+      {
+        title: "App stack summary",
+        body:
+          "Build the app stack around first-day jobs: pay, navigate, translate, call a ride, check train details, stay online, and recover if data or login fails.",
+        items: [
+          "Payment: Alipay first, WeChat as backup if setup works.",
+          "Maps: one familiar map plus Chinese place names saved offline.",
+          "Translation: camera translation and offline Chinese language pack.",
+          "Transport: ride-hailing, train booking support, and station screenshots.",
+          "Offline backup: hotel address, passport copy, bookings, emergency contacts, and phrase cards.",
+        ],
+      },
+      {
+        title: "Must-have before arrival",
+        items: [
+          "Alipay 支付宝: payment, ride-hailing access, and travel mini programs.",
+          "WeChat 微信: messaging, WeChat Pay backup, and mini programs.",
+          "Translation app 翻译应用: camera translation, typed requests, and offline Chinese.",
+          "Map app 地图应用: hotel checks, metro exits, and walking directions.",
+          "eSIM or roaming app: mobile data for payment, maps, and verification codes.",
+          "Trip.com or train support: bookings, confirmations, and English support.",
+          "Offline screenshot folder: works even when data, Wi-Fi, or app login fails.",
+        ],
+      },
+      {
+        title: "Useful after arrival",
+        items: [
+          "DiDi 滴滴: helpful for late arrivals, rain, airports, and hotels away from metro lines.",
+          "Amap 高德地图: strong local detail, but more Chinese-language friction.",
+          "China Railway 12306 中国铁路12306: official railway schedules and ticket service checks.",
+          "Dianping 大众点评 / Meituan 美团: food discovery after you are comfortable with local apps.",
+        ],
+      },
+      {
+        title: "Optional / advanced",
+        items: [
+          "Xiaohongshu 小红书: useful for inspiration, but verify addresses, opening hours, and booking rules elsewhere.",
+          "Local metro apps: useful in some cities, but Alipay transport tools or ticket machines may be simpler.",
+          "Attraction mini programs 景区小程序: helpful for reservations, but can be difficult with passport entry or Chinese-only screens.",
+        ],
+      },
     ],
     steps: [
       "Start with payment: install Alipay and WeChat, then add cards and test login stability. These two apps also unlock useful mini programs for ride-hailing, restaurants, attraction booking, and local services.",
@@ -319,6 +423,61 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Travelers comparing 12306, Trip.com, station counters, or hotel help.",
       "Visitors taking common routes such as Shanghai to Hangzhou, Shanghai to Suzhou, Beijing to Xi'an, Guangzhou to Shenzhen, or Beijing to Tianjin.",
       "Travelers worried about passport checks, station names, boarding gates, luggage, missed trains, or tight transfers.",
+    ],
+    featureSections: [
+      {
+        title: "Major station warning",
+        body:
+          "The biggest train mistake for foreign visitors is choosing the right city but the wrong station. Large Chinese cities often have several stations, and they can be far apart.",
+        items: [
+          "Do not book by city name alone. Check the exact Chinese station name.",
+          "Compare the station with your hotel, airport, and next transfer before paying.",
+          "Save both English and Chinese station names as screenshots.",
+          "Leave extra buffer if transferring between an airport and a railway station.",
+        ],
+      },
+      {
+        title: "City station name table",
+        columns: ["City", "Common station names", "Planning note"],
+        rows: [
+          ["Shanghai", "Shanghai Hongqiao 上海虹桥站, Shanghai Railway Station 上海站", "Hongqiao is the main high-speed hub for many routes; Shanghai Railway Station is more central but not interchangeable."],
+          ["Beijing", "Beijing South 北京南站, Beijing West 北京西站, Beijing Chaoyang 北京朝阳站", "Check the station against your route; Great Wall transfers are a separate planning problem."],
+          ["Xi'an", "Xi'an North 西安北站, Xi'an Railway Station 西安站", "High-speed trains usually use Xi'an North, which is outside the old city center."],
+          ["Hangzhou", "Hangzhou East 杭州东站, Hangzhou Railway Station 杭州站", "Hangzhou East is the major high-speed hub; check West Lake transfer time."],
+          ["Suzhou", "Suzhou 苏州站, Suzhou North 苏州北站", "Suzhou Station is closer to the old town; Suzhou North may require more transfer time."],
+          ["Guangzhou / Shenzhen", "Guangzhou South 广州南站, Shenzhen North 深圳北站", "These are major high-speed hubs but can be far from some central hotels."],
+        ],
+      },
+      {
+        title: "Passport real-name ticketing",
+        body:
+          "Train tickets are tied to the ID used for booking. For foreign visitors, this usually means the passport you will carry on travel day.",
+        items: [
+          "Use the same passport for booking, station entry, and boarding.",
+          "Keep the passport accessible until you are seated.",
+          "If an automatic gate cannot read your passport, use a staffed manual lane.",
+          "Name, passport number, nationality, and document type should match the booking record.",
+        ],
+      },
+      {
+        title: "Station arrival process",
+        items: [
+          "Arrive at the correct station and entrance.",
+          "Pass passport or ticket check, then security screening.",
+          "Find the departure board by train number, not only destination city.",
+          "Wait near the gate and board when your train number opens.",
+          "Follow platform signs for carriage number, then find your seat.",
+        ],
+      },
+      {
+        title: "Wrong station mistakes",
+        items: [
+          "Shanghai Hongqiao and Shanghai Railway Station are different stations.",
+          "Beijing South, Beijing West, and Beijing Chaoyang serve different route patterns.",
+          "Suzhou Station is closer to old town than Suzhou North for many visitors.",
+          "Guangzhou South and Shenzhen North are efficient but not always central.",
+        ],
+      },
     ],
     steps: [
       "Confirm whether your route is better by high-speed train before booking. For city pairs such as Shanghai-Hangzhou, Shanghai-Suzhou, Beijing-Xi'an, and Guangzhou-Shenzhen, trains are often easier than flying once station time is included.",
@@ -462,6 +621,11 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         label: "Browse Itinerary Kits",
         href: "/itinerary-kits",
         note: "Use ready-to-adjust routes for Shanghai, Beijing, Xi'an, Hangzhou, Suzhou, and classic China trips.",
+      },
+      {
+        label: "Browse City Kits",
+        href: "/city-kits",
+        note: "Check city-specific railway stations, hotel areas, Chinese addresses, and first-day transport notes.",
       },
       {
         label: "Ask a China Trip Question",
@@ -877,6 +1041,59 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Travelers continuing to another country or region after China, not simply making a round trip.",
       "Visitors who want a planning checklist before booking non-refundable flights, hotels, trains, or tours.",
     ],
+    featureSections: [
+      {
+        title: "Risk warning card",
+        body:
+          "This guide is for trip planning only and is not legal or immigration advice. A route that looks plausible online may still fail if the passport nationality, port, ticket, third country or region, or allowed travel area does not match current official rules.",
+        items: [
+          "Verify before booking non-refundable flights, hotels, trains, or tours.",
+          "Keep official source links and onward ticket proof offline and printed.",
+          "If any item is unclear, apply for the appropriate visa or change the route.",
+        ],
+      },
+      {
+        title: "Third country / region examples",
+        columns: ["Example route", "Why it may work", "What to verify"],
+        rows: [
+          ["Tokyo → Shanghai → Seoul", "The route appears to continue from one country to China and onward to another country.", "Passport eligibility, Shanghai port, confirmed onward ticket, permitted stay area."],
+          ["Hong Kong → Beijing → Singapore", "Hong Kong is often treated as a separate region for transit routing.", "Current official interpretation, Beijing permitted area, onward ticket and date."],
+          ["Los Angeles → Shanghai → Los Angeles", "This is a round trip pattern, not a clear third-country transit.", "Do not rely on transit unless official sources confirm your exact route."],
+          ["London → Guangzhou → Hong Kong", "This may be a third-region onward pattern for some travelers.", "Eligible nationality, Guangzhou/Shenzhen permitted area, carrier document checks."],
+        ],
+      },
+      {
+        title: "Route examples to verify",
+        columns: ["Route idea", "Best use", "Verification focus"],
+        rows: [
+          ["Shanghai + Suzhou + Hangzhou", "Short rail hops, practical hotels, and soft first-trip logistics.", "Confirm every city is inside the permitted area for your entry port."],
+          ["Beijing + Tianjin", "History plus an easy northern high-speed rail add-on.", "Confirm Beijing-area permitted movement and exact port rules."],
+          ["Guangzhou + Shenzhen", "Southern food, business, and Greater Bay Area connections.", "Confirm border-region routing, hotel cities, and onward destination logic."],
+        ],
+      },
+      {
+        title: "Do not book yet if...",
+        items: [
+          "You have not confirmed your passport nationality is currently eligible.",
+          "Your onward ticket returns to the same country or region in a way that may not qualify as transit.",
+          "Your arrival or departure port is not clearly covered.",
+          "Any hotel city or day trip may be outside the permitted stay area.",
+          "Your airline, cruise line, or train operator cannot confirm boarding document expectations.",
+          "You are relying only on social media examples instead of official resources.",
+        ],
+      },
+      {
+        title: "Official verification checklist",
+        items: [
+          "Passport nationality appears on the current official eligibility list.",
+          "Entry and exit ports are covered by the current policy.",
+          "Onward ticket is confirmed, dated, and goes to a third country or region where required.",
+          "Every hotel and day trip is inside the allowed area for the port.",
+          "Airline or transport operator can board you under the document setup.",
+          "Official sources were checked again shortly before travel.",
+        ],
+      },
+    ],
     steps: [
       "Start with official policy pages, not a sample itinerary. Confirm your passport nationality is currently eligible.",
       "Check that your arrival and departure ports are covered by the policy you plan to use.",
@@ -893,7 +1110,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Booking cities outside the permitted stay area.",
       "Assuming all airports, railway stations, or cruise ports qualify.",
       "Using a tight arrival day with no buffer for document checks.",
-      "Treating online route examples as official approval.",
+      "Treating online route examples as official confirmation.",
     ],
     troubleshooting: [
       "If your airline questions eligibility, show official policy information and onward ticket proof.",
@@ -971,8 +1188,8 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     officialSourceLinks: [
       {
         label: "China National Immigration Administration",
-        href: "https://en.nia.gov.cn/",
-        note: "Use for current immigration policy notices.",
+        href: "https://en.nia.gov.cn/n147413/c178106/content.html",
+        note: "Use for the official 240-hour visa-free transit policy notice and current immigration updates.",
       },
       {
         label: "Chinese embassy or consulate information",
@@ -1001,6 +1218,11 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         href: "/contact",
         note: "Send your passport country, entry city, exit city, and onward destination for planning feedback.",
       },
+      {
+        label: "View Upcoming Travel Kits",
+        href: "/store",
+        note: "Use printable planning kits for payment, apps, and realistic first-trip preparation. They do not replace official visa checks.",
+      },
     ],
     relatedGuideSlugs: [
       "can-americans-travel-to-china-in-2026",
@@ -1012,6 +1234,61 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
   "how-to-use-alipay-in-china-as-a-tourist": {
     quickAnswer:
       "Tourists should set up Alipay before departure, add at least one international card, keep mobile data active, and test a small purchase on day one. Use Alipay as your main payment tool, but keep WeChat Pay, a physical card, and some RMB cash as backups.",
+    whoThisGuideIsFor: [
+      "Tourists who want Alipay ready before their first meal, taxi, metro ride, or convenience store purchase.",
+      "Visitors using international cards who understand setup may vary by bank, phone number, country, and current app rules.",
+      "Travelers who want a primary wallet but still need backup payment options.",
+    ],
+    featureSections: [
+      {
+        title: "What to prepare before setup",
+        items: [
+          "Passport name and number in the same format you use for bookings.",
+          "One main international card and one backup card if possible.",
+          "Phone number or email access for login and security checks.",
+          "Your bank app, because card issuers may ask you to approve or unblock overseas payments.",
+          "Stable internet before departure and again on arrival day.",
+        ],
+      },
+      {
+        title: "Linking an international card",
+        body:
+          "Card linking may work for many visitors, but it is not certain. Treat card linking as a setup step to test, not as proof that every merchant payment will succeed.",
+        items: [
+          "Use the card name and passport details as consistently as possible.",
+          "Try a second card if the first issuer blocks or rejects setup.",
+          "Check overseas transaction limits and online payment controls in your bank app.",
+          "Avoid repeated failed attempts if the app or bank starts showing security warnings.",
+        ],
+      },
+      {
+        title: "First payment test",
+        items: [
+          "Go to a convenience store near your hotel.",
+          "Buy water or a small snack.",
+          "Try scanning the merchant QR code first.",
+          "If that fails, ask the cashier to scan your payment code.",
+          "Confirm the transaction in Alipay and your bank app before relying on Alipay for taxis or dinner.",
+        ],
+      },
+      {
+        title: "What to use Alipay for",
+        items: [
+          "Everyday QR payments at convenience stores, cafes, casual restaurants, and many attractions.",
+          "Ride-hailing or taxi-related flows where available.",
+          "Some metro, transport, booking, and local service mini programs.",
+          "Small first-day purchases before more stressful payment situations.",
+        ],
+      },
+      {
+        title: "What not to rely on",
+        items: [
+          "Do not rely on Alipay as your only payment method before testing it in China.",
+          "Do not assume every foreign card, merchant, taxi, hotel deposit, or refund flow will work.",
+          "Do not troubleshoot identity verification at a busy counter if cash or another backup can solve the immediate purchase.",
+        ],
+      },
+    ],
     steps: [
       "Install Alipay before travel and complete as much account setup as the app allows.",
       "Add your main card and a backup card from a different bank if possible.",
@@ -1032,6 +1309,29 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "If merchant QR scanning fails, ask whether the cashier can scan your payment code.",
       "If Alipay asks for verification, move to stable Wi-Fi before retrying.",
       "If a taxi payment fails, use cash or hotel help instead of troubleshooting in traffic.",
+    ],
+    backupPlan: [
+      "Use WeChat Pay as a backup if setup works for your account.",
+      "Keep a small amount of RMB cash for arrival day, taxis, weak data, and urgent purchases.",
+      "Carry the physical card linked to your booking for hotels, deposits, and larger merchants.",
+      "Ask hotel staff for help if payment, taxi, or address problems are blocking the next step.",
+    ],
+    usefulChinesePhrases: [
+      {
+        english: "Can I pay with Alipay?",
+        chinese: "我可以用支付宝支付吗？",
+        pinyin: "Wo keyi yong Zhifubao zhifu ma?",
+      },
+      {
+        english: "The payment failed.",
+        chinese: "支付失败了。",
+        pinyin: "Zhifu shibai le.",
+      },
+      {
+        english: "Could you scan my payment code?",
+        chinese: "您可以扫我的付款码吗？",
+        pinyin: "Nin keyi sao wo de fukuanma ma?",
+      },
     ],
     firstDayChecklist: [
       "Alipay opens successfully.",
@@ -1063,6 +1363,23 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         href: "https://www.alipay.com/",
         note: "Use for current product and service information.",
       },
+      {
+        label: "China government payment service guidance for overseas visitors",
+        href: "https://english.www.gov.cn/news/202404/11/content_WS6617c858c6d0868f4e8e5f4d.html",
+        note: "Use for official payment guidance and available payment options for overseas visitors.",
+      },
+    ],
+    ctaLinks: [
+      {
+        label: "View the Payment & Apps Setup Guide",
+        href: "/store#inside-the-guide",
+        note: "Get printable Alipay, WeChat Pay, payment backup, and phrase card pages.",
+      },
+      {
+        label: "Compare Free vs Paid",
+        href: "/store#free-vs-paid",
+        note: "See what is included in the free checklist and the $7 setup guide.",
+      },
     ],
     relatedGuideSlugs: [
       "how-to-pay-in-china-as-a-foreigner",
@@ -1074,6 +1391,46 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
   "how-to-use-wechat-pay-in-china-as-a-foreigner": {
     quickAnswer:
       "Foreign visitors should treat WeChat Pay as an important backup wallet and mini-program tool. Set it up before relying on it, test a small transaction, and keep Alipay, cash, and a physical card ready because account and card verification can vary.",
+    whoThisGuideIsFor: [
+      "Visitors who already use WeChat or want a backup to Alipay.",
+      "Travelers who may need restaurant, attraction, transport, or hotel mini programs.",
+      "Foreign visitors who want realistic expectations about WeChat Pay setup friction.",
+    ],
+    featureSections: [
+      {
+        title: "Why WeChat is useful even if WeChat Pay fails",
+        items: [
+          "Messaging: hotels, guides, local contacts, and some service providers may use WeChat.",
+          "Mini programs: attractions, restaurants, ride-hailing, and local services may run inside WeChat.",
+          "QR scanning: many local notices, menus, and service pages open through WeChat.",
+          "Backup identity: even without payment, WeChat can be useful for communication and service access.",
+        ],
+      },
+      {
+        title: "Setup friction warning",
+        body:
+          "WeChat and WeChat Pay can be powerful, but setup may be less predictable for foreign visitors than a simple travel app.",
+        items: [
+          "Foreign phone numbers may receive codes inconsistently.",
+          "Card linking and identity verification may vary by issuing bank and current app requirements.",
+          "Some services inside mini programs may still require Chinese-language screens or passport entry.",
+          "Do not make WeChat Pay your only payment method until a small transaction works.",
+        ],
+      },
+      {
+        title: "Payment backup role",
+        items: [
+          "Use Alipay as primary if it is working more smoothly.",
+          "Keep WeChat Pay as a second QR wallet for merchants or mini programs that prefer WeChat.",
+          "Carry cash and a physical card for arrival day, taxis, hotels, and account verification interruptions.",
+        ],
+      },
+      {
+        title: "Mini programs explained",
+        body:
+          "Mini programs are lightweight services inside WeChat. They can handle restaurant queues, attraction reservations, ride-hailing, hotel services, and local transport, but they may be Chinese-first and sometimes hard for passport users.",
+      },
+    ],
     steps: [
       "Install WeChat and complete account setup before travel where possible.",
       "Try to activate WeChat Pay and add a supported card.",
@@ -1093,6 +1450,29 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "If a merchant QR fails, ask whether they can scan your payment code.",
       "If card verification fails, try another card or contact your bank.",
       "If a mini program is confusing, ask hotel staff or use a simpler restaurant or service.",
+    ],
+    backupPlan: [
+      "Use Alipay as the primary wallet if it works and WeChat Pay does not.",
+      "Keep WeChat installed for messaging, QR scanning, and mini programs even if payment is unavailable.",
+      "Carry cash for taxis, late arrivals, weak mobile data, and urgent purchases.",
+      "Use hotel staff, a travel platform, or a simple walk-in option when a mini program is too hard to complete.",
+    ],
+    usefulChinesePhrases: [
+      {
+        english: "Can I pay with WeChat Pay?",
+        chinese: "可以用微信支付吗？",
+        pinyin: "Keyi yong Weixin zhifu ma?",
+      },
+      {
+        english: "Can I use Alipay instead?",
+        chinese: "我可以改用支付宝吗？",
+        pinyin: "Wo keyi gai yong Zhifubao ma?",
+      },
+      {
+        english: "I cannot complete verification.",
+        chinese: "我无法完成验证。",
+        pinyin: "Wo wufa wancheng yanzheng.",
+      },
     ],
     firstDayChecklist: [
       "WeChat opens and account is accessible.",
@@ -1123,6 +1503,28 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         label: "WeChat Pay",
         href: "https://pay.weixin.qq.com/",
         note: "Use for current wallet and service information.",
+      },
+      {
+        label: "WeChat",
+        href: "https://www.wechat.com/",
+        note: "Use for current app information and download links.",
+      },
+      {
+        label: "China government payment service guidance for overseas visitors",
+        href: "https://english.www.gov.cn/news/202404/11/content_WS6617c858c6d0868f4e8e5f4d.html",
+        note: "Use for official payment guidance and available payment options for overseas visitors.",
+      },
+    ],
+    ctaLinks: [
+      {
+        label: "View the Payment & Apps Setup Guide",
+        href: "/store#inside-the-guide",
+        note: "Get printable WeChat Pay backup, Alipay primary setup, troubleshooting, and phrase card pages.",
+      },
+      {
+        label: "Use Essential Apps Checklist",
+        href: "/tools/essential-apps-checklist",
+        note: "Check whether your payment, translation, maps, train support, and offline backups are ready.",
       },
     ],
     relatedGuideSlugs: [

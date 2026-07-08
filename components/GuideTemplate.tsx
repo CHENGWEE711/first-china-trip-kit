@@ -75,6 +75,80 @@ function BulletSection({ title, items }: { title: string; items: string[] }) {
   );
 }
 
+function responsiveGridColumns(count: number) {
+  if (count === 2) {
+    return "md:grid-cols-2";
+  }
+
+  if (count === 3) {
+    return "md:grid-cols-3";
+  }
+
+  if (count === 4) {
+    return "md:grid-cols-4";
+  }
+
+  return "md:grid-cols-5";
+}
+
+function FeatureTable({ columns, rows }: { columns: string[]; rows: string[][] }) {
+  return (
+    <div className="mt-4 overflow-hidden rounded-lg border border-ink/10">
+      <div
+        className={`hidden gap-4 bg-ink px-4 py-3 text-sm font-bold uppercase text-white md:grid ${responsiveGridColumns(columns.length)}`}
+      >
+        {columns.map((column) => (
+          <span key={column}>{column}</span>
+        ))}
+      </div>
+      <div className="divide-y divide-ink/10">
+        {rows.map((row) => (
+          <div
+            key={row.join("-")}
+            className={`grid gap-3 bg-sand px-4 py-4 text-base text-ink/70 md:gap-4 ${responsiveGridColumns(columns.length)}`}
+          >
+            {row.map((cell, index) => (
+              <div key={`${cell}-${index}`}>
+                <p className="text-xs font-bold uppercase text-ink/42 md:hidden">
+                  {columns[index]}
+                </p>
+                <p className={index === 0 ? "font-semibold text-ink" : ""}>{cell}</p>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FeatureSections({ sections }: { sections: NonNullable<GuideDetailContent["featureSections"]> }) {
+  return (
+    <>
+      {sections.map((section) => (
+        <section key={section.title} className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+          <h2 className="text-2xl font-bold leading-tight text-ink">{section.title}</h2>
+          {section.body ? (
+            <p className="mt-3 text-base leading-relaxed text-ink/70">{section.body}</p>
+          ) : null}
+          {section.items && section.items.length > 0 ? (
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {section.items.map((item) => (
+                <div key={item} className="rounded-md border border-ink/10 bg-sand p-4 text-base leading-relaxed text-ink/70">
+                  {item}
+                </div>
+              ))}
+            </div>
+          ) : null}
+          {section.columns && section.rows ? (
+            <FeatureTable columns={section.columns} rows={section.rows} />
+          ) : null}
+        </section>
+      ))}
+    </>
+  );
+}
+
 function formatUpdatedDate(value: string) {
   return new Intl.DateTimeFormat("en", {
     month: "long",
@@ -205,6 +279,9 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
 
             {content.whoThisGuideIsFor && content.whoThisGuideIsFor.length > 0 ? (
               <BulletSection title="Who this guide is for" items={content.whoThisGuideIsFor} />
+            ) : null}
+            {content.featureSections && content.featureSections.length > 0 ? (
+              <FeatureSections sections={content.featureSections} />
             ) : null}
             <BulletSection title="Step-by-step guide" items={content.steps} />
             <BulletSection title="Common mistakes" items={content.commonMistakes} />

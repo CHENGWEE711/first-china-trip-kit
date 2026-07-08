@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
+import { ButtonLink } from "@/components/ButtonLink";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
 import { GuideCard } from "@/components/GuideCard";
@@ -267,13 +268,31 @@ export default async function CityKitDetailPage({ params }: PageProps) {
 
             <Section title="Useful Chinese addresses">
               <div className="grid gap-3">
-                {city.usefulChineseAddresses.map((address) => (
+                {city.usefulChineseAddresses.map((address) => {
+                  const derivedChineseName =
+                    address.chineseName || address.chinese.split(" ").filter(Boolean).at(-1) || address.label;
+
+                  return (
                   <div key={address.label} className="rounded-md bg-sand p-4">
-                    <p className="font-bold text-ink">{address.label}</p>
-                    <p className="mt-1">{address.english}</p>
-                    <p className="mt-1 text-lg font-semibold text-ink">{address.chinese}</p>
+                    <p className="text-sm font-bold uppercase text-ember">English name</p>
+                    <p className="font-bold text-ink">{address.englishName || address.label}</p>
+                    <p className="mt-3 text-sm font-bold uppercase text-ember">Chinese name</p>
+                    <p className="mt-1 text-lg font-semibold text-ink">
+                      {derivedChineseName}
+                    </p>
+                    <p className="mt-3 text-sm font-bold uppercase text-ember">Chinese address</p>
+                    <p className="mt-1">{address.chineseAddress || address.chinese}</p>
+                    <p className="mt-3 text-sm font-bold uppercase text-ember">Best use case</p>
+                    <p className="mt-1">
+                      {address.bestUseCase || "Use this saved address for taxis, maps, or hotel staff when planning the day."}
+                    </p>
+                    <p className="mt-3 text-sm font-bold uppercase text-ember">Taxi or metro note</p>
+                    <p className="mt-1">
+                      {address.taxiOrMetroNote || address.english}
+                    </p>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </Section>
 
@@ -327,6 +346,39 @@ export default async function CityKitDetailPage({ params }: PageProps) {
       <section className="px-4 py-12">
         <div className="mx-auto max-w-7xl">
           <div className="mb-6 max-w-3xl">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Related itineraries</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              Routes that include {city.cityName}
+            </h2>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {suggestedPlan.map((itinerary) => (
+              <ItineraryCard key={itinerary.id} itinerary={itinerary} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-ink px-4 py-12 text-white">
+        <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <p className="mb-2 text-sm font-bold uppercase text-clay">Printable setup help</p>
+            <h2 className="text-3xl font-bold leading-tight">Need payment and app backup cards?</h2>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-white/72">
+              The China Payment & Apps Setup Guide gives you printable checklists,
+              payment failure backup steps, app stack notes, and taxi or checkout
+              phrase cards before your first day in China.
+            </p>
+          </div>
+          <ButtonLink href="/store#inside-the-guide" variant="primary" className="w-full md:w-auto">
+            View Store
+          </ButtonLink>
+        </div>
+      </section>
+
+      <section className="px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 max-w-3xl">
             <p className="mb-2 text-sm font-bold uppercase text-ember">Related guides</p>
             <h2 className="text-3xl font-bold leading-tight text-ink">
               Prepare the practical details
@@ -340,7 +392,7 @@ export default async function CityKitDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      <ChecklistCTA />
+      <ChecklistCTA title="Download the free checklist before you visit" />
       <FeedbackCTA sourceLabel={`city-kit-${city.slug}`} />
       <NewsletterSignup />
     </>

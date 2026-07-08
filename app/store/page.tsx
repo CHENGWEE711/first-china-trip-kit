@@ -209,7 +209,7 @@ export default function StorePage() {
         </div>
       </section>
 
-      <section className="bg-mist px-4 py-12">
+      <section id="free-vs-paid" className="bg-mist px-4 py-12">
         <div className="mx-auto max-w-7xl">
           <div className="mb-7 max-w-3xl">
             <p className="mb-2 text-sm font-bold uppercase text-ember">Compare</p>
@@ -248,6 +248,51 @@ export default function StorePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-paper px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-7 max-w-3xl">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Before you buy</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              Read the free setup guides first
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-ink/68">
+              The paid PDF is a printable setup pack. These free guides explain the
+              same travel-planning principles online before you decide whether the
+              offline cards and tables are useful for your trip.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              {
+                title: "How to Pay in China as a Foreigner",
+                href: "/guides/how-to-pay-in-china-as-a-foreigner",
+                body: "Understand Alipay, WeChat Pay, cards, cash, QR flows, and first-day payment testing.",
+              },
+              {
+                title: "Best Apps for Traveling in China",
+                href: "/guides/best-apps-for-traveling-in-china",
+                body: "Build a practical app stack for payment, maps, translation, ride-hailing, trains, and backups.",
+              },
+              {
+                title: "How to Use Alipay in China as a Tourist",
+                href: "/guides/how-to-use-alipay-in-china-as-a-tourist",
+                body: "Prepare card linking, QR payment habits, first purchase tests, and backup options.",
+              },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="rounded-lg border border-ink/10 bg-sand p-5 shadow-soft transition hover:border-ember/35"
+              >
+                <h3 className="text-xl font-bold leading-tight text-ink">{link.title}</h3>
+                <p className="mt-3 text-base leading-relaxed text-ink/68">{link.body}</p>
+                <p className="mt-5 text-base font-semibold text-ember">Read guide</p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
