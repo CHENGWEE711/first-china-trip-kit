@@ -81,7 +81,7 @@ export default async function CityKitDetailPage({ params }: PageProps) {
     content?.relatedGuideSlugs || [
       "how-to-pay-in-china-as-a-foreigner",
       "best-apps-for-traveling-in-china",
-      "how-to-take-high-speed-trains-in-china",
+      "how-to-book-high-speed-trains-in-china",
     ];
   const relatedGuides = guides.filter((guide) => relatedGuideSlugs.includes(guide.slug)).slice(0, 3);
   const suggestedPlan = relatedItineraries.length

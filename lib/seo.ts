@@ -130,6 +130,19 @@ export function faqJsonLd(faqs: FAQ[], path: string) {
   };
 }
 
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  };
+}
+
 export function cityJsonLd(city: City, path: string, faqs: FAQ[] = []) {
   const url = absoluteUrl(path);
   const guide = {
@@ -180,8 +193,13 @@ export function guideJsonLd(guide: Guide, path: string, faqs: FAQ[] = []) {
     updatedAt: guide.updatedAt,
   });
   const faq = faqJsonLd(faqs, path);
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/guides" },
+    { name: guide.title, path },
+  ]);
 
-  return faq ? [article, faq] : [article];
+  return faq ? [article, faq, breadcrumb] : [article, breadcrumb];
 }
 
 export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] = []) {

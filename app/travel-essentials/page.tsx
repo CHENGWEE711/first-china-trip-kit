@@ -59,7 +59,7 @@ const essentials = [
       "Use metro systems for predictable city travel.",
     ],
     mistake: "Booking the right city but the wrong station.",
-    href: "/guides/how-to-take-high-speed-trains-in-china",
+    href: "/guides/how-to-book-high-speed-trains-in-china",
   },
   {
     title: "Internet & SIM",
@@ -72,7 +72,7 @@ const essentials = [
       "Save hotel addresses and ticket screenshots offline.",
     ],
     mistake: "Waiting until the airport arrival hall to solve data access.",
-    href: "/guides/china-internet-and-esim-guide",
+    href: "/guides/china-esim-guide-for-tourists",
   },
   {
     title: "Hotels",

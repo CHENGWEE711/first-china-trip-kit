@@ -126,7 +126,7 @@ export const cityGuideContent: Record<string, CityGuideContent> = {
     relatedGuideSlugs: [
       "how-to-pay-in-china-as-a-foreigner",
       "best-apps-for-traveling-in-china",
-      "how-to-take-high-speed-trains-in-china",
+      "how-to-book-high-speed-trains-in-china",
     ],
     officialSourceLinks: [
       {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { GuideTemplate } from "@/components/GuideTemplate";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { getGuideBySlug, guides } from "@/data/guides";
@@ -9,6 +9,11 @@ import { buildMetadata, guideJsonLd } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
+};
+
+const legacyGuideRedirects: Record<string, string> = {
+  "how-to-take-high-speed-trains-in-china": "how-to-book-high-speed-trains-in-china",
+  "china-internet-and-esim-guide": "china-esim-guide-for-tourists",
 };
 
 export function generateStaticParams() {
@@ -33,6 +38,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function GuideDetailPage({ params }: PageProps) {
   const { slug } = await params;
+
+  if (legacyGuideRedirects[slug]) {
+    redirect(`/guides/${legacyGuideRedirects[slug]}`);
+  }
+
   const guide = getGuideBySlug(slug);
 
   if (!guide) {

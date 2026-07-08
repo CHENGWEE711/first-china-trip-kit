@@ -3,13 +3,22 @@ import type { AppRecommendationGroup } from "@/data/app-recommendations";
 import { chinaTravelAppGroups } from "@/data/app-recommendations";
 
 export type GuideDetailContent = {
+  importantNotice?: string;
   quickAnswer: string;
+  whoThisGuideIsFor?: string[];
   steps: string[];
   commonMistakes: string[];
   troubleshooting: string[];
+  backupPlan?: string[];
+  usefulChinesePhrases?: {
+    english: string;
+    chinese: string;
+    pinyin: string;
+  }[];
   firstDayChecklist: string[];
   faq: FAQ[];
   officialSourceLinks: LinkItem[];
+  ctaLinks?: LinkItem[];
   relatedGuideSlugs: string[];
   relatedProductIds: string[];
   appGroups?: AppRecommendationGroup[];
@@ -19,6 +28,12 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
   "how-to-pay-in-china-as-a-foreigner": {
     quickAnswer:
       "For most foreign visitors, the most reliable China payment setup is Alipay with at least one international card, WeChat Pay as a backup when available, a physical card for hotels and deposits, and a small amount of RMB cash for emergencies. Do the app setup before you fly, then test it with a low-value purchase on your first day before relying on it for taxis, restaurants, or train station snacks.",
+    whoThisGuideIsFor: [
+      "First-time visitors who do not have a Chinese bank account.",
+      "Travelers planning to pay for restaurants, cafes, taxis, metro rides, hotels, train tickets, attractions, and small local shops.",
+      "Visitors staying 3-14 days who want a simple payment stack and backup plan.",
+      "Travelers whose bank card, phone number, or identity verification may not work smoothly on the first attempt.",
+    ],
     steps: [
       "Install Alipay before departure, create your account, and complete identity or card verification as far as the app allows. Do not leave the first login for the airport arrival hall, where roaming, SMS codes, and fatigue make every small issue harder.",
       "Add one main international card and one backup card if you have it. Cards from different banks are useful because issuer security rules can block a transaction even when the app itself is working.",
@@ -45,6 +60,35 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "If ride-hailing payment fails, switch to a taxi from a hotel or station queue and show your destination in Chinese. Keep enough cash for this fallback on arrival day.",
       "If a refund or duplicate charge happens, save screenshots of the transaction, merchant name, date, and amount. It is easier to resolve from your hotel than while moving between sights.",
     ],
+    backupPlan: [
+      "Primary: Alipay with a supported international card, prepared before departure and tested on day one.",
+      "Secondary: WeChat and WeChat Pay if your account and card setup work, especially for mini programs and local communication.",
+      "Hotel and airport backup: a physical Visa or Mastercard for deposits, pre-authorization, larger hotels, and some tourist venues.",
+      "Emergency: small RMB cash in mixed notes for late arrivals, weak mobile data, low phone battery, taxi issues, or app verification problems.",
+      "Bank backup: enable travel use in your card issuer app and carry a second card from another bank if possible.",
+    ],
+    usefulChinesePhrases: [
+      {
+        english: "Can I pay with Alipay?",
+        chinese: "我可以用支付宝支付吗？",
+        pinyin: "Wo keyi yong Zhifubao zhifu ma?",
+      },
+      {
+        english: "Can I pay by card?",
+        chinese: "可以刷卡吗？",
+        pinyin: "Keyi shuaka ma?",
+      },
+      {
+        english: "Do you accept cash?",
+        chinese: "可以用现金吗？",
+        pinyin: "Keyi yong xianjin ma?",
+      },
+      {
+        english: "Could you scan my payment code?",
+        chinese: "可以扫我的付款码吗？",
+        pinyin: "Keyi sao wo de fukuanma ma?",
+      },
+    ],
     firstDayChecklist: [
       "Alipay installed and logged in.",
       "At least one card added and verified.",
@@ -52,6 +96,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Small cash backup in RMB.",
       "Hotel address saved in Chinese.",
       "Translation app ready for cashier or taxi conversations.",
+      "First small purchase tested before depending on mobile payment for taxis or dinner.",
     ],
     faq: [
       {
@@ -82,26 +127,66 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     ],
     officialSourceLinks: [
       {
+        label: "China government payment service guidance for overseas visitors",
+        href: "https://english.www.gov.cn/",
+        note: "Use for current official payment service guidance and policy updates for overseas visitors.",
+      },
+      {
         label: "Alipay",
         href: "https://www.alipay.com/",
         note: "Use for current app and service information.",
+      },
+      {
+        label: "Alipay+",
+        href: "https://www.alipayplus.com/",
+        note: "Use for current cross-border payment service information where available.",
       },
       {
         label: "WeChat Pay",
         href: "https://pay.weixin.qq.com/",
         note: "Use for current wallet and service information.",
       },
+      {
+        label: "Your own bank card travel rules",
+        href: "https://www.visa.com/",
+        note: "Also check your card issuer's travel controls, overseas transaction rules, limits, and fraud alerts.",
+      },
+    ],
+    ctaLinks: [
+      {
+        label: "Get the Free China First Trip Checklist",
+        href: "/thank-you",
+        note: "Download the printable 3-page checklist for payment, apps, hotel addresses, transport, food, and emergency phrases.",
+      },
+      {
+        label: "Ask a China Trip Question",
+        href: "/contact",
+        note: "Tell us your country, travel month, payment concern, and backup options.",
+      },
+      {
+        label: "View Upcoming Travel Kits",
+        href: "/store",
+        note: "See the upcoming Payment & Apps Setup Guide and other trip kits.",
+      },
     ],
     relatedGuideSlugs: [
-      "how-to-use-alipay-and-wechat-pay-in-china",
       "best-apps-for-traveling-in-china",
-      "china-travel-packing-list",
+      "how-to-use-alipay-in-china-as-a-tourist",
+      "how-to-use-wechat-pay-in-china-as-a-foreigner",
+      "china-travel-checklist-before-you-fly",
+      "how-to-book-high-speed-trains-in-china",
     ],
     relatedProductIds: ["china-payment-apps-setup-guide"],
   },
   "best-apps-for-traveling-in-china": {
     quickAnswer:
       "The essential China app stack is payment, maps, translation, ride-hailing, train support, and offline backups. Do not download every app you see on social media. Instead, install a small core set, log in before departure, save Chinese addresses, and test payment, maps, and translation before your first full sightseeing day.",
+    whoThisGuideIsFor: [
+      "First-time visitors who want a small, reliable app stack instead of a phone full of unused downloads.",
+      "Travelers who need payment, maps, translation, taxis, train support, mobile data, and offline backups ready before arrival.",
+      "Visitors who do not read Chinese and need to know which apps are essential, useful later, or optional.",
+      "Travelers who want to avoid app login, SMS, payment, and map problems on arrival day.",
+    ],
     steps: [
       "Start with payment: install Alipay and WeChat, then add cards and test login stability. These two apps also unlock useful mini programs for ride-hailing, restaurants, attraction booking, and local services.",
       "Choose your map setup before arrival. Apple Maps can be approachable for many foreign visitors; Amap and Baidu Maps have stronger local detail but more Chinese-language friction.",
@@ -128,6 +213,30 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "If a travel app will not accept your foreign card, try the same service through Alipay or WeChat, use a hotel concierge, or book through a travel platform that already supports your payment method.",
       "If an app feels overwhelming, stop adding features and return to the basics: payment, destination address, translation, and a safe route back to the hotel.",
     ],
+    backupPlan: [
+      "Create an offline screenshot folder called China Trip with hotel addresses, passport copy, train tickets, flight details, attraction reservations, insurance, and emergency contacts.",
+      "Keep payment, maps, translation, ride-hailing, and hotel address notes on your first home screen for day one.",
+      "Save key Chinese place names so you can switch between Apple Maps, Amap, Baidu Maps, hotel staff help, or a taxi note.",
+      "If a standalone Chinese app is hard to set up, try the same service inside Alipay or WeChat, ask your hotel, or use a travel platform with English support.",
+      "Prepare mobile data before landing. Do not rely on airport Wi-Fi for taxis, maps, payment, or translation after you leave the terminal.",
+    ],
+    usefulChinesePhrases: [
+      {
+        english: "Please help me find this address.",
+        chinese: "请帮我找这个地址。",
+        pinyin: "Qing bang wo zhao zhe ge dizhi.",
+      },
+      {
+        english: "I cannot open this app.",
+        chinese: "我打不开这个应用。",
+        pinyin: "Wo da bu kai zhe ge yingyong.",
+      },
+      {
+        english: "Can you send me the address in Chinese?",
+        chinese: "可以把中文地址发给我吗？",
+        pinyin: "Keyi ba Zhongwen dizhi fa gei wo ma?",
+      },
+    ],
     firstDayChecklist: [
       "Payment apps logged in.",
       "Translation app with offline Chinese downloaded.",
@@ -135,6 +244,8 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Ride-hailing access tested.",
       "Train or flight confirmations screenshotted.",
       "Power bank charged.",
+      "eSIM or roaming data tested outside Wi-Fi.",
+      "Offline screenshot folder easy to open.",
     ],
     faq: [
       {
@@ -169,18 +280,46 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         href: "https://www.12306.cn/en/index.html",
         note: "Use for official railway ticket information.",
       },
+      {
+        label: "Trip.com",
+        href: "https://www.trip.com/",
+        note: "Use for current travel platform support and booking rules if you book there.",
+      },
+    ],
+    ctaLinks: [
+      {
+        label: "Use Essential Apps Checklist",
+        href: "/tools/essential-apps-checklist",
+        note: "Mark your payment, maps, translation, train, data, and offline backup setup before you fly.",
+      },
+      {
+        label: "Get the Free China First Trip Checklist",
+        href: "/thank-you",
+        note: "Download the printable 3-page checklist for apps, payment, hotel addresses, transport, and emergency phrases.",
+      },
+      {
+        label: "View Upcoming Travel Kits",
+        href: "/store",
+        note: "See the upcoming Payment & Apps Setup Guide for a printable app setup workflow.",
+      },
     ],
     relatedGuideSlugs: [
       "how-to-pay-in-china-as-a-foreigner",
-      "how-to-take-high-speed-trains-in-china",
+      "how-to-book-high-speed-trains-in-china",
       "basic-chinese-phrases-for-travelers",
     ],
     relatedProductIds: ["china-payment-apps-setup-guide"],
     appGroups: chinaTravelAppGroups,
   },
-  "how-to-take-high-speed-trains-in-china": {
+  "how-to-book-high-speed-trains-in-china": {
     quickAnswer:
-      "For foreign visitors, the most important high-speed train preparation is to book with the passport you will carry, confirm the exact departure and arrival stations, arrive early enough for security and passport checks, and save your train number, gate, carriage, and seat details offline. The train ride itself is usually smooth; the station logistics are where first-time visitors make mistakes.",
+      "Foreign visitors can take China's high-speed trains using passport-based real-name ticketing. The most common booking options are 12306, Trip.com or another travel platform, a station ticket counter, and hotel or local travel help. For a smooth trip, make sure your ticket name and passport information match exactly, arrive early at the correct station, and keep your passport, train number, gate, carriage, and seat details ready offline.",
+    whoThisGuideIsFor: [
+      "First-time visitors booking China high-speed rail without a Chinese ID card.",
+      "Travelers comparing 12306, Trip.com, station counters, or hotel help.",
+      "Visitors taking common routes such as Shanghai to Hangzhou, Shanghai to Suzhou, Beijing to Xi'an, Guangzhou to Shenzhen, or Beijing to Tianjin.",
+      "Travelers worried about passport checks, station names, boarding gates, luggage, missed trains, or tight transfers.",
+    ],
     steps: [
       "Confirm whether your route is better by high-speed train before booking. For city pairs such as Shanghai-Hangzhou, Shanghai-Suzhou, Beijing-Xi'an, and Guangzhou-Shenzhen, trains are often easier than flying once station time is included.",
       "Choose a booking route: 12306 for official railway information, a travel platform for easier English support or payment, a station counter for changes and problems, or hotel help when you need the Chinese station name confirmed.",
@@ -206,6 +345,40 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "If you miss your train, go to a ticket office or service desk with your passport. Ask whether the ticket can be changed to a later train; options depend on the ticket rules and seat availability.",
       "If you cannot find your carriage, look for carriage numbers marked on the platform or ask staff with your ticket screenshot.",
       "If you have a tight transfer, prioritize getting to the next gate or exit first. Food, photos, and app troubleshooting can wait until the transfer is secure.",
+    ],
+    backupPlan: [
+      "If 12306 registration or payment is difficult, use a travel platform with English support or ask your hotel to help confirm station names.",
+      "If your passport does not scan at an automatic gate, use a staffed manual lane and show your booking confirmation.",
+      "If you miss your train, go to a ticket office or service desk immediately with your passport and booking details. Change options depend on ticket rules, timing, and seat availability.",
+      "If you are not sure which station is correct, compare the Chinese station name with your hotel map before booking.",
+      "If you have luggage, children, holiday crowds, or an airport-to-train transfer, add more buffer instead of booking the fastest possible connection.",
+    ],
+    usefulChinesePhrases: [
+      {
+        english: "High-speed train station",
+        chinese: "高铁站",
+        pinyin: "Gaotie zhan",
+      },
+      {
+        english: "Which gate is this train?",
+        chinese: "这趟车在哪个检票口？",
+        pinyin: "Zhe tang che zai nage jianpiaokou?",
+      },
+      {
+        english: "I need help finding my platform.",
+        chinese: "我需要帮忙找站台。",
+        pinyin: "Wo xuyao bangmang zhao zhantai.",
+      },
+      {
+        english: "I booked this train ticket with my passport.",
+        chinese: "我用护照买了这张火车票。",
+        pinyin: "Wo yong huzhao mai le zhe zhang huochepiao.",
+      },
+      {
+        english: "I missed my train. What should I do?",
+        chinese: "我错过火车了，应该怎么办？",
+        pinyin: "Wo cuoguo huoche le, yinggai zenme ban?",
+      },
     ],
     firstDayChecklist: [
       "Passport used for booking is in your hand luggage.",
@@ -267,6 +440,33 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         label: "China Railway 12306",
         href: "https://www.12306.cn/en/index.html",
         note: "Use for official railway ticket and passenger service information.",
+      },
+      {
+        label: "12306 passenger notices and FAQ",
+        href: "https://www.12306.cn/en/index.html",
+        note: "Use for current passenger rules, ticket changes, refunds, and station notices where available.",
+      },
+      {
+        label: "Your booking platform",
+        href: "https://www.trip.com/",
+        note: "If you book through a platform, verify its current change, refund, support, and passport-name rules.",
+      },
+    ],
+    ctaLinks: [
+      {
+        label: "Get the Free China First Trip Checklist",
+        href: "/thank-you",
+        note: "Prepare payment apps, train tickets, hotel addresses, transport backup, and emergency phrases before you travel.",
+      },
+      {
+        label: "Browse Itinerary Kits",
+        href: "/itinerary-kits",
+        note: "Use ready-to-adjust routes for Shanghai, Beijing, Xi'an, Hangzhou, Suzhou, and classic China trips.",
+      },
+      {
+        label: "Ask a China Trip Question",
+        href: "/contact",
+        note: "Send your cities and travel dates if you need help choosing train stations or route pacing.",
       },
     ],
     relatedGuideSlugs: [
@@ -406,7 +606,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     officialSourceLinks: [],
     relatedGuideSlugs: [
       "how-to-pay-in-china-as-a-foreigner",
-      "how-to-take-high-speed-trains-in-china",
+      "how-to-book-high-speed-trains-in-china",
       "best-apps-for-traveling-in-china",
     ],
     relatedProductIds: [],
@@ -472,7 +672,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     ],
     relatedProductIds: [],
   },
-  "china-internet-and-esim-guide": {
+  "china-esim-guide-for-tourists": {
     quickAnswer:
       "For a first China trip, choose your mobile data plan before you fly and prepare offline backups even if you expect data to work. Your phone is not just for messaging; it is your payment wallet, map, translator, hotel address card, train folder, and emergency backup. The safest setup is one primary data option, one backup way to reach Wi-Fi, and a screenshot folder that works without signal.",
     steps: [
@@ -667,8 +867,16 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     relatedProductIds: [],
   },
   "china-240-hour-visa-free-transit-guide": {
+    importantNotice:
+      "This guide is for trip planning only and is not legal or immigration advice. China's visa-free transit rules can change. Always verify current official requirements before booking flights, hotels, trains, or tours.",
     quickAnswer:
-      "China's 240-hour visa-free transit is a planning option for eligible travelers, not a universal visa replacement. Before using it, verify nationality, entry and exit ports, onward ticket to a third country or region, permitted stay area, and current official rules for your exact route.",
+      "China's 240-hour visa-free transit policy may allow eligible travelers from certain countries to enter China through designated ports, stay within permitted areas, and continue to a third country or region without applying for a regular visa. Before relying on this policy, verify five things: your passport nationality, your third-country or region routing, confirmed onward transport, eligible entry and exit ports, and whether every city in your plan stays inside the permitted area.",
+    whoThisGuideIsFor: [
+      "Travelers planning a short China stopover of up to 10 days under a transit policy.",
+      "Visitors considering Shanghai, Beijing, Guangzhou, Shenzhen, Hangzhou, Suzhou, Chengdu, Xi'an, or another covered area as a short route.",
+      "Travelers continuing to another country or region after China, not simply making a round trip.",
+      "Visitors who want a planning checklist before booking non-refundable flights, hotels, trains, or tours.",
+    ],
     steps: [
       "Start with official policy pages, not a sample itinerary. Confirm your passport nationality is currently eligible.",
       "Check that your arrival and departure ports are covered by the policy you plan to use.",
@@ -676,19 +884,48 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Map every hotel city and day trip against the permitted stay area for your entry port.",
       "Carry printed and offline proof of onward travel, hotels, and route details.",
       "Use a flexible itinerary with buffer time because airline checks, immigration checks, and flight changes can affect the plan.",
+      "Prepare both digital and printed copies of your passport, onward ticket, hotel booking, full itinerary, Chinese hotel address, and any proof needed for your next destination.",
     ],
     commonMistakes: [
       "Treating 240-hour transit as permission to travel anywhere in China.",
       "Forgetting the third country or region requirement.",
+      "Booking a simple round trip and assuming it works like transit.",
       "Booking cities outside the permitted stay area.",
-      "Assuming all ports follow the same practical process.",
+      "Assuming all airports, railway stations, or cruise ports qualify.",
       "Using a tight arrival day with no buffer for document checks.",
+      "Treating online route examples as official approval.",
     ],
     troubleshooting: [
       "If your airline questions eligibility, show official policy information and onward ticket proof.",
       "If your routing changes, re-check the entire transit logic before flying.",
       "If a city is outside the permitted area, remove it from the route instead of hoping it will be accepted.",
       "If you need certainty, apply for the appropriate visa rather than relying on transit rules.",
+      "If official information is unclear, contact the Chinese embassy, consulate, airline, or port authority before booking.",
+      "If immigration says your route does not qualify, you may be denied temporary entry or asked to use another route. Keep a backup plan.",
+    ],
+    backupPlan: [
+      "If any eligibility item is unclear, do not rely on visa-free transit yet. Verify before booking or apply for the appropriate visa.",
+      "Avoid non-refundable hotels, trains, and tours until your passport nationality, ports, onward ticket, and permitted area are checked.",
+      "Keep route alternatives simple: a Shanghai base with Suzhou or Hangzhou, a Beijing base with Tianjin, or a Guangzhou/Shenzhen base can be easier to verify than a long domestic loop.",
+      "Save official policy links and printed documents in case airline staff ask before boarding.",
+      "If your flight is changed, re-check the entire route. A small route change can affect the transit logic.",
+    ],
+    usefulChinesePhrases: [
+      {
+        english: "I would like to apply for 240-hour visa-free transit.",
+        chinese: "我想申请240小时过境免签。",
+        pinyin: "Wo xiang shenqing 240 xiaoshi guojing mianqian.",
+      },
+      {
+        english: "This is my onward ticket.",
+        chinese: "这是我的后续行程票。",
+        pinyin: "Zhe shi wo de houxu xingcheng piao.",
+      },
+      {
+        english: "This is my hotel address in China.",
+        chinese: "这是我在中国的酒店地址。",
+        pinyin: "Zhe shi wo zai Zhongguo de jiudian dizhi.",
+      },
     ],
     firstDayChecklist: [
       "Passport nationality checked against official rules.",
@@ -697,6 +934,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Hotel cities inside permitted area.",
       "Official resources saved offline.",
       "Backup plan ready if routing changes.",
+      "Chinese hotel address saved for immigration checks, taxi use, and hotel registration.",
     ],
     faq: [
       {
@@ -714,6 +952,21 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         answer:
           "Do not assume that. Allowed areas depend on the entry port and current policy. Check the permitted stay area before adding any city.",
       },
+      {
+        question: "Does a round trip qualify for 240-hour visa-free transit?",
+        answer:
+          "A simple round trip may not qualify because transit usually depends on traveling from one country or region to China and onward to a different third country or region. Verify the latest official interpretation before booking.",
+      },
+      {
+        question: "Are Hong Kong, Macao, and Taiwan treated as third regions?",
+        answer:
+          "They are often treated as separate regions for transit routing purposes, but you should verify the current official interpretation for your route before booking.",
+      },
+      {
+        question: "What should I print before arrival?",
+        answer:
+          "Print or save offline your passport page, onward ticket, hotel booking, full itinerary, Chinese hotel address, and any next-destination entry proof that may be relevant.",
+      },
     ],
     officialSourceLinks: [
       {
@@ -725,6 +978,28 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         label: "Chinese embassy or consulate information",
         href: "https://www.mfa.gov.cn/eng/",
         note: "Use to locate official consular information before booking.",
+      },
+      {
+        label: "Airline or transport operator",
+        href: "https://www.iata.org/",
+        note: "Confirm boarding and document checks with your carrier or booking channel before departure.",
+      },
+    ],
+    ctaLinks: [
+      {
+        label: "Use Visa-Free Checker",
+        href: "/tools/visa-free-eligibility-checker",
+        note: "Answer a few planning questions before you book your route.",
+      },
+      {
+        label: "Get the Free China First Trip Checklist",
+        href: "/thank-you",
+        note: "Prepare documents, payment, apps, hotel addresses, and emergency phrases before departure.",
+      },
+      {
+        label: "Ask a China Trip Question",
+        href: "/contact",
+        note: "Send your passport country, entry city, exit city, and onward destination for planning feedback.",
       },
     ],
     relatedGuideSlugs: [
@@ -908,7 +1183,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     relatedGuideSlugs: [
       "how-to-pay-in-china-as-a-foreigner",
       "best-apps-for-traveling-in-china",
-      "how-to-take-high-speed-trains-in-china",
+      "how-to-book-high-speed-trains-in-china",
     ],
     relatedProductIds: ["shanghai-3-day-travel-kit"],
   },
@@ -964,7 +1239,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     officialSourceLinks: [],
     relatedGuideSlugs: [
       "how-to-pay-in-china-as-a-foreigner",
-      "china-internet-and-esim-guide",
+      "china-esim-guide-for-tourists",
       "basic-chinese-phrases-for-travelers",
     ],
     relatedProductIds: [],

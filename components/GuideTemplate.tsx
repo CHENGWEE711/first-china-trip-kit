@@ -1,4 +1,5 @@
 import { AppGuideCards } from "@/components/AppGuideCards";
+import { ButtonLink } from "@/components/ButtonLink";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
@@ -19,6 +20,7 @@ type GuideTemplateProps = {
 function fallbackDetail(guide: Guide): GuideDetailContent {
   return {
     quickAnswer: guide.summary,
+    whoThisGuideIsFor: [],
     steps: guide.content.flatMap((section) => section.bullets || [section.body]),
     commonMistakes: [
       "Leaving key setup tasks until the airport arrival hall.",
@@ -29,6 +31,8 @@ function fallbackDetail(guide: Guide): GuideDetailContent {
       "Use screenshots and Chinese text when a spoken explanation is difficult.",
       "Ask hotel staff to write or confirm addresses before a taxi or train transfer.",
     ],
+    backupPlan: [],
+    usefulChinesePhrases: [],
     firstDayChecklist: [
       "Passport accessible.",
       "Hotel address saved in Chinese.",
@@ -48,6 +52,7 @@ function fallbackDetail(guide: Guide): GuideDetailContent {
       },
     ],
     officialSourceLinks: [],
+    ctaLinks: [],
     relatedGuideSlugs: [],
     relatedProductIds: [],
   };
@@ -96,14 +101,47 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
 
         <section className="px-4 py-12">
           <div className="mx-auto grid max-w-5xl gap-5">
+            {content.importantNotice ? (
+              <section className="rounded-lg border border-ember/25 bg-sand p-5 shadow-soft">
+                <p className="mb-2 text-sm font-bold uppercase text-ember">Important notice</p>
+                <p className="text-base leading-relaxed text-ink/76">{content.importantNotice}</p>
+              </section>
+            ) : null}
+
             <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
               <p className="mb-2 text-sm font-bold uppercase text-ember">Quick answer</p>
               <p className="text-lg text-ink/72">{content.quickAnswer}</p>
             </section>
 
+            {content.whoThisGuideIsFor && content.whoThisGuideIsFor.length > 0 ? (
+              <BulletSection title="Who this guide is for" items={content.whoThisGuideIsFor} />
+            ) : null}
             <BulletSection title="Step-by-step guide" items={content.steps} />
             <BulletSection title="Common mistakes" items={content.commonMistakes} />
             <BulletSection title="Troubleshooting" items={content.troubleshooting} />
+            {content.backupPlan && content.backupPlan.length > 0 ? (
+              <BulletSection title="Backup plan" items={content.backupPlan} />
+            ) : null}
+
+            {content.usefulChinesePhrases && content.usefulChinesePhrases.length > 0 ? (
+              <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+                <h2 className="text-2xl font-bold leading-tight text-ink">
+                  Useful Chinese phrases
+                </h2>
+                <div className="mt-4 grid gap-3">
+                  {content.usefulChinesePhrases.map((phrase) => (
+                    <div
+                      key={`${phrase.english}-${phrase.chinese}`}
+                      className="rounded-md border border-ink/10 bg-sand p-4"
+                    >
+                      <p className="text-sm font-bold uppercase text-ink/45">{phrase.english}</p>
+                      <p className="mt-2 text-lg font-bold text-ink">{phrase.chinese}</p>
+                      <p className="mt-1 text-base text-ink/65">{phrase.pinyin}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ) : null}
             <BulletSection title="First-day checklist" items={content.firstDayChecklist} />
 
             {content.appGroups ? <AppGuideCards groups={content.appGroups} /> : null}
@@ -127,7 +165,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             {content.officialSourceLinks.length > 0 ? (
               <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
                 <h2 className="text-2xl font-bold leading-tight text-ink">
-                  Useful official resources
+                  Official resources to verify
                 </h2>
                 <div className="mt-4 grid gap-4">
                   {content.officialSourceLinks.map((link) => (
@@ -141,6 +179,34 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
                       <span className="font-bold text-ink">{link.label}</span>
                       {link.note ? <span className="block text-sm text-ink/58">{link.note}</span> : null}
                     </a>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
+            {content.ctaLinks && content.ctaLinks.length > 0 ? (
+              <section className="rounded-lg border border-ink/10 bg-ink p-5 text-white shadow-soft">
+                <p className="mb-2 text-sm font-bold uppercase text-clay">Next step</p>
+                <h2 className="text-2xl font-bold leading-tight">
+                  Turn this guide into a working trip plan
+                </h2>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {content.ctaLinks.map((link, index) => (
+                    <div key={link.href} className="rounded-md border border-white/10 bg-white/8 p-4">
+                      <p className="text-base font-bold text-white">{link.label}</p>
+                      {link.note ? (
+                        <p className="mt-2 text-sm leading-relaxed text-white/68">{link.note}</p>
+                      ) : null}
+                      <div className="mt-4">
+                        <ButtonLink
+                          href={link.href}
+                          variant={index === 0 ? "primary" : "secondary"}
+                          className="w-full sm:w-auto"
+                        >
+                          {link.label}
+                        </ButtonLink>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </section>

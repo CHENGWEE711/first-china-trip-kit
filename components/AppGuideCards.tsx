@@ -38,6 +38,10 @@ const frictionStyles = {
   high: "bg-ink text-white",
 };
 
+function formatLabel(value: string) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
 export function AppGuideCards({ groups }: AppGuideCardsProps) {
   return (
     <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
@@ -95,12 +99,12 @@ export function AppGuideCards({ groups }: AppGuideCardsProps) {
 
                     <div className="mt-4 flex flex-wrap gap-2">
                       <span className="rounded-md bg-sand px-3 py-1 text-sm font-bold text-ink/70">
-                        Install before arrival: {app.installBeforeArrival}
+                        Install before arrival: {formatLabel(app.installBeforeArrival)}
                       </span>
                       <span
                         className={`rounded-md px-3 py-1 text-sm font-bold ${frictionStyles[app.foreignerFriction]}`}
                       >
-                        Foreigner friction: {app.foreignerFriction}
+                        Foreigner friction: {formatLabel(app.foreignerFriction)}
                       </span>
                     </div>
 

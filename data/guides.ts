@@ -25,9 +25,9 @@ export const guides: Guide[] = [
     summary:
       "A practical introduction to mobile payments, cash, cards, and what to set up before your first meal in China.",
     updatedAt: "2026-07-08",
-    seoTitle: "How to Pay in China as a Foreigner | First China Trip Kit",
+    seoTitle: "How to Pay in China as a Foreigner: Alipay, WeChat Pay, Cards and Cash",
     seoDescription:
-      "Learn how foreign visitors can pay in China using Alipay, WeChat Pay, cash, bank cards, and backup payment strategies.",
+      "A practical China payment guide for foreign visitors: how to use Alipay, WeChat Pay, international cards, cash backup, and what to test before your first day in China.",
     content: [
       {
         heading: "Alipay as your main travel wallet",
@@ -84,9 +84,9 @@ export const guides: Guide[] = [
     summary:
       "The essential apps for maps, translation, mobile payment, ride-hailing, trains, restaurants, and staying connected.",
     updatedAt: "2026-07-08",
-    seoTitle: "Best Apps for Traveling in China | First China Trip Kit",
+    seoTitle: "Best Apps for Traveling in China: Payment, Maps, Translation, Trains and Taxis",
     seoDescription:
-      "A first-time visitor's app checklist for China, including maps, payment, translation, trains, ride-hailing, and food discovery.",
+      "A practical app checklist for first-time visitors to China, including payment apps, maps, translation, ride-hailing, train booking, eSIM, food, and offline backups.",
     content: [
       {
         heading: "Payment",
@@ -137,15 +137,15 @@ export const guides: Guide[] = [
   },
   {
     id: "guide-high-speed-trains",
-    slug: "how-to-take-high-speed-trains-in-china",
-    title: "How to Book High-Speed Trains in China",
+    slug: "how-to-book-high-speed-trains-in-china",
+    title: "How to Book High-Speed Trains in China as a Foreigner",
     category: "Transportation",
     summary:
       "A practical foreign visitor's guide to booking Chinese high-speed trains, choosing the right station, using your passport, boarding, luggage, seat classes, and missed-train backups.",
     updatedAt: "2026-07-08",
-    seoTitle: "How to Book High-Speed Trains in China",
+    seoTitle: "How to Book High-Speed Trains in China as a Foreigner",
     seoDescription:
-      "Learn how foreign visitors can book and ride China's high-speed trains, including 12306, passports, station names, boarding gates, luggage, seat classes, and transfer timing.",
+      "A practical guide for foreign visitors booking China high-speed trains: 12306, passport real-name tickets, Trip.com, station arrival, boarding, seat classes, changes, refunds, and common mistakes.",
     content: [
       {
         heading: "Can foreigners buy high-speed train tickets in China?",
@@ -308,7 +308,7 @@ export const guides: Guide[] = [
   },
   {
     id: "guide-internet-esim",
-    slug: "china-internet-and-esim-guide",
+    slug: "china-esim-guide-for-tourists",
     title: "China eSIM Guide for Tourists",
     category: "Internet & eSIM",
     summary:
@@ -416,9 +416,9 @@ export const guides: Guide[] = [
     summary:
       "A cautious planning guide to China's 240-hour visa-free transit policy, including eligibility checks, onward tickets, permitted areas, ports, and common mistakes.",
     updatedAt: "2026-07-08",
-    seoTitle: "China 240-Hour Visa-Free Transit Guide | First China Trip Kit",
+    seoTitle: "China 240-Hour Visa-Free Transit Guide for First-Time Visitors",
     seoDescription:
-      "Understand China's 240-hour visa-free transit as a planning topic, including nationality, ports, onward ticket requirements, permitted stay areas, official checks, and route examples.",
+      "A practical guide to China's 240-hour visa-free transit policy: who may be eligible, documents to prepare, third-country rule, ports, permitted areas, route examples, and official verification checklist.",
     content: [
       {
         heading: "Use this as a planning guide",

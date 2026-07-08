@@ -128,12 +128,12 @@ export const essentialKits = [
   },
   {
     title: "Transport Kit",
-    href: "/guides/how-to-take-high-speed-trains-in-china",
+    href: "/guides/how-to-book-high-speed-trains-in-china",
     summary: "Book trains, choose the right station, use your passport, and board confidently.",
   },
   {
     title: "Internet & eSIM Kit",
-    href: "/guides/china-internet-and-esim-guide",
+    href: "/guides/china-esim-guide-for-tourists",
     summary: "Plan mobile data, offline screenshots, phone setup, and app access before arrival.",
   },
   {
