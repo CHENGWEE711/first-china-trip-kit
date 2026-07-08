@@ -3,7 +3,7 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 
 export function NewsletterSignup() {
   return (
-    <section className="bg-ink px-4 py-12 text-white">
+    <section id="newsletter" className="bg-ink px-4 py-12 text-white">
       <div className="mx-auto grid max-w-7xl gap-7 md:grid-cols-[1.1fr_0.9fr] md:items-center">
         <div>
           <p className="mb-3 inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-1 text-sm font-semibold text-white/84">

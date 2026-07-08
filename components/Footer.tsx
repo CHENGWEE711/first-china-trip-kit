@@ -1,6 +1,33 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { ClipboardList, Mail, MailCheck, MessageCircle } from "lucide-react";
 import { footerLegalItems, navItems, siteConfig } from "@/lib/site";
+
+const contactEntries = [
+  {
+    label: "Email",
+    href: `mailto:${siteConfig.contactEmail}`,
+    description: siteConfig.contactEmail,
+    icon: Mail,
+  },
+  {
+    label: "Contact Form",
+    href: "/contact",
+    description: "Ask a China trip question",
+    icon: ClipboardList,
+  },
+  {
+    label: "WhatsApp",
+    href: "/contact?channel=whatsapp",
+    description: "Request a WhatsApp reply",
+    icon: MessageCircle,
+  },
+  {
+    label: "Newsletter",
+    href: "/#free-checklist",
+    description: "Get the free checklist",
+    icon: MailCheck,
+  },
+];
 
 export function Footer() {
   return (
@@ -26,13 +53,35 @@ export function Footer() {
         </div>
         <div>
           <p className="font-semibold text-white">Contact</p>
-          <a
-            href={`mailto:${siteConfig.contactEmail}`}
-            className="mt-3 inline-flex items-center gap-2 text-white/72 hover:text-white"
-          >
-            <Mail aria-hidden="true" size={18} />
-            {siteConfig.contactEmail}
-          </a>
+          <div className="mt-3 grid gap-3">
+            {contactEntries.map((item) => {
+              const Icon = item.icon;
+              const isExternal = item.href.startsWith("mailto:");
+              const className =
+                "group grid gap-0.5 rounded-md border border-white/10 bg-white/5 p-3 text-white/72 transition hover:border-white/22 hover:bg-white/9 hover:text-white";
+              const content = (
+                <>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-white">
+                    <Icon aria-hidden="true" size={16} />
+                    {item.label}
+                  </span>
+                  <span className="text-sm text-white/55 group-hover:text-white/70">
+                    {item.description}
+                  </span>
+                </>
+              );
+
+              return isExternal ? (
+                <a key={item.label} href={item.href} className={className}>
+                  {content}
+                </a>
+              ) : (
+                <Link key={item.label} href={item.href} className={className}>
+                  {content}
+                </Link>
+              );
+            })}
+          </div>
           <p className="mt-5 text-sm text-white/52">
             Travel information changes. Always verify official requirements before booking.
           </p>

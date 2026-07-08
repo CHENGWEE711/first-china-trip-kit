@@ -127,7 +127,7 @@ export default function AboutPage() {
           <div className="mt-6 rounded-lg border border-ink/10 bg-sand p-5">
             <p className="text-sm font-bold uppercase text-ember">Contact</p>
             <p className="mt-2 text-base leading-relaxed text-ink/70">
-              For corrections, source updates, or traveler questions, email{" "}
+              For questions, corrections, or partnerships, contact{" "}
               <a
                 href={`mailto:${siteConfig.contactEmail}`}
                 className="font-semibold text-ember hover:text-[#982F28]"

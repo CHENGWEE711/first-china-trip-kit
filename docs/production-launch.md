@@ -28,9 +28,11 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 SUPABASE_NEWSLETTER_TABLE=newsletter_subscribers
+SUPABASE_CONTACT_TABLE=contact_messages
 ```
 
-Create the Supabase table with `supabase/newsletter_subscribers.sql`.
+Create the Supabase tables with `supabase/newsletter_subscribers.sql` and
+`supabase/contact_messages.sql`.
 
 Login, payment, AI itinerary generator, and CMS environment variables are not
 required for the current SEO content deployment.

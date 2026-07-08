@@ -54,7 +54,8 @@ NEXT_PUBLIC_SITE_URL=https://www.firstchinatripkit.com
 
 Newsletter signup is wired for Supabase and becomes active when the Supabase
 environment variables are added in Vercel. The table SQL lives at
-`supabase/newsletter_subscribers.sql`. Payments, AI itinerary generation, and CMS
+`supabase/newsletter_subscribers.sql`. Contact form messages use
+`supabase/contact_messages.sql`. Payments, AI itinerary generation, and CMS
 migration remain optional future integrations.
 
 ## Future integrations

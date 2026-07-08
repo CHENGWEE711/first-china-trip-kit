@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ButtonLink } from "@/components/ButtonLink";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { PageIntro } from "@/components/PageIntro";
 import { ProductCard } from "@/components/ProductCard";
@@ -32,6 +33,25 @@ export default function StorePage() {
             </p>
           </div>
           <NewsletterForm source="store-notify" compact />
+        </div>
+      </section>
+      <section className="bg-paper px-4 py-10">
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-lg border border-ink/10 bg-sand p-5 shadow-soft md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Planning help</p>
+            <h2 className="text-2xl font-bold leading-tight text-ink">
+              Want a route reviewed before you book?
+            </h2>
+            <p className="mt-2 max-w-2xl text-base text-ink/68">
+              Trip planning calls are not open yet, but you can register interest
+              and send your route questions now.
+            </p>
+          </div>
+          <div className="md:shrink-0">
+            <ButtonLink href="/contact?service=planning-call">
+              Book a China Trip Planning Call
+            </ButtonLink>
+          </div>
         </div>
       </section>
       <section className="bg-mist px-4 py-10">

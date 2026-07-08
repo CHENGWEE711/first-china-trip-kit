@@ -1,16 +1,18 @@
-# Supabase Newsletter Setup
+# Supabase Contact and Newsletter Setup
 
-First China Trip Kit stores newsletter signups in Supabase when these Vercel
+First China Trip Kit stores newsletter signups and contact form messages in Supabase when these Vercel
 environment variables are configured:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_NEWSLETTER_TABLE`
+- `SUPABASE_CONTACT_TABLE`
 
-The server-side newsletter API writes with `SUPABASE_SERVICE_ROLE_KEY`. The anon
-key is reserved for future lightweight client-side Supabase features.
+The server-side APIs write with `SUPABASE_SERVICE_ROLE_KEY`. The anon key is
+reserved for future lightweight client-side Supabase features.
 
-Create the table by running:
+Create the newsletter table by running:
 
 ```sql
 create table if not exists public.newsletter_subscribers (
@@ -31,3 +33,17 @@ with check (auth.role() = 'service_role');
 ```
 
 The complete migration file lives at `supabase/newsletter_subscribers.sql`.
+
+Create the contact table by running `supabase/contact_messages.sql`. It stores:
+
+- name
+- email
+- nationality
+- travel_month
+- planned_cities
+- trip_length
+- main_question
+- interested_in_custom_itinerary
+- source
+- status
+- created_at
