@@ -15,6 +15,7 @@ export type Product = {
   localDownloadUrl?: string;
   previewPdfUrl?: string;
   refundNote: string;
+  structuredDataDescription?: string;
   updatedAt: string;
   isNextLaunch?: boolean;
 };
@@ -51,6 +52,8 @@ export const products: Product[] = [
     title: "China Payment & Apps Setup Guide",
     summary:
       "A printable setup pack for Alipay, WeChat Pay, essential apps, payment backups, and first-day troubleshooting.",
+    structuredDataDescription:
+      "A step-by-step pre-arrival setup pack for Alipay, WeChat Pay, maps, translation, ride-hailing, and payment backups.",
     bestFor:
       "First-time visitors who feel anxious about mobile payments, Chinese apps, taxis, and what to do if something fails on arrival day.",
     includes: [

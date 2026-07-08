@@ -1,8 +1,10 @@
 "use client";
 
 import { AlertTriangle, CheckCircle2, ExternalLink, RotateCcw } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { appTrademarkDisclaimer } from "@/data/app-recommendations";
+import { trackEvent } from "@/lib/analytics";
 
 type ToolType = "visa" | "duration" | "apps" | "route";
 
@@ -14,22 +16,47 @@ const visaChecks = [
   {
     id: "passport",
     label: "My passport nationality is on the current official eligibility list",
+    description:
+      "Check the current official list for your passport nationality before planning around transit.",
   },
   {
     id: "ticket",
     label: "I have a confirmed onward ticket to a third country or region",
+    description:
+      "Visa-free transit normally depends on leaving mainland China for a third country or region.",
   },
   {
     id: "ports",
     label: "My entry and exit ports match the policy",
+    description:
+      "The airport, rail, or cruise port you enter and exit through must be covered by the current rule.",
   },
   {
     id: "area",
     label: "My hotel cities stay inside the permitted travel area",
+    description:
+      "Your hotels and day trips need to stay inside the permitted area for the port you use.",
   },
   {
     id: "official",
     label: "I will verify official requirements before booking",
+    description:
+      "Use this tool as a planning checklist, then verify with official sources before paying.",
+  },
+];
+
+const visaResultStates = [
+  {
+    title: "Likely worth checking official eligibility",
+    description: "All planning inputs are present, but official verification is still required.",
+  },
+  {
+    title: "High risk — verify before booking",
+    description: "One or more route-specific items are missing or unclear.",
+  },
+  {
+    title: "Do not rely on visa-free transit yet",
+    description: "There is not enough confirmed information to plan around visa-free transit.",
   },
 ];
 
@@ -103,6 +130,7 @@ export function ToolKitWidget({ type }: ToolKitWidgetProps) {
 
 function VisaTool() {
   const [checked, setChecked] = useState<string[]>([]);
+  const trackedResultRef = useRef<string | null>(null);
   const missing = visaChecks.filter((item) => !checked.includes(item.id));
   const criticalMissing = visaChecks.filter(
     (item) => item.id !== "official" && !checked.includes(item.id),
@@ -142,6 +170,18 @@ function VisaTool() {
               "The main route pieces appear present, but you still need a final official check. Do not rely on a third-party summary alone.",
           };
 
+  useEffect(() => {
+    if (checked.length === 0 || trackedResultRef.current === result.title) {
+      return;
+    }
+
+    trackedResultRef.current = result.title;
+    trackEvent("visa_free_checker_completed", {
+      checked_count: score,
+      result: result.title,
+    });
+  }, [checked.length, result.title, score]);
+
   return (
     <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
       <div className="mb-5 flex gap-3 rounded-md border border-ember/25 bg-sand p-4">
@@ -159,7 +199,10 @@ function VisaTool() {
       </div>
       <div className="grid gap-3">
         {visaChecks.map((item) => (
-          <label key={item.id} className="flex items-start gap-3 rounded-md bg-sand p-3 text-base text-ink/72">
+          <label
+            key={item.id}
+            className="flex cursor-pointer items-start gap-3 rounded-lg border border-ink/10 bg-sand p-4 text-base text-ink/72 transition hover:border-ember/30"
+          >
             <input
               type="checkbox"
               checked={checked.includes(item.id)}
@@ -172,8 +215,11 @@ function VisaTool() {
               }
               className="mt-1 h-4 w-4 accent-[#B43D35]"
             />
-            <span>
+            <span className="min-w-0">
               <span className="block font-bold text-ink">{item.label}</span>
+              <span className="mt-1 block text-sm leading-relaxed text-ink/62">
+                {item.description}
+              </span>
             </span>
           </label>
         ))}
@@ -182,6 +228,18 @@ function VisaTool() {
         <p className="text-sm font-bold uppercase opacity-80">Planning result</p>
         <h2 className="mt-2 text-2xl font-bold leading-tight">{result.title}</h2>
         <p className="mt-2 text-base opacity-85">{result.body}</p>
+        <div className="mt-4 grid gap-2 sm:grid-cols-3">
+          {visaResultStates.map((state) => (
+            <div
+              key={state.title}
+              className="rounded-md bg-white/12 p-3 text-sm"
+              aria-current={state.title === result.title ? "true" : undefined}
+            >
+              <p className="font-bold leading-snug">{state.title}</p>
+              <p className="mt-1 opacity-80">{state.description}</p>
+            </div>
+          ))}
+        </div>
         <div className="mt-4 rounded-md bg-white/12 p-3">
           <p className="text-sm font-bold uppercase opacity-80">Official verification reminder</p>
           <p className="mt-2 text-sm opacity-85">{result.nextStep}</p>
@@ -223,6 +281,12 @@ function VisaTool() {
           ))}
         </div>
       </section>
+      <Link
+        href="/guides/china-240-hour-visa-free-transit-guide"
+        className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-center text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember sm:w-auto"
+      >
+        Read the 240-hour visa-free transit guide
+      </Link>
     </div>
   );
 }
@@ -279,6 +343,7 @@ function DurationTool() {
 function AppsTool() {
   const [checked, setChecked] = useState<string[]>([]);
   const [hasLoadedStoredChecks, setHasLoadedStoredChecks] = useState(false);
+  const hasTrackedCompletionRef = useRef(false);
   const readyCount = checked.length;
   const totalCount = appChecks.length;
   const progressPercent = Math.round((readyCount / totalCount) * 100);
@@ -343,6 +408,19 @@ function AppsTool() {
     window.localStorage.setItem(appChecklistStorageKey, JSON.stringify(checked));
   }, [checked, hasLoadedStoredChecks]);
 
+  useEffect(() => {
+    if (!hasLoadedStoredChecks || readyCount < 7 || hasTrackedCompletionRef.current) {
+      return;
+    }
+
+    hasTrackedCompletionRef.current = true;
+    trackEvent("essential_apps_checklist_completed", {
+      ready_count: readyCount,
+      total_count: totalCount,
+      result: result.title,
+    });
+  }, [hasLoadedStoredChecks, readyCount, result.title, totalCount]);
+
   return (
     <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
       <div className="mb-5 rounded-md bg-sand p-4">
@@ -405,6 +483,21 @@ function AppsTool() {
         <p className="text-sm font-bold uppercase opacity-80">Checklist result</p>
         <h2 className="mt-2 text-2xl font-bold leading-tight">{result.title}</h2>
         <p className="mt-2 text-base opacity-85">{result.body}</p>
+      </div>
+
+      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        <Link
+          href="/guides/best-apps-for-traveling-in-china"
+          className="inline-flex min-h-11 items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-center text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember"
+        >
+          Read the China apps guide
+        </Link>
+        <Link
+          href="/store#inside-the-guide"
+          className="inline-flex min-h-11 items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-center text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember"
+        >
+          View the printable setup guide
+        </Link>
       </div>
 
       <p className="mt-5 rounded-md border border-ink/10 bg-paper p-4 text-sm leading-relaxed text-ink/58">

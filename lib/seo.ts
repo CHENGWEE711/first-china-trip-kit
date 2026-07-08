@@ -280,30 +280,33 @@ export function productJsonLd(product: Product, path: string) {
     product.payhipUrl ||
     absoluteUrl(path);
   const price = product.price.replace(/[^0-9.]/g, "");
-
-  return {
+  const productSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.title,
-    description: product.summary,
+    description: product.structuredDataDescription || product.summary,
     url: absoluteUrl(path),
     brand: {
       "@type": "Brand",
       name: siteConfig.name,
     },
-    category: "Digital travel planning guide",
-    offers: {
+    category: "Digital travel guide",
+    isAccessibleForFree: false,
+  };
+
+  if (product.status === "available") {
+    productSchema.offers = {
       "@type": "Offer",
       price: price || "0",
       priceCurrency: "USD",
-      availability: product.externalPurchaseUrl
-        ? "https://schema.org/InStock"
-        : "https://schema.org/PreOrder",
+      availability: "https://schema.org/InStock",
       url: purchaseUrl,
       seller: {
         "@type": "Organization",
         name: siteConfig.name,
       },
-    },
-  };
+    };
+  }
+
+  return productSchema;
 }

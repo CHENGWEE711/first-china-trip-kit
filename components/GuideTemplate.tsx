@@ -127,6 +127,11 @@ function PaymentAppsGuideCta() {
             className="mt-0"
             isExternal={isAvailable}
             canBuy={isAvailable}
+            eventNames={
+              isAvailable
+                ? ["guide_paid_cta_clicked", "payment_apps_guide_buy_clicked"]
+                : ["store_waitlist_clicked"]
+            }
             label={isAvailable ? "Buy the $7 Guide" : "Join the waitlist"}
             productId="china-payment-apps-setup-guide"
           />
