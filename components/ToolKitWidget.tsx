@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertTriangle, CheckCircle2, ExternalLink, RotateCcw } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { appTrademarkDisclaimer } from "@/data/app-recommendations";
 
 type ToolType = "visa" | "duration" | "apps" | "route";
@@ -83,6 +83,7 @@ const appChecks = [
     detail: "Your phone runs payment, maps, translation, tickets, and hotel addresses on day one.",
   },
 ];
+const appChecklistStorageKey = "first-china-trip-kit-essential-apps";
 
 export function ToolKitWidget({ type }: ToolKitWidgetProps) {
   if (type === "visa") {
@@ -277,6 +278,7 @@ function DurationTool() {
 
 function AppsTool() {
   const [checked, setChecked] = useState<string[]>([]);
+  const [hasLoadedStoredChecks, setHasLoadedStoredChecks] = useState(false);
   const readyCount = checked.length;
   const totalCount = appChecks.length;
   const progressPercent = Math.round((readyCount / totalCount) * 100);
@@ -304,6 +306,42 @@ function AppsTool() {
       nextChecked ? [...current, id] : current.filter((candidate) => candidate !== id),
     );
   }
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      try {
+        const storedValue = window.localStorage.getItem(appChecklistStorageKey);
+        const validIds = new Set(appChecks.map((item) => item.id));
+
+        if (storedValue) {
+          const parsedValue = JSON.parse(storedValue);
+
+          if (Array.isArray(parsedValue)) {
+            setChecked(
+              parsedValue.filter(
+                (candidate): candidate is string =>
+                  typeof candidate === "string" && validIds.has(candidate),
+              ),
+            );
+          }
+        }
+      } catch {
+        window.localStorage.removeItem(appChecklistStorageKey);
+      } finally {
+        setHasLoadedStoredChecks(true);
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    if (!hasLoadedStoredChecks) {
+      return;
+    }
+
+    window.localStorage.setItem(appChecklistStorageKey, JSON.stringify(checked));
+  }, [checked, hasLoadedStoredChecks]);
 
   return (
     <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
