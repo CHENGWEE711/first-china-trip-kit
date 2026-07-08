@@ -25,7 +25,7 @@ export const products: Product[] = [
     slug: "china-first-trip-checklist",
     title: "China First Trip Checklist",
     summary:
-      "A printable first-trip checklist for payment, apps, transport, hotel addresses, packing, and emergency phrases.",
+      "A printable first-trip checklist for foreign visitors coming to China. It helps you prepare payment apps, essential travel apps, internet access, hotel addresses, transport backup, packing reminders, and emergency phrases before your flight.",
     bestFor:
       "First-time visitors who want one simple pre-flight and arrival-day checklist before traveling to China.",
     includes: [
@@ -53,7 +53,7 @@ export const products: Product[] = [
     slug: "china-payment-apps-setup-guide",
     title: "China Payment & Apps Setup Guide",
     summary:
-      "A step-by-step pre-arrival setup pack for Alipay, WeChat Pay, maps, translation, ride-hailing, and payment backups.",
+      "A step-by-step pre-arrival setup guide for foreign visitors traveling to China. It helps you prepare Alipay, WeChat Pay, essential apps, maps, translation, ride-hailing, internet access, backup payment options, and first-day troubleshooting before arrival.",
     bestFor:
       "Anxious first-time travelers who want printable backup cards, setup checklists, and simple decision tables before their first days in China.",
     includes: [
@@ -62,9 +62,11 @@ export const products: Product[] = [
       "Backup payment decision tree",
       "Essential China apps stack",
       "First-day payment test",
-      "Troubleshooting table for common payment failures",
-      "Taxi and checkout phrase cards",
+      "Common payment failure fixes",
+      "Taxi and checkout Chinese phrases",
       "Printable offline cards",
+      "Official verification reminders",
+      "Important travel disclaimer",
     ],
     price: "$7",
     status: "available",

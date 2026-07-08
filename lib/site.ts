@@ -28,6 +28,7 @@ export const footerLegalItems = [
   { href: "/about", label: "About" },
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Use" },
+  { href: "/refund-policy", label: "Refund Policy" },
   { href: "/contact", label: "Contact" },
 ];
 

@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/privacy",
     "/terms",
+    "/refund-policy",
     "/thank-you",
   ].map((path) => ({
     url: absoluteUrl(path || "/"),

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { ProductActionButton } from "@/components/ProductActionButton";
 import { ProductCard } from "@/components/ProductCard";
@@ -150,15 +151,21 @@ export default function StorePage() {
             Digital delivery and refund notes
           </h2>
           <p className="mt-3 text-base text-ink/68">
-            Digital products are sold through Payhip. After purchase, customers
-            receive access through Payhip checkout or confirmation email. Because
-            products are downloadable digital planning files, refunds may be limited
-            after download. If you purchased the wrong file or cannot access your
-            guide, contact{" "}
+            Digital kits are delivered through Payhip after purchase. Because these
+            are downloadable digital planning files, refunds may be limited after
+            download. If you purchased the wrong file or cannot access your guide,
+            contact{" "}
             <a href={`mailto:${siteConfig.contactEmail}`} className="font-semibold text-ember">
               {siteConfig.contactEmail}
             </a>{" "}
             and we will review the issue.
+          </p>
+          <p className="mt-3 text-base text-ink/68">
+            Read the{" "}
+            <Link href="/refund-policy" className="font-semibold text-ember">
+              Digital Delivery and Refund Policy
+            </Link>
+            .
           </p>
           <h2 className="mt-9 text-3xl font-bold leading-tight text-ink">
             Important travel disclaimer

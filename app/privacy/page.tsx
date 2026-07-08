@@ -42,20 +42,29 @@ export default function PrivacyPage() {
             Newsletter storage or email delivery may be handled by providers such
             as Supabase, Resend, or Mailchimp when newsletter delivery is enabled.
           </p>
-          <h2>Purchases and checkout</h2>
+          <h2>Purchases and external checkout</h2>
           <p>
-            Purchases are handled by Payhip. Payment information is processed by
-            Payhip, PayPal, or other checkout providers and is not stored by First
-            China Trip Kit.
+            Digital product purchases are handled through Payhip. When you click a
+            Payhip purchase or download link, you leave firstchinatripkit.com and
+            complete checkout through Payhip.
           </p>
+          <h2>Payment information</h2>
           <p>
-            We may receive order-related information such as email, product purchased,
-            and transaction status so we can help with access problems and support
-            requests.
+            Payment information is processed by Payhip and its supported payment
+            providers, such as PayPal or card payment processors. First China Trip
+            Kit does not directly collect or store credit card numbers, PayPal login
+            details, banking details, or payment account credentials.
           </p>
+          <h2>Order-related information</h2>
           <p>
-            Payhip and PayPal privacy policies apply at checkout. External Payhip
-            checkout opens outside firstchinatripkit.com.
+            We may receive limited order-related information from Payhip, such as
+            your email address, product purchased, order status, and purchase time,
+            for customer support and product access purposes.
+          </p>
+          <h2>Third-party policies</h2>
+          <p>
+            Payhip and payment providers have their own privacy policies and terms.
+            Please review them at checkout.
           </p>
           <h2>Contact</h2>
           <p>Questions can be sent to {siteConfig.contactEmail}.</p>

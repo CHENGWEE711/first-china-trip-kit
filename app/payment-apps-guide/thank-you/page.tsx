@@ -39,9 +39,7 @@ export default function PaymentAppsGuideThankYouPage() {
               your confirmation email. If you have trouble accessing it, contact{" "}
               <a href={`mailto:${siteConfig.contactEmail}`} className="font-semibold text-ember">
                 {siteConfig.contactEmail}
-              </a>
-              . Include the email address you used at checkout and the provider
-              confirmation number if you have one.
+              </a>.
             </p>
             <p className="mt-4 rounded-md border border-ink/10 bg-sand p-4 text-sm leading-relaxed text-ink/62">
               First China Trip Kit provides travel planning information only. We
@@ -54,7 +52,7 @@ export default function PaymentAppsGuideThankYouPage() {
             <h2 className="text-2xl font-bold leading-tight text-ink">Next steps</h2>
             <div className="mt-5 grid gap-3">
               <ButtonLink href="/thank-you" variant="ghost">
-                Download free checklist
+                Download the free China First Trip Checklist
               </ButtonLink>
               <ButtonLink href="/city-kits" variant="ghost">
                 Browse City Kits
