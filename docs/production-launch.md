@@ -43,8 +43,20 @@ missing, the site builds normally and no analytics script is added.
 NEXT_PUBLIC_GA_ID=
 ```
 
-Login, payment, AI itinerary generator, and CMS environment variables are not
-required for the current SEO content deployment.
+## Optional Payhip and Support Links
+
+These public product links power the digital product buttons. When a value is
+blank, the site hides that external button or shows the safe waitlist/local
+download fallback.
+
+```bash
+NEXT_PUBLIC_PAYHIP_CHECKLIST_URL=
+NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL=
+NEXT_PUBLIC_COFFEE_TIP_URL=
+```
+
+Login, AI itinerary generator, and CMS environment variables are not required for
+the current SEO content deployment.
 
 ## Build Commands
 

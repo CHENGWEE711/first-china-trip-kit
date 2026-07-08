@@ -28,7 +28,7 @@ export function CoffeeTipLink({
     <a
       href={coffeeTipUrl}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       onClick={() => trackEvent("coffee_tip_clicked", { source })}
       className={cn(
         "inline-flex min-h-11 items-center justify-center gap-2 rounded-md text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-ember focus:ring-offset-2",

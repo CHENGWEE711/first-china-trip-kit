@@ -12,9 +12,36 @@ export function ProductCard({ product }: ProductCardProps) {
     product.checkoutUrl ||
     product.gumroadUrl ||
     product.payhipUrl;
-  const canBuy = product.status === "available" && Boolean(purchaseUrl);
-  const purchaseIsExternal = Boolean(purchaseUrl && /^https?:\/\//.test(purchaseUrl));
+  const isChecklist = product.id === "china-first-trip-checklist";
   const isPaymentAppsGuide = product.id === "china-payment-apps-setup-guide";
+  const localDownloadUrl = isChecklist ? product.localDownloadUrl : undefined;
+  const hasExternalPurchaseUrl = Boolean(purchaseUrl);
+  const canBuy = isChecklist
+    ? Boolean(purchaseUrl || localDownloadUrl)
+    : product.status === "available" && hasExternalPurchaseUrl;
+  const purchaseIsExternal = Boolean(purchaseUrl && /^https?:\/\//.test(purchaseUrl));
+  const statusLabel = isChecklist
+    ? "Free / Pay what you want"
+    : isPaymentAppsGuide && !hasExternalPurchaseUrl
+      ? "Coming soon"
+      : product.status === "available"
+        ? "Available now"
+        : "Coming soon";
+  const actionHref = purchaseUrl || localDownloadUrl || "/store#early-access";
+  const actionLabel = isChecklist
+    ? purchaseUrl
+      ? "Download / Support on Payhip"
+      : "Download free checklist"
+    : isPaymentAppsGuide && purchaseUrl
+      ? "Buy on Payhip — $7"
+      : product.status === "available" && purchaseUrl
+        ? `Buy now — ${product.price}`
+        : "Join waitlist";
+  const actionEventName = isChecklist
+    ? purchaseUrl
+      ? "payhip_checklist_clicked"
+      : "checklist_download_clicked"
+    : undefined;
 
   return (
     <article className="flex h-full flex-col rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
@@ -23,14 +50,14 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="flex flex-wrap justify-end gap-2 text-right">
           {product.isNextLaunch ? (
             <span className="rounded-md bg-ember px-3 py-1 text-xs font-bold uppercase text-white">
-              {product.status === "available" ? "First kit now available" : "First to open"}
+              {hasExternalPurchaseUrl ? "First kit now available" : "First kit waitlist"}
             </span>
           ) : null}
           <span className="rounded-md bg-mist px-3 py-1 text-xs font-bold uppercase text-ink/58">
-            {product.status === "available" ? "Available now" : "Coming soon"}
+            {statusLabel}
           </span>
           <span className="rounded-md bg-sand px-3 py-1 text-sm font-bold text-ember">
-            {product.status === "available" ? "Price" : "Planned price"}: {product.price}
+            {product.price}
           </span>
         </div>
       </div>
@@ -55,12 +82,14 @@ export function ProductCard({ product }: ProductCardProps) {
         </a>
       ) : null}
       <p className="mt-4 text-sm text-ink/58">{product.refundNote}</p>
-      {canBuy && purchaseUrl ? (
+      {canBuy ? (
         <ProductActionButton
-          href={purchaseUrl}
+          href={actionHref}
+          download={isChecklist && !purchaseUrl}
+          eventName={actionEventName}
           isExternal={purchaseIsExternal}
           canBuy
-          label={isPaymentAppsGuide ? "Buy now — $7" : `Buy now — ${product.price}`}
+          label={actionLabel}
           productId={product.id}
         />
       ) : (
@@ -73,7 +102,7 @@ export function ProductCard({ product }: ProductCardProps) {
           />
           <p className="mt-3 text-sm text-ink/58">
             {product.status === "available"
-              ? "Checkout is not connected in this environment yet. Join the newsletter to get notified."
+              ? "Join the newsletter to get notified when the Payhip purchase link opens."
               : "Join the newsletter to get notified when this kit opens."}
           </p>
         </>

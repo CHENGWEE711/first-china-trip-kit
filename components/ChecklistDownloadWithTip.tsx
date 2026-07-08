@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Download, X } from "lucide-react";
 import { CoffeeTipLink } from "@/components/CoffeeTipLink";
+import { PayhipChecklistLink } from "@/components/PayhipChecklistLink";
 import { trackEvent } from "@/lib/analytics";
 
 const coffeeTipUrl = process.env.NEXT_PUBLIC_COFFEE_TIP_URL || "";
+const payhipChecklistUrl = process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL || "";
 const storageKey = "first-china-trip-kit-coffee-tip-last-shown";
 const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
 
@@ -32,7 +34,7 @@ export function ChecklistDownloadWithTip({
   }, []);
 
   function canShowTip() {
-    if (!coffeeTipUrl) {
+    if (!coffeeTipUrl && !payhipChecklistUrl) {
       return false;
     }
 
@@ -72,6 +74,13 @@ export function ChecklistDownloadWithTip({
     trackEvent("coffee_tip_popup_closed", { source });
   }
 
+  const supportMessage =
+    coffeeTipUrl && payhipChecklistUrl
+      ? "The checklist is free. If it saved you time, you can buy us a coffee or support the guide on Payhip to help keep First China Trip Kit updated."
+      : coffeeTipUrl
+        ? "The checklist is free. If it saved you time, you can buy us a coffee to help keep First China Trip Kit updated."
+        : "The checklist is free. If it saved you time, you can support the guide on Payhip to help keep First China Trip Kit updated.";
+
   return (
     <>
       <a
@@ -84,15 +93,12 @@ export function ChecklistDownloadWithTip({
         {label}
       </a>
 
-      {showTip && coffeeTipUrl ? (
+      {showTip && (coffeeTipUrl || payhipChecklistUrl) ? (
         <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-md rounded-lg border border-ink/10 bg-paper p-4 shadow-soft">
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-lg font-bold leading-tight text-ink">Was this guide helpful?</p>
-              <p className="mt-2 text-sm leading-relaxed text-ink/68">
-                The checklist is free. If it saved you time, you can buy us a coffee to
-                help keep First China Trip Kit updated for future travelers.
-              </p>
+              <p className="mt-2 text-sm leading-relaxed text-ink/68">{supportMessage}</p>
             </div>
             <button
               type="button"
@@ -103,10 +109,21 @@ export function ChecklistDownloadWithTip({
               <X aria-hidden="true" size={18} />
             </button>
           </div>
-          <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-            <CoffeeTipLink source={`${source}-popup`} className="w-full sm:w-auto">
-              Buy us a coffee
-            </CoffeeTipLink>
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            {coffeeTipUrl ? (
+              <CoffeeTipLink source={`${source}-popup`} className="w-full sm:w-auto">
+                Buy us a coffee
+              </CoffeeTipLink>
+            ) : null}
+            {payhipChecklistUrl ? (
+              <PayhipChecklistLink
+                source={`${source}-popup`}
+                variant="ghost"
+                className="w-full sm:w-auto"
+              >
+                Support on Payhip
+              </PayhipChecklistLink>
+            ) : null}
             <button
               type="button"
               onClick={closeTip}

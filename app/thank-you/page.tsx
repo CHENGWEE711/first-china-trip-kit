@@ -4,6 +4,7 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { ChecklistDownloadWithTip } from "@/components/ChecklistDownloadWithTip";
 import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { PageIntro } from "@/components/PageIntro";
+import { PayhipChecklistLink } from "@/components/PayhipChecklistLink";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -45,6 +46,7 @@ const nextSteps = [
 
 export default function ThankYouPage() {
   const coffeeTipEnabled = Boolean(process.env.NEXT_PUBLIC_COFFEE_TIP_URL);
+  const payhipChecklistEnabled = Boolean(process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL);
 
   return (
     <>
@@ -92,6 +94,24 @@ export default function ThankYouPage() {
           </section>
         </div>
       </section>
+      {payhipChecklistEnabled ? (
+        <section className="bg-paper px-4 pb-12">
+          <div className="mx-auto max-w-5xl rounded-lg border border-ink/10 bg-sand p-5 shadow-soft">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Optional support</p>
+            <h2 className="text-2xl font-bold leading-tight text-ink">
+              Want to support this free guide?
+            </h2>
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-ink/68">
+              The checklist is free. If it saved you time, you can choose $0 or
+              pay what you want on Payhip. Your support helps us keep First China
+              Trip Kit updated for future travelers.
+            </p>
+            <div className="mt-5">
+              <PayhipChecklistLink source="thank-you-support" className="w-full sm:w-fit" />
+            </div>
+          </div>
+        </section>
+      ) : null}
       <section className="bg-mist px-4 py-12">
         <div className="mx-auto max-w-5xl">
           <div className="mb-6 max-w-3xl">

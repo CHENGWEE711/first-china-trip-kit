@@ -1,10 +1,12 @@
 import { AppGuideCards } from "@/components/AppGuideCards";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
+import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
 import { GuideCard } from "@/components/GuideCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { ProductActionButton } from "@/components/ProductActionButton";
 import { ProductCard } from "@/components/ProductCard";
 import type { Guide } from "@/data/guides";
 import type { GuideDetailContent } from "@/data/guide-detail-content";
@@ -82,8 +84,72 @@ function formatUpdatedDate(value: string) {
   }).format(new Date(value));
 }
 
+const paymentAppsGuideCtaSlugs = new Set([
+  "how-to-pay-in-china-as-a-foreigner",
+  "best-apps-for-traveling-in-china",
+  "how-to-use-alipay-in-china-as-a-tourist",
+  "how-to-use-wechat-pay-in-china-as-a-foreigner",
+  "china-esim-guide-for-tourists",
+  "how-to-book-high-speed-trains-in-china",
+]);
+
+function PaymentAppsGuideCta() {
+  const paymentAppsGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
+  const isAvailable = Boolean(paymentAppsGuideBuyUrl);
+
+  return (
+    <section className="bg-ink px-4 py-12 text-white">
+      <div className="mx-auto max-w-5xl">
+        <p className="mb-2 text-sm font-bold uppercase text-clay">Printable setup guide</p>
+        <h2 className="text-3xl font-bold leading-tight">
+          Want the printable setup version?
+        </h2>
+        <p className="mt-3 max-w-3xl text-base leading-relaxed text-white/72">
+          Get the China Payment & Apps Setup Guide with checklists, offline cards,
+          and troubleshooting tables for your first days in China.
+        </p>
+        <ProductActionButton
+          href={isAvailable ? paymentAppsGuideBuyUrl : "/store#early-access"}
+          isExternal={isAvailable}
+          canBuy={isAvailable}
+          label={isAvailable ? "Buy the $7 Guide" : "Join the waitlist"}
+          productId="china-payment-apps-setup-guide"
+        />
+      </div>
+    </section>
+  );
+}
+
+function GuideSupportCta({ guideSlug }: { guideSlug: string }) {
+  const coffeeTipEnabled = Boolean(process.env.NEXT_PUBLIC_COFFEE_TIP_URL);
+
+  if (!coffeeTipEnabled) {
+    return null;
+  }
+
+  return (
+    <section className="bg-paper px-4 py-10">
+      <div className="mx-auto max-w-5xl rounded-lg border border-ink/10 bg-sand p-5 shadow-soft">
+        <p className="mb-2 text-sm font-bold uppercase text-ember">Support this guide</p>
+        <h2 className="text-2xl font-bold leading-tight text-ink">Was this guide helpful?</h2>
+        <p className="mt-3 max-w-3xl text-base leading-relaxed text-ink/68">
+          First China Trip Kit is free to read. If this guide helped you prepare for
+          China, you can support future updates with a small coffee tip.
+        </p>
+        <div className="mt-5">
+          <CoffeeTipLink source={`guide-${guideSlug}`} className="w-full sm:w-fit">
+            Buy us a coffee
+          </CoffeeTipLink>
+        </div>
+        <p className="mt-3 text-sm text-ink/52">No pressure. The guide stays free.</p>
+      </div>
+    </section>
+  );
+}
+
 export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideTemplateProps) {
   const content = detail || fallbackDetail(guide);
+  const showPaymentAppsGuideCta = paymentAppsGuideCtaSlugs.has(guide.slug);
 
   return (
     <>
@@ -251,6 +317,8 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
         </section>
       ) : null}
 
+      {showPaymentAppsGuideCta ? <PaymentAppsGuideCta /> : null}
+      <GuideSupportCta guideSlug={guide.slug} />
       <ChecklistCTA />
       <FeedbackCTA sourceLabel={`guide-${guide.slug}`} />
       <NewsletterSignup />

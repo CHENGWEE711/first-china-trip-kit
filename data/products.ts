@@ -7,11 +7,12 @@ export type Product = {
   includes: string[];
   price: string;
   status: "comingSoon" | "available";
-  checkoutProvider: "stripe" | "gumroad" | "lemon-squeezy" | "manual";
+  checkoutProvider: "stripe" | "gumroad" | "lemon-squeezy" | "payhip" | "manual";
   checkoutUrl?: string;
   gumroadUrl?: string;
   payhipUrl?: string;
   externalPurchaseUrl?: string;
+  localDownloadUrl?: string;
   previewPdfUrl?: string;
   refundNote: string;
   updatedAt: string;
@@ -20,18 +21,75 @@ export type Product = {
 
 export const products: Product[] = [
   {
+    id: "china-first-trip-checklist",
+    slug: "china-first-trip-checklist",
+    title: "China First Trip Checklist",
+    summary:
+      "A printable first-trip checklist for payment, apps, transport, hotel addresses, packing, and emergency phrases.",
+    bestFor:
+      "First-time visitors who want one simple pre-flight and arrival-day checklist before traveling to China.",
+    includes: [
+      "Pre-flight preparation checklist",
+      "Arrival day checklist",
+      "Payment setup reminders",
+      "Essential apps checklist",
+      "Hotel address card",
+      "Transport backup notes",
+      "Food ordering phrases",
+      "Emergency phrases",
+    ],
+    price: "$0+",
+    status: "available",
+    checkoutProvider: "payhip",
+    externalPurchaseUrl: process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL || "",
+    localDownloadUrl: "/china-first-time-visitor-checklist.pdf",
+    previewPdfUrl: "",
+    refundNote:
+      "Free local download is available. Payhip can also be used for $0+ pay-what-you-want support when configured.",
+    updatedAt: "2026-07-08",
+  },
+  {
+    id: "china-payment-apps-setup-guide",
+    slug: "china-payment-apps-setup-guide",
+    title: "China Payment & Apps Setup Guide",
+    summary:
+      "A step-by-step pre-arrival setup pack for Alipay, WeChat Pay, maps, translation, ride-hailing, and payment backups.",
+    bestFor:
+      "First-time visitors who are more worried about paying, ordering, maps, taxis, and phone setup than sightseeing choices.",
+    includes: [
+      "Alipay setup checklist",
+      "WeChat Pay setup checklist",
+      "Backup payment decision tree",
+      "Essential China apps stack",
+      "First-day payment test",
+      "Common payment failure fixes",
+      "Taxi and checkout Chinese phrases",
+      "Printable offline cards",
+    ],
+    price: "$7",
+    status: "available",
+    checkoutProvider: "payhip",
+    externalPurchaseUrl: process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "",
+    previewPdfUrl: "",
+    refundNote:
+      "Digital delivery is handled by Payhip after purchase. Refunds may be limited after download.",
+    updatedAt: "2026-07-08",
+    isNextLaunch: true,
+  },
+  {
     id: "shanghai-3-day-travel-kit",
     slug: "shanghai-3-day-travel-kit",
     title: "Shanghai 3-Day Travel Kit",
     summary:
-      "A printable planning pack for first-time visitors who want a smooth, realistic Shanghai city break.",
-    bestFor: "Travelers landing in Shanghai who want hotel areas, daily routes, food notes, Chinese addresses, and booking reminders in one place.",
+      "A practical 3-day Shanghai kit with daily routes, food ideas, Chinese addresses, metro tips, taxi cards, and first-time visitor notes.",
+    bestFor:
+      "Travelers landing in Shanghai who want hotel areas, daily routes, food notes, Chinese addresses, and booking reminders in one place.",
     includes: [
-      "3-day route map and daily timing guide",
-      "Hotel area comparison",
-      "Food checklist with Chinese names",
-      "Airport and railway transfer notes",
-      "Printable Chinese address card",
+      "Daily route cards",
+      "Food and neighborhood ideas",
+      "Chinese addresses and taxi cards",
+      "Metro and airport transfer notes",
+      "First-time visitor reminders",
     ],
     price: "$9",
     status: "comingSoon",
@@ -47,14 +105,15 @@ export const products: Product[] = [
     slug: "10-day-classic-china-itinerary",
     title: "10-Day Classic China Itinerary",
     summary:
-      "A complete first-trip route pack for Beijing, Xi'an, Shanghai, and Hangzhou.",
-    bestFor: "Visitors planning one classic China trip and wanting fewer planning tabs, fewer transfer surprises, and a clearer booking order.",
+      "A classic first-time China route with city-by-city planning, train connections, hotel area suggestions, booking reminders, and printable daily schedules.",
+    bestFor:
+      "Visitors planning one classic China trip and wanting fewer planning tabs, fewer transfer surprises, and a clearer booking order.",
     includes: [
-      "Day-by-day classic route",
-      "Train versus flight decision notes",
-      "Hotel base recommendations",
+      "City-by-city planning notes",
+      "Train connection guidance",
+      "Hotel area suggestions",
       "Attraction booking checklist",
-      "Budget and pacing notes",
+      "Printable daily schedules",
     ],
     price: "$19",
     status: "comingSoon",
@@ -64,32 +123,6 @@ export const products: Product[] = [
     refundNote:
       "Refund and delivery details will be shown before purchase when this kit opens.",
     updatedAt: "2026-07-07",
-  },
-  {
-    id: "china-payment-apps-setup-guide",
-    slug: "china-payment-apps-setup-guide",
-    title: "China Payment & Apps Setup Guide",
-    summary:
-      "A step-by-step pre-arrival setup pack for Alipay, WeChat Pay, maps, translation, ride-hailing, and payment backups.",
-    bestFor: "First-time visitors who are more worried about paying, ordering, maps, taxis, and phone setup than sightseeing choices.",
-    includes: [
-      "Alipay setup checklist",
-      "WeChat Pay setup checklist",
-      "Backup payment decision tree",
-      "Essential app list",
-      "First-day troubleshooting guide",
-      "Chinese phrases for checkout and taxis",
-      "Printable offline cards",
-    ],
-    price: "$7",
-    status: "available",
-    checkoutProvider: "gumroad",
-    externalPurchaseUrl: process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "",
-    previewPdfUrl: "",
-    refundNote:
-      "Digital delivery is handled by the checkout provider. Refunds may be limited after download.",
-    updatedAt: "2026-07-08",
-    isNextLaunch: true,
   },
 ];
 
