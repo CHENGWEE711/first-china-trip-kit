@@ -8,9 +8,6 @@ from reportlab.lib.units import inch
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
-    Flowable,
-    FrameBreak,
-    KeepTogether,
     ListFlowable,
     ListItem,
     PageBreak,
@@ -27,15 +24,20 @@ FONT_PATH = Path("/System/Library/Fonts/Supplemental/Arial Unicode.ttf")
 
 PAGE_WIDTH, PAGE_HEIGHT = letter
 MARGIN = 0.58 * inch
+CONTENT_WIDTH = PAGE_WIDTH - (2 * MARGIN)
 
-INK = colors.HexColor("#2f2a28")
-EMBER = colors.HexColor("#b13a2f")
-CLAY = colors.HexColor("#d28a62")
-SAND = colors.HexColor("#f6efe6")
-PAPER = colors.HexColor("#fffdf9")
-MIST = colors.HexColor("#eef3f0")
-JADE = colors.HexColor("#3f7a68")
-LINE = colors.HexColor("#e1d6cc")
+INK = colors.HexColor("#2F2A28")
+EMBER = colors.HexColor("#B13A2F")
+CLAY = colors.HexColor("#D28A62")
+SAND = colors.HexColor("#F6EFE6")
+PAPER = colors.HexColor("#FFFDF9")
+MIST = colors.HexColor("#EEF3F0")
+JADE = colors.HexColor("#3F7A68")
+LINE = colors.HexColor("#E1D6CC")
+MUTED = colors.HexColor("#6B625D")
+
+SITE_URL = "www.firstchinatripkit.com"
+CONTACT_EMAIL = "hello@firstchinatripkit.com"
 
 
 if FONT_PATH.exists():
@@ -48,56 +50,8 @@ else:
     BOLD_FONT = "Helvetica-Bold"
 
 
-class ColorBlock(Flowable):
-    def __init__(self, width, height, fill_color, stroke_color=None):
-        super().__init__()
-        self.width = width
-        self.height = height
-        self.fill_color = fill_color
-        self.stroke_color = stroke_color
-
-    def draw(self):
-        self.canv.setFillColor(self.fill_color)
-        self.canv.setStrokeColor(self.stroke_color or self.fill_color)
-        self.canv.roundRect(0, 0, self.width, self.height, 8, fill=1, stroke=1)
-
-
 def make_styles():
     styles = getSampleStyleSheet()
-    styles.add(
-        ParagraphStyle(
-            "FCTKCoverKicker",
-            fontName=BOLD_FONT,
-            fontSize=11,
-            textColor=CLAY,
-            uppercase=True,
-            leading=14,
-            alignment=TA_CENTER,
-            spaceAfter=14,
-        )
-    )
-    styles.add(
-        ParagraphStyle(
-            "FCTKCoverTitle",
-            fontName=BOLD_FONT,
-            fontSize=31,
-            leading=36,
-            textColor=colors.white,
-            alignment=TA_CENTER,
-            spaceAfter=16,
-        )
-    )
-    styles.add(
-        ParagraphStyle(
-            "FCTKCoverSubtitle",
-            fontName=BASE_FONT,
-            fontSize=13,
-            leading=19,
-            textColor=colors.white,
-            alignment=TA_CENTER,
-            spaceAfter=16,
-        )
-    )
     styles.add(
         ParagraphStyle(
             "FCTKKicker",
@@ -121,22 +75,55 @@ def make_styles():
     )
     styles.add(
         ParagraphStyle(
+            "FCTKCoverKicker",
+            fontName=BOLD_FONT,
+            fontSize=12,
+            leading=15,
+            textColor=CLAY,
+            alignment=TA_CENTER,
+            spaceAfter=14,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "FCTKCoverTitle",
+            fontName=BOLD_FONT,
+            fontSize=34,
+            leading=39,
+            textColor=colors.white,
+            alignment=TA_CENTER,
+            spaceAfter=16,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "FCTKCoverSubtitle",
+            fontName=BASE_FONT,
+            fontSize=13,
+            leading=19,
+            textColor=colors.white,
+            alignment=TA_CENTER,
+            spaceAfter=8,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
             "FCTKHeading",
             fontName=BOLD_FONT,
-            fontSize=15,
-            leading=18,
+            fontSize=14.2,
+            leading=17,
             textColor=INK,
-            spaceBefore=8,
-            spaceAfter=6,
+            spaceBefore=6,
+            spaceAfter=5,
         )
     )
     styles.add(
         ParagraphStyle(
             "FCTKBody",
             fontName=BASE_FONT,
-            fontSize=9.6,
-            leading=13.2,
-            textColor=colors.HexColor("#554d49"),
+            fontSize=9.2,
+            leading=12.2,
+            textColor=colors.HexColor("#554D49"),
             spaceAfter=6,
         )
     )
@@ -144,9 +131,9 @@ def make_styles():
         ParagraphStyle(
             "FCTKSmall",
             fontName=BASE_FONT,
-            fontSize=8.1,
-            leading=11,
-            textColor=colors.HexColor("#6b625d"),
+            fontSize=7.7,
+            leading=10.2,
+            textColor=MUTED,
             spaceAfter=4,
         )
     )
@@ -155,35 +142,35 @@ def make_styles():
             "FCTKCardTitle",
             fontName=BOLD_FONT,
             fontSize=10,
-            leading=13,
+            leading=12.4,
             textColor=INK,
             spaceAfter=4,
         )
     )
     styles.add(
         ParagraphStyle(
-            "FCTKTableText",
-            fontName=BASE_FONT,
-            fontSize=7.6,
-            leading=10.3,
-            textColor=INK,
-        )
-    )
-    styles.add(
-        ParagraphStyle(
             "FCTKTableHead",
             fontName=BOLD_FONT,
-            fontSize=7.8,
-            leading=10.4,
+            fontSize=7.2,
+            leading=9.2,
             textColor=colors.white,
         )
     )
     styles.add(
         ParagraphStyle(
-            "FCTKPhrase",
+            "FCTKTableText",
             fontName=BASE_FONT,
-            fontSize=8.6,
-            leading=12,
+            fontSize=7.0,
+            leading=9.1,
+            textColor=INK,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "FCTKLargeCardText",
+            fontName=BASE_FONT,
+            fontSize=10,
+            leading=14,
             textColor=INK,
         )
     )
@@ -193,34 +180,44 @@ def make_styles():
 S = make_styles()
 
 
-def p(text, style="FCTKBody"):
-    return Paragraph(text, S[style])
+STYLE_ALIASES = {
+    "Kicker": "FCTKKicker",
+    "Title": "FCTKTitle",
+    "CoverKicker": "FCTKCoverKicker",
+    "CoverTitle": "FCTKCoverTitle",
+    "CoverSubtitle": "FCTKCoverSubtitle",
+    "Heading": "FCTKHeading",
+    "Body": "FCTKBody",
+    "Small": "FCTKSmall",
+    "CardTitle": "FCTKCardTitle",
+    "TableHead": "FCTKTableHead",
+    "TableText": "FCTKTableText",
+    "LargeCardText": "FCTKLargeCardText",
+}
 
 
-def bullet_list(items):
-    return ListFlowable(
-        [ListItem(p(item, "FCTKBody"), leftIndent=10) for item in items],
-        bulletType="bullet",
-        start="circle",
-        leftIndent=16,
-        bulletFontName=BASE_FONT,
-        bulletFontSize=7,
-        bulletColor=EMBER,
-    )
+def p(text, style="Body"):
+    return Paragraph(text, S[STYLE_ALIASES.get(style, style)])
 
 
-def check_list(items):
-    data = []
-    for item in items:
-        data.append([p("□", "FCTKTableText"), p(item, "FCTKTableText")])
-    table = Table(data, colWidths=[0.22 * inch, 6.55 * inch], hAlign="LEFT")
+def title(kicker, heading, intro=None):
+    items = [p(kicker.upper(), "Kicker"), p(heading, "Title")]
+    if intro:
+        items.append(p(intro, "Body"))
+    items.append(Spacer(1, 0.08 * inch))
+    return items
+
+
+def checkbox_table(items, col_width=CONTENT_WIDTH):
+    rows = [[p("□", "TableText"), p(item, "TableText")] for item in items]
+    table = Table(rows, colWidths=[0.25 * inch, col_width - 0.25 * inch], hAlign="LEFT")
     table.setStyle(
         TableStyle(
             [
-                ("VALIGN", (0, 0), (-1, -1), "TOP"),
                 ("BOX", (0, 0), (-1, -1), 0.5, LINE),
                 ("INNERGRID", (0, 0), (-1, -1), 0.3, LINE),
                 ("BACKGROUND", (0, 0), (-1, -1), colors.white),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 6),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 6),
                 ("TOPPADDING", (0, 0), (-1, -1), 5),
@@ -231,16 +228,52 @@ def check_list(items):
     return table
 
 
-def info_card(title, body, width=3.25 * inch):
-    content = [
-        [p(title, "FCTKCardTitle")],
-        [p(body, "FCTKSmall")],
+def bullet_list(items):
+    return ListFlowable(
+        [ListItem(p(item, "Body"), leftIndent=10) for item in items],
+        bulletType="bullet",
+        start="circle",
+        leftIndent=16,
+        bulletFontName=BASE_FONT,
+        bulletFontSize=7,
+        bulletColor=EMBER,
+    )
+
+
+def data_table(rows, widths, header=True, body_style="TableText"):
+    converted = []
+    for row_index, row in enumerate(rows):
+        style = "TableHead" if row_index == 0 and header else body_style
+        converted.append([p(str(cell), style) for cell in row])
+    table = Table(converted, colWidths=widths, hAlign="LEFT", repeatRows=1 if header else 0)
+    commands = [
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("BOX", (0, 0), (-1, -1), 0.6, LINE),
+        ("INNERGRID", (0, 0), (-1, -1), 0.3, LINE),
+        ("LEFTPADDING", (0, 0), (-1, -1), 5),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
     ]
-    table = Table(content, colWidths=[width], hAlign="LEFT")
+    if header:
+        commands.extend(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), INK),
+                ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, MIST]),
+            ]
+        )
+    else:
+        commands.append(("BACKGROUND", (0, 0), (-1, -1), colors.white))
+    table.setStyle(TableStyle(commands))
+    return table
+
+
+def card(title_text, body_text, width=CONTENT_WIDTH, fill=SAND):
+    table = Table([[p(title_text, "CardTitle")], [p(body_text, "Small")]], colWidths=[width])
     table.setStyle(
         TableStyle(
             [
-                ("BACKGROUND", (0, 0), (-1, -1), SAND),
+                ("BACKGROUND", (0, 0), (-1, -1), fill),
                 ("BOX", (0, 0), (-1, -1), 0.6, LINE),
                 ("LEFTPADDING", (0, 0), (-1, -1), 9),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 9),
@@ -252,41 +285,11 @@ def info_card(title, body, width=3.25 * inch):
     return table
 
 
-def section_header(kicker, title, intro=None):
-    out = [p(kicker, "FCTKKicker"), p(title, "FCTKTitle")]
-    if intro:
-        out.append(p(intro, "FCTKBody"))
-    out.append(Spacer(1, 0.08 * inch))
-    return out
-
-
-def table(rows, widths, header=True):
-    converted = []
-    for row_index, row in enumerate(rows):
-        style = "FCTKTableHead" if row_index == 0 and header else "FCTKTableText"
-        converted.append([p(str(cell), style) for cell in row])
-    t = Table(converted, colWidths=widths, hAlign="LEFT", repeatRows=1 if header else 0)
-    commands = [
-        ("VALIGN", (0, 0), (-1, -1), "TOP"),
-        ("BOX", (0, 0), (-1, -1), 0.6, LINE),
-        ("INNERGRID", (0, 0), (-1, -1), 0.3, LINE),
-        ("LEFTPADDING", (0, 0), (-1, -1), 6),
-        ("RIGHTPADDING", (0, 0), (-1, -1), 6),
-        ("TOPPADDING", (0, 0), (-1, -1), 5),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
-    ]
-    if header:
-        commands.extend(
-            [
-                ("BACKGROUND", (0, 0), (-1, 0), INK),
-                ("BACKGROUND", (0, 1), (-1, -1), colors.white),
-                ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, MIST]),
-            ]
-        )
-    else:
-        commands.append(("BACKGROUND", (0, 0), (-1, -1), colors.white))
-    t.setStyle(TableStyle(commands))
-    return t
+def phrase_table(rows):
+    return data_table(
+        [["English", "Chinese characters", "Pinyin"]] + rows,
+        [2.05 * inch, 2.2 * inch, 2.5 * inch],
+    )
 
 
 def on_page(canvas, doc):
@@ -294,36 +297,31 @@ def on_page(canvas, doc):
     canvas.saveState()
     canvas.setFillColor(PAPER)
     canvas.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, fill=1, stroke=0)
-    canvas.setFillColor(INK)
     canvas.setFont(BOLD_FONT, 8)
+    canvas.setFillColor(INK)
     canvas.drawString(MARGIN, 0.33 * inch, "First China Trip Kit")
     canvas.setFont(BASE_FONT, 7.5)
-    canvas.setFillColor(colors.HexColor("#6b625d"))
-    canvas.drawCentredString(PAGE_WIDTH / 2, 0.33 * inch, "Travel planning information - verify official requirements")
-    canvas.drawRightString(PAGE_WIDTH - MARGIN, 0.33 * inch, f"{page_num}")
+    canvas.setFillColor(MUTED)
+    canvas.drawCentredString(PAGE_WIDTH / 2, 0.33 * inch, SITE_URL)
+    canvas.drawRightString(PAGE_WIDTH - MARGIN, 0.33 * inch, str(page_num))
     canvas.restoreState()
 
 
 def cover_page(story):
     cover = Table(
         [
-            [p("FIRST CHINA TRIP KIT", "FCTKCoverKicker")],
-            [p("China Payment & Apps Setup Guide", "FCTKCoverTitle")],
+            [p("FIRST CHINA TRIP KIT", "CoverKicker")],
+            [p("China Payment & Apps Setup Guide", "CoverTitle")],
             [
                 p(
-                    "A printable pre-arrival setup pack for Alipay, WeChat Pay, essential apps, maps, translation, ride-hailing, internet access, backup payment options, and first-day troubleshooting.",
-                    "FCTKCoverSubtitle",
+                    "A practical pre-arrival setup guide for Alipay, WeChat Pay, essential apps, and first-day payment backups.",
+                    "CoverSubtitle",
                 )
             ],
-            [
-                p(
-                    "Mobile-readable. Printable. Built for first-time foreign visitors preparing for China.",
-                    "FCTKCoverSubtitle",
-                )
-            ],
+            [p(f"{SITE_URL}<br/>{CONTACT_EMAIL}", "CoverSubtitle")],
         ],
-        colWidths=[PAGE_WIDTH - 2 * MARGIN],
-        rowHeights=[0.55 * inch, 1.3 * inch, 1.05 * inch, 0.7 * inch],
+        colWidths=[CONTENT_WIDTH],
+        rowHeights=[0.55 * inch, 1.45 * inch, 1.05 * inch, 0.62 * inch],
     )
     cover.setStyle(
         TableStyle(
@@ -338,16 +336,16 @@ def cover_page(story):
             ]
         )
     )
-    story.append(Spacer(1, 0.55 * inch))
+    story.append(Spacer(1, 0.75 * inch))
     story.append(cover)
-    story.append(Spacer(1, 0.28 * inch))
+    story.append(Spacer(1, 0.32 * inch))
     story.append(
-        table(
+        data_table(
             [
-                ["Use this guide for", "What this guide is not"],
+                ["Use this guide for", "Keep as backup"],
                 [
-                    "Planning your first payment, app, internet, and backup setup before arrival.",
-                    "Legal, immigration, visa, financial, banking, or official government advice.",
+                    "Preparing payment apps, essential apps, internet access, hotel address cards, and first-day tests before arrival.",
+                    "Save the PDF offline and print the cards you may need for taxis, hotels, and checkout counters.",
                 ],
             ],
             [3.35 * inch, 3.35 * inch],
@@ -358,308 +356,316 @@ def cover_page(story):
 
 def build_story():
     story = []
+
     cover_page(story)
 
-    story += section_header(
-        "Start here",
-        "How to use this setup guide",
-        "Work through the pages before you fly, then keep the phrase cards and offline notes on your phone. Availability may change, so use this as a practical planning layer and verify important rules in the official app or provider source.",
-    )
+    story += title("Page 2", "Important disclaimer")
     story.append(
-        table(
-            [
-                ["When", "What to do", "Why it matters"],
-                ["7-14 days before", "Install apps, add cards, choose data plan, save hotel address.", "You have time to solve verification and bank security prompts."],
-                ["2-3 days before", "Reopen apps, update passwords, save screenshots, pack backup card and cash.", "Travel day is not the moment to debug account access."],
-                ["Arrival day", "Test data, maps, translation, payment, ride-hailing, and hotel address.", "Small tests reduce stress before the first meal or taxi."],
-                ["First 48 hours", "Use simple purchases, keep backups nearby, ask hotel staff for address help.", "Most friction is easier to solve away from queues."],
-            ],
-            [1.45 * inch, 3.1 * inch, 2.2 * inch],
+        card(
+            "Travel planning information only",
+            "This guide provides travel planning information only. It is not legal, immigration, financial, banking, or official government advice. Payment app support, card acceptance, verification rules, transport policies, and travel requirements may change. Always verify current official information before traveling.",
+            fill=MIST,
         )
     )
-    story.append(Spacer(1, 0.14 * inch))
-    story.append(info_card("Important travel disclaimer", "First China Trip Kit provides travel planning information only. We do not provide legal, immigration, visa, financial, banking, or official government advice. Visa rules, payment app support, bank card acceptance, transport policies, and booking requirements may change. Always verify current official requirements before booking or traveling.", 6.75 * inch))
-    story.append(PageBreak())
-
-    story += section_header("Pre-arrival plan", "Your setup timeline")
+    story.append(Spacer(1, 0.16 * inch))
     story.append(
-        check_list(
+        data_table(
             [
-                "Confirm your passport, visa or visa-free transit eligibility, and entry documents through official sources.",
-                "Install Alipay and WeChat before departure and confirm you can sign in.",
-                "Add at least one international card to Alipay if supported for your account and card issuer.",
-                "Prepare WeChat Pay as a backup if your account and card setup allow it.",
-                "Choose roaming, eSIM, local SIM, or pocket Wi-Fi before arrival.",
-                "Save your hotel name, Chinese address, phone number, and nearest landmark offline.",
-                "Save passport copy, flight details, train tickets, attraction bookings, and insurance offline.",
-                "Carry a physical card and a small cash backup for arrival-day problems.",
-                "Prepare translation, maps, and ride-hailing access before the first transfer.",
-            ]
-        )
-    )
-    story.append(PageBreak())
-
-    story += section_header("Payment overview", "Payment setup master checklist")
-    story.append(
-        table(
-            [
-                ["Layer", "Prepare", "Use for", "Backup note"],
-                ["Alipay", "Install, sign in, add card, learn scan/show QR flows.", "Everyday payments, ride-hailing, some local travel services.", "Do not rely on one card only if you can add another."],
-                ["WeChat Pay", "Prepare if your account supports it.", "Restaurants, mini programs, local contact flows.", "Treat as a backup until tested."],
-                ["Physical card", "Keep the card used for hotels and bookings.", "Hotel deposits, international hotels, emergency backup.", "Some small merchants may not accept it."],
-                ["Cash", "Carry a modest amount in RMB.", "Arrival-day gaps, phone battery issues, small merchant backup.", "China is mobile-payment heavy, but cash can still help."],
-                ["Hotel help", "Ask staff to confirm addresses or write a short note.", "Taxi, station, booking, and payment explanation support.", "Useful when translation is not enough."],
-            ],
-            [1.0 * inch, 2.1 * inch, 2.0 * inch, 1.65 * inch],
-        )
-    )
-    story.append(Spacer(1, 0.12 * inch))
-    story.append(info_card("Prepare a backup", "Payment app availability, foreign card support, merchant QR flows, and bank security rules may change. Keep more than one payment path ready.", 6.75 * inch))
-    story.append(PageBreak())
-
-    story += section_header("Alipay", "Alipay setup checklist")
-    story.append(
-        check_list(
-            [
-                "Install the official Alipay app from your phone's app store.",
-                "Sign in with a phone number you can access while traveling.",
-                "Use the same passport name format when identity details are requested.",
-                "Add your main international card if supported.",
-                "Add a backup card from a different bank if possible.",
-                "Learn the two QR patterns: scan merchant code and show your payment code.",
-                "Enable phone security you can use while traveling, such as passcode or biometrics.",
-                "Keep mobile data active before opening payment, map, or ride-hailing flows.",
-                "Test with a small low-pressure purchase before relying on Alipay for a full day.",
-            ]
-        )
-    )
-    story.append(Spacer(1, 0.1 * inch))
-    story.append(info_card("If setup fails", "Do not solve every account issue at a busy counter. Step aside, try stable Wi-Fi, use a backup card or cash for urgent purchases, and ask hotel staff for practical help.", 6.75 * inch))
-    story.append(PageBreak())
-
-    story += section_header("WeChat Pay", "WeChat Pay setup checklist")
-    story.append(
-        check_list(
-            [
-                "Install WeChat and confirm you can sign in before travel day.",
-                "Prepare account security and phone access before departure.",
-                "Open wallet/payment features only if they are available for your account.",
-                "Add your card if supported and complete only ordinary app prompts.",
-                "Do not make WeChat Pay your only payment plan on a first trip.",
-                "Use WeChat Pay where a restaurant, local service, or mini program flow needs it.",
-                "Test with a small purchase before using it for a taxi, meal, or ticket line.",
-                "Keep Alipay, physical card, and cash available as backups.",
-            ]
-        )
-    )
-    story.append(Spacer(1, 0.1 * inch))
-    story.append(
-        table(
-            [
-                ["Good WeChat Pay use case", "Use another backup when"],
-                ["A restaurant ordering system opens inside WeChat.", "Your account asks for extra verification you cannot complete."],
-                ["A local contact or mini program expects WeChat.", "You are standing in a queue with weak mobile data."],
-                ["A merchant QR flow works better in WeChat.", "The purchase is urgent and cash or Alipay is faster."],
+                ["Do not use this guide as", "Use this guide as"],
+                ["A guarantee that an app, bank card, visa, route, or merchant payment will work.", "A practical pre-trip checklist and backup planning tool."],
+                ["A replacement for official app notices, bank card rules, immigration rules, or transport policies.", "A way to organize what to verify before booking and before relying on payment apps."],
             ],
             [3.35 * inch, 3.35 * inch],
         )
     )
     story.append(PageBreak())
 
-    story += section_header("Backup payment", "Backup payment decision tree")
+    story += title("Page 3", "Quick setup overview")
     story.append(
-        table(
+        checkbox_table(
             [
-                ["Problem", "First move", "Second move", "Fallback"],
-                ["Merchant QR will not load", "Check mobile data and try again.", "Ask if cashier can scan your payment code.", "Use another wallet or cash."],
-                ["Card issuer blocks payment", "Try backup card if already added.", "Use cash or physical card for urgent purchase.", "Call issuer later on stable Wi-Fi."],
-                ["App asks for verification", "Step aside and read the prompt calmly.", "Use hotel Wi-Fi or ask staff for translation help.", "Use another payment path."],
-                ["Taxi payment unclear", "Use ride-hailing inside an app if possible.", "Show hotel address and ask about cash before ride.", "Ask hotel staff to help arrange taxi."],
-                ["Restaurant QR ordering fails", "Ask staff for help or cashier ordering.", "Choose picture menu or counter ordering.", "Move to a simpler first meal."],
-            ],
-            [1.55 * inch, 1.85 * inch, 1.85 * inch, 1.5 * inch],
-        )
-    )
-    story.append(Spacer(1, 0.1 * inch))
-    story.append(info_card("Decision rule", "If the purchase is urgent, pay with the working backup first. Debug app and card problems later, away from the counter.", 6.75 * inch))
-    story.append(PageBreak())
-
-    story += section_header("Apps", "Essential China apps stack")
-    story.append(
-        table(
-            [
-                ["Need", "Primary app type", "Prepare before arrival", "Offline backup"],
-                ["Payment", "Alipay plus WeChat if available", "Install, sign in, add card, learn QR flows.", "Cash, physical card, screenshot notes."],
-                ["Maps", "Apple Maps, Amap, or Baidu Maps", "Save hotel and station names in Chinese.", "Screenshots of routes and addresses."],
-                ["Translation", "Text, camera, and offline Chinese", "Download offline language pack if offered.", "Saved phrase cards."],
-                ["Ride-hailing", "DiDi or ride-hailing mini program", "Save hotel address and pickup notes.", "Taxi card and cash backup."],
-                ["Trains", "12306 or travel platform", "Save passport-linked booking details.", "Screenshots of train number, station, carriage."],
-                ["Internet", "Roaming, eSIM, local SIM, or pocket Wi-Fi", "Choose plan and test instructions.", "Airport Wi-Fi and hotel help."],
-            ],
-            [0.9 * inch, 1.7 * inch, 2.35 * inch, 1.8 * inch],
-        )
-    )
-    story.append(PageBreak())
-
-    story += section_header("Internet", "Mobile data and access checklist")
-    story.append(
-        check_list(
-            [
-                "Confirm your phone supports your chosen roaming, eSIM, SIM, or pocket Wi-Fi option.",
-                "Save activation instructions offline before the flight.",
-                "Keep your home SIM or phone number accessible if apps or banks send security prompts.",
-                "Download offline Chinese in your translation app if available.",
-                "Save key map pins, station names, hotel address, and booking details as screenshots.",
-                "Before leaving the airport or station, test data, maps, translation, payment apps, and ride-hailing.",
-                "Carry a power bank so payment and transport apps are not limited by battery.",
-            ]
-        )
-    )
-    story.append(Spacer(1, 0.12 * inch))
-    story.append(
-        table(
-            [
-                ["Option", "Best for", "Watch for"],
-                ["Roaming", "Simple short trips if your home plan is affordable.", "Daily fees, speed limits, and coverage."],
-                ["Travel eSIM", "Phones that support eSIM and travelers who want setup before landing.", "Activation timing and mainland China support."],
-                ["Local SIM", "Longer stays and travelers who need local service.", "Passport registration and setup time."],
-                ["Pocket Wi-Fi", "Groups sharing one connection.", "Battery, pickup/return, and carrying another device."],
-            ],
-            [1.2 * inch, 3.1 * inch, 2.4 * inch],
-        )
-    )
-    story.append(PageBreak())
-
-    story += section_header("Arrival day", "First-day payment test")
-    story.append(
-        check_list(
-            [
-                "Open Alipay and confirm the app loads on mobile data.",
-                "Open WeChat and confirm you can access chat and payment features if available.",
-                "Load your hotel address in Chinese and map pin.",
-                "Make one small low-pressure purchase, such as bottled water or a snack.",
-                "If one card fails, try a backup card or another wallet before troubleshooting in depth.",
-                "Use ride-hailing or hotel help for your first taxi if the destination is hard to explain.",
-                "Keep cash, physical card, passport, and hotel address accessible on the first day.",
-                "Write down what worked: wallet, card, merchant type, and any prompts you saw.",
-            ]
-        )
-    )
-    story.append(Spacer(1, 0.1 * inch))
-    story.append(info_card("Good first purchase", "Choose a calm shop near your hotel or a staffed counter. Avoid making your first test while a taxi meter is running or a restaurant line is waiting.", 6.75 * inch))
-    story.append(PageBreak())
-
-    story += section_header("Troubleshooting", "Common payment failure fixes")
-    story.append(
-        table(
-            [
-                ["Symptom", "Likely cause", "What to try"],
-                ["Payment app opens slowly", "Weak mobile data or app update.", "Step aside, reconnect, reopen app, use screenshot notes."],
-                ["Card cannot be charged", "Issuer security or merchant support.", "Try backup card, lower-pressure merchant, cash, or physical card."],
-                ["QR scan does nothing", "Wrong QR type or mini program issue.", "Ask cashier to scan your payment code instead."],
-                ["Identity prompt appears", "Account verification required.", "Read prompt, use stable Wi-Fi, avoid sharing sensitive data with strangers."],
-                ["Restaurant ordering QR is confusing", "Menu flow requires local language or account.", "Ask staff for help, use camera translation, or order at counter."],
-                ["Taxi driver does not understand address", "Address not saved in Chinese.", "Show hotel card with Chinese address and phone number."],
-                ["Train booking details hard to find", "App login or data issue.", "Use passport, screenshots, and staffed counter if needed."],
-            ],
-            [1.55 * inch, 1.85 * inch, 3.35 * inch],
-        )
-    )
-    story.append(PageBreak())
-
-    story += section_header("Phrase cards", "Taxi and checkout phrases")
-    story.append(
-        table(
-            [
-                ["Situation", "Show this Chinese", "Pinyin", "Meaning"],
-                ["Taxi to hotel", "请带我去这个地址。", "Qing dai wo qu zhe ge di zhi.", "Please take me to this address."],
-                ["Call hotel", "可以帮我打电话给酒店吗？", "Ke yi bang wo da dian hua gei jiu dian ma?", "Can you help call the hotel?"],
-                ["Alipay", "可以用支付宝吗？", "Ke yi yong Zhi Fu Bao ma?", "Can I use Alipay?"],
-                ["WeChat Pay", "可以用微信支付吗？", "Ke yi yong Wei Xin Zhi Fu ma?", "Can I use WeChat Pay?"],
-                ["Cash", "可以用现金吗？", "Ke yi yong xian jin ma?", "Can I use cash?"],
-                ["Need help", "我不会操作，可以帮我一下吗？", "Wo bu hui cao zuo, ke yi bang wo yi xia ma?", "I do not know how to use this. Can you help?"],
-                ["Receipt", "可以给我收据吗？", "Ke yi gei wo shou ju ma?", "Can I have a receipt?"],
-            ],
-            [1.0 * inch, 2.0 * inch, 1.95 * inch, 1.8 * inch],
-        )
-    )
-    story.append(Spacer(1, 0.1 * inch))
-    story.append(info_card("How to use phrases", "Show the Chinese characters on your screen. Short written Chinese is often clearer than long spoken audio in a busy taxi, shop, or restaurant.", 6.75 * inch))
-    story.append(PageBreak())
-
-    story += section_header("Offline cards", "Print or save these cards")
-    cards = [
-        ("Hotel address card", "Hotel name: ____________________<br/>Chinese address: ____________________<br/>Phone: ____________________<br/>Nearest landmark: ____________________"),
-        ("Payment backup card", "Main wallet: ____________________<br/>Backup wallet: ____________________<br/>Backup card: ____________________<br/>Cash location: ____________________"),
-        ("Transport card", "Arrival airport/station: ____________________<br/>Hotel route: ____________________<br/>Backup taxi phrase saved: Yes / No"),
-        ("Emergency card", "Travel insurance: ____________________<br/>Embassy/consulate info: ____________________<br/>Hotel front desk phone: ____________________"),
-    ]
-    story.append(
-        table(
-            [[title, body] for title, body in cards],
-            [2.0 * inch, 4.75 * inch],
-            header=False,
-        )
-    )
-    story.append(PageBreak())
-
-    story += section_header("Arrival checklist", "First 24 hours in China")
-    story.append(
-        check_list(
-            [
-                "Confirm phone data works outside the airport or station.",
-                "Open maps and confirm your hotel route.",
-                "Open translation app and camera translation.",
-                "Confirm hotel address and phone number are saved in Chinese.",
-                "Test one payment app with a small purchase.",
-                "Keep cash and physical card available until payment is tested.",
-                "Save screenshots of any app prompts that need later attention.",
-                "Ask hotel staff to confirm station, attraction, or taxi addresses before long transfers.",
-                "Avoid tight train, flight, or attraction schedules on the first day.",
-                "Rest, charge devices, and prepare the next morning's transport plan.",
-            ]
-        )
-    )
-    story.append(PageBreak())
-
-    story += section_header("Verify", "Official verification reminders")
-    story.append(
-        table(
-            [
-                ["Topic", "Verify before relying on it", "Where to check"],
-                ["Entry documents", "Visa, visa-free transit, passport validity, permitted stay area.", "Official consular or immigration sources."],
-                ["Payment apps", "Current foreign card support, fees, identity prompts, and usage limits.", "Official app help pages and in-app notices."],
-                ["Transport", "Ticket rules, station name, passport checks, refund or change policy.", "Official railway or booking platform details."],
-                ["Attractions", "Reservation rules, passport requirements, closure days, entry time.", "Official attraction pages or booking mini programs."],
-                ["Mobile data", "Plan coverage, activation timing, speed, and mainland China support.", "Your mobile provider or eSIM provider."],
-            ],
-            [1.3 * inch, 3.2 * inch, 2.25 * inch],
-        )
-    )
-    story.append(Spacer(1, 0.12 * inch))
-    story.append(info_card("Keep this wording in mind", "Availability may change. Prepare a backup. Verify official requirements. This guide helps you plan, but it does not replace current official instructions.", 6.75 * inch))
-    story.append(PageBreak())
-
-    story += section_header("Quick reference", "Final pre-flight checklist")
-    story.append(
-        check_list(
-            [
-                "Passport and entry documents verified.",
-                "Hotel Chinese address and phone number saved offline.",
-                "Alipay installed, signed in, and prepared if available.",
-                "WeChat and WeChat Pay prepared as a backup if available.",
-                "Payment backup card and cash plan ready.",
-                "Mobile data option chosen and instructions saved offline.",
-                "Maps, translation, ride-hailing, and train support apps prepared.",
-                "First-day small payment test planned.",
-                "Taxi and checkout phrase cards saved to phone.",
-                "Important screenshots stored in an offline album.",
-                "Official requirements checked before final bookings.",
+                "Install Alipay.",
+                "Add international card if supported.",
+                "Install WeChat.",
+                "Prepare translation app.",
+                "Prepare map app.",
+                "Prepare eSIM / roaming.",
+                "Save hotel address in Chinese.",
+                "Carry backup cash.",
+                "Carry physical bank card.",
+                "Test payment on arrival day.",
             ]
         )
     )
     story.append(Spacer(1, 0.16 * inch))
-    story.append(info_card("Need help?", "If you cannot access your guide or purchased the wrong file, contact hello@firstchinatripkit.com and we will review the issue.", 6.75 * inch))
+    story.append(
+        card(
+            "Best order",
+            "Set up apps before you fly, save hotel details offline, then make one small purchase after arrival before depending on mobile payment for taxis or dinner.",
+        )
+    )
+    story.append(PageBreak())
+
+    story += title("Page 4", "Alipay setup checklist")
+    story.append(
+        data_table(
+            [
+                ["Section", "What to prepare", "Backup plan"],
+                ["Passport", "Use the same passport name format if identity details are requested.", "Keep passport available during setup and hotel check-in."],
+                ["International card", "Add a card if supported by your account and card issuer.", "Prepare another card, cash, and a physical card."],
+                ["Phone number", "Use a number you can access while traveling.", "Keep your home SIM available if bank SMS is needed."],
+                ["Bank app", "Make sure your bank app and security prompts work overseas.", "Notify your bank of travel if your issuer recommends it."],
+                ["Stable internet", "Use reliable Wi-Fi or mobile data during setup.", "Do urgent purchases with a working backup first."],
+                ["First-day payment test", "Test with water or a small snack.", "Do not make taxis or dinner your first test."],
+                ["Common setup issues", "Card declined, SMS not received, identity prompt, app language confusion.", "Step aside, screenshot the prompt, and ask hotel staff if needed."],
+            ],
+            [1.22 * inch, 3.0 * inch, 2.53 * inch],
+        )
+    )
+    story.append(Spacer(1, 0.1 * inch))
+    story.append(card("Careful wording", "Alipay may work well for many foreign visitors, but support can depend on account status, card issuer, verification, app rules, and merchant flows. Prepare a backup."))
+    story.append(PageBreak())
+
+    story += title("Page 5", "WeChat / WeChat Pay setup checklist")
+    story.append(
+        data_table(
+            [
+                ["Topic", "Use", "Planning note"],
+                ["Why WeChat is useful", "Messaging, local contact, restaurant ordering, mini programs, and some payment flows.", "Install before arrival and confirm you can sign in."],
+                ["Messaging use", "Hotels, drivers, contacts, and service providers may use WeChat.", "Keep account access stable before you travel."],
+                ["Payment backup", "WeChat Pay can be useful when a merchant or mini program expects it.", "Treat it as a backup until you have tested it."],
+                ["Mini programs", "Restaurants, attractions, ride-hailing, and services may use mini programs.", "Some flows can be hard without Chinese support."],
+                ["Setup friction warning", "Foreign card support and verification can vary.", "Do not make WeChat Pay your only payment option."],
+                ["If WeChat Pay does not work", "Use Alipay, cash, physical card, or hotel help.", "Solve account issues later away from the queue."],
+                ["When to use Alipay first", "Everyday QR payments and simple first-day purchases.", "Test both options before relying on either."],
+            ],
+            [1.35 * inch, 2.8 * inch, 2.6 * inch],
+        )
+    )
+    story.append(PageBreak())
+
+    story += title("Page 6", "Payment backup decision tree")
+    story.append(
+        data_table(
+            [
+                ["If this happens", "Try this", "Then this", "Final backup"],
+                ["Alipay works", "Use it as your primary payment method.", "Still keep a backup card and cash.", "Save successful setup notes."],
+                ["Alipay card fails", "Try another card.", "Check bank app or issuer security prompt.", "Use cash, physical card, or hotel help."],
+                ["WeChat Pay works", "Use it as a backup.", "Use where restaurants or mini programs expect it.", "Do not remove other backups."],
+                ["App payment fails", "Reconnect data and retry once.", "Try another wallet or cashier scan flow.", "Use cash / physical card / hotel help."],
+                ["Taxi payment fails", "Ask driver if cash is possible.", "Call hotel or show hotel phone number.", "Ask hotel to help resolve the fare."],
+                ["No internet", "Use offline hotel address and saved screenshots.", "Use cash and physical card.", "Get hotel or station staff help."],
+            ],
+            [1.42 * inch, 1.9 * inch, 1.9 * inch, 1.53 * inch],
+        )
+    )
+    story.append(Spacer(1, 0.12 * inch))
+    story.append(card("Rule of thumb", "Pay with a working backup first. Debug account or bank issues later, away from a taxi, restaurant line, or checkout counter."))
+    story.append(PageBreak())
+
+    story += title("Page 7", "Essential China app stack")
+    story.append(
+        data_table(
+            [
+                ["App / Tool", "Chinese name", "Main use", "Install before arrival?", "Foreigner friction", "Backup tip"],
+                ["Alipay", "支付宝", "Payment, QR codes, ride-hailing, some services.", "Yes", "Medium", "Carry card and cash."],
+                ["WeChat", "微信", "Messaging, payment backup, mini programs.", "Yes", "Medium / High", "Use Alipay first if needed."],
+                ["Translation app", "-", "Text, voice, camera translation.", "Yes", "Low", "Download offline Chinese."],
+                ["Map app", "-", "Routes, addresses, transit.", "Yes", "Medium", "Save screenshots."],
+                ["eSIM / roaming app", "-", "Mobile data setup and support.", "Yes", "Medium", "Keep hotel Wi-Fi plan."],
+                ["Trip.com or train booking support", "-", "Train and hotel booking help.", "Yes", "Low / Medium", "Save passport-linked tickets."],
+                ["DiDi", "滴滴", "Ride-hailing.", "Optional", "Medium", "Hotel can help call taxi."],
+                ["Amap", "高德地图", "Local maps and transit.", "Optional", "High", "Use screenshots or translation."],
+                ["12306", "中国铁路12306", "Official train tickets.", "Optional", "High", "Use booking platform or station help."],
+                ["Offline screenshot folder", "-", "Backup for addresses and tickets.", "Yes", "Low", "Keep it available without data."],
+            ],
+            [0.92 * inch, 0.78 * inch, 1.55 * inch, 1.05 * inch, 0.95 * inch, 1.5 * inch],
+        )
+    )
+    story.append(PageBreak())
+
+    story += title("Page 8", "First-day payment test")
+    story.append(
+        checkbox_table(
+            [
+                "Go to a convenience store.",
+                "Buy water or a small snack.",
+                "Test Alipay.",
+                "Confirm card charge.",
+                "Save receipt if needed.",
+                "Keep cash ready.",
+                "Do not depend on taxis or dinner before testing payment.",
+            ]
+        )
+    )
+    story.append(Spacer(1, 0.14 * inch))
+    story.append(
+        data_table(
+            [
+                ["Good test", "Avoid as first test"],
+                ["A small purchase near your hotel, airport, or station.", "Taxi fare, group dinner, attraction entry, or any queue where people are waiting behind you."],
+                ["A staffed counter where you can step aside if needed.", "A rushed self-service kiosk with weak mobile data."],
+            ],
+            [3.35 * inch, 3.35 * inch],
+        )
+    )
+    story.append(PageBreak())
+
+    story += title("Page 9", "Troubleshooting table")
+    story.append(
+        data_table(
+            [
+                ["Problem", "Possible reason", "What to try", "Backup"],
+                ["Card cannot be added", "Issuer support, identity prompt, app rule, network issue.", "Try another card, stable Wi-Fi, or bank app check.", "Cash, physical card, hotel help."],
+                ["SMS verification does not arrive", "Roaming, SIM, spam filter, delay.", "Wait, reconnect, check home SIM access.", "Use another payment path."],
+                ["Merchant says payment failed", "QR flow, network, issuer block, merchant setting.", "Try again once, lower amount, or another wallet.", "Cash or physical card."],
+                ["App asks for identity verification", "Account rules or transaction risk check.", "Read prompt carefully; avoid sharing sensitive data with strangers.", "Use backup payment."],
+                ["No internet after landing", "Roaming/eSIM not active or airport coverage issue.", "Use airport/hotel Wi-Fi and activation notes.", "Cash, screenshots, hotel address."],
+                ["Taxi cannot accept card", "Taxi expects cash or QR payment.", "Ask about cash before ride if possible.", "Hotel call or ride-hailing app."],
+                ["Restaurant only accepts QR payment", "Ordering/payment inside QR or mini program.", "Ask staff to help or order at cashier.", "Choose simpler first meal."],
+                ["Bank blocks transaction", "Issuer fraud check or travel rule.", "Open bank app or call support later.", "Backup card or cash."],
+            ],
+            [1.18 * inch, 1.82 * inch, 2.45 * inch, 1.3 * inch],
+        )
+    )
+    story.append(PageBreak())
+
+    story += title("Page 10", "Useful Chinese payment phrases")
+    story.append(
+        phrase_table(
+            [
+                ["Can I pay with Alipay?", "我可以用支付宝支付吗？", "Wǒ kěyǐ yòng Zhīfùbǎo zhīfù ma?"],
+                ["Can I pay with WeChat Pay?", "可以用微信支付吗？", "Kěyǐ yòng Wēixìn zhīfù ma?"],
+                ["Can I pay by card?", "可以刷卡吗？", "Kěyǐ shuākǎ ma?"],
+                ["Can I pay with cash?", "可以用现金吗？", "Kěyǐ yòng xiànjīn ma?"],
+                ["The payment failed.", "支付失败了。", "Zhīfù shībài le."],
+                ["Could you scan my QR code?", "您可以扫我的付款码吗？", "Nín kěyǐ sǎo wǒ de fùkuǎn mǎ ma?"],
+            ]
+        )
+    )
+    story.append(Spacer(1, 0.14 * inch))
+    story.append(card("How to use this page", "Show the Chinese characters on your phone. Keep the page available offline in case translation apps or mobile data are not working."))
+    story.append(PageBreak())
+
+    story += title("Page 11", "Taxi and hotel phrase card")
+    story.append(
+        phrase_table(
+            [
+                ["Please help me call a taxi.", "请帮我叫一辆出租车。", "Qǐng bāng wǒ jiào yí liàng chūzūchē."],
+                ["This is my hotel address.", "这是我的酒店地址。", "Zhè shì wǒ de jiǔdiàn dìzhǐ."],
+                ["Please take me to this address.", "请带我去这个地址。", "Qǐng dài wǒ qù zhège dìzhǐ."],
+                ["Can I pay with cash?", "可以用现金吗？", "Kěyǐ yòng xiànjīn ma?"],
+            ]
+        )
+    )
+    story.append(Spacer(1, 0.16 * inch))
+    story.append(card("Taxi note", "If your destination is difficult to explain, show the Chinese address and hotel phone number. Hotel staff can often help confirm the destination before you leave."))
+    story.append(PageBreak())
+
+    story += title("Page 12", "Hotel address card template")
+    story.append(
+        data_table(
+            [
+                ["Field", "Write your details here"],
+                ["Hotel English name", ""],
+                ["Hotel Chinese name", ""],
+                ["Chinese address", ""],
+                ["Hotel phone", ""],
+                ["Nearest metro station", ""],
+                ["Emergency contact", ""],
+                ["Notes", ""],
+            ],
+            [2.0 * inch, 4.75 * inch],
+            body_style="LargeCardText",
+        )
+    )
+    story.append(Spacer(1, 0.18 * inch))
+    story.append(card("Offline tip", "Save this card as a screenshot and print one copy. It is useful for taxis, station help desks, and hotel check-in issues."))
+    story.append(PageBreak())
+
+    story += title("Page 13", "Payment backup card")
+    story.append(
+        data_table(
+            [
+                ["Backup item", "Write your plan here"],
+                ["Primary payment", ""],
+                ["Backup payment", ""],
+                ["Cash location", ""],
+                ["Bank support number", ""],
+                ["Hotel phone", ""],
+                ["Phrase", "可以用现金吗？ / Kěyǐ yòng xiànjīn ma? / Can I pay with cash?"],
+            ],
+            [2.0 * inch, 4.75 * inch],
+            body_style="LargeCardText",
+        )
+    )
+    story.append(Spacer(1, 0.18 * inch))
+    story.append(card("Do not store sensitive data", "Do not write full card numbers, account passwords, or bank login details on this card. Keep it practical and non-sensitive."))
+    story.append(PageBreak())
+
+    story += title("Page 14", "Before you fly checklist")
+    checklist_groups = [
+        ["Payment", "Alipay installed; WeChat installed; card prepared; cash backup ready."],
+        ["Apps", "Translation, maps, ride-hailing, train support, and screenshot folder ready."],
+        ["Internet", "Roaming, eSIM, SIM, or pocket Wi-Fi plan confirmed."],
+        ["Hotel address", "Chinese name, address, phone, and nearest metro saved offline."],
+        ["Train tickets", "Passport-linked details and station names saved."],
+        ["Passport", "Passport accessible for hotel, trains, and tickets."],
+        ["Cash", "Small RMB backup carried safely."],
+        ["Power bank", "Charged and packed for payment and maps."],
+        ["Emergency phrases", "Payment, taxi, hotel, and cash phrases saved offline."],
+    ]
+    story.append(data_table([["Area", "Ready check"]] + checklist_groups, [1.6 * inch, 5.15 * inch]))
+    story.append(PageBreak())
+
+    story += title("Page 15", "Official resources to verify")
+    story.append(
+        data_table(
+            [
+                ["Resource", "What to verify"],
+                ["Alipay official resources", "Current foreign card support, identity requirements, fees, and payment limits."],
+                ["WeChat Pay official resources", "Current foreign card support, wallet availability, verification, and usage limits."],
+                ["China government payment guidance for overseas visitors", "Current official visitor payment guidance and accepted methods."],
+                ["Your own bank card issuer", "Travel rules, fraud checks, overseas fees, SMS prompts, and card restrictions."],
+                ["Hotel or travel provider", "Address, payment options, deposit rules, local taxi or arrival help."],
+            ],
+            [2.25 * inch, 4.5 * inch],
+        )
+    )
+    story.append(Spacer(1, 0.18 * inch))
+    story.append(card("Verify before booking", "Payment support, card acceptance, transport policies, and travel requirements may change. Check official resources before relying on any single setup."))
+    story.append(PageBreak())
+
+    story += title("Page 16", "Need more China trip help?")
+    story.append(
+        card(
+            "Next steps",
+            f"Visit {SITE_URL} for city kits, itinerary kits, travel essentials, and free planning tools.",
+            fill=MIST,
+        )
+    )
+    story.append(Spacer(1, 0.16 * inch))
+    story.append(
+        data_table(
+            [
+                ["Resource", "Where to go"],
+                ["City kits", "Choose your first China base and save useful Chinese addresses."],
+                ["Itinerary kits", "Build routes that leave room for jet lag, transfers, and weather."],
+                ["Travel essentials", "Prepare visa, internet, train, food, safety, and basic Chinese notes."],
+                ["Free tools", "Use checklists, route pickers, and planning helpers."],
+                ["Support", CONTACT_EMAIL],
+            ],
+            [1.65 * inch, 5.1 * inch],
+        )
+    )
+    story.append(Spacer(1, 0.2 * inch))
+    story.append(
+        card(
+            "Thank you",
+            "Thanks for supporting First China Trip Kit. The guide stays practical, cautious, and focused on first-time visitors.",
+        )
+    )
+
     return story
 
 
@@ -671,7 +677,7 @@ def main():
         rightMargin=MARGIN,
         leftMargin=MARGIN,
         topMargin=0.54 * inch,
-        bottomMargin=0.58 * inch,
+        bottomMargin=0.62 * inch,
         title="China Payment & Apps Setup Guide",
         author="First China Trip Kit",
         subject="Printable China payment and app setup guide for first-time visitors",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { ProductActionButton } from "@/components/ProductActionButton";
@@ -102,9 +103,26 @@ const insideGuideCards = [
 ];
 
 const previewCards = [
-  "Cover",
-  "Payment decision tree",
-  "Phrase card page",
+  {
+    title: "Cover preview",
+    src: "/products/previews/payment-apps-guide-cover.png",
+    alt: "Cover preview for the China Payment and Apps Setup Guide",
+  },
+  {
+    title: "Decision tree preview",
+    src: "/products/previews/payment-apps-guide-decision-tree.png",
+    alt: "Payment backup decision tree preview from the setup guide",
+  },
+  {
+    title: "App stack preview",
+    src: "/products/previews/payment-apps-guide-app-stack.png",
+    alt: "Essential China app stack preview from the setup guide",
+  },
+  {
+    title: "Phrase card preview",
+    src: "/products/previews/payment-apps-guide-phrase-card.png",
+    alt: "Useful Chinese payment phrase card preview from the setup guide",
+  },
 ];
 
 export default function StorePage() {
@@ -158,12 +176,15 @@ export default function StorePage() {
               cards before relying on Alipay, WeChat Pay, maps, translation,
               ride-hailing, and train bookings.
             </p>
-            <div className="mt-5 rounded-md border border-dashed border-ember/35 bg-sand p-4">
-              <p className="text-sm font-bold uppercase text-ember">PDF preview coming soon</p>
-              <p className="mt-2 text-sm leading-relaxed text-ink/62">
-                Preview cards will show sample checklists, phrase cards, and
-                decision tables before purchase.
-              </p>
+            <div className="mt-5 overflow-hidden rounded-lg border border-ink/10 bg-sand shadow-soft">
+              <Image
+                src="/products/previews/payment-apps-guide-cover.png"
+                alt="Cover preview for the China Payment and Apps Setup Guide"
+                width={900}
+                height={1164}
+                sizes="(min-width: 1024px) 44vw, 100vw"
+                className="h-auto w-full"
+              />
             </div>
           </div>
         </div>
@@ -257,25 +278,31 @@ export default function StorePage() {
           <div className="mb-7 max-w-3xl">
             <p className="mb-2 text-sm font-bold uppercase text-ember">Preview</p>
             <h2 className="text-3xl font-bold leading-tight text-ink">
-              Preview pages coming soon
+              Preview sample pages
             </h2>
             <p className="mt-3 text-base leading-relaxed text-ink/68">
-              We are adding sample preview images so you can see the printable
-              checklists, phrase cards, and decision tree before purchase.
+              These previews are rendered from the actual PDF so you can see the
+              printable cover, decision tree, app stack, and phrase card layout
+              before purchase.
             </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {previewCards.map((card) => (
               <div
-                key={card}
-                className="flex min-h-48 flex-col justify-between rounded-lg border border-dashed border-ember/35 bg-paper p-5 shadow-soft"
+                key={card.src}
+                className="overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft"
               >
-                <p className="text-sm font-bold uppercase text-ember">Sample preview</p>
-                <h3 className="mt-8 text-2xl font-bold leading-tight text-ink">{card}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink/58">
-                  Styled placeholder. Real preview image will be added before the
-                  next product-page update.
-                </p>
+                <Image
+                  src={card.src}
+                  alt={card.alt}
+                  width={900}
+                  height={1164}
+                  sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
+                  className="h-auto w-full"
+                />
+                <div className="border-t border-ink/10 p-4">
+                  <h3 className="text-base font-bold leading-tight text-ink">{card.title}</h3>
+                </div>
               </div>
             ))}
           </div>

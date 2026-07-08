@@ -60,10 +60,10 @@ export function ProductCard({ product }: ProductCardProps) {
       <p className="mt-3 text-base text-ink/68">{product.summary}</p>
       {isPaymentAppsGuide ? (
         <div className="mt-4 rounded-md border border-dashed border-ember/35 bg-sand p-4">
-          <p className="text-sm font-bold uppercase text-ember">PDF preview coming soon</p>
+          <p className="text-sm font-bold uppercase text-ember">PDF previews available</p>
           <p className="mt-2 text-sm leading-relaxed text-ink/62">
-            Preview images will show sample checklist pages, phrase cards, and
-            troubleshooting tables before purchase.
+            View sample pages below, including the cover, decision tree, app stack,
+            and phrase card layout.
           </p>
         </div>
       ) : null}
