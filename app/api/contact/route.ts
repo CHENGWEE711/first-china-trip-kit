@@ -25,12 +25,13 @@ export async function POST(request: Request) {
   const result = await saveContactMessage({
     name: String(body.name || ""),
     email: String(body.email || ""),
-    nationality: String(body.nationality || ""),
+    countryOrPassport: String(body.country_or_passport || body.nationality || ""),
     travelMonth: String(body.travel_month || ""),
-    plannedCities: String(body.planned_cities || ""),
+    citiesConsidered: String(body.cities_considered || body.planned_cities || ""),
     tripLength: String(body.trip_length || ""),
     mainQuestion: String(body.main_question || ""),
     interestedInCustomItinerary,
+    preferredReplyMethod: String(body.preferred_reply_method || "email"),
     source: String(body.source || "contact-page"),
   });
 

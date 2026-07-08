@@ -38,12 +38,13 @@ Create the contact table by running `supabase/contact_messages.sql`. It stores:
 
 - name
 - email
-- nationality
+- country_or_passport
 - travel_month
-- planned_cities
+- cities_considered
 - trip_length
 - main_question
 - interested_in_custom_itinerary
+- preferred_reply_method
 - source
 - status
 - created_at

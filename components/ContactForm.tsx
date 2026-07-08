@@ -74,8 +74,8 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className={labelClass}>
-          Nationality
-          <input name="nationality" type="text" className={inputClass} />
+          Country or passport
+          <input name="country_or_passport" type="text" className={inputClass} />
         </label>
         <label className={labelClass}>
           Travel month
@@ -85,8 +85,8 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className={labelClass}>
-          Cities they plan to visit
-          <input name="planned_cities" type="text" placeholder="e.g. Shanghai, Beijing, Xi'an" className={inputClass} />
+          Cities considered
+          <input name="cities_considered" type="text" placeholder="e.g. Shanghai, Beijing, Xi'an" className={inputClass} />
         </label>
         <label className={labelClass}>
           Trip length
@@ -128,6 +128,33 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
               className="h-4 w-4 accent-[#B43D35]"
             />
             No
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset className="grid gap-3 rounded-md bg-sand p-4">
+        <legend className="text-base font-semibold text-ink">
+          Preferred reply method
+        </legend>
+        <div className="flex flex-wrap gap-4 text-base text-ink/72">
+          <label className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="preferred_reply_method"
+              value="email"
+              defaultChecked
+              className="h-4 w-4 accent-[#B43D35]"
+            />
+            Email
+          </label>
+          <label className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="preferred_reply_method"
+              value="whatsapp"
+              className="h-4 w-4 accent-[#B43D35]"
+            />
+            WhatsApp
           </label>
         </div>
       </fieldset>

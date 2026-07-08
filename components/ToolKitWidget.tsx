@@ -12,28 +12,23 @@ type ToolKitWidgetProps = {
 const visaChecks = [
   {
     id: "passport",
-    label: "Passport eligibility",
-    description: "My passport nationality appears on the current official eligibility list.",
+    label: "My passport nationality is on the current official eligibility list",
   },
   {
     id: "ticket",
-    label: "Onward ticket",
-    description: "I have a confirmed onward ticket to a third country or region.",
+    label: "I have a confirmed onward ticket to a third country or region",
   },
   {
     id: "ports",
-    label: "Entry and exit ports",
-    description: "My entry and exit ports match the policy I plan to use.",
+    label: "My entry and exit ports match the policy",
   },
   {
     id: "area",
-    label: "Permitted travel area",
-    description: "Every city and hotel in my plan stays inside the permitted travel area.",
+    label: "My hotel cities stay inside the permitted travel area",
   },
   {
     id: "official",
-    label: "Official verification",
-    description: "I will verify official requirements before booking non-refundable travel.",
+    label: "I will verify official requirements before booking",
   },
 ];
 
@@ -97,7 +92,7 @@ function VisaTool() {
         <AlertTriangle aria-hidden="true" className="mt-1 shrink-0 text-ember" size={22} />
         <div>
           <p className="text-base font-bold text-ink">
-            This is not legal or immigration advice.
+            This is not legal or immigration advice. Always verify official requirements before booking.
           </p>
           <p className="mt-1 text-sm leading-relaxed text-ink/68">
             Use this checker to organize what to verify. Your actual eligibility
@@ -123,9 +118,6 @@ function VisaTool() {
             />
             <span>
               <span className="block font-bold text-ink">{item.label}</span>
-              <span className="mt-1 block text-sm leading-relaxed text-ink/64">
-                {item.description}
-              </span>
             </span>
           </label>
         ))}

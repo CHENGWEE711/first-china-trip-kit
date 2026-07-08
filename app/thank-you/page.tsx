@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Download } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { PageIntro } from "@/components/PageIntro";
 import { buildMetadata } from "@/lib/seo";
@@ -21,6 +23,25 @@ const checklist = [
   "Emergency phrases: short Mandarin lines for help, hospitals, taxis, and payment.",
 ];
 
+const nextSteps = [
+  {
+    title: "Set up payment before you fly",
+    href: "/guides/how-to-pay-in-china-as-a-foreigner",
+  },
+  {
+    title: "Prepare essential apps",
+    href: "/guides/best-apps-for-traveling-in-china",
+  },
+  {
+    title: "Choose your first city base",
+    href: "/city-kits",
+  },
+  {
+    title: "Build your first route",
+    href: "/itinerary-kits",
+  },
+];
+
 export default function ThankYouPage() {
   return (
     <>
@@ -34,7 +55,7 @@ export default function ThankYouPage() {
           <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
             <h2 className="text-2xl font-bold leading-tight text-ink">What is inside the PDF</h2>
             <p className="mt-3 text-base text-ink/68">
-              This is a printable, two-page checklist you can review before
+              This is a printable 3-page checklist you can review before
               flying and keep on your phone for arrival day. It focuses on the
               details that usually slow first-time visitors down: payment, apps,
               Chinese hotel addresses, transport, food, and emergency phrases.
@@ -43,9 +64,10 @@ export default function ThankYouPage() {
               <a
                 href="/china-first-time-visitor-checklist.pdf"
                 download
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-5 py-3 text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-auto"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-ember px-5 py-3 text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-auto"
               >
-                Download PDF checklist
+                <Download aria-hidden="true" size={18} />
+                Download PDF Checklist
               </a>
               <p className="text-sm text-ink/58">
                 Includes arrival-day checks, payment backups, app setup, hotel
@@ -67,7 +89,36 @@ export default function ThankYouPage() {
               ))}
             </ul>
           </section>
+        </div>
+      </section>
+      <section className="bg-mist px-4 py-12">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-6 max-w-3xl">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Next steps</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              Turn the checklist into a trip plan
+            </h2>
           </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {nextSteps.map((step, index) => (
+              <Link
+                key={step.href}
+                href={step.href}
+                className="group rounded-lg border border-ink/10 bg-paper p-5 shadow-soft transition hover:-translate-y-0.5 hover:border-ember/35"
+              >
+                <p className="text-sm font-bold uppercase text-ember">
+                  Step {index + 1}
+                </p>
+                <h3 className="mt-2 text-xl font-bold leading-tight text-ink">
+                  {step.title}
+                </h3>
+                <p className="mt-4 text-base font-semibold text-ember group-hover:text-[#982F28]">
+                  Open guide
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
     </>
   );

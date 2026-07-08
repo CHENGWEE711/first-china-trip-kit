@@ -3,12 +3,13 @@ import { siteConfig } from "@/lib/site";
 export type ContactMessageInput = {
   name: string;
   email: string;
-  nationality?: string;
+  countryOrPassport?: string;
   travelMonth?: string;
-  plannedCities?: string;
+  citiesConsidered?: string;
   tripLength?: string;
   mainQuestion: string;
   interestedInCustomItinerary?: boolean;
+  preferredReplyMethod?: string;
   source?: string;
 };
 
@@ -24,12 +25,13 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export async function saveContactMessage({
   name,
   email,
-  nationality = "",
+  countryOrPassport = "",
   travelMonth = "",
-  plannedCities = "",
+  citiesConsidered = "",
   tripLength = "",
   mainQuestion,
   interestedInCustomItinerary = false,
+  preferredReplyMethod = "email",
   source = "contact-page",
 }: ContactMessageInput): Promise<ContactMessageResult> {
   const cleanEmail = email.trim().toLowerCase();
@@ -55,12 +57,14 @@ export async function saveContactMessage({
     return saveWithSupabase({
       name: name.trim(),
       email: cleanEmail,
-      nationality: nationality.trim(),
+      countryOrPassport: countryOrPassport.trim(),
       travelMonth: travelMonth.trim(),
-      plannedCities: plannedCities.trim(),
+      citiesConsidered: citiesConsidered.trim(),
       tripLength: tripLength.trim(),
       mainQuestion: cleanQuestion,
       interestedInCustomItinerary,
+      preferredReplyMethod:
+        preferredReplyMethod === "whatsapp" ? "whatsapp" : "email",
       source: source.trim() || "contact-page",
     });
   }
@@ -90,12 +94,13 @@ async function saveWithSupabase(
       body: JSON.stringify({
         name: input.name,
         email: input.email,
-        nationality: input.nationality,
+        country_or_passport: input.countryOrPassport,
         travel_month: input.travelMonth,
-        planned_cities: input.plannedCities,
+        cities_considered: input.citiesConsidered,
         trip_length: input.tripLength,
         main_question: input.mainQuestion,
         interested_in_custom_itinerary: input.interestedInCustomItinerary,
+        preferred_reply_method: input.preferredReplyMethod,
         source: input.source,
         status: "new",
         created_at: new Date().toISOString(),
