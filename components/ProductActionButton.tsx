@@ -1,9 +1,11 @@
 "use client";
 
 import { trackEvent } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 type ProductActionButtonProps = {
   canBuy: boolean;
+  className?: string;
   href: string;
   label: string;
   productId: string;
@@ -14,6 +16,7 @@ type ProductActionButtonProps = {
 
 export function ProductActionButton({
   canBuy,
+  className,
   download = false,
   eventName,
   href,
@@ -35,7 +38,10 @@ export function ProductActionButton({
           product_id: productId,
         })
       }
-      className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-fit"
+      className={cn(
+        "inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-fit",
+        className,
+      )}
     >
       {label}
     </a>

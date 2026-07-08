@@ -42,6 +42,21 @@ export default function PrivacyPage() {
             Newsletter storage or email delivery may be handled by providers such
             as Supabase, Resend, or Mailchimp when newsletter delivery is enabled.
           </p>
+          <h2>Purchases and checkout</h2>
+          <p>
+            Purchases are handled by Payhip. Payment information is processed by
+            Payhip, PayPal, or other checkout providers and is not stored by First
+            China Trip Kit.
+          </p>
+          <p>
+            We may receive order-related information such as email, product purchased,
+            and transaction status so we can help with access problems and support
+            requests.
+          </p>
+          <p>
+            Payhip and PayPal privacy policies apply at checkout. External Payhip
+            checkout opens outside firstchinatripkit.com.
+          </p>
           <h2>Contact</h2>
           <p>Questions can be sent to {siteConfig.contactEmail}.</p>
         </div>

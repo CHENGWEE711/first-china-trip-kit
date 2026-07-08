@@ -63,8 +63,29 @@ export function ProductCard({ product }: ProductCardProps) {
       </div>
       <h3 className="mt-4 text-2xl font-bold leading-tight text-ink">{product.title}</h3>
       <p className="mt-3 text-base text-ink/68">{product.summary}</p>
+      {isPaymentAppsGuide ? (
+        <div className="mt-4 rounded-md border border-dashed border-ember/35 bg-sand p-4">
+          <p className="text-sm font-bold uppercase text-ember">PDF preview coming soon</p>
+          <p className="mt-2 text-sm leading-relaxed text-ink/62">
+            Preview images will show sample checklist pages, phrase cards, and
+            troubleshooting tables before purchase.
+          </p>
+        </div>
+      ) : null}
       <p className="mt-4 text-sm font-bold uppercase text-ink/48">Best for</p>
       <p className="mt-1 text-base text-ink/68">{product.bestFor}</p>
+      {isPaymentAppsGuide ? (
+        <div className="mt-4 rounded-md bg-mist p-4">
+          <p className="text-sm font-bold uppercase text-jade">
+            What makes this different from the free checklist?
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-ink/66">
+            The free checklist tells you what to prepare. This guide gives you
+            printable setup checklists, decision trees, phrase cards, an app stack,
+            and a first-day troubleshooting table for payment and transport friction.
+          </p>
+        </div>
+      ) : null}
       <p className="mt-4 text-sm font-bold uppercase text-ink/48">Includes</p>
       <ul className="mt-2 grid gap-2 text-base text-ink/68">
         {product.includes.map((item) => (
@@ -85,6 +106,7 @@ export function ProductCard({ product }: ProductCardProps) {
       {canBuy ? (
         <ProductActionButton
           href={actionHref}
+          className="mt-5"
           download={isChecklist && !purchaseUrl}
           eventName={actionEventName}
           isExternal={purchaseIsExternal}
@@ -96,6 +118,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <>
           <ProductActionButton
             href="/store#early-access"
+            className="mt-5"
             canBuy={false}
             label="Join waitlist"
             productId={product.id}

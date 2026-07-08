@@ -110,6 +110,7 @@ function PaymentAppsGuideCta() {
         </p>
         <ProductActionButton
           href={isAvailable ? paymentAppsGuideBuyUrl : "/store#early-access"}
+          className="mt-5"
           isExternal={isAvailable}
           canBuy={isAvailable}
           label={isAvailable ? "Buy the $7 Guide" : "Join the waitlist"}

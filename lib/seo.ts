@@ -3,6 +3,7 @@ import type { City } from "@/data/cities";
 import type { FAQ } from "@/data/faqs";
 import type { Guide } from "@/data/guides";
 import type { Itinerary } from "@/data/itineraries";
+import type { Product } from "@/data/products";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
 type SeoInput = {
@@ -269,4 +270,40 @@ export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] 
   const faq = faqJsonLd(faqs, path);
 
   return faq ? [article, travelGuide, trip, itemList, faq] : [article, travelGuide, trip, itemList];
+}
+
+export function productJsonLd(product: Product, path: string) {
+  const purchaseUrl =
+    product.externalPurchaseUrl ||
+    product.checkoutUrl ||
+    product.gumroadUrl ||
+    product.payhipUrl ||
+    absoluteUrl(path);
+  const price = product.price.replace(/[^0-9.]/g, "");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    description: product.summary,
+    url: absoluteUrl(path),
+    brand: {
+      "@type": "Brand",
+      name: siteConfig.name,
+    },
+    category: "Digital travel planning guide",
+    offers: {
+      "@type": "Offer",
+      price: price || "0",
+      priceCurrency: "USD",
+      availability: product.externalPurchaseUrl
+        ? "https://schema.org/InStock"
+        : "https://schema.org/PreOrder",
+      url: purchaseUrl,
+      seller: {
+        "@type": "Organization",
+        name: siteConfig.name,
+      },
+    },
+  };
 }

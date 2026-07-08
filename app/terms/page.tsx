@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageIntro } from "@/components/PageIntro";
 import { buildMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "Terms of Use | First China Trip Kit",
@@ -32,12 +33,17 @@ export default function TermsPage() {
           </p>
           <h2>Digital products</h2>
           <p>
-            Travel Kits are planned digital downloads. When paid products launch,
-            checkout, refunds, and delivery terms will be provided at purchase.
+            Digital products are sold through Payhip. After purchase, customers
+            receive access through Payhip checkout or confirmation email. Because
+            products are downloadable digital planning files, refunds may be limited
+            after download. If you purchased the wrong file or cannot access your
+            guide, contact{" "}
+            <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>{" "}
+            and we will review the issue.
           </p>
           <h2>Use of content</h2>
           <p>
-            You may use the site for personal trip planning. Reproducing the
+            You may use the site for personal trip planning only. Reproducing the
             content for commercial use requires permission.
           </p>
         </div>

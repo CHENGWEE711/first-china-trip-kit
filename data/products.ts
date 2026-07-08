@@ -55,15 +55,15 @@ export const products: Product[] = [
     summary:
       "A step-by-step pre-arrival setup pack for Alipay, WeChat Pay, maps, translation, ride-hailing, and payment backups.",
     bestFor:
-      "First-time visitors who are more worried about paying, ordering, maps, taxis, and phone setup than sightseeing choices.",
+      "Anxious first-time travelers who want printable backup cards, setup checklists, and simple decision tables before their first days in China.",
     includes: [
       "Alipay setup checklist",
       "WeChat Pay setup checklist",
       "Backup payment decision tree",
       "Essential China apps stack",
       "First-day payment test",
-      "Common payment failure fixes",
-      "Taxi and checkout Chinese phrases",
+      "Troubleshooting table for common payment failures",
+      "Taxi and checkout phrase cards",
       "Printable offline cards",
     ],
     price: "$7",
