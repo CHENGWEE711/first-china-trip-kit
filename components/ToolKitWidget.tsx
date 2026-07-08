@@ -1,7 +1,8 @@
 "use client";
 
-import { AlertTriangle, ExternalLink } from "lucide-react";
+import { AlertTriangle, CheckCircle2, ExternalLink, RotateCcw } from "lucide-react";
 import { useMemo, useState } from "react";
+import { appTrademarkDisclaimer } from "@/data/app-recommendations";
 
 type ToolType = "visa" | "duration" | "apps" | "route";
 
@@ -33,14 +34,54 @@ const visaChecks = [
 ];
 
 const appChecks = [
-  "Alipay installed and card added",
-  "WeChat installed and payment attempted if available",
-  "Map app tested with Chinese hotel address",
-  "Translation app downloaded with offline Chinese",
-  "Ride-hailing option tested",
-  "Train confirmations saved as screenshots",
-  "Hotel address saved in Chinese",
-  "Power bank packed",
+  {
+    id: "alipay",
+    title: "Alipay installed and card added",
+    category: "Payment",
+    detail: "Open the app, confirm you can log in, and add at least one international card if supported.",
+  },
+  {
+    id: "wechat",
+    title: "WeChat installed and payment attempted if available",
+    category: "Payment backup",
+    detail: "Use it as a backup wallet and mini-program tool, but do not make it your only payment plan.",
+  },
+  {
+    id: "map",
+    title: "Map app tested with Chinese hotel address",
+    category: "Maps",
+    detail: "Search your hotel by Chinese name or address and save the location before arrival.",
+  },
+  {
+    id: "translation",
+    title: "Translation app downloaded with offline Chinese",
+    category: "Translation",
+    detail: "Download offline Chinese and test camera translation for menus and signs.",
+  },
+  {
+    id: "ride",
+    title: "Ride-hailing option tested",
+    category: "Ride-hailing",
+    detail: "Check whether DiDi or a ride-hailing mini program can find your hotel and pickup area.",
+  },
+  {
+    id: "train",
+    title: "Train confirmations saved as screenshots",
+    category: "Train",
+    detail: "Save train number, station, passport-linked booking, carriage, seat, and time offline.",
+  },
+  {
+    id: "hotel",
+    title: "Hotel address saved in Chinese",
+    category: "Offline backup",
+    detail: "Keep the hotel name, Chinese address, phone number, and nearest landmark in one note.",
+  },
+  {
+    id: "battery",
+    title: "Power bank packed",
+    category: "Phone survival",
+    detail: "Your phone runs payment, maps, translation, tickets, and hotel addresses on day one.",
+  },
 ];
 
 export function ToolKitWidget({ type }: ToolKitWidgetProps) {
@@ -236,33 +277,100 @@ function DurationTool() {
 
 function AppsTool() {
   const [checked, setChecked] = useState<string[]>([]);
-  const remaining = appChecks.length - checked.length;
+  const readyCount = checked.length;
+  const totalCount = appChecks.length;
+  const progressPercent = Math.round((readyCount / totalCount) * 100);
+  const result =
+    readyCount >= 7
+      ? {
+          title: "First-day ready",
+          body: "Your app setup covers the essentials for payment, navigation, translation, transport, and offline backup.",
+          tone: "bg-jade text-white",
+        }
+      : readyCount >= 4
+        ? {
+            title: "Almost ready",
+            body: "You have the basics started. Finish the missing items before you rely on your phone for arrival day.",
+            tone: "bg-ember text-white",
+          }
+        : {
+            title: "Not ready yet",
+            body: "Set up the core apps before you fly. Arrival halls, taxi queues, and train stations are stressful places to troubleshoot logins.",
+            tone: "bg-ink text-white",
+          };
+
+  function toggleItem(id: string, nextChecked: boolean) {
+    setChecked((current) =>
+      nextChecked ? [...current, id] : current.filter((candidate) => candidate !== id),
+    );
+  }
 
   return (
     <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="mb-5 rounded-md bg-sand p-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-bold uppercase text-ember">Progress</p>
+            <h2 className="mt-1 text-2xl font-bold leading-tight text-ink">
+              {readyCount}/{totalCount} ready
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={() => setChecked([])}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-ink/12 bg-paper px-4 py-2 text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember"
+          >
+            <RotateCcw aria-hidden="true" size={17} />
+            Reset
+          </button>
+        </div>
+        <div className="mt-4 h-3 overflow-hidden rounded-full bg-paper">
+          <div
+            className="h-full rounded-full bg-ember transition-all"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="grid gap-3">
         {appChecks.map((item) => (
-          <label key={item} className="flex items-start gap-3 rounded-md bg-sand p-3 text-base text-ink/72">
+          <label
+            key={item.id}
+            className="flex cursor-pointer items-start gap-3 rounded-lg border border-ink/10 bg-sand p-4 text-base text-ink/72 transition hover:border-ember/30"
+          >
             <input
               type="checkbox"
-              checked={checked.includes(item)}
+              aria-label={item.title}
+              checked={checked.includes(item.id)}
               onChange={(event) =>
-                setChecked((current) =>
-                  event.target.checked
-                    ? [...current, item]
-                    : current.filter((candidate) => candidate !== item),
-                )
+                toggleItem(item.id, event.target.checked)
               }
-              className="mt-1 h-4 w-4 accent-[#B43D35]"
+              className="mt-1 h-5 w-5 shrink-0 accent-[#B43D35]"
             />
-            <span>{item}</span>
+            <span className="min-w-0">
+              <span className="inline-flex items-center gap-2 text-sm font-bold uppercase text-ember">
+                {checked.includes(item.id) ? <CheckCircle2 aria-hidden="true" size={16} /> : null}
+                {item.category}
+              </span>
+              <span className="mt-1 block text-lg font-bold leading-tight text-ink">
+                {item.title}
+              </span>
+              <span className="mt-1 block text-sm leading-relaxed text-ink/62">
+                {item.detail}
+              </span>
+            </span>
           </label>
         ))}
       </div>
-      <p className="mt-5 rounded-md bg-ink p-4 text-base text-white/78">
-        {remaining === 0
-          ? "Your app setup looks ready for a first arrival day."
-          : `${remaining} item${remaining === 1 ? "" : "s"} left before your app setup feels first-day ready.`}
+
+      <div className={`mt-5 rounded-md p-4 ${result.tone}`}>
+        <p className="text-sm font-bold uppercase opacity-80">Checklist result</p>
+        <h2 className="mt-2 text-2xl font-bold leading-tight">{result.title}</h2>
+        <p className="mt-2 text-base opacity-85">{result.body}</p>
+      </div>
+
+      <p className="mt-5 rounded-md border border-ink/10 bg-paper p-4 text-sm leading-relaxed text-ink/58">
+        {appTrademarkDisclaimer}
       </p>
     </div>
   );

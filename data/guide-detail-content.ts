@@ -1,4 +1,6 @@
 import type { FAQ, LinkItem } from "@/data/faqs";
+import type { AppRecommendationGroup } from "@/data/app-recommendations";
+import { chinaTravelAppGroups } from "@/data/app-recommendations";
 
 export type GuideDetailContent = {
   quickAnswer: string;
@@ -10,6 +12,7 @@ export type GuideDetailContent = {
   officialSourceLinks: LinkItem[];
   relatedGuideSlugs: string[];
   relatedProductIds: string[];
+  appGroups?: AppRecommendationGroup[];
 };
 
 export const guideDetailContent: Record<string, GuideDetailContent> = {
@@ -173,6 +176,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "basic-chinese-phrases-for-travelers",
     ],
     relatedProductIds: ["china-payment-apps-setup-guide"],
+    appGroups: chinaTravelAppGroups,
   },
   "how-to-take-high-speed-trains-in-china": {
     quickAnswer:

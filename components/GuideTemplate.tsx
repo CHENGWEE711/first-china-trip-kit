@@ -1,3 +1,4 @@
+import { AppGuideCards } from "@/components/AppGuideCards";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
@@ -104,6 +105,8 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             <BulletSection title="Common mistakes" items={content.commonMistakes} />
             <BulletSection title="Troubleshooting" items={content.troubleshooting} />
             <BulletSection title="First-day checklist" items={content.firstDayChecklist} />
+
+            {content.appGroups ? <AppGuideCards groups={content.appGroups} /> : null}
 
             <section className="content-prose rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
               {guide.content.map((section) => (
