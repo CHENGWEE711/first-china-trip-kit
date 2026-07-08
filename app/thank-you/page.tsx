@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Download } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ChecklistDownloadWithTip } from "@/components/ChecklistDownloadWithTip";
+import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { PageIntro } from "@/components/PageIntro";
 import { buildMetadata } from "@/lib/seo";
 
@@ -43,6 +44,8 @@ const nextSteps = [
 ];
 
 export default function ThankYouPage() {
+  const coffeeTipEnabled = Boolean(process.env.NEXT_PUBLIC_COFFEE_TIP_URL);
+
   return (
     <>
       <PageIntro
@@ -61,14 +64,12 @@ export default function ThankYouPage() {
               Chinese hotel addresses, transport, food, and emergency phrases.
             </p>
             <div className="mt-7 flex flex-col gap-3">
-              <a
-                href="/china-first-time-visitor-checklist.pdf"
-                download
-                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-ember px-5 py-3 text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-auto"
-              >
-                <Download aria-hidden="true" size={18} />
-                Download PDF Checklist
-              </a>
+              <ChecklistDownloadWithTip source="thank-you" />
+              {coffeeTipEnabled ? (
+                <CoffeeTipLink source="thank-you" className="w-full sm:w-fit">
+                  Buy us a coffee
+                </CoffeeTipLink>
+              ) : null}
               <p className="text-sm text-ink/58">
                 Includes arrival-day checks, payment backups, app setup, hotel
                 address notes, train reminders, and emergency phrases in

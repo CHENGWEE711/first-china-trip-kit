@@ -65,10 +65,15 @@ SUPABASE_SERVICE_ROLE_KEY=
 SUPABASE_NEWSLETTER_TABLE=newsletter_subscribers
 SUPABASE_CONTACT_TABLE=contact_messages
 NEXT_PUBLIC_GA_ID=
+NEXT_PUBLIC_COFFEE_TIP_URL=
+NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL=
 ```
 
-Payments, AI itinerary generation, and CMS migration remain optional future
-integrations.
+The coffee tip URL and Payment & Apps Guide buy URL are optional external
+checkout links. When they are empty, the site does not render fake payment or
+tip links.
+
+AI itinerary generation and CMS migration remain optional future integrations.
 
 ## Future integrations
 

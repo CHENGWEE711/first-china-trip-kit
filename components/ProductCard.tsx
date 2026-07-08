@@ -1,4 +1,5 @@
 import { ShoppingBag } from "lucide-react";
+import { ProductActionButton } from "@/components/ProductActionButton";
 import type { Product } from "@/data/products";
 
 type ProductCardProps = {
@@ -13,6 +14,7 @@ export function ProductCard({ product }: ProductCardProps) {
     product.payhipUrl;
   const canBuy = product.status === "available" && Boolean(purchaseUrl);
   const purchaseIsExternal = Boolean(purchaseUrl && /^https?:\/\//.test(purchaseUrl));
+  const isPaymentAppsGuide = product.id === "china-payment-apps-setup-guide";
 
   return (
     <article className="flex h-full flex-col rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
@@ -21,14 +23,14 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="flex flex-wrap justify-end gap-2 text-right">
           {product.isNextLaunch ? (
             <span className="rounded-md bg-ember px-3 py-1 text-xs font-bold uppercase text-white">
-              First to open
+              {product.status === "available" ? "First kit now available" : "First to open"}
             </span>
           ) : null}
           <span className="rounded-md bg-mist px-3 py-1 text-xs font-bold uppercase text-ink/58">
-            {product.status === "available" ? "Available" : "Coming soon"}
+            {product.status === "available" ? "Available now" : "Coming soon"}
           </span>
           <span className="rounded-md bg-sand px-3 py-1 text-sm font-bold text-ember">
-            Planned price: {product.price}
+            {product.status === "available" ? "Price" : "Planned price"}: {product.price}
           </span>
         </div>
       </div>
@@ -54,24 +56,25 @@ export function ProductCard({ product }: ProductCardProps) {
       ) : null}
       <p className="mt-4 text-sm text-ink/58">{product.refundNote}</p>
       {canBuy && purchaseUrl ? (
-        <a
+        <ProductActionButton
           href={purchaseUrl}
-          target={purchaseIsExternal ? "_blank" : undefined}
-          rel={purchaseIsExternal ? "noreferrer" : undefined}
-          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 text-base font-semibold text-white transition hover:bg-[#982F28]"
-        >
-          Buy now
-        </a>
+          isExternal={purchaseIsExternal}
+          canBuy
+          label={isPaymentAppsGuide ? "Buy now — $7" : `Buy now — ${product.price}`}
+          productId={product.id}
+        />
       ) : (
         <>
-          <a
+          <ProductActionButton
             href="/store#early-access"
-            className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 text-base font-semibold text-white transition hover:bg-[#982F28]"
-          >
-            Join waitlist
-          </a>
+            canBuy={false}
+            label="Join waitlist"
+            productId={product.id}
+          />
           <p className="mt-3 text-sm text-ink/58">
-            Join the newsletter to get notified when this kit opens.
+            {product.status === "available"
+              ? "Checkout is not connected in this environment yet. Join the newsletter to get notified."
+              : "Join the newsletter to get notified when this kit opens."}
           </p>
         </>
       )}

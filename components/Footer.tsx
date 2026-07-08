@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ClipboardList, Mail, MailCheck, MessageCircle } from "lucide-react";
+import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { footerLegalItems, navItems, siteConfig } from "@/lib/site";
 
 const contactEntries = [
@@ -30,6 +31,8 @@ const contactEntries = [
 ];
 
 export function Footer() {
+  const coffeeTipEnabled = Boolean(process.env.NEXT_PUBLIC_COFFEE_TIP_URL);
+
   return (
     <footer className="border-t border-ink/10 bg-ink text-white">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:grid-cols-[1.25fr_1fr_1fr]">
@@ -82,6 +85,13 @@ export function Footer() {
               );
             })}
           </div>
+          {coffeeTipEnabled ? (
+            <div className="mt-4">
+              <CoffeeTipLink source="footer" variant="subtle">
+                Buy us a coffee
+              </CoffeeTipLink>
+            </div>
+          ) : null}
           <p className="mt-5 text-sm text-white/52">
             Travel information changes. Always verify official requirements before booking.
           </p>
