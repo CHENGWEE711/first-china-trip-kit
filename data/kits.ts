@@ -158,6 +158,7 @@ export const toolKits = [
     title: "Visa-Free Eligibility Checker",
     summary:
       "A planning checklist that helps you identify what to verify before relying on visa-free transit.",
+    bestFor: "Travelers considering a 240-hour visa-free transit route.",
     type: "visa",
   },
   {
@@ -165,6 +166,7 @@ export const toolKits = [
     title: "China Trip Duration Planner",
     summary:
       "Pick cities and travel pace to estimate a realistic first China trip length.",
+    bestFor: "Travelers unsure how many cities fit into their available days.",
     type: "duration",
   },
   {
@@ -172,6 +174,7 @@ export const toolKits = [
     title: "Essential Apps Checklist",
     summary:
       "Mark the apps and offline backups you should prepare before your first arrival day.",
+    bestFor: "Travelers setting up payment, maps, translation, internet, and backups.",
     type: "apps",
   },
   {
@@ -179,6 +182,7 @@ export const toolKits = [
     title: "City Route Picker",
     summary:
       "Choose your travel interests and get a simple first-route direction.",
+    bestFor: "Travelers choosing their first China city combination.",
     type: "route",
   },
 ] as const;
