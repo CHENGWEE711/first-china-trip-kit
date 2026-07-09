@@ -117,29 +117,65 @@ const paymentGuideNotNeededBullets = [
   "You are traveling with a local guide who handles payments and transport for you.",
 ];
 
+const paidGuideValueBullets = [
+  "More detailed than the free checklist",
+  "Designed for first-day problems",
+  "Works as an offline backup",
+  "Printable cards for taxis, hotels, and checkout counters",
+  "Helps you prepare before you arrive tired or jet-lagged",
+];
+
+const whatYouGetCards = [
+  {
+    title: "Printable PDF",
+    description:
+      "A clean travel kit PDF you can save offline or print before your trip.",
+  },
+  {
+    title: "Setup checklists",
+    description:
+      "Prepare Alipay, WeChat, maps, translation, internet, and backup payment options.",
+  },
+  {
+    title: "Troubleshooting tables",
+    description:
+      "Know what to try if your card fails, SMS does not arrive, or QR payment does not work.",
+  },
+  {
+    title: "Phrase cards",
+    description:
+      "Use simple Chinese phrases for payment, taxis, hotels, and help.",
+  },
+  {
+    title: "Offline backup cards",
+    description:
+      "Save key hotel, payment, and emergency details in one place.",
+  },
+];
+
 const previewCards = [
   {
-    title: "Cover preview",
+    title: "Cover",
     src: "/products/previews/payment-apps-guide-cover.png",
     alt: "Cover preview for the China Payment and Apps Setup Guide",
   },
   {
-    title: "Decision tree preview",
+    title: "Payment decision tree",
     src: "/products/previews/payment-apps-guide-decision-tree.png",
     alt: "Payment backup decision tree preview from the setup guide",
   },
   {
-    title: "App stack preview",
+    title: "Essential app stack",
     src: "/products/previews/payment-apps-guide-app-stack.png",
     alt: "Essential China app stack preview from the setup guide",
   },
   {
-    title: "Phrase card preview",
+    title: "Payment phrase cards",
     src: "/products/previews/payment-apps-guide-phrase-card.png",
     alt: "Useful Chinese payment phrase card preview from the setup guide",
   },
   {
-    title: "Hotel card preview",
+    title: "Hotel address card",
     src: "/products/previews/payment-apps-guide-hotel-card.png",
     alt: "Hotel address card preview from the setup guide",
   },
@@ -240,6 +276,58 @@ export default function StorePage() {
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
+        </div>
+      </section>
+
+      <section className="bg-paper px-4 py-12">
+        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+          <div className="rounded-lg border border-ink/10 bg-sand p-5 shadow-soft">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Paid guide value</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              Why this guide is paid
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-ink/70">
+              The free checklist is designed for quick preparation. The paid setup
+              guide adds printable cards, troubleshooting tables, app setup checklists,
+              and offline backup pages you can save before your flight.
+            </p>
+          </div>
+          <div className="grid gap-3">
+            {paidGuideValueBullets.map((item) => (
+              <div
+                key={item}
+                className="rounded-lg border border-ink/10 bg-paper p-4 shadow-soft"
+              >
+                <p className="text-base font-semibold leading-relaxed text-ink">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-mist px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-7 max-w-3xl">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Product contents</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              What you get
+            </h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+            {whatYouGetCards.map((card) => (
+              <article
+                key={card.title}
+                className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft"
+              >
+                <h3 className="text-xl font-bold leading-tight text-ink">{card.title}</h3>
+                <p className="mt-3 text-base leading-relaxed text-ink/68">
+                  {card.description}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -415,19 +503,20 @@ export default function StorePage() {
           <div className="mb-7 max-w-3xl">
             <p className="mb-2 text-sm font-bold uppercase text-ember">Preview</p>
             <h2 className="text-3xl font-bold leading-tight text-ink">
-              Preview sample pages
+              Preview the guide
             </h2>
             <p className="mt-3 text-base leading-relaxed text-ink/68">
-              These previews are rendered from the actual PDF so you can see the
-              printable cover, decision tree, app stack, phrase card, and hotel card layout
-              before purchase.
+              See sample pages from the printable setup guide before you buy.
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             {previewCards.map((card) => (
-              <div
+              <a
                 key={card.src}
                 className="overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft"
+                href={card.src}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Image
                   src={card.src}
@@ -439,9 +528,23 @@ export default function StorePage() {
                 />
                 <div className="border-t border-ink/10 p-4">
                   <h3 className="text-base font-bold leading-tight text-ink">{card.title}</h3>
+                  <p className="mt-1 text-sm text-ink/58">Open larger preview</p>
                 </div>
-              </div>
+              </a>
             ))}
+          </div>
+          <div className="mt-8 rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+            <h2 className="text-2xl font-bold leading-tight text-ink">
+              Ready to prepare your first-day payment setup?
+            </h2>
+            <ProductActionButton
+              canBuy={Boolean(paymentGuideBuyUrl)}
+              className="mt-5"
+              href={paymentGuideBuyUrl || "/store#early-access"}
+              isExternal={Boolean(paymentGuideBuyUrl)}
+              label={paymentGuideBuyUrl ? "Buy Payment & Apps Guide — $7" : "Join the waitlist"}
+              productId="china-payment-apps-setup-guide"
+            />
           </div>
         </div>
       </section>
