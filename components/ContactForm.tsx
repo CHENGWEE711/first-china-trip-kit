@@ -46,7 +46,9 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       data = (await response.json()) as { message?: string };
     } catch {
       setStatus("idle");
-      setMessage(`We could not save this right now. Please email ${siteConfig.contactEmail} directly.`);
+      setMessage(
+        `The contact form is temporarily unavailable. Please email ${siteConfig.contactEmail} directly with your travel month, passport country, trip length, cities, and question.`,
+      );
       return;
     }
 
@@ -92,7 +94,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
 
       <div className="grid min-w-0 gap-4 md:grid-cols-2">
         <label className={labelClass}>
-          Country or passport
+          Country or passport nationality
           <input name="country_or_passport" type="text" className={inputClass} />
         </label>
         <label className={labelClass}>
@@ -180,14 +182,19 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="min-h-12 rounded-md bg-ember px-5 py-3 text-base font-bold text-white transition hover:bg-[#982F28] disabled:cursor-wait disabled:opacity-70"
+        className="min-h-12 w-full rounded-md bg-ember px-5 py-3 text-base font-bold text-white transition hover:bg-[#982F28] disabled:cursor-wait disabled:opacity-70 sm:w-fit"
       >
         {status === "success" ? "Message saved" : isSubmitting ? "Saving..." : "Send question"}
       </button>
+      <p className="text-sm leading-relaxed text-ink/58">
+        We do not provide legal, immigration, visa, financial, or official government
+        advice. For visa or entry questions, always verify official requirements.
+      </p>
 
       {message ? (
         <p
           className={`text-base font-semibold ${status === "success" ? "text-jade" : "text-ember"}`}
+          role="status"
           aria-live="polite"
         >
           {message}

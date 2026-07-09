@@ -71,7 +71,7 @@ export async function saveContactMessage({
 
   return {
     ok: false,
-    message: `The contact form is not connected yet. Please email ${siteConfig.contactEmail} directly for now.`,
+    message: `The contact form is temporarily unavailable. Please email ${siteConfig.contactEmail} directly with your travel month, passport country, trip length, cities, and question.`,
     status: 503,
   };
 }

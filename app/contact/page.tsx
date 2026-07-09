@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Mail, MessageCircle } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { NewsletterForm } from "@/components/NewsletterForm";
@@ -19,7 +20,7 @@ export default function ContactPage() {
       <PageIntro
         eyebrow="Contact"
         title="Ask a China Trip Question"
-        description="Send a practical question about your first China trip, route, payment setup, cities, or timing. For corrections and partnerships, you can also email us directly."
+        description="Tell us your travel month, passport country, trip length, and the cities you are considering. We use this information to understand your question and suggest the most practical next step."
       />
       <section className="px-4 py-12">
         <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.15fr_0.85fr]">
@@ -58,6 +59,49 @@ export default function ContactPage() {
                 <NewsletterForm source="contact-page" compact />
               </div>
             </section>
+          </div>
+        </div>
+      </section>
+      <section className="bg-sand px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 max-w-3xl">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Next step</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              Not sure where to start?
+            </h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              {
+                href: "/start-here",
+                title: "Start Here",
+                body: "Work through the first-trip preparation sequence.",
+              },
+              {
+                href: "/thank-you",
+                title: "Download Free Checklist",
+                body: "Get the printable China First Trip Checklist.",
+              },
+              {
+                href: "/city-kits",
+                title: "Browse City Kits",
+                body: "Choose your first city base and useful Chinese addresses.",
+              },
+              {
+                href: "/store",
+                title: "View Travel Kits",
+                body: "See printable guides and upcoming route packs.",
+              },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft transition hover:border-ember/35"
+              >
+                <h3 className="text-xl font-bold leading-tight text-ink">{item.title}</h3>
+                <p className="mt-3 text-base leading-relaxed text-ink/68">{item.body}</p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
