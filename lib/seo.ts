@@ -273,7 +273,12 @@ export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] 
 }
 
 export function productJsonLd(product: Product, path: string) {
+  const configuredPaymentAppsGuideBuyUrl =
+    product.id === "china-payment-apps-setup-guide"
+      ? process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || ""
+      : "";
   const purchaseUrl =
+    configuredPaymentAppsGuideBuyUrl ||
     product.externalPurchaseUrl ||
     product.checkoutUrl ||
     product.gumroadUrl ||
