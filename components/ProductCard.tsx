@@ -68,10 +68,10 @@ export function ProductCard({ product }: ProductCardProps) {
           className="mt-4 overflow-hidden rounded-md border border-ink/10 bg-sand shadow-soft transition hover:border-ember/35"
         >
           <Image
-            src="/products/previews/payment-apps-guide-cover.png"
-            alt="Preview cover for the China Payment and Apps Setup Guide"
-            width={900}
-            height={1164}
+            src="/products/previews/payment-apps-guide-store-cover.png"
+            alt="Product cover for the China Payment and Apps Setup Guide"
+            width={1200}
+            height={800}
             sizes="(min-width: 1024px) 45vw, 100vw"
             className="h-auto w-full"
           />

@@ -248,10 +248,10 @@ export default function StorePage() {
             </p>
             <div className="mt-5 overflow-hidden rounded-lg border border-ink/10 bg-sand shadow-soft">
               <Image
-                src="/products/previews/payment-apps-guide-cover.png"
-                alt="Cover preview for the China Payment and Apps Setup Guide"
-                width={900}
-                height={1164}
+                src="/products/previews/payment-apps-guide-store-cover.png"
+                alt="Product cover for the China Payment and Apps Setup Guide"
+                width={1200}
+                height={800}
                 sizes="(min-width: 1024px) 44vw, 100vw"
                 className="h-auto w-full"
               />

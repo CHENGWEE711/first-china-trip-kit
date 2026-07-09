@@ -6,6 +6,8 @@ import { Header } from "@/components/Header";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 import "./globals.css";
 
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
@@ -38,6 +40,11 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [absoluteUrl(siteConfig.heroImage)],
   },
+  verification: googleSiteVerification
+    ? {
+        google: googleSiteVerification,
+      }
+    : undefined,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
