@@ -8,6 +8,7 @@ import { GuideCard } from "@/components/GuideCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ProductActionButton } from "@/components/ProductActionButton";
 import { ProductCard } from "@/components/ProductCard";
+import { TrackedLink } from "@/components/TrackedLink";
 import type { Guide } from "@/data/guides";
 import type { GuideDetailContent } from "@/data/guide-detail-content";
 import type { Product } from "@/data/products";
@@ -165,6 +166,7 @@ const paymentAppsGuideCtaSlugs = new Set([
   "how-to-use-wechat-pay-in-china-as-a-foreigner",
   "china-esim-guide-for-tourists",
   "how-to-book-high-speed-trains-in-china",
+  "china-240-hour-visa-free-transit-guide",
 ]);
 
 function PaymentAppsGuideCta() {
@@ -195,7 +197,7 @@ function PaymentAppsGuideCta() {
             </li>
           ))}
         </ul>
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <ProductActionButton
             href={isAvailable ? paymentAppsGuideBuyUrl : "/store#early-access"}
             className="mt-0"
@@ -209,12 +211,63 @@ function PaymentAppsGuideCta() {
             label={isAvailable ? "Buy the $7 Guide" : "Join the waitlist"}
             productId="china-payment-apps-setup-guide"
           />
-          <ButtonLink href="/store#inside-the-guide" variant="secondary" className="w-full sm:w-auto">
+          <TrackedLink
+            href="/store#inside-the-guide"
+            eventName="store_inside_guide_clicked"
+            eventParams={{ source: "guide-primary-cta" }}
+            className="inline-flex min-h-11 items-center justify-center rounded-md px-2 py-2 text-base font-semibold text-clay underline-offset-4 transition hover:text-white hover:underline sm:w-auto"
+          >
             View what&apos;s inside
-          </ButtonLink>
-          <ButtonLink href="/store#free-vs-paid" variant="ghost" className="w-full sm:w-auto">
-            Compare free vs paid
-          </ButtonLink>
+          </TrackedLink>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function GuideQuestionCta({ guideSlug }: { guideSlug: string }) {
+  return (
+    <section className="bg-paper px-4 py-10">
+      <div className="mx-auto grid max-w-5xl gap-4 md:grid-cols-[1fr_0.72fr]">
+        <div className="rounded-lg border border-ink/10 bg-sand p-5 shadow-soft">
+          <p className="mb-2 text-sm font-bold uppercase text-ember">Trip question</p>
+          <h2 className="text-2xl font-bold leading-tight text-ink">
+            Need help with your China trip?
+          </h2>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink/68">
+            Send your travel month, passport country, trip length, and cities you
+            are considering.
+          </p>
+          <div className="mt-5">
+            <TrackedLink
+              href={`/contact?source=guide-${guideSlug}`}
+              eventName="guide_contact_clicked"
+              eventParams={{ guide_slug: guideSlug }}
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-5 py-3 text-center text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-auto"
+            >
+              Ask a China Trip Question
+            </TrackedLink>
+          </div>
+        </div>
+        <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+          <p className="mb-2 text-sm font-bold uppercase text-ink/45">
+            Free starting point
+          </p>
+          <h2 className="text-xl font-bold leading-tight text-ink">
+            Want the free checklist first?
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-ink/64">
+            Use the printable checklist for documents, payment, apps, hotel
+            address, transport, packing, and emergency phrases.
+          </p>
+          <TrackedLink
+            href="/thank-you"
+            eventName="checklist_download_clicked"
+            eventParams={{ source: `guide-${guideSlug}` }}
+            className="mt-5 inline-flex text-base font-semibold text-ember underline-offset-4 hover:text-[#982F28] hover:underline"
+          >
+            Get the Free China First Trip Checklist
+          </TrackedLink>
         </div>
       </div>
     </section>
@@ -251,6 +304,7 @@ function GuideSupportCta({ guideSlug }: { guideSlug: string }) {
 export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideTemplateProps) {
   const content = detail || fallbackDetail(guide);
   const showPaymentAppsGuideCta = paymentAppsGuideCtaSlugs.has(guide.slug);
+  const useCoreGuideBottomCta = paymentAppsGuideCtaSlugs.has(guide.slug);
   const displayedProducts = showPaymentAppsGuideCta
     ? products.filter((product) => product.id !== "china-payment-apps-setup-guide")
     : products;
@@ -392,6 +446,8 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
 
       {showPaymentAppsGuideCta ? <PaymentAppsGuideCta /> : null}
 
+      {useCoreGuideBottomCta ? <GuideQuestionCta guideSlug={guide.slug} /> : null}
+
       {relatedGuides.length > 0 ? (
         <section className="px-4 py-12">
           <div className="mx-auto max-w-7xl">
@@ -427,8 +483,12 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
       ) : null}
 
       <GuideSupportCta guideSlug={guide.slug} />
-      <ChecklistCTA />
-      <FeedbackCTA sourceLabel={`guide-${guide.slug}`} />
+      {useCoreGuideBottomCta ? null : (
+        <>
+          <ChecklistCTA />
+          <FeedbackCTA sourceLabel={`guide-${guide.slug}`} />
+        </>
+      )}
       <NewsletterSignup />
     </>
   );
