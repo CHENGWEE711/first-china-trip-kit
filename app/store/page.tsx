@@ -102,6 +102,21 @@ const insideGuideCards = [
   },
 ];
 
+const paymentGuideFitBullets = [
+  "You are worried about Alipay or WeChat Pay setup.",
+  "You want printable backup cards.",
+  "You want a first-day payment test plan.",
+  "You do not want to troubleshoot apps at the airport.",
+  "You want a simple offline reference you can save or print before flying.",
+];
+
+const paymentGuideNotNeededBullets = [
+  "You already have China payment apps tested.",
+  "You are comfortable using Chinese apps.",
+  "You only need a quick free checklist.",
+  "You are traveling with a local guide who handles payments and transport for you.",
+];
+
 const previewCards = [
   {
     title: "Cover preview",
@@ -213,13 +228,44 @@ export default function StorePage() {
           <p className="mt-3 max-w-3xl text-base text-ink/68">
             Products open through Payhip when a public product link is configured.
             If a paid product is not open yet, the store shows a waitlist instead
-            of a placeholder checkout link.
+            of an inactive checkout link.
           </p>
         </div>
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
+        </div>
+      </section>
+
+      <section className="bg-paper px-4 py-12">
+        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
+          <div className="rounded-lg border border-ink/10 bg-mist p-5 shadow-soft">
+            <p className="mb-2 text-sm font-bold uppercase text-ember">Good fit</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              This guide is for you if
+            </h2>
+            <ul className="mt-5 grid gap-3 text-base leading-relaxed text-ink/70">
+              {paymentGuideFitBullets.map((item) => (
+                <li key={item} className="rounded-md border border-ink/10 bg-paper p-3">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-lg border border-ink/10 bg-sand p-5 shadow-soft">
+            <p className="mb-2 text-sm font-bold uppercase text-ink/45">Maybe skip it</p>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              You may not need it if
+            </h2>
+            <ul className="mt-5 grid gap-3 text-base leading-relaxed text-ink/70">
+              {paymentGuideNotNeededBullets.map((item) => (
+                <li key={item} className="rounded-md border border-ink/10 bg-paper p-3">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -231,7 +277,7 @@ export default function StorePage() {
               Free checklist vs. paid setup guide
             </h2>
           </div>
-          <div className="overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft">
+          <div className="hidden overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft md:block">
             <div className="hidden grid-cols-[1.1fr_0.9fr_1fr] gap-4 border-b border-ink/10 bg-ink px-5 py-4 text-sm font-bold uppercase text-white md:grid">
               <span>Feature</span>
               <span>Free Checklist</span>
@@ -262,6 +308,33 @@ export default function StorePage() {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="grid gap-4 md:hidden">
+            {freeVsPaidRows.map((row) => (
+              <article
+                key={row.feature}
+                className="rounded-lg border border-ink/10 bg-paper p-4 shadow-soft"
+              >
+                <p className="text-xs font-bold uppercase text-ember">Feature</p>
+                <h3 className="mt-1 text-lg font-bold leading-tight text-ink">
+                  {row.feature}
+                </h3>
+                <div className="mt-4 grid gap-3">
+                  <div className="rounded-md bg-sand p-3">
+                    <p className="text-xs font-bold uppercase text-ink/45">
+                      Free Checklist
+                    </p>
+                    <p className="mt-1 text-base text-ink/72">{row.free}</p>
+                  </div>
+                  <div className="rounded-md bg-mist p-3">
+                    <p className="text-xs font-bold uppercase text-ink/45">
+                      Payment & Apps Setup Guide
+                    </p>
+                    <p className="mt-1 text-base text-ink/72">{row.paid}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>

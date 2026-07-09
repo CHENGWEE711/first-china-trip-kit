@@ -23,16 +23,19 @@ export function ProductCard({ product }: ProductCardProps) {
   const purchaseIsExternal = Boolean(purchaseUrl && /^https?:\/\//.test(purchaseUrl));
   const statusLabel = isChecklist
     ? "Free / Pay what you want"
-    : isPaymentAppsGuide && !hasExternalPurchaseUrl
-      ? "Coming soon"
-      : product.status === "available"
-        ? "Available now"
-        : "Coming soon";
+    : product.status === "available"
+      ? "Available now"
+      : "Coming soon";
+  const statusClass = isChecklist
+    ? "bg-ember text-white"
+    : product.status === "available"
+      ? "bg-jade text-white"
+      : "bg-mist text-ink/58";
   const actionHref = purchaseUrl || localDownloadUrl || "/store#early-access";
   const actionLabel = isChecklist
     ? purchaseUrl
       ? "Download / Support on Payhip"
-      : "Download free checklist"
+      : "Download Free Checklist"
     : isPaymentAppsGuide && purchaseUrl
       ? "Buy on Payhip — $7"
       : product.status === "available" && purchaseUrl
@@ -45,11 +48,11 @@ export function ProductCard({ product }: ProductCardProps) {
     : undefined;
 
   return (
-    <article className="flex h-full flex-col rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+    <article className="flex h-full min-w-0 flex-col rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <ShoppingBag aria-hidden="true" className="mt-1 text-ember" size={24} />
         <div className="flex flex-wrap justify-end gap-2 text-right">
-          <span className="rounded-md bg-mist px-3 py-1 text-xs font-bold uppercase text-ink/58">
+          <span className={`rounded-md px-3 py-1 text-xs font-bold uppercase ${statusClass}`}>
             {statusLabel}
           </span>
           <span className="rounded-md bg-sand px-3 py-1 text-sm font-bold text-ember">
@@ -113,33 +116,35 @@ export function ProductCard({ product }: ProductCardProps) {
         </a>
       ) : null}
       <p className="mt-4 text-sm text-ink/58">{product.refundNote}</p>
-      {canBuy ? (
-        <ProductActionButton
-          href={actionHref}
-          className="mt-5"
-          download={isChecklist && !purchaseUrl}
-          eventName={actionEventName}
-          isExternal={purchaseIsExternal}
-          canBuy
-          label={actionLabel}
-          productId={product.id}
-        />
-      ) : (
-        <>
+      <div className="mt-auto pt-1">
+        {canBuy ? (
           <ProductActionButton
-            href="/store#early-access"
+            href={actionHref}
             className="mt-5"
-            canBuy={false}
-            label="Join waitlist"
+            download={isChecklist && !purchaseUrl}
+            eventName={actionEventName}
+            isExternal={purchaseIsExternal}
+            canBuy
+            label={actionLabel}
             productId={product.id}
           />
-          <p className="mt-3 text-sm text-ink/58">
-            {product.status === "available"
-              ? "Join the newsletter to get notified when the Payhip purchase link opens."
-              : "Join the newsletter to get notified when this kit opens."}
-          </p>
-        </>
-      )}
+        ) : (
+          <>
+            <ProductActionButton
+              href="/store#early-access"
+              className="mt-5"
+              canBuy={false}
+              label="Join waitlist"
+              productId={product.id}
+            />
+            <p className="mt-3 text-sm text-ink/58">
+              {product.status === "available"
+                ? "Join the newsletter to get notified when the Payhip purchase link opens."
+                : "Join the newsletter to get notified when this kit opens."}
+            </p>
+          </>
+        )}
+      </div>
     </article>
   );
 }
