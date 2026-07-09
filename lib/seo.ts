@@ -286,6 +286,10 @@ export function productJsonLd(product: Product, path: string) {
     name: product.title,
     description: product.structuredDataDescription || product.summary,
     url: absoluteUrl(path),
+    image:
+      product.id === "china-payment-apps-setup-guide"
+        ? absoluteUrl("/products/previews/payment-apps-guide-cover.png")
+        : absoluteUrl(siteConfig.heroImage),
     brand: {
       "@type": "Brand",
       name: siteConfig.name,

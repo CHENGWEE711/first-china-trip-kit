@@ -34,7 +34,7 @@ export default function ContactPage() {
               </p>
               <a
                 href={`mailto:${siteConfig.contactEmail}`}
-                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-5 py-3 text-base font-semibold text-white"
+                className="mt-5 inline-flex min-h-11 w-full items-center justify-center break-all rounded-md bg-ember px-5 py-3 text-center text-base font-semibold text-white sm:w-auto"
               >
                 {siteConfig.contactEmail}
               </a>

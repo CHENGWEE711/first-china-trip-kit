@@ -165,6 +165,20 @@ export default function StorePage() {
                 productId="china-payment-apps-setup-guide"
               />
             </div>
+            <div className="mt-5 grid gap-2 text-sm text-ink/58 sm:grid-cols-2">
+              <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
+                Payhip checkout for digital delivery.
+              </p>
+              <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
+                Printable offline cards for arrival day.
+              </p>
+              <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
+                No visa, payment, or booking guarantees.
+              </p>
+              <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
+                Support contact: {siteConfig.contactEmail}
+              </p>
+            </div>
           </div>
           <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
             <p className="mb-2 text-sm font-bold uppercase text-ember">First paid kit</p>
@@ -318,7 +332,7 @@ export default function StorePage() {
         </div>
       </section>
 
-      <section className="bg-sand px-4 py-12">
+      <section id="preview-pages" className="bg-sand px-4 py-12">
         <div className="mx-auto max-w-7xl">
           <div className="mb-7 max-w-3xl">
             <p className="mb-2 text-sm font-bold uppercase text-ember">Preview</p>

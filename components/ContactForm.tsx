@@ -1,6 +1,7 @@
 "use client";
 
 import { type FormEvent, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { siteConfig } from "@/lib/site";
 
 type ContactFormProps = {
@@ -34,11 +35,20 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       return;
     }
 
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      body: formData,
-    });
-    const data = (await response.json()) as { message?: string };
+    let response: Response;
+    let data: { message?: string } = {};
+
+    try {
+      response = await fetch("/api/contact", {
+        method: "POST",
+        body: formData,
+      });
+      data = (await response.json()) as { message?: string };
+    } catch {
+      setStatus("idle");
+      setMessage(`We could not save this right now. Please email ${siteConfig.contactEmail} directly.`);
+      return;
+    }
 
     if (!response.ok) {
       setStatus("idle");
@@ -47,21 +57,29 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
     }
 
     setStatus("success");
+    trackEvent("contact_question_submitted", {
+      source,
+      preferred_reply_method: String(formData.get("preferred_reply_method") || "email"),
+      interested_in_custom_itinerary:
+        String(formData.get("interested_in_custom_itinerary") || "no") === "yes",
+    });
     setMessage(data.message || "Thanks! Your China trip question has been saved.");
     form.reset();
   }
 
   const inputClass =
-    "min-h-12 rounded-md border border-ink/12 bg-paper px-4 py-3 text-base text-ink outline-none focus:border-ember";
-  const labelClass = "grid gap-2 text-base font-semibold text-ink";
+    "min-h-12 w-full min-w-0 rounded-md border border-ink/12 bg-paper px-4 py-3 text-base text-ink outline-none focus:border-ember";
+  const labelClass = "grid min-w-0 gap-2 text-base font-semibold text-ink";
+  const radioClass =
+    "flex min-h-11 items-center gap-2 rounded-md border border-ink/10 bg-paper px-3 py-2 text-base text-ink/72";
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid gap-4 rounded-lg border border-ink/10 bg-paper p-5 shadow-soft"
+      className="grid min-w-0 gap-4 rounded-lg border border-ink/10 bg-paper p-5 shadow-soft"
     >
       <input type="hidden" name="source" value={source} />
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid min-w-0 gap-4 md:grid-cols-2">
         <label className={labelClass}>
           Name
           <input name="name" type="text" required className={inputClass} />
@@ -72,7 +90,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
         </label>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid min-w-0 gap-4 md:grid-cols-2">
         <label className={labelClass}>
           Country or passport
           <input name="country_or_passport" type="text" className={inputClass} />
@@ -83,7 +101,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
         </label>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid min-w-0 gap-4 md:grid-cols-2">
         <label className={labelClass}>
           Cities considered
           <input name="cities_considered" type="text" placeholder="e.g. Shanghai, Beijing, Xi'an" className={inputClass} />
@@ -101,7 +119,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
           required
           rows={6}
           placeholder="Tell us what you are trying to plan, what feels confusing, and any timing or route constraints."
-          className="rounded-md border border-ink/12 bg-paper px-4 py-3 text-base text-ink outline-none focus:border-ember"
+          className="w-full min-w-0 rounded-md border border-ink/12 bg-paper px-4 py-3 text-base text-ink outline-none focus:border-ember"
         />
       </label>
 
@@ -109,8 +127,8 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
         <legend className="text-base font-semibold text-ink">
           Interested in custom itinerary?
         </legend>
-        <div className="flex flex-wrap gap-4 text-base text-ink/72">
-          <label className="flex items-center gap-2">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label className={radioClass}>
             <input
               type="radio"
               name="interested_in_custom_itinerary"
@@ -119,7 +137,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
             />
             Yes
           </label>
-          <label className="flex items-center gap-2">
+          <label className={radioClass}>
             <input
               type="radio"
               name="interested_in_custom_itinerary"
@@ -136,8 +154,8 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
         <legend className="text-base font-semibold text-ink">
           Preferred reply method
         </legend>
-        <div className="flex flex-wrap gap-4 text-base text-ink/72">
-          <label className="flex items-center gap-2">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label className={radioClass}>
             <input
               type="radio"
               name="preferred_reply_method"
@@ -147,7 +165,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
             />
             Email
           </label>
-          <label className="flex items-center gap-2">
+          <label className={radioClass}>
             <input
               type="radio"
               name="preferred_reply_method"

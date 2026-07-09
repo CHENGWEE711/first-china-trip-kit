@@ -136,6 +136,7 @@ function VisaTool() {
     (item) => item.id !== "official" && !checked.includes(item.id),
   );
   const score = checked.length;
+  const progressPercent = Math.round((score / visaChecks.length) * 100);
   const hasOfficialVerification = checked.includes("official");
   const result =
     score === visaChecks.length
@@ -182,6 +183,12 @@ function VisaTool() {
     });
   }, [checked.length, result.title, score]);
 
+  function toggleVisaCheck(id: string, nextChecked: boolean) {
+    setChecked((current) =>
+      nextChecked ? [...current, id] : current.filter((candidate) => candidate !== id),
+    );
+  }
+
   return (
     <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
       <div className="mb-5 flex gap-3 rounded-md border border-ember/25 bg-sand p-4">
@@ -197,23 +204,45 @@ function VisaTool() {
           </p>
         </div>
       </div>
+      <div className="mb-5 rounded-md bg-sand p-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-bold uppercase text-ember">Planning checks</p>
+            <h2 className="mt-1 text-2xl font-bold leading-tight text-ink">
+              {score}/{visaChecks.length} confirmed
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={() => setChecked([])}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-ink/12 bg-paper px-4 py-2 text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember"
+          >
+            <RotateCcw aria-hidden="true" size={17} />
+            Reset
+          </button>
+        </div>
+        <div className="mt-4 h-3 overflow-hidden rounded-full bg-paper">
+          <div
+            className="h-full rounded-full bg-ember transition-all"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+      </div>
       <div className="grid gap-3">
         {visaChecks.map((item) => (
           <label
             key={item.id}
-            className="flex cursor-pointer items-start gap-3 rounded-lg border border-ink/10 bg-sand p-4 text-base text-ink/72 transition hover:border-ember/30"
+            className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 text-base text-ink/72 transition hover:border-ember/30 ${
+              checked.includes(item.id)
+                ? "border-ember/35 bg-mist"
+                : "border-ink/10 bg-sand"
+            }`}
           >
             <input
               type="checkbox"
               checked={checked.includes(item.id)}
-              onChange={(event) =>
-                setChecked((current) =>
-                  event.target.checked
-                    ? [...current, item.id]
-                    : current.filter((candidate) => candidate !== item.id),
-                )
-              }
-              className="mt-1 h-4 w-4 accent-[#B43D35]"
+              onChange={(event) => toggleVisaCheck(item.id, event.target.checked)}
+              className="mt-1 h-5 w-5 shrink-0 accent-[#B43D35]"
             />
             <span className="min-w-0">
               <span className="block font-bold text-ink">{item.label}</span>
@@ -452,7 +481,11 @@ function AppsTool() {
         {appChecks.map((item) => (
           <label
             key={item.id}
-            className="flex cursor-pointer items-start gap-3 rounded-lg border border-ink/10 bg-sand p-4 text-base text-ink/72 transition hover:border-ember/30"
+            className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 text-base text-ink/72 transition hover:border-ember/30 ${
+              checked.includes(item.id)
+                ? "border-ember/35 bg-mist"
+                : "border-ink/10 bg-sand"
+            }`}
           >
             <input
               type="checkbox"

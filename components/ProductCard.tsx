@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ShoppingBag } from "lucide-react";
 import { ProductActionButton } from "@/components/ProductActionButton";
 import type { Product } from "@/data/products";
@@ -59,13 +60,27 @@ export function ProductCard({ product }: ProductCardProps) {
       <h3 className="mt-4 text-2xl font-bold leading-tight text-ink">{product.title}</h3>
       <p className="mt-3 text-base text-ink/68">{product.summary}</p>
       {isPaymentAppsGuide ? (
-        <div className="mt-4 rounded-md border border-dashed border-ember/35 bg-sand p-4">
-          <p className="text-sm font-bold uppercase text-ember">PDF previews available</p>
-          <p className="mt-2 text-sm leading-relaxed text-ink/62">
-            View sample pages below, including the cover, decision tree, app stack,
-            and phrase card layout.
-          </p>
-        </div>
+        <a
+          href="/store#preview-pages"
+          className="mt-4 overflow-hidden rounded-md border border-ink/10 bg-sand shadow-soft transition hover:border-ember/35"
+        >
+          <Image
+            src="/products/previews/payment-apps-guide-cover.png"
+            alt="Preview cover for the China Payment and Apps Setup Guide"
+            width={900}
+            height={1164}
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            className="h-auto w-full"
+          />
+          <span className="block border-t border-ink/10 p-4">
+            <span className="block text-sm font-bold uppercase text-ember">
+              Preview pages available
+            </span>
+            <span className="mt-1 block text-sm leading-relaxed text-ink/62">
+              See the cover, decision tree, app stack, and phrase card layout before purchase.
+            </span>
+          </span>
+        </a>
       ) : null}
       <p className="mt-4 text-sm font-bold uppercase text-ink/48">Best for</p>
       <p className="mt-1 text-base text-ink/68">{product.bestFor}</p>
@@ -89,7 +104,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </li>
         ))}
       </ul>
-      {product.previewPdfUrl ? (
+      {product.previewPdfUrl && !isPaymentAppsGuide ? (
         <a
           href={product.previewPdfUrl}
           className="mt-4 text-sm font-semibold text-ember hover:text-[#982F28]"

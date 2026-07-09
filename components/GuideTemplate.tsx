@@ -212,6 +212,9 @@ function PaymentAppsGuideCta() {
           <ButtonLink href="/store#inside-the-guide" variant="secondary" className="w-full sm:w-auto">
             View what&apos;s inside
           </ButtonLink>
+          <ButtonLink href="/store#free-vs-paid" variant="ghost" className="w-full sm:w-auto">
+            Compare free vs paid
+          </ButtonLink>
         </div>
       </div>
     </section>
@@ -248,6 +251,9 @@ function GuideSupportCta({ guideSlug }: { guideSlug: string }) {
 export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideTemplateProps) {
   const content = detail || fallbackDetail(guide);
   const showPaymentAppsGuideCta = paymentAppsGuideCtaSlugs.has(guide.slug);
+  const displayedProducts = showPaymentAppsGuideCta
+    ? products.filter((product) => product.id !== "china-payment-apps-setup-guide")
+    : products;
 
   return (
     <>
@@ -384,6 +390,8 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
 
       <FAQSection faqs={content.faq} />
 
+      {showPaymentAppsGuideCta ? <PaymentAppsGuideCta /> : null}
+
       {relatedGuides.length > 0 ? (
         <section className="px-4 py-12">
           <div className="mx-auto max-w-7xl">
@@ -402,15 +410,15 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
         </section>
       ) : null}
 
-      {products.length > 0 ? (
+      {displayedProducts.length > 0 ? (
         <section className="bg-sand px-4 py-12">
           <div className="mx-auto max-w-7xl">
             <div className="mb-6 max-w-3xl">
-              <p className="mb-2 text-sm font-bold uppercase text-ember">Related products</p>
-              <h2 className="text-3xl font-bold leading-tight text-ink">Useful planning kits</h2>
+              <p className="mb-2 text-sm font-bold uppercase text-ember">More planning kits</p>
+              <h2 className="text-3xl font-bold leading-tight text-ink">Useful add-on kits</h2>
             </div>
             <div className="grid gap-5 md:grid-cols-3">
-              {products.map((product) => (
+              {displayedProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
@@ -418,7 +426,6 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
         </section>
       ) : null}
 
-      {showPaymentAppsGuideCta ? <PaymentAppsGuideCta /> : null}
       <GuideSupportCta guideSlug={guide.slug} />
       <ChecklistCTA />
       <FeedbackCTA sourceLabel={`guide-${guide.slug}`} />

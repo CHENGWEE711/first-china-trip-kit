@@ -1,6 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: "/products/china-payment-apps-setup-guide.pdf",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, noarchive",
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       {
