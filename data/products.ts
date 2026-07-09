@@ -73,7 +73,7 @@ export const products: Product[] = [
     previewPdfUrl: "",
     refundNote:
       "Digital delivery is handled by Payhip after purchase. Refunds may be limited after download.",
-    updatedAt: "2026-07-08",
+    updatedAt: "2026-07-09",
     isNextLaunch: true,
   },
   {

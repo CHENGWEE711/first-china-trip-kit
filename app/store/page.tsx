@@ -138,6 +138,11 @@ const previewCards = [
     src: "/products/previews/payment-apps-guide-phrase-card.png",
     alt: "Useful Chinese payment phrase card preview from the setup guide",
   },
+  {
+    title: "Hotel card preview",
+    src: "/products/previews/payment-apps-guide-hotel-card.png",
+    alt: "Hotel address card preview from the setup guide",
+  },
 ];
 
 export default function StorePage() {
@@ -414,11 +419,11 @@ export default function StorePage() {
             </h2>
             <p className="mt-3 text-base leading-relaxed text-ink/68">
               These previews are rendered from the actual PDF so you can see the
-              printable cover, decision tree, app stack, and phrase card layout
+              printable cover, decision tree, app stack, phrase card, and hotel card layout
               before purchase.
             </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             {previewCards.map((card) => (
               <div
                 key={card.src}

@@ -80,7 +80,7 @@ export function ProductCard({ product }: ProductCardProps) {
               Preview pages available
             </span>
             <span className="mt-1 block text-sm leading-relaxed text-ink/62">
-              See the cover, decision tree, app stack, and phrase card layout before purchase.
+              See the cover, decision tree, app stack, phrase cards, and hotel card before purchase.
             </span>
           </span>
         </a>
