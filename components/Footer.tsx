@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ClipboardList, Mail, MailCheck, MessageCircle } from "lucide-react";
+import { ClipboardList, Mail, MailCheck } from "lucide-react";
 import { CoffeeTipLink } from "@/components/CoffeeTipLink";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { footerLegalItems, navItems, siteConfig } from "@/lib/site";
 
 const contactEntries = [
@@ -15,12 +16,6 @@ const contactEntries = [
     href: "/contact",
     description: "Ask a China trip question",
     icon: ClipboardList,
-  },
-  {
-    label: "WhatsApp",
-    href: "/contact?channel=whatsapp",
-    description: "Request a WhatsApp reply",
-    icon: MessageCircle,
   },
   {
     label: "Newsletter",
@@ -84,6 +79,11 @@ export function Footer() {
                 </Link>
               );
             })}
+            <WhatsAppLink
+              placement="footer"
+              sourcePage="site_footer"
+              variant="footer"
+            />
           </div>
           {coffeeTipEnabled ? (
             <div className="mt-4">

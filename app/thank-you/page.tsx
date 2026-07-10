@@ -5,6 +5,7 @@ import { ChecklistDownloadWithTip } from "@/components/ChecklistDownloadWithTip"
 import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { PageIntro } from "@/components/PageIntro";
 import { PayhipChecklistLink } from "@/components/PayhipChecklistLink";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -47,6 +48,7 @@ const nextSteps = [
 export default function ThankYouPage() {
   const coffeeTipEnabled = Boolean(process.env.NEXT_PUBLIC_COFFEE_TIP_URL);
   const payhipChecklistEnabled = Boolean(process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL);
+  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
 
   return (
     <>
@@ -139,6 +141,22 @@ export default function ThankYouPage() {
               </Link>
             ))}
           </div>
+          {whatsappEnabled ? (
+            <div className="mt-6 rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+              <h2 className="text-2xl font-bold leading-tight text-ink">
+                Have a checklist question?
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-ink/68">
+                Send your passport country, travel month, trip length, cities
+                considered, and main question.
+              </p>
+              <WhatsAppLink
+                placement="checklist_thank_you"
+                sourcePage="/thank-you"
+                className="mt-5 w-full sm:w-fit"
+              />
+            </div>
+          ) : null}
         </div>
       </section>
     </>

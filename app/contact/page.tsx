@@ -4,6 +4,7 @@ import { Mail, MessageCircle } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { PageIntro } from "@/components/PageIntro";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
@@ -15,6 +16,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function ContactPage() {
+  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
+
   return (
     <>
       <PageIntro
@@ -40,14 +43,32 @@ export default function ContactPage() {
                 {siteConfig.contactEmail}
               </a>
             </section>
-            <section className="rounded-lg border border-ink/10 bg-sand p-5 shadow-soft">
-              <MessageCircle aria-hidden="true" className="text-ember" size={26} />
-              <h2 className="mt-4 text-2xl font-bold leading-tight text-ink">WhatsApp</h2>
-              <p className="mt-3 text-base text-ink/68">
-                WhatsApp replies are being prepared. If you prefer WhatsApp, mention
-                it in the form and include the best number to contact.
-              </p>
-            </section>
+            {whatsappEnabled ? (
+              <section className="rounded-lg border border-ink/10 bg-sand p-5 shadow-soft">
+                <MessageCircle aria-hidden="true" className="text-ember" size={26} />
+                <h2 className="mt-4 text-2xl font-bold leading-tight text-ink">
+                  Prefer WhatsApp?
+                </h2>
+                <p className="mt-3 text-base text-ink/68">
+                  Send your passport country, travel month, trip length, cities
+                  considered, and main question. We will review your message when
+                  available.
+                </p>
+                <div className="mt-5">
+                  <WhatsAppLink
+                    placement="contact_page"
+                    sourcePage="/contact"
+                    variant="primary"
+                    className="w-full sm:w-fit"
+                  />
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-ink/58">
+                  WhatsApp is for general trip-planning and digital-product support
+                  questions. First China Trip Kit does not provide legal,
+                  immigration, visa, financial, or official government advice.
+                </p>
+              </section>
+            ) : null}
             <section className="rounded-lg border border-ink/10 bg-ink p-5 text-white shadow-soft">
               <h2 className="text-2xl font-bold leading-tight">
                 Get practical China trip updates before you fly.

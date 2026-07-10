@@ -5,6 +5,7 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { ProductActionButton } from "@/components/ProductActionButton";
 import { ProductCard } from "@/components/ProductCard";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { products } from "@/data/products";
 import { buildMetadata, productJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
@@ -185,6 +186,7 @@ export default function StorePage() {
   const paymentGuide = products.find((product) => product.id === "china-payment-apps-setup-guide");
   const paymentGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
   const checklistPayhipUrl = process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL || "";
+  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
   const productSchema = paymentGuide ? productJsonLd(paymentGuide, "/store") : null;
 
   return (
@@ -563,37 +565,60 @@ export default function StorePage() {
       </section>
 
       <section className="bg-paper px-4 py-12">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold leading-tight text-ink">
-            Digital delivery and refund notes
-          </h2>
-          <p className="mt-3 text-base text-ink/68">
-            Digital kits are delivered through Payhip after purchase. Because these
-            are downloadable digital planning files, refunds may be limited after
-            download. If you purchased the wrong file or cannot access your guide,
-            contact{" "}
-            <a href={`mailto:${siteConfig.contactEmail}`} className="font-semibold text-ember">
-              {siteConfig.contactEmail}
-            </a>{" "}
-            and we will review the issue.
-          </p>
-          <p className="mt-3 text-base text-ink/68">
-            Read the{" "}
-            <Link href="/refund-policy" className="font-semibold text-ember">
-              Digital Delivery and Refund Policy
-            </Link>
-            .
-          </p>
-          <h2 className="mt-9 text-3xl font-bold leading-tight text-ink">
-            Important travel disclaimer
-          </h2>
-          <p className="mt-3 text-base text-ink/68">
-            First China Trip Kit provides travel planning information only. We do
-            not provide legal, immigration, visa, financial, or official government
-            advice. Visa rules, payment app support, transport policies, and attraction
-            booking requirements may change. Always verify current official requirements
-            before booking or traveling.
-          </p>
+        <div className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <h2 className="text-3xl font-bold leading-tight text-ink">
+              Digital delivery and refund notes
+            </h2>
+            <p className="mt-3 text-base text-ink/68">
+              Digital kits are delivered through Payhip after purchase. Because these
+              are downloadable digital planning files, refunds may be limited after
+              download. If you purchased the wrong file or cannot access your guide,
+              contact{" "}
+              <a href={`mailto:${siteConfig.contactEmail}`} className="font-semibold text-ember">
+                {siteConfig.contactEmail}
+              </a>{" "}
+              and we will review the issue.
+            </p>
+            <p className="mt-3 text-base text-ink/68">
+              Read the{" "}
+              <Link href="/refund-policy" className="font-semibold text-ember">
+                Digital Delivery and Refund Policy
+              </Link>
+              .
+            </p>
+            <h2 className="mt-9 text-3xl font-bold leading-tight text-ink">
+              Important travel disclaimer
+            </h2>
+            <p className="mt-3 text-base text-ink/68">
+              First China Trip Kit provides travel planning information only. We do
+              not provide legal, immigration, visa, financial, or official government
+              advice. Visa rules, payment app support, transport policies, and attraction
+              booking requirements may change. Always verify current official requirements
+              before booking or traveling.
+            </p>
+          </div>
+          {whatsappEnabled ? (
+            <aside className="rounded-lg border border-ink/10 bg-sand p-5 shadow-soft">
+              <h2 className="text-2xl font-bold leading-tight text-ink">
+                Need help choosing a guide?
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-ink/68">
+                Message us on WhatsApp with your travel month, trip length, and
+                the problem you are trying to solve.
+              </p>
+              <WhatsAppLink
+                placement="store_support"
+                sourcePage="/store"
+                className="mt-5 w-full sm:w-fit"
+              />
+              <p className="mt-4 text-sm leading-relaxed text-ink/58">
+                WhatsApp is for general trip-planning and digital-product support
+                questions. We do not provide legal, immigration, visa, financial,
+                or official government advice.
+              </p>
+            </aside>
+          ) : null}
         </div>
       </section>
     </>

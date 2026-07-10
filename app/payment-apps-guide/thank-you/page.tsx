@@ -3,6 +3,7 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { PageIntro } from "@/components/PageIntro";
 import { ProductSuccessPageView } from "@/components/ProductSuccessPageView";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
 
 export default function PaymentAppsGuideThankYouPage() {
   const coffeeTipEnabled = Boolean(process.env.NEXT_PUBLIC_COFFEE_TIP_URL);
+  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
 
   return (
     <>
@@ -47,6 +49,22 @@ export default function PaymentAppsGuideThankYouPage() {
               government advice. Always verify current official requirements
               before booking or traveling.
             </p>
+            {whatsappEnabled ? (
+              <div className="mt-5 rounded-md border border-ink/10 bg-mist p-4">
+                <h3 className="text-xl font-bold leading-tight text-ink">
+                  Need help accessing your guide?
+                </h3>
+                <p className="mt-2 text-base leading-relaxed text-ink/68">
+                  Your download should be available through Payhip or your
+                  confirmation email. If you still need help, message us on WhatsApp.
+                </p>
+                <WhatsAppLink
+                  placement="product_success_page"
+                  sourcePage="/payment-apps-guide/thank-you"
+                  className="mt-4 w-full sm:w-fit"
+                />
+              </div>
+            ) : null}
           </section>
           <section className="rounded-lg border border-ink/10 bg-sand p-5">
             <h2 className="text-2xl font-bold leading-tight text-ink">Next steps</h2>

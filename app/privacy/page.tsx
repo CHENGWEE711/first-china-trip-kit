@@ -66,6 +66,23 @@ export default function PrivacyPage() {
             Payhip and payment providers have their own privacy policies and terms.
             Please review them at checkout.
           </p>
+          <h2>WhatsApp contact</h2>
+          <p>
+            When you click our WhatsApp contact link, you leave
+            firstchinatripkit.com and communicate through WhatsApp. WhatsApp and
+            Meta may process your phone number, profile information, messages,
+            device information, and related usage data under their own privacy
+            policies.
+          </p>
+          <p>
+            We do not ask users to share passwords, verification codes, payment
+            credentials, banking information, or identity documents through
+            WhatsApp.
+          </p>
+          <p>
+            Please avoid sending sensitive personal or financial information
+            through WhatsApp.
+          </p>
           <h2>Contact</h2>
           <p>Questions can be sent to {siteConfig.contactEmail}.</p>
         </div>

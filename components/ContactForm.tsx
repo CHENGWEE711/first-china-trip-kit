@@ -1,6 +1,7 @@
 "use client";
 
 import { type FormEvent, useState } from "react";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { trackEvent } from "@/lib/analytics";
 import { siteConfig } from "@/lib/site";
 
@@ -11,7 +12,9 @@ type ContactFormProps = {
 export function ContactForm({ source = "contact-page" }: ContactFormProps) {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [continueOnWhatsApp, setContinueOnWhatsApp] = useState(false);
   const isSubmitting = status === "loading";
+  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -22,6 +25,8 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
     const formData = new FormData(form);
     const email = String(formData.get("email") || "").trim();
     const question = String(formData.get("main_question") || "").trim();
+    const preferredReplyMethod = String(formData.get("preferred_reply_method") || "email");
+    setContinueOnWhatsApp(false);
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setStatus("idle");
@@ -61,11 +66,12 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
     setStatus("success");
     trackEvent("contact_question_submitted", {
       source,
-      preferred_reply_method: String(formData.get("preferred_reply_method") || "email"),
+      preferred_reply_method: preferredReplyMethod,
       interested_in_custom_itinerary:
         String(formData.get("interested_in_custom_itinerary") || "no") === "yes",
     });
     setMessage(data.message || "Thanks! Your China trip question has been saved.");
+    setContinueOnWhatsApp(preferredReplyMethod === "whatsapp" && whatsappEnabled);
     form.reset();
   }
 
@@ -192,13 +198,27 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       </p>
 
       {message ? (
-        <p
-          className={`text-base font-semibold ${status === "success" ? "text-jade" : "text-ember"}`}
-          role="status"
-          aria-live="polite"
-        >
-          {message}
-        </p>
+        <div role="status" aria-live="polite" className="grid gap-3">
+          <p
+            className={`text-base font-semibold ${status === "success" ? "text-jade" : "text-ember"}`}
+          >
+            {message}
+          </p>
+          {continueOnWhatsApp ? (
+            <div className="rounded-md border border-ink/10 bg-sand p-4">
+              <p className="text-sm leading-relaxed text-ink/66">
+                To continue on WhatsApp, please open the WhatsApp chat and send
+                the pre-filled message. We cannot initiate a WhatsApp conversation
+                unless you message us first.
+              </p>
+              <WhatsAppLink
+                placement="contact_form_success"
+                sourcePage="/contact"
+                className="mt-3 w-full sm:w-fit"
+              />
+            </div>
+          ) : null}
+        </div>
       ) : null}
     </form>
   );
