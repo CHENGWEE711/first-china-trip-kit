@@ -216,7 +216,7 @@ export default function StorePage() {
               />
               <ProductActionButton
                 canBuy={Boolean(paymentGuideBuyUrl)}
-                className="mt-0 border border-ink/12 bg-paper text-ink hover:border-ember/35 hover:bg-paper hover:text-ember"
+                className="mt-0 border border-ink/12 !bg-paper !text-ink hover:border-ember/35 hover:!bg-paper hover:!text-ember"
                 href={paymentGuideBuyUrl || "/store#early-access"}
                 isExternal={Boolean(paymentGuideBuyUrl)}
                 label={paymentGuideBuyUrl ? "Buy Payment & Apps Guide — $7" : "Join waitlist"}
