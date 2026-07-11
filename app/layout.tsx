@@ -4,6 +4,7 @@ import { AttributionCapture } from "@/components/AttributionCapture";
 import { Footer } from "@/components/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Header } from "@/components/Header";
+import { MetricoolAnalytics } from "@/components/MetricoolAnalytics";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <body>
         <AttributionCapture />
         <GoogleAnalytics />
+        <MetricoolAnalytics />
         <Header />
         <main>{children}</main>
         <Footer />
