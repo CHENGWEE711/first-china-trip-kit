@@ -95,8 +95,8 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
         Get the free China First-Time Visitor Checklist and practical planning notes.
       </p>
       <p className="text-xs leading-relaxed text-white/48">
-        By subscribing, you agree to receive the checklist and a short five-email
-        first-trip planning series. Unsubscribe anytime. Read our{" "}
+        By subscribing, you join the list for future China trip updates. Automated
+        email delivery is not active yet. Read our{" "}
         <Link href="/privacy" className="underline underline-offset-2 hover:text-white/75">
           Privacy Policy
         </Link>
