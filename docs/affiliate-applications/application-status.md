@@ -4,10 +4,10 @@ Last updated: July 11, 2026
 
 | Platform | Official entry verified | Account created | Website added | Application drafted | Application submitted | Status | Manual action required | Date |
 | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |
-| Airalo | Yes | No | No | Yes | No | Blocked at contract review | Review and accept Airalo's Impact contract terms, then continue registration | July 11, 2026 |
-| Klook | Yes | No | No | Yes | No | Blocked at sign-up and agreement | Choose a sign-up method, complete authentication, and accept the Affiliate Agreement | July 11, 2026 |
-| SafetyWing | Yes | No | No | Yes | No | Blocked at account creation | Enter a reachable email and a private password, then complete any verification | July 11, 2026 |
-| Booking.com | Yes | No | No | Yes | No | Blocked at CJ region selection | Select the audience region using real traffic or business information, then continue account creation | July 11, 2026 |
+| Airalo | Yes | In progress | Yes | Yes | No | Blocked at personal details and legal agreement | Enter true country, mailing address, timezone and currency; review the Partner Program Agreement; then submit | July 11, 2026 |
+| Klook | Yes | Yes | Entered, not submitted | Yes | No | Blocked at personal details and legal agreement | Enter true name, billing currency, primary audience country and residence; review the Affiliate Agreement; then submit | July 11, 2026 |
+| SafetyWing | Yes | Yes | No | Yes | No | Blocked at program terms | Review the Ambassador Program terms and confirm the advertising restriction before continuing | July 11, 2026 |
+| Booking.com | Yes | No | No | Yes | No | Blocked at sensitive registration fields | Choose the correct programme region and enter true country, email and password; complete CAPTCHA and email verification | July 11, 2026 |
 
 ## Application details
 
@@ -18,10 +18,10 @@ Last updated: July 11, 2026
 - Account email: Not recorded
 - Publisher or partner ID: Not assigned
 - Submission time: Not submitted
-- Review status: Application copy prepared; registration not completed
+- Review status: Website channel added; registration not completed
 - Additional materials: None requested
 - Review email subject: None
-- Next step: Review the contract terms shown by Impact. If accepted, select the legal agreement checkbox and continue to registration.
+- Next step: Complete true country, mailing address, timezone and currency. Review the Partner Program Agreement checkbox and submit the Impact registration personally.
 
 ### Klook
 
@@ -30,10 +30,10 @@ Last updated: July 11, 2026
 - Account email: Not recorded
 - Publisher or partner ID: Not assigned
 - Submission time: Not submitted
-- Review status: Application copy prepared; registration not completed
+- Review status: Account created; public website fields entered; application not submitted
 - Additional materials: None requested
 - Review email subject: None
-- Next step: Choose Google, email, or phone registration, complete authentication, and review the Affiliate Agreement checkbox.
+- Next step: Complete true first and last name, billing currency, primary target-audience country and country of residence. Review the Affiliate Agreement and submit personally.
 
 ### SafetyWing
 
@@ -42,10 +42,10 @@ Last updated: July 11, 2026
 - Account email: Not recorded
 - Publisher or partner ID: Not assigned
 - Submission time: Not submitted
-- Review status: Application copy prepared; registration not completed
+- Review status: Account created; Ambassador registration opened; program terms not accepted
 - Additional materials: None requested
 - Review email subject: None
-- Next step: Enter a reachable email and private password, then complete any email verification. Do not use the domain support address until it is confirmed operational.
+- Next step: Review the Company Product & Services, Fee Schedule, traffic-source and intellectual-property terms, then click "I understand, and agree not to run ads" personally if accepted.
 
 ### Booking.com
 
@@ -54,10 +54,10 @@ Last updated: July 11, 2026
 - Account email: Not recorded
 - Publisher or partner ID: Not assigned
 - Submission time: Not submitted
-- Review status: Application copy prepared; registration not completed
+- Review status: CJ registration form opened; account not created
 - Additional materials: None requested
 - Review email subject: None
-- Next step: Choose the CJ audience region based on actual traffic or the owner's real operating region. GA4 reported zero active users by country/region for June 13 to July 10, 2026, so no region was inferred.
+- Next step: Choose the programme region, account language and true country. Enter a reachable email and private password, complete CAPTCHA and email verification, then review Booking.com and CJ legal terms. GA4 reported zero active users by country/region for June 13 to July 10, 2026, so no audience region was inferred.
 
 ## Website readiness check
 
