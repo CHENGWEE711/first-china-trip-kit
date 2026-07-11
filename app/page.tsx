@@ -16,6 +16,7 @@ import {
 import { ButtonLink } from "@/components/ButtonLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ProductActionButton } from "@/components/ProductActionButton";
+import { RecommendedTravelTools } from "@/components/RecommendedTravelTools";
 import { SectionHeader } from "@/components/SectionHeader";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { cities } from "@/data/cities";
@@ -29,6 +30,7 @@ import {
   toolKits,
 } from "@/data/kits";
 import { buildMetadata } from "@/lib/seo";
+import { hasWhatsAppContact } from "@/lib/whatsapp";
 
 export const metadata: Metadata = buildMetadata({
   title: "First China Trip Kit | Practical China Travel Kit for First-Time Visitors",
@@ -40,9 +42,7 @@ export const metadata: Metadata = buildMetadata({
 export default function HomePage() {
   const paymentGuideBuyUrl =
     process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
-  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith(
-    "https://wa.me/",
-  );
+  const whatsappEnabled = hasWhatsAppContact();
   const featuredCities = cityKitSlugs
     .map((slug) => cities.find((city) => city.slug === slug))
     .filter(Boolean);
@@ -229,6 +229,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <RecommendedTravelTools />
 
       <section className="bg-mist px-4 py-12">
         <div className="mx-auto max-w-7xl">

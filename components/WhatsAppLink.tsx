@@ -4,6 +4,7 @@ import { MessageCircle } from "lucide-react";
 import type { ReactNode } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 type WhatsAppLinkProps = {
   children?: ReactNode;
@@ -12,16 +13,6 @@ type WhatsAppLinkProps = {
   sourcePage: string;
   variant?: "primary" | "secondary" | "footer" | "text";
 };
-
-function getWhatsAppUrl() {
-  const url = process.env.NEXT_PUBLIC_WHATSAPP_URL || "";
-
-  if (!url.startsWith("https://wa.me/")) {
-    return "";
-  }
-
-  return url;
-}
 
 export function WhatsAppLink({
   children = "Message us on WhatsApp",

@@ -8,6 +8,7 @@ import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { products } from "@/data/products";
 import { buildMetadata, productJsonLd } from "@/lib/seo";
+import { hasWhatsAppContact } from "@/lib/whatsapp";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
@@ -191,7 +192,7 @@ export default function StorePage() {
   const paymentGuide = products.find((product) => product.id === "china-payment-apps-setup-guide");
   const paymentGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
   const checklistPayhipUrl = process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL || "";
-  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
+  const whatsappEnabled = hasWhatsAppContact();
   const productSchema = paymentGuide ? productJsonLd(paymentGuide, "/store") : null;
 
   return (

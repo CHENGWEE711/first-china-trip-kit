@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/city-kits",
     "/itinerary-kits",
     "/travel-essentials",
+    "/travel-tools",
     "/guides",
     "/tools",
     "/store",
@@ -19,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/privacy",
     "/terms",
     "/refund-policy",
+    "/affiliate-disclosure",
     "/thank-you",
   ].map((path) => ({
     url: absoluteUrl(path || "/"),

@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/ButtonLink";
+import { CityPlanYourStay } from "@/components/CityPlanYourStay";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
 import { GuideCard } from "@/components/GuideCard";
@@ -193,6 +194,8 @@ export function CityGuideTemplate({
       </section>
 
       <FAQSection faqs={guide.faq} />
+
+      <CityPlanYourStay cityName={city.cityName} citySlug={city.slug} />
 
       <section className="bg-mist px-4 py-12">
         <div className="mx-auto max-w-7xl">

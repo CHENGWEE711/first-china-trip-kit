@@ -5,6 +5,7 @@ import { PageIntro } from "@/components/PageIntro";
 import { ProductSuccessPageView } from "@/components/ProductSuccessPageView";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { buildMetadata } from "@/lib/seo";
+import { hasWhatsAppContact } from "@/lib/whatsapp";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function PaymentAppsGuideThankYouPage() {
   const coffeeTipEnabled = Boolean(process.env.NEXT_PUBLIC_COFFEE_TIP_URL);
-  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
+  const whatsappEnabled = hasWhatsAppContact();
 
   return (
     <>

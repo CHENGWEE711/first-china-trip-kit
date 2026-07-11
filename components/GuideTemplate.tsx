@@ -5,6 +5,7 @@ import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
 import { GuideCard } from "@/components/GuideCard";
+import { GuideAffiliateRecommendations } from "@/components/GuideAffiliateRecommendations";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ProductActionButton } from "@/components/ProductActionButton";
 import { ProductCard } from "@/components/ProductCard";
@@ -453,6 +454,8 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
       </article>
 
       <FAQSection faqs={content.faq} />
+
+      <GuideAffiliateRecommendations guideSlug={guide.slug} />
 
       {showPaymentAppsGuideCta ? <PaymentAppsGuideCta guideSlug={guide.slug} /> : null}
 

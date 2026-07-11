@@ -2,6 +2,7 @@
 
 import { type FormEvent, useRef, useState } from "react";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
+import { hasWhatsAppContact } from "@/lib/whatsapp";
 import { trackEvent } from "@/lib/analytics";
 
 type ContactFormProps = {
@@ -14,7 +15,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
   const [continueOnWhatsApp, setContinueOnWhatsApp] = useState(false);
   const hasTrackedStart = useRef(false);
   const isSubmitting = status === "loading";
-  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
+  const whatsappEnabled = hasWhatsAppContact();
 
   function trackFormStart() {
     if (hasTrackedStart.current) {

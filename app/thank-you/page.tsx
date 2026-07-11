@@ -8,6 +8,7 @@ import { PageIntro } from "@/components/PageIntro";
 import { PayhipChecklistLink } from "@/components/PayhipChecklistLink";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { buildMetadata } from "@/lib/seo";
+import { hasWhatsAppContact } from "@/lib/whatsapp";
 
 export const metadata: Metadata = buildMetadata({
   title: "Thank You | China First-Time Visitor Checklist",
@@ -49,7 +50,7 @@ const nextSteps = [
 export default function ThankYouPage() {
   const coffeeTipEnabled = Boolean(process.env.NEXT_PUBLIC_COFFEE_TIP_URL);
   const payhipChecklistEnabled = Boolean(process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL);
-  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
+  const whatsappEnabled = hasWhatsAppContact();
 
   return (
     <>

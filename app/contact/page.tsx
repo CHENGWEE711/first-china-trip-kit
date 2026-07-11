@@ -6,6 +6,7 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { PageIntro } from "@/components/PageIntro";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { buildMetadata } from "@/lib/seo";
+import { hasWhatsAppContact } from "@/lib/whatsapp";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
@@ -16,7 +17,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function ContactPage() {
-  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
+  const whatsappEnabled = hasWhatsAppContact();
 
   return (
     <>

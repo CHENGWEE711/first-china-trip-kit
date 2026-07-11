@@ -101,6 +101,9 @@ export function Footer() {
                 {item.label}
               </Link>
             ))}
+            <Link href="/affiliate-disclosure" className="text-white/60 hover:text-white">
+              Affiliate Disclosure
+            </Link>
           </div>
         </div>
       </div>
