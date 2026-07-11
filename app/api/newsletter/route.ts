@@ -35,5 +35,6 @@ export async function POST(request: Request) {
     ok: true,
     message: result.message,
     provider: result.provider,
+    delivery_status: result.deliveryStatus,
   });
 }

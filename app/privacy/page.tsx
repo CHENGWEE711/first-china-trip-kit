@@ -40,7 +40,20 @@ export default function PrivacyPage() {
           <h2>Third-party services</h2>
           <p>
             Newsletter storage or email delivery may be handled by providers such
-            as Supabase, Resend, or Mailchimp when newsletter delivery is enabled.
+            as Supabase and Brevo when newsletter delivery is enabled. Legacy or
+            alternative delivery integrations may include Resend or Mailchimp.
+          </p>
+          <h2>Brevo email sequence</h2>
+          <p>
+            When the Brevo integration is active, an email subscriber may be added
+            to a First China Trip Kit contact list in Brevo. Brevo then sends the
+            checklist and a short first-trip planning series covering payment,
+            essential apps, arrival-day preparation, cities, and routes.
+          </p>
+          <p>
+            Each marketing email provides an unsubscribe option. Unsubscribing
+            stops future marketing messages from that list. Brevo processes email
+            addresses and delivery activity under its own privacy policy.
           </p>
           <h2>Purchases and external checkout</h2>
           <p>

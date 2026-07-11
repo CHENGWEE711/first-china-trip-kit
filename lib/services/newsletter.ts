@@ -6,9 +6,14 @@ type SubscribeInput = {
 type SubscribeResult = {
   ok: boolean;
   message: string;
-  provider?: "supabase" | "mailchimp" | "resend";
+  provider?: "supabase" | "brevo" | "supabase+brevo" | "mailchimp" | "resend";
+  deliveryStatus?: "active" | "not_configured" | "failed";
   status?: number;
 };
+
+const successMessage = "Thanks! Your China First Trip Checklist is on the way.";
+const savedWithoutDeliveryMessage =
+  "Thanks! Your email was saved. Automated email delivery is temporarily unavailable, so download the checklist on the next page.";
 
 export async function subscribeToNewsletter({
   email,
@@ -18,8 +23,56 @@ export async function subscribeToNewsletter({
     return { ok: false, message: "Please enter a valid email address.", status: 400 };
   }
 
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    return subscribeWithSupabase({ email, sourcePage });
+  const supabaseReady = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY,
+  );
+  const brevoReady = Boolean(process.env.BREVO_API_KEY && process.env.BREVO_LIST_ID);
+
+  if (supabaseReady) {
+    const stored = await subscribeWithSupabase({ email, sourcePage });
+
+    if (!stored.ok && stored.status !== 409) {
+      return stored;
+    }
+
+    if (brevoReady) {
+      const delivered = await subscribeWithBrevo({ email, sourcePage });
+
+      if (stored.status === 409) {
+        return stored;
+      }
+
+      if (delivered.ok) {
+        return {
+          ok: true,
+          message: successMessage,
+          provider: "supabase+brevo",
+          deliveryStatus: "active",
+        };
+      }
+
+      return {
+        ok: true,
+        message: savedWithoutDeliveryMessage,
+        provider: "supabase",
+        deliveryStatus: "failed",
+      };
+    }
+
+    if (stored.status === 409) {
+      return stored;
+    }
+
+    return {
+      ok: true,
+      message: savedWithoutDeliveryMessage,
+      provider: "supabase",
+      deliveryStatus: "not_configured",
+    };
+  }
+
+  if (brevoReady) {
+    return subscribeWithBrevo({ email, sourcePage });
   }
 
   if (process.env.MAILCHIMP_API_KEY && process.env.MAILCHIMP_LIST_ID) {
@@ -33,7 +86,7 @@ export async function subscribeToNewsletter({
   return {
     ok: false,
     message:
-      "Newsletter signup is not connected yet. Please contact us directly for now.",
+      "Newsletter signup is not connected yet. Please use the free checklist download or contact us directly for now.",
     status: 503,
   };
 }
@@ -83,8 +136,68 @@ async function subscribeWithSupabase({
 
   return {
     ok: true,
-    message: "Thanks! Your China First Trip Checklist is on the way.",
+    message: "Thanks! Your email was saved.",
     provider: "supabase",
+  };
+}
+
+async function subscribeWithBrevo({
+  email,
+}: Required<SubscribeInput>): Promise<SubscribeResult> {
+  const listId = Number(process.env.BREVO_LIST_ID);
+
+  if (!Number.isInteger(listId) || listId <= 0) {
+    return {
+      ok: false,
+      message: "Brevo newsletter delivery is not configured correctly.",
+      provider: "brevo",
+      deliveryStatus: "failed",
+      status: 503,
+    };
+  }
+
+  const response = await fetch("https://api.brevo.com/v3/contacts", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "api-key": process.env.BREVO_API_KEY || "",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      listIds: [listId],
+      updateEnabled: true,
+    }),
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    const normalizedBody = body.toLowerCase();
+
+    if (response.status === 400 && normalizedBody.includes("already")) {
+      return {
+        ok: false,
+        message: "You’re already subscribed.",
+        provider: "brevo",
+        deliveryStatus: "active",
+        status: 409,
+      };
+    }
+
+    return {
+      ok: false,
+      message: "Your email could not be added to the welcome sequence yet.",
+      provider: "brevo",
+      deliveryStatus: "failed",
+      status: response.status,
+    };
+  }
+
+  return {
+    ok: true,
+    message: successMessage,
+    provider: "brevo",
+    deliveryStatus: "active",
   };
 }
 
@@ -137,7 +250,7 @@ async function subscribeWithMailchimp({
 
   return {
     ok: true,
-    message: "Thanks! Your China First Trip Checklist is on the way.",
+    message: successMessage,
     provider: "mailchimp",
   };
 }
@@ -182,7 +295,7 @@ async function subscribeWithResend({
 
   return {
     ok: true,
-    message: "Thanks! Your China First Trip Checklist is on the way.",
+    message: successMessage,
     provider: "resend",
   };
 }

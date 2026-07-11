@@ -1,6 +1,7 @@
 "use client";
 
 import { type FormEvent, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type NewsletterFormProps = {
@@ -92,6 +93,14 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
       </div>
       <p className="text-sm text-white/55">
         Get the free China First-Time Visitor Checklist and practical planning notes.
+      </p>
+      <p className="text-xs leading-relaxed text-white/48">
+        By subscribing, you agree to receive the checklist and a short five-email
+        first-trip planning series. Unsubscribe anytime. Read our{" "}
+        <Link href="/privacy" className="underline underline-offset-2 hover:text-white/75">
+          Privacy Policy
+        </Link>
+        .
       </p>
       {message ? (
         <p className="text-sm font-semibold text-white" aria-live="polite">
