@@ -33,7 +33,13 @@ Last updated: July 11, 2026
 - Review status: Active dashboard with Product Explorer and affiliate-link generation
 - Additional materials: None requested
 - Review email subject: Activate your Klook affiliate account
-- Next step: Use Product Explorer or Link Converter to generate approved Klook links. Complete tax and payment details personally before payout; do not store them in this project.
+- Official affiliate URL: https://affiliate.klook.com/redirect?aid=126918&aff_adid=1335426&k_site=https%3A%2F%2Fwww.klook.com%2F
+- Deep-link capability: Yes, through Link Converter and Product Explorer
+- Custom-tag capability: Yes, up to three optional custom tags in Link Converter
+- Website configuration: Enabled for Vercel Production and Preview on July 11, 2026
+- Live placement: Essential China Travel Tools and existing contextual Klook cards
+- Tracking: GA4 `affiliate_click` event with partner, category, campaign, label, placement, page and destination parameters
+- Next step: Complete tax and payment details personally before payout; do not store them in this project. Generate city-specific deep links later when relevant Klook destination pages are confirmed.
 
 ### SafetyWing
 

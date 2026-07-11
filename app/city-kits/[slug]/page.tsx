@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
 import { ButtonLink } from "@/components/ButtonLink";
+import { CityPlanYourStay } from "@/components/CityPlanYourStay";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
 import { GuideCard } from "@/components/GuideCard";
@@ -342,6 +343,8 @@ export default async function CityKitDetailPage({ params }: PageProps) {
       </article>
 
       {content?.faq ? <FAQSection faqs={content.faq} /> : null}
+
+      <CityPlanYourStay cityName={city.cityName} citySlug={city.slug} />
 
       <section className="px-4 py-12">
         <div className="mx-auto max-w-7xl">
