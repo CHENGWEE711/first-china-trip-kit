@@ -5,6 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
+import { ItineraryAffiliateRecommendation } from "@/components/ItineraryAffiliateRecommendation";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ProductCard } from "@/components/ProductCard";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
@@ -373,6 +374,11 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
       </article>
 
       {content?.faq ? <FAQSection faqs={content.faq} /> : null}
+
+      <ItineraryAffiliateRecommendation
+        itinerarySlug={itinerary.slug}
+        itineraryTitle={itinerary.title}
+      />
 
       {products.length > 0 ? (
         <section className="bg-sand px-4 py-12">
