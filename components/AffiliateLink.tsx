@@ -20,6 +20,8 @@ type AffiliateLinkProps = {
   disabledLabel?: string;
   fallbackHref?: string;
   label?: string;
+  offerName?: string;
+  offerType?: string;
   placement: string;
   sourcePage: string;
 };
@@ -34,6 +36,8 @@ export function AffiliateLink({
   disabledLabel = "Coming soon",
   fallbackHref,
   label,
+  offerName,
+  offerType,
   placement,
   sourcePage,
 }: AffiliateLinkProps) {
@@ -51,7 +55,11 @@ export function AffiliateLink({
       <a
         href={resolvedAffiliateUrl}
         target="_blank"
-        rel="sponsored nofollow noopener noreferrer"
+        rel={
+          partner === "klook"
+            ? "sponsored noopener noreferrer"
+            : "sponsored nofollow noopener noreferrer"
+        }
         aria-label={ariaLabel || `${linkLabel} (opens in a new tab)`}
         className={sharedClassName}
         onClick={() => {
@@ -66,6 +74,16 @@ export function AffiliateLink({
             source_page: sourcePage,
             destination_url: resolvedAffiliateUrl,
           });
+          if (partner === "klook") {
+            trackEvent("affiliate_klook_clicked", {
+              partner: "klook",
+              source_page: sourcePage,
+              placement,
+              destination: resolvedAffiliateUrl,
+              offer_type: offerType || config.category,
+              offer_name: offerName || linkLabel,
+            });
+          }
         }}
       >
         {content}

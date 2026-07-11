@@ -34,6 +34,15 @@ const recommendations: Record<
       label: "Check China eSIM Plans",
     },
   ],
+  "china-240-hour-visa-free-transit-guide": [
+    {
+      partner: "klook",
+      title: "Compare route activities after eligibility checks",
+      description:
+        "Once your transit eligibility, ports, onward ticket, and permitted travel area are verified, compare attraction tickets, transfers, and day tours that fit your confirmed route.",
+      label: "Browse China Tours & Tickets",
+    },
+  ],
   "china-travel-checklist-before-you-fly": [
     {
       partner: "airalo",

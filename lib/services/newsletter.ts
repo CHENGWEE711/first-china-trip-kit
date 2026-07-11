@@ -6,6 +6,7 @@ type SubscribeInput = {
   utmSource?: string;
   utmMedium?: string;
   utmCampaign?: string;
+  utmContent?: string;
   consentTimestamp?: string;
 };
 
@@ -29,6 +30,7 @@ export async function subscribeToNewsletter({
   utmSource = "",
   utmMedium = "",
   utmCampaign = "",
+  utmContent = "",
   consentTimestamp = new Date().toISOString(),
 }: SubscribeInput): Promise<SubscribeResult> {
   const subscription = {
@@ -39,6 +41,7 @@ export async function subscribeToNewsletter({
     utmSource,
     utmMedium,
     utmCampaign,
+    utmContent,
     consentTimestamp,
   };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -171,6 +174,7 @@ async function subscribeWithBrevo({
   utmSource,
   utmMedium,
   utmCampaign,
+  utmContent,
   consentTimestamp,
 }: SubscribeInput & { email: string; sourcePage: string }): Promise<SubscribeResult> {
   const listId = Number(process.env.BREVO_LIST_ID);
@@ -181,6 +185,7 @@ async function subscribeWithBrevo({
     UTM_SOURCE: utmSource || "",
     UTM_MEDIUM: utmMedium || "",
     UTM_CAMPAIGN: utmCampaign || "",
+    UTM_CONTENT: utmContent || "",
     LEAD_MAGNET: leadMagnet || "China First Trip Checklist",
     CONSENT_TIMESTAMP: consentTimestamp || new Date().toISOString(),
   };

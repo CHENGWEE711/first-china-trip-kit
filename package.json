@@ -5,6 +5,7 @@
   "scripts": {
     "generate:pdf": "node scripts/generate-checklist-pdf.mjs",
     "generate:share-card": "swift scripts/generate-share-qr.swift && python3 scripts/generate-checklist-share-card.py",
+    "generate:launch-assets": "python3 scripts/generate-launch-assets.py",
     "prebuild": "node scripts/generate-checklist-pdf.mjs",
     "dev": "next dev",
     "build": "next build",

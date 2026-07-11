@@ -44,6 +44,8 @@ export function CityPlanYourStay({ cityName, citySlug }: { cityName: string; cit
             title="Tours & tickets"
             label={`Browse ${cityName} Tours & Tickets`}
             description="Compare attraction tickets and guided experiences that fit your daily route and booking requirements."
+            offerType="attraction_tickets"
+            offerName={`${cityName} tours and attraction tickets`}
             campaign={campaign}
             placement="city_plan_your_stay"
             sourcePage={sourcePage}
@@ -54,6 +56,8 @@ export function CityPlanYourStay({ cityName, citySlug }: { cityName: string; cit
             title="Airport transfers"
             label="Check Airport Transfer Options"
             description="Review pickup details, luggage limits, cancellation terms, and your exact arrival terminal before booking."
+            offerType="airport_transfer"
+            offerName={`${cityName} airport transfer options`}
             campaign={campaign}
             placement="city_plan_your_stay"
             sourcePage={sourcePage}

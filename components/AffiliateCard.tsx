@@ -33,6 +33,8 @@ type AffiliateCardProps = {
   title?: string;
   description?: string;
   label?: string;
+  offerName?: string;
+  offerType?: string;
   campaign?: string;
   placement: string;
   sourcePage: string;
@@ -46,6 +48,8 @@ export function AffiliateCard({
   title,
   description,
   label,
+  offerName,
+  offerType,
   campaign,
   placement,
   sourcePage,
@@ -73,6 +77,8 @@ export function AffiliateCard({
           partner={partner}
           affiliateUrl={affiliateUrl}
           label={label}
+          offerName={offerName}
+          offerType={offerType}
           campaign={campaign}
           placement={placement}
           sourcePage={sourcePage}

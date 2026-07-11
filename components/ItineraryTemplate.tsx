@@ -2,6 +2,7 @@ import { CTASection } from "@/components/CTASection";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
+import { ItineraryAffiliateRecommendation } from "@/components/ItineraryAffiliateRecommendation";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ProductCard } from "@/components/ProductCard";
 import type { ChineseAddress } from "@/data/cities";
@@ -274,6 +275,11 @@ export function ItineraryTemplate({ itinerary, content, products }: ItineraryTem
       />
 
       <FAQSection faqs={faqs} />
+
+      <ItineraryAffiliateRecommendation
+        itinerarySlug={itinerary.slug}
+        itineraryTitle={itinerary.title}
+      />
 
       <ChecklistCTA
         title="Before you follow this route, download the first-trip checklist"

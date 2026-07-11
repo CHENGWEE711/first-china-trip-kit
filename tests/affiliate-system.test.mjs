@@ -19,7 +19,8 @@ test("affiliate partners stay disabled without verified URLs", async () => {
 test("affiliate links use safe sponsored attributes and the shared event", async () => {
   const source = await readFile(new URL("components/AffiliateLink.tsx", root), "utf8");
 
-  assert.match(source, /rel="sponsored nofollow noopener noreferrer"/);
+  assert.match(source, /sponsored nofollow noopener noreferrer/);
+  assert.match(source, /sponsored noopener noreferrer/);
   assert.match(source, /target="_blank"/);
   assert.match(source, /trackEvent\("affiliate_click"/);
   for (const field of [
