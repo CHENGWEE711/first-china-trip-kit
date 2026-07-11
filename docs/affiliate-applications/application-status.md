@@ -7,7 +7,7 @@ Last updated: July 11, 2026
 | Airalo | Yes | Yes | Yes | Yes | Yes | In review | Wait for the Impact review response | July 11, 2026 |
 | Klook | Yes | Yes | Yes | Yes | Yes | Active | Complete payout and tax information personally before requesting payment | July 11, 2026 |
 | SafetyWing | Yes | Yes | Promotional channel supplied | Yes | Yes | Dashboard active; contract review may still reject | Wait for the contract copy and any review response before publishing the link | July 11, 2026 |
-| Booking.com | Yes | Yes | Form completed; CJ save did not advance | Yes | No | CJ onboarding pending, 2 of 8 complete | Submit the prepared website property, then complete personal, tax and payment steps personally | July 11, 2026 |
+| Booking.com | Yes | Yes | Yes | Yes | No | CJ onboarding pending, 3 of 8 complete | Complete user information, tax forms, payment details and account activation personally | July 11, 2026 |
 
 ## Application details
 
@@ -53,12 +53,12 @@ Last updated: July 11, 2026
 - Official application entry domain: booking.com/affiliate-program
 - Affiliate management platform: CJ, reached through Booking.com's official affiliate page
 - Account email: Not recorded in this file
-- Publisher or partner ID: CJ CID 8012262
+- Publisher or partner ID: CJ CID 8012262; Promotional Property ID 101824957
 - Submission time: Not submitted
-- Review status: Booking.com North America application pending; CJ onboarding 2 of 8 complete
+- Review status: Booking.com North America application pending; CJ onboarding 3 of 8 complete
 - Additional materials: None requested
 - Review email subject: None
-- Next step: The network profile is saved. The website property form is filled with Website, Content/Blog/Media, First China Trip Kit and the live URL, but CJ did not advance after Submit. Submit it manually, then complete user information, W-8BEN or other applicable tax forms, payment information and account activation personally. Do not send these details in chat.
+- Next step: The network profile and active website property are saved. Complete user information, W-8BEN or other applicable tax forms, payment information and account activation personally. Do not send these details in chat. Booking.com review begins only after CJ account activation.
 
 ## Website readiness check
 
