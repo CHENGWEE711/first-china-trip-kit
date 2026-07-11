@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { getAffiliatePartner, type AffiliatePartnerKey } from "@/config/affiliate";
+import {
+  getAffiliatePartner,
+  resolveAffiliateUrl,
+  type AffiliatePartnerKey,
+} from "@/config/affiliate";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +14,7 @@ type AffiliateLinkProps = {
   partner: AffiliatePartnerKey;
   children?: ReactNode;
   ariaLabel?: string;
+  affiliateUrl?: string;
   campaign?: string;
   className?: string;
   disabledLabel?: string;
@@ -23,6 +28,7 @@ export function AffiliateLink({
   partner,
   children,
   ariaLabel,
+  affiliateUrl,
   campaign,
   className,
   disabledLabel = "Coming soon",
@@ -32,6 +38,7 @@ export function AffiliateLink({
   sourcePage,
 }: AffiliateLinkProps) {
   const config = getAffiliatePartner(partner);
+  const resolvedAffiliateUrl = resolveAffiliateUrl(partner, affiliateUrl);
   const linkLabel = label || config.label;
   const content = children || linkLabel;
   const sharedClassName = cn(
@@ -39,10 +46,10 @@ export function AffiliateLink({
     className,
   );
 
-  if (config.enabled && config.affiliateUrl) {
+  if (resolvedAffiliateUrl) {
     return (
       <a
-        href={config.affiliateUrl}
+        href={resolvedAffiliateUrl}
         target="_blank"
         rel="sponsored nofollow noopener noreferrer"
         aria-label={ariaLabel || `${linkLabel} (opens in a new tab)`}
@@ -57,7 +64,7 @@ export function AffiliateLink({
             page_location: window.location.href,
             page_path: window.location.pathname,
             source_page: sourcePage,
-            destination_url: config.affiliateUrl,
+            destination_url: resolvedAffiliateUrl,
           });
         }}
       >

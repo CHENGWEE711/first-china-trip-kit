@@ -33,6 +33,13 @@ const configuredEnabled: Record<AffiliatePartnerKey, boolean> = {
   safetywing: process.env.NEXT_PUBLIC_AFFILIATE_SAFETYWING_ENABLED !== "false",
 };
 
+const configuredKlookCityUrls: Record<string, string> = {
+  shanghai: process.env.NEXT_PUBLIC_AFFILIATE_KLOOK_SHANGHAI_URL || "",
+  beijing: process.env.NEXT_PUBLIC_AFFILIATE_KLOOK_BEIJING_URL || "",
+  xian: process.env.NEXT_PUBLIC_AFFILIATE_KLOOK_XIAN_URL || "",
+  chengdu: process.env.NEXT_PUBLIC_AFFILIATE_KLOOK_CHENGDU_URL || "",
+};
+
 export function isValidAffiliateUrl(value: string) {
   if (!value) return false;
 
@@ -117,4 +124,19 @@ export const affiliatePartnerOrder: AffiliatePartnerKey[] = [
 
 export function getAffiliatePartner(partner: AffiliatePartnerKey) {
   return affiliatePartners[partner];
+}
+
+export function resolveAffiliateUrl(
+  partner: AffiliatePartnerKey,
+  affiliateUrlOverride?: string,
+) {
+  if (!configuredEnabled[partner]) return "";
+
+  const candidate = affiliateUrlOverride?.trim() || configuredUrls[partner].trim();
+  return isValidAffiliateUrl(candidate) ? candidate : "";
+}
+
+export function getKlookCityAffiliateUrl(citySlug: string) {
+  const candidate = configuredKlookCityUrls[citySlug]?.trim() || "";
+  return isValidAffiliateUrl(candidate) ? candidate : undefined;
 }

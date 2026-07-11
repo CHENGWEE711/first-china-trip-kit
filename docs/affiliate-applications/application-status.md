@@ -34,12 +34,16 @@ Last updated: July 11, 2026
 - Additional materials: None requested
 - Review email subject: Activate your Klook affiliate account
 - Official affiliate URL: https://affiliate.klook.com/redirect?aid=126918&aff_adid=1335426&k_site=https%3A%2F%2Fwww.klook.com%2F
+- Shanghai deep link: https://affiliate.klook.com/redirect?aid=126918&aff_adid=1335478&k_site=https%3A%2F%2Fwww.klook.com%2Fdestination%2Fc59-shanghai%2F
+- Beijing deep link: https://affiliate.klook.com/redirect?aid=126918&aff_adid=1335479&k_site=https%3A%2F%2Fwww.klook.com%2Fdestination%2Fc57-beijing%2F
+- Xi'an deep link: https://affiliate.klook.com/redirect?aid=126918&aff_adid=1335480&k_site=https%3A%2F%2Fwww.klook.com%2Fdestination%2Fc60-xi-an%2F
+- Chengdu deep link: https://affiliate.klook.com/redirect?aid=126918&aff_adid=1335481&k_site=https%3A%2F%2Fwww.klook.com%2Fdestination%2Fc61-chengdu%2F
 - Deep-link capability: Yes, through Link Converter and Product Explorer
 - Custom-tag capability: Yes, up to three optional custom tags in Link Converter
 - Website configuration: Enabled for Vercel Production and Preview on July 11, 2026
 - Live placement: Essential China Travel Tools and existing contextual Klook cards
 - Tracking: GA4 `affiliate_click` event with partner, category, campaign, label, placement, page and destination parameters
-- Next step: Complete tax and payment details personally before payout; do not store them in this project. Generate city-specific deep links later when relevant Klook destination pages are confirmed.
+- Next step: Complete tax and payment details personally before payout; do not store them in this project. City-specific destination links are configured for Shanghai, Beijing, Xi'an, and Chengdu.
 
 ### SafetyWing
 

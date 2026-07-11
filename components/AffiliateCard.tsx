@@ -6,7 +6,11 @@ import {
   TicketCheck,
 } from "lucide-react";
 import { AffiliateLink } from "@/components/AffiliateLink";
-import { getAffiliatePartner, type AffiliatePartnerKey } from "@/config/affiliate";
+import {
+  getAffiliatePartner,
+  resolveAffiliateUrl,
+  type AffiliatePartnerKey,
+} from "@/config/affiliate";
 
 const icons = {
   airalo: Smartphone,
@@ -24,6 +28,7 @@ const partnerNames = {
 
 type AffiliateCardProps = {
   anchorId?: string;
+  affiliateUrl?: string;
   partner: AffiliatePartnerKey;
   title?: string;
   description?: string;
@@ -36,6 +41,7 @@ type AffiliateCardProps = {
 
 export function AffiliateCard({
   anchorId,
+  affiliateUrl,
   partner,
   title,
   description,
@@ -46,6 +52,7 @@ export function AffiliateCard({
   fallbackHref,
 }: AffiliateCardProps) {
   const config = getAffiliatePartner(partner);
+  const resolvedAffiliateUrl = resolveAffiliateUrl(partner, affiliateUrl);
   const Icon = icons[partner];
   const heading = title || config.label;
 
@@ -64,6 +71,7 @@ export function AffiliateCard({
       <div className="mt-5">
         <AffiliateLink
           partner={partner}
+          affiliateUrl={affiliateUrl}
           label={label}
           campaign={campaign}
           placement={placement}
@@ -73,11 +81,11 @@ export function AffiliateCard({
         >
           <span className="inline-flex items-center gap-2">
             {label || config.label}
-            {config.enabled ? <ExternalLink aria-hidden="true" size={17} /> : null}
+            {resolvedAffiliateUrl ? <ExternalLink aria-hidden="true" size={17} /> : null}
           </span>
         </AffiliateLink>
       </div>
-      {config.enabled ? (
+      {resolvedAffiliateUrl ? (
         <p className="mt-3 text-xs font-semibold uppercase text-ink/42">
           Affiliate partner · {partnerNames[partner]}
         </p>

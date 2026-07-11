@@ -1,6 +1,6 @@
 import { AffiliateCard } from "@/components/AffiliateCard";
 import { AffiliateDisclosureNote } from "@/components/AffiliateDisclosureNote";
-import { getAffiliatePartner } from "@/config/affiliate";
+import { getAffiliatePartner, getKlookCityAffiliateUrl } from "@/config/affiliate";
 
 const supportedCities = new Set(["beijing", "shanghai", "xian", "chengdu"]);
 
@@ -9,6 +9,7 @@ export function CityPlanYourStay({ cityName, citySlug }: { cityName: string; cit
 
   const campaign = `${citySlug}_city_kit_planning`;
   const sourcePage = `/city-kits/${citySlug}`;
+  const klookCityAffiliateUrl = getKlookCityAffiliateUrl(citySlug);
   const hasEnabledPartner = ["booking", "klook", "airalo"].some((partner) =>
     getAffiliatePartner(partner as "booking" | "klook" | "airalo").enabled,
   );
@@ -39,6 +40,7 @@ export function CityPlanYourStay({ cityName, citySlug }: { cityName: string; cit
           />
           <AffiliateCard
             partner="klook"
+            affiliateUrl={klookCityAffiliateUrl}
             title="Tours & tickets"
             label={`Browse ${cityName} Tours & Tickets`}
             description="Compare attraction tickets and guided experiences that fit your daily route and booking requirements."
@@ -48,6 +50,7 @@ export function CityPlanYourStay({ cityName, citySlug }: { cityName: string; cit
           />
           <AffiliateCard
             partner="klook"
+            affiliateUrl={klookCityAffiliateUrl}
             title="Airport transfers"
             label="Check Airport Transfer Options"
             description="Review pickup details, luggage limits, cancellation terms, and your exact arrival terminal before booking."

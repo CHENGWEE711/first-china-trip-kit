@@ -9,11 +9,18 @@ Add the matching public environment variable in Vercel for Production and Previe
 
 - `NEXT_PUBLIC_AFFILIATE_AIRALO_URL`
 - `NEXT_PUBLIC_AFFILIATE_KLOOK_URL`
+- `NEXT_PUBLIC_AFFILIATE_KLOOK_SHANGHAI_URL`
+- `NEXT_PUBLIC_AFFILIATE_KLOOK_BEIJING_URL`
+- `NEXT_PUBLIC_AFFILIATE_KLOOK_XIAN_URL`
+- `NEXT_PUBLIC_AFFILIATE_KLOOK_CHENGDU_URL`
 - `NEXT_PUBLIC_AFFILIATE_BOOKING_URL`
 - `NEXT_PUBLIC_AFFILIATE_SAFETYWING_URL`
 
 Use the complete HTTPS affiliate URL issued by the partner. Do not use a normal homepage
 URL as a substitute. A blank, malformed, or non-HTTPS URL stays disabled.
+
+The four city-level Klook variables are optional deep-link overrides. When one is blank or
+invalid, that city card safely falls back to `NEXT_PUBLIC_AFFILIATE_KLOOK_URL`.
 
 A valid URL enables the partner by default. To pause one partner without removing its URL,
 set its matching switch to `false`, for example:
@@ -65,4 +72,3 @@ If GA4 is absent, the existing analytics helper safely becomes a no-op/dataLayer
 
 Never place partner dashboard credentials, private tokens, or secret API keys in a
 `NEXT_PUBLIC_` variable.
-

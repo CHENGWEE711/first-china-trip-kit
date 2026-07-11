@@ -37,6 +37,19 @@ test("affiliate links use safe sponsored attributes and the shared event", async
   assert.match(source, /aria-disabled="true"/);
 });
 
+test("city Klook links support safe overrides with a generic fallback", async () => {
+  const config = await readFile(new URL("config/affiliate.ts", root), "utf8");
+  const cityCards = await readFile(
+    new URL("components/CityPlanYourStay.tsx", root),
+    "utf8"
+  );
+
+  assert.match(config, /NEXT_PUBLIC_AFFILIATE_KLOOK_SHANGHAI_URL/);
+  assert.match(config, /getKlookCityAffiliateUrl/);
+  assert.match(config, /affiliateUrlOverride\?\.trim\(\) \|\| configuredUrls\[partner\]\.trim\(\)/);
+  assert.match(cityCards, /affiliateUrl=\{klookCityAffiliateUrl\}/);
+});
+
 test("WhatsApp username and official short links render safely", async () => {
   const { isValidWhatsAppContactUrl } = await import(
     new URL("../lib/whatsapp.ts", import.meta.url)
