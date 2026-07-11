@@ -7,7 +7,7 @@ Last updated: July 11, 2026
 | Airalo | Yes | Yes | Yes | Yes | Yes | In review | Wait for the Impact review response | July 11, 2026 |
 | Klook | Yes | Yes | Yes | Yes | Yes | Active | Complete payout and tax information personally before requesting payment | July 11, 2026 |
 | SafetyWing | Yes | Yes | Promotional channel supplied | Yes | Yes | Dashboard active; contract review may still reject | Wait for the contract copy and any review response before publishing the link | July 11, 2026 |
-| Booking.com | Yes | Yes | Yes | Yes | No | CJ onboarding pending, 3 of 8 complete | Complete user information, tax forms, payment details and account activation personally | July 11, 2026 |
+| Booking.com | Yes | Yes | Yes | Yes | No | CJ onboarding pending, 6 of 8 complete | Complete the remaining user and payment information personally, activate the account, then wait for advertiser approval | July 11, 2026 |
 
 ## Application details
 
@@ -65,10 +65,12 @@ Last updated: July 11, 2026
 - Account email: Not recorded in this file
 - Publisher or partner ID: CJ CID 8012262; Promotional Property ID 101824957
 - Submission time: Not submitted
-- Review status: Booking.com North America application pending; CJ onboarding 3 of 8 complete
+- Review status: Booking.com North America application not yet submitted; CJ onboarding 6 of 8 complete
 - Additional materials: None requested
 - Review email subject: None
-- Next step: The network profile and active website property are saved. Complete user information, W-8BEN or other applicable tax forms, payment information and account activation personally. Do not send these details in chat. Booking.com review begins only after CJ account activation.
+- Active advertiser check: 0 active advertisers and 0 pending advertiser applications on July 11, 2026
+- Affiliate tracking URL: Not available yet; do not publish a normal Booking.com URL as an affiliate link
+- Next step: The network profile, promotional property, company details and tax form are complete. Complete the remaining user information and payment information personally, then activate the CJ account. Booking.com review begins only after activation, and the website link must remain disabled until the advertiser relationship is approved and CJ provides a trackable link.
 
 ## Website readiness check
 
