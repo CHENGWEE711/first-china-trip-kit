@@ -1,9 +1,8 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { trackEvent } from "@/lib/analytics";
-import { siteConfig } from "@/lib/site";
 
 type ContactFormProps = {
   source?: string;
@@ -13,8 +12,21 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [continueOnWhatsApp, setContinueOnWhatsApp] = useState(false);
+  const hasTrackedStart = useRef(false);
   const isSubmitting = status === "loading";
   const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith("https://wa.me/");
+
+  function trackFormStart() {
+    if (hasTrackedStart.current) {
+      return;
+    }
+
+    hasTrackedStart.current = true;
+    trackEvent("contact_form_started", {
+      source_page: "/contact",
+      placement: source,
+    });
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,20 +64,24 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
     } catch {
       setStatus("idle");
       setMessage(
-        `The contact form is temporarily unavailable. Please email ${siteConfig.contactEmail} directly with your travel month, passport country, trip length, cities, and question.`,
+        "The contact form is temporarily unavailable. Please email us or contact us through WhatsApp.",
       );
       return;
     }
 
     if (!response.ok) {
       setStatus("idle");
-      setMessage(data.message || `Please email ${siteConfig.contactEmail} directly for now.`);
+      setMessage(
+        data.message ||
+          "The contact form is temporarily unavailable. Please email us or contact us through WhatsApp.",
+      );
       return;
     }
 
     setStatus("success");
-    trackEvent("contact_question_submitted", {
-      source,
+    trackEvent("contact_form_submitted", {
+      source_page: "/contact",
+      placement: source,
       preferred_reply_method: preferredReplyMethod,
       interested_in_custom_itinerary:
         String(formData.get("interested_in_custom_itinerary") || "no") === "yes",
@@ -84,6 +100,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
+      onFocusCapture={trackFormStart}
       className="grid min-w-0 gap-4 rounded-lg border border-ink/10 bg-paper p-5 shadow-soft"
     >
       <input type="hidden" name="source" value={source} />

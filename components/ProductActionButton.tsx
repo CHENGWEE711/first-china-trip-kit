@@ -4,11 +4,13 @@ import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 type ProductActionButtonProps = {
+  analyticsParams?: Record<string, string | number | boolean | undefined>;
   canBuy: boolean;
   className?: string;
   href: string;
   label: string;
   productId: string;
+  placement?: string;
   download?: boolean;
   eventName?: string;
   eventNames?: string[];
@@ -16,6 +18,7 @@ type ProductActionButtonProps = {
 };
 
 export function ProductActionButton({
+  analyticsParams,
   canBuy,
   className,
   download = false,
@@ -24,6 +27,7 @@ export function ProductActionButton({
   href,
   label,
   productId,
+  placement = "product_action",
   isExternal = false,
 }: ProductActionButtonProps) {
   const trackedEvents =
@@ -37,9 +41,21 @@ export function ProductActionButton({
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
       onClick={() => {
+        const product =
+          productId === "china-payment-apps-setup-guide"
+            ? "China Payment & Apps Setup Guide"
+            : productId === "china-first-trip-checklist"
+              ? "China First Trip Checklist"
+              : productId;
+
         trackedEvents.forEach((trackedEvent) =>
           trackEvent(trackedEvent, {
+            source_page: window.location.pathname,
+            placement,
             product_id: productId,
+            product,
+            ...(productId === "china-payment-apps-setup-guide" ? { price: "7" } : {}),
+            ...analyticsParams,
           }),
         );
       }}

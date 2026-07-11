@@ -79,18 +79,20 @@ export default function HomePage() {
               <ProductActionButton
                 canBuy
                 className="mt-0 w-full sm:w-auto"
-                eventName="home_free_checklist_clicked"
+                eventName="checklist_download_clicked"
                 href="#free-checklist"
                 label="Get the Free China First Trip Checklist"
+                placement="home_hero"
                 productId="china-first-trip-checklist"
               />
               <ProductActionButton
                 canBuy
                 className="mt-0 w-full border border-white/80 !bg-white !text-ink hover:!bg-sand hover:!text-ember sm:w-auto"
-                eventName="home_payment_guide_clicked"
+                eventName="payment_apps_guide_buy_clicked"
                 href={paymentGuideBuyUrl || "/store#inside-the-guide"}
                 isExternal={Boolean(paymentGuideBuyUrl)}
                 label={paymentGuideBuyUrl ? "Buy the $7 Setup Guide" : "View the $7 Setup Guide"}
+                placement="home_hero"
                 productId="china-payment-apps-setup-guide"
               />
             </div>
@@ -150,9 +152,10 @@ export default function HomePage() {
                 <ProductActionButton
                   canBuy
                   className="mt-0 w-full"
-                  eventName="home_free_checklist_clicked"
+                  eventName="checklist_download_clicked"
                   href="#free-checklist"
                   label="Get the free checklist"
+                  placement="home_conversion_card"
                   productId="china-first-trip-checklist"
                 />
               </div>
@@ -183,10 +186,11 @@ export default function HomePage() {
                 <ProductActionButton
                   canBuy
                   className="mt-0 w-full"
-                  eventName="home_payment_guide_clicked"
+                  eventName="payment_apps_guide_buy_clicked"
                   href={paymentGuideBuyUrl || "/store#inside-the-guide"}
                   isExternal={Boolean(paymentGuideBuyUrl)}
                   label={paymentGuideBuyUrl ? "Buy now — $7" : "See what is inside"}
+                  placement="home_conversion_card"
                   productId="china-payment-apps-setup-guide"
                 />
               </div>

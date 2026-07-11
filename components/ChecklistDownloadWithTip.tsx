@@ -55,7 +55,10 @@ export function ChecklistDownloadWithTip({
   }
 
   function handleDownloadClick() {
-    trackEvent("checklist_download_clicked", { source });
+    trackEvent("checklist_download_clicked", {
+      source_page: window.location.pathname,
+      placement: source,
+    });
 
     if (!canShowTip()) {
       return;

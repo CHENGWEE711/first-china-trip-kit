@@ -33,27 +33,31 @@ export default function PrivacyPage() {
           </p>
           <h2>Analytics</h2>
           <p>
-            The site may send basic newsletter submission events to analytics
-            tools. These events are used to understand which pages help visitors
-            plan more effectively.
+            We use Google Analytics to understand website traffic, page usage,
+            and user interactions. Analytics may record page views, approximate
+            device and location information, and interactions such as checklist,
+            store, tool, contact, and WhatsApp link clicks. We use this aggregated
+            information to improve the site and understand which resources are useful.
           </p>
-          <h2>Third-party services</h2>
+          <h2>Newsletter</h2>
           <p>
-            Newsletter storage or email delivery may be handled by providers such
-            as Supabase and Brevo when newsletter delivery is enabled. Legacy or
-            alternative delivery integrations may include Resend or Mailchimp.
-          </p>
-          <h2>Brevo email sequence</h2>
-          <p>
-            When the Brevo integration is active, an email subscriber may be added
-            to a First China Trip Kit contact list in Brevo. Brevo then sends the
-            checklist and a short first-trip planning series covering payment,
-            essential apps, arrival-day preparation, cities, and routes.
+            If you subscribe to our newsletter, your email address and signup source
+            may be processed through our email marketing provider. Brevo currently
+            stores website newsletter contacts when the integration is configured.
+            We do not claim that a subscription succeeded when the provider is unavailable.
           </p>
           <p>
-            Each marketing email provides an unsubscribe option. Unsubscribing
-            stops future marketing messages from that list. Brevo processes email
-            addresses and delivery activity under its own privacy policy.
+            Automated marketing emails are not sent while the Brevo workflow is
+            inactive. If a welcome series is enabled later, each marketing email
+            will include an unsubscribe option. Brevo processes email addresses
+            and related delivery activity under its own privacy policy.
+          </p>
+          <h2>External services</h2>
+          <p>
+            When you click WhatsApp links, Payhip purchase links, PayPal or other
+            external payment links, you leave firstchinatripkit.com and interact
+            with third-party services. Their privacy policies and terms apply to
+            information you provide on those services.
           </p>
           <h2>Purchases and external checkout</h2>
           <p>

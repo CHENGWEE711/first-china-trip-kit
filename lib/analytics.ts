@@ -14,9 +14,10 @@ export function trackEvent(eventName: string, params: AnalyticsParams = {}) {
     return;
   }
 
-  window.dataLayer?.push({
-    event: eventName,
-    ...params,
-  });
-  window.gtag?.("event", eventName, params);
+  if (window.gtag) {
+    window.gtag("event", eventName, params);
+    return;
+  }
+
+  window.dataLayer?.push({ event: eventName, ...params });
 }

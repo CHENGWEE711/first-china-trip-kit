@@ -217,6 +217,7 @@ export default function StorePage() {
                 href={checklistPayhipUrl || "/thank-you"}
                 isExternal={Boolean(checklistPayhipUrl)}
                 label="Download Free Checklist"
+                placement="store_hero"
                 productId="china-first-trip-checklist"
               />
               <ProductActionButton
@@ -225,6 +226,7 @@ export default function StorePage() {
                 href={paymentGuideBuyUrl || "/store#early-access"}
                 isExternal={Boolean(paymentGuideBuyUrl)}
                 label={paymentGuideBuyUrl ? "Buy Payment & Apps Guide — $7" : "Join waitlist"}
+                placement="store_hero"
                 productId="china-payment-apps-setup-guide"
               />
             </div>
@@ -550,6 +552,7 @@ export default function StorePage() {
               href={paymentGuideBuyUrl || "/store#early-access"}
               isExternal={Boolean(paymentGuideBuyUrl)}
               label={paymentGuideBuyUrl ? "Buy Payment & Apps Guide — $7" : "Join the waitlist"}
+              placement="store_preview"
               productId="china-payment-apps-setup-guide"
             />
           </div>

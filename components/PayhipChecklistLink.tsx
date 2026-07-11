@@ -29,7 +29,13 @@ export function PayhipChecklistLink({
       href={payhipChecklistUrl}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackEvent("payhip_checklist_clicked", { source })}
+      onClick={() =>
+        trackEvent("payhip_checklist_clicked", {
+          source_page: window.location.pathname,
+          placement: source,
+          product: "China First Trip Checklist",
+        })
+      }
       className={cn(
         "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-4 py-2 text-center text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-ember focus:ring-offset-2",
         variant === "primary" && "bg-ember text-white shadow-soft hover:bg-[#982F28]",

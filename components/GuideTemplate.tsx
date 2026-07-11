@@ -169,7 +169,7 @@ const paymentAppsGuideCtaSlugs = new Set([
   "china-240-hour-visa-free-transit-guide",
 ]);
 
-function PaymentAppsGuideCta() {
+function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
   const paymentAppsGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
   const isAvailable = Boolean(paymentAppsGuideBuyUrl);
 
@@ -210,11 +210,17 @@ function PaymentAppsGuideCta() {
             }
             label={isAvailable ? "Buy the $7 Guide" : "Join the waitlist"}
             productId="china-payment-apps-setup-guide"
+            placement="guide_bottom_paid_cta"
+            analyticsParams={{ guide_slug: guideSlug }}
           />
           <TrackedLink
             href="/store#inside-the-guide"
             eventName="store_inside_guide_clicked"
-            eventParams={{ source: "guide-primary-cta" }}
+            eventParams={{
+              source_page: `/guides/${guideSlug}`,
+              guide_slug: guideSlug,
+              placement: "guide_bottom_paid_cta",
+            }}
             className="inline-flex min-h-11 items-center justify-center rounded-md px-2 py-2 text-base font-semibold text-clay underline-offset-4 transition hover:text-white hover:underline sm:w-auto"
           >
             View what&apos;s inside
@@ -263,7 +269,11 @@ function GuideQuestionCta({ guideSlug }: { guideSlug: string }) {
           <TrackedLink
             href="/thank-you"
             eventName="checklist_download_clicked"
-            eventParams={{ source: `guide-${guideSlug}` }}
+            eventParams={{
+              source_page: `/guides/${guideSlug}`,
+              guide_slug: guideSlug,
+              placement: "guide_bottom_free_checklist",
+            }}
             className="mt-5 inline-flex text-base font-semibold text-ember underline-offset-4 hover:text-[#982F28] hover:underline"
           >
             Get the Free China First Trip Checklist
@@ -444,7 +454,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
 
       <FAQSection faqs={content.faq} />
 
-      {showPaymentAppsGuideCta ? <PaymentAppsGuideCta /> : null}
+      {showPaymentAppsGuideCta ? <PaymentAppsGuideCta guideSlug={guide.slug} /> : null}
 
       {useCoreGuideBottomCta ? <GuideQuestionCta guideSlug={guide.slug} /> : null}
 

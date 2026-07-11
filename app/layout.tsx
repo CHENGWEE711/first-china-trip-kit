@@ -7,6 +7,9 @@ import { absoluteUrl, siteConfig } from "@/lib/site";
 import "./globals.css";
 
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const isProductionEnvironment =
+  process.env.VERCEL_ENV === "production" ||
+  (!process.env.VERCEL_ENV && process.env.NODE_ENV === "production");
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -40,7 +43,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [absoluteUrl(siteConfig.heroImage)],
   },
-  verification: googleSiteVerification
+  verification: isProductionEnvironment && googleSiteVerification
     ? {
         google: googleSiteVerification,
       }

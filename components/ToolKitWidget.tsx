@@ -241,6 +241,8 @@ function VisaTool() {
 
     trackedResultRef.current = result.title;
     trackEvent("visa_free_checker_completed", {
+      source_page: "/tools/visa-free-eligibility-checker",
+      tool: "visa-free-eligibility-checker",
       checked_count: score,
       result: result.title,
     });
@@ -546,6 +548,8 @@ function AppsTool() {
 
     hasTrackedCompletionRef.current = true;
     trackEvent("essential_apps_checklist_completed", {
+      source_page: "/tools/essential-apps-checklist",
+      tool: "essential-apps-checklist",
       ready_count: readyCount,
       total_count: totalCount,
       result: result.title,

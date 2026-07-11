@@ -1,5 +1,3 @@
-import { siteConfig } from "@/lib/site";
-
 export type ContactMessageInput = {
   name: string;
   email: string;
@@ -71,7 +69,8 @@ export async function saveContactMessage({
 
   return {
     ok: false,
-    message: `The contact form is temporarily unavailable. Please email ${siteConfig.contactEmail} directly with your travel month, passport country, trip length, cities, and question.`,
+    message:
+      "The contact form is temporarily unavailable. Please email us or contact us through WhatsApp.",
     status: 503,
   };
 }

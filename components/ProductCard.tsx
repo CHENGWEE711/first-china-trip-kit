@@ -126,6 +126,7 @@ export function ProductCard({ product }: ProductCardProps) {
             isExternal={purchaseIsExternal}
             canBuy
             label={actionLabel}
+            placement="store_product_card"
             productId={product.id}
           />
         ) : (
@@ -135,6 +136,7 @@ export function ProductCard({ product }: ProductCardProps) {
               className="mt-5"
               canBuy={false}
               label="Join waitlist"
+              placement="store_product_card"
               productId={product.id}
             />
             <p className="mt-3 text-sm text-ink/58">
