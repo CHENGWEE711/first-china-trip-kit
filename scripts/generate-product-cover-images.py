@@ -141,7 +141,75 @@ def create_cover(size, output, variant):
     margin = int(min(w, h) * 0.06)
     rounded(draw, (margin, margin, w - margin, h - margin), 36, PAPER, LINE, 3)
 
-    if variant == "store":
+    if variant == "payhip":
+        text(draw, (w / 2, margin + 64), "FIRST CHINA TRIP KIT", 28, RED, True, anchor="mm")
+        draw.line((margin + 70, margin + 118, w - margin - 70, margin + 118), fill=LINE, width=3)
+
+        text(
+            draw,
+            (w / 2, margin + 220),
+            "China Payment & Apps\nSetup Guide",
+            64,
+            INK,
+            True,
+            anchor="mm",
+            align="center",
+            spacing=12,
+        )
+        text(
+            draw,
+            (w / 2, margin + 360),
+            "Alipay · WeChat Pay · Essential Apps\nFirst-Day Backup Plan",
+            34,
+            MUTED,
+            anchor="mm",
+            align="center",
+            spacing=10,
+        )
+        rounded(draw, (w / 2 - 165, margin + 415, w / 2 + 165, margin + 475), 18, "#F8E7E3", RED, 2)
+        text(draw, (w / 2, margin + 445), "Printable PDF", 31, RED, True, anchor="mm")
+
+        cards_y = margin + 535
+        card_w = 390
+        card_h = 315
+        gap = 34
+        start_x = int((w - (card_w * 3 + gap * 2)) / 2)
+        feature_cards = [
+            ("Payment setup", "Alipay checklist\nWeChat Pay backup\nFirst-day test"),
+            ("Decision tree", "Card declined?\nQR failed?\nNo internet?"),
+            ("Offline cards", "Taxi phrases\nHotel address\nPayment backup"),
+        ]
+        for i, (heading, body) in enumerate(feature_cards):
+            x = start_x + i * (card_w + gap)
+            rounded(draw, (x, cards_y, x + card_w, cards_y + card_h), 28, "#F4EADD", LINE, 3)
+            icon_y = cards_y + 42
+            if i == 0:
+                draw_wallet(draw, x + 118, icon_y, 150, 92)
+            elif i == 1:
+                for j, label in enumerate(["Try", "Backup", "Ask"]):
+                    yy = icon_y + j * 44
+                    rounded(draw, (x + 118, yy, x + 272, yy + 31), 10, PAPER, RED if j == 0 else GREEN, 2)
+                    text(draw, (x + 195, yy + 16), label, 18, INK, True, anchor="mm")
+                    if j < 2:
+                        draw.line((x + 195, yy + 31, x + 195, yy + 44), fill=MUTED, width=2)
+            else:
+                for j in range(3):
+                    yy = icon_y + j * 42
+                    rounded(draw, (x + 112, yy, x + 142, yy + 30), 8, MIST, GREEN, 2)
+                    draw.line((x + 119, yy + 15, x + 127, yy + 23, x + 136, yy + 8), fill=GREEN, width=3)
+                    draw.line((x + 158, yy + 9, x + 278, yy + 9), fill=MUTED, width=3)
+                    draw.line((x + 158, yy + 22, x + 250, yy + 22), fill=LINE, width=3)
+            text(draw, (x + card_w / 2, cards_y + 202), heading, 27, INK, True, anchor="mm")
+            text(draw, (x + card_w / 2, cards_y + 255), body, 22, MUTED, anchor="mm", align="center", spacing=8)
+
+        draw_chips(draw, ["Print", "Save Offline", "Travel Ready"], margin + 880, w, h)
+
+        footer_y = h - margin - 58
+        draw.line((margin + 90, footer_y - 48, w - margin - 90, footer_y - 48), fill=LINE, width=2)
+        text(draw, (w / 2, footer_y), "First China Trip Kit", 30, INK, True, anchor="mm")
+        text(draw, (w / 2, footer_y + 42), "www.firstchinatripkit.com", 24, MUTED, anchor="mm")
+
+    elif variant == "store":
         text(draw, (margin + 58, margin + 58), "FIRST CHINA TRIP KIT", 18, RED, True)
         draw.line((margin + 58, margin + 92, w - margin - 58, margin + 92), fill=LINE, width=3)
 
@@ -180,14 +248,22 @@ def create_cover(size, output, variant):
         text(draw, (w / 2, brand_y), "FIRST CHINA TRIP KIT", int(h * 0.021), RED, True, anchor="mm")
         draw.line((margin + 70, brand_y + int(h * 0.04), w - margin - 70, brand_y + int(h * 0.04)), fill=LINE, width=3)
 
-        title_size = int(h * (0.052 if variant == "square" else 0.05))
-        title = fit_lines(draw, "China Payment & Apps Setup Guide", w - margin * 2 - 170, title_size, True)
+        title_size = int(h * (0.052 if variant == "square" else 0.052))
+        title = (
+            "China Payment & Apps\nSetup Guide"
+            if variant == "payhip"
+            else fit_lines(draw, "China Payment & Apps Setup Guide", w - margin * 2 - 170, title_size, True)
+        )
         title_y = margin + int(h * (0.17 if variant == "square" else 0.145))
         text(draw, (w / 2, title_y), title, title_size, INK, True, anchor="mm", align="center", spacing=10)
 
         subtitle_size = int(h * 0.026)
-        subtitle = "Alipay | WeChat Pay | Essential Apps | First-Day Backup Plan"
-        subtitle_wrapped = fit_lines(draw, subtitle, w - margin * 2 - 200, subtitle_size)
+        subtitle = (
+            "Alipay · WeChat Pay · Essential Apps\nFirst-Day Backup Plan\n\nPrintable PDF"
+            if variant == "payhip"
+            else "Alipay | WeChat Pay | Essential Apps | First-Day Backup Plan"
+        )
+        subtitle_wrapped = subtitle if variant == "payhip" else fit_lines(draw, subtitle, w - margin * 2 - 200, subtitle_size)
         subtitle_y = margin + int(h * (0.265 if variant == "square" else 0.245))
         text(draw, (w / 2, subtitle_y), subtitle_wrapped, subtitle_size, MUTED, anchor="mm", align="center", spacing=8)
 
@@ -198,12 +274,15 @@ def create_cover(size, output, variant):
         draw_hero_graphic(draw, margin + 95, graphic_top + int(graphic_h * 0.08), scale)
 
         chip_y = margin + int(h * 0.72)
-        draw_chips(draw, ["Payment checklist", "App stack", "Decision tree", "Phrase cards"], chip_y, w, h)
+        if variant == "payhip":
+            draw_chips(draw, ["Print", "Save Offline", "Travel Ready"], chip_y, w, h)
+        else:
+            draw_chips(draw, ["Payment checklist", "App stack", "Decision tree", "Phrase cards"], chip_y, w, h)
 
         footer_y = h - margin - int(h * (0.045 if variant == "square" else 0.05))
         draw.line((margin + 90, footer_y - int(h * 0.03), w - margin - 90, footer_y - int(h * 0.03)), fill=LINE, width=2)
-        text(draw, (w / 2, footer_y), "www.firstchinatripkit.com", int(h * 0.021), MUTED, anchor="mm")
-        text(draw, (w / 2, footer_y + int(h * 0.04)), "hello@firstchinatripkit.com", int(h * 0.019), MUTED, anchor="mm")
+        text(draw, (w / 2, footer_y), "First China Trip Kit", int(h * 0.023), INK, True, anchor="mm")
+        text(draw, (w / 2, footer_y + int(h * 0.04)), "www.firstchinatripkit.com", int(h * 0.019), MUTED, anchor="mm")
 
     img.save(OUT_DIR / output, quality=95)
 
