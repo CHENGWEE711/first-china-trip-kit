@@ -4,10 +4,10 @@ Last updated: July 11, 2026
 
 | Platform | Official entry verified | Account created | Website added | Application drafted | Application submitted | Status | Manual action required | Date |
 | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | --- |
-| Airalo | Yes | In progress | Yes | Yes | No | Blocked at personal details and legal agreement | Enter true country, mailing address, timezone and currency; review the Partner Program Agreement; then submit | July 11, 2026 |
-| Klook | Yes | Yes | Entered, not submitted | Yes | No | Blocked at personal details and legal agreement | Enter true name, billing currency, primary audience country and residence; review the Affiliate Agreement; then submit | July 11, 2026 |
-| SafetyWing | Yes | Yes | No | Yes | No | Blocked at program terms | Review the Ambassador Program terms and confirm the advertising restriction before continuing | July 11, 2026 |
-| Booking.com | Yes | No | No | Yes | No | Blocked at sensitive registration fields | Choose the correct programme region and enter true country, email and password; complete CAPTCHA and email verification | July 11, 2026 |
+| Airalo | Yes | Yes | Yes | Yes | Yes | In review | Wait for the Impact review response | July 11, 2026 |
+| Klook | Yes | Yes | Yes | Yes | Yes | Active | Complete payout and tax information personally before requesting payment | July 11, 2026 |
+| SafetyWing | Yes | Yes | Promotional channel supplied | Yes | Yes | Dashboard active; contract review may still reject | Wait for the contract copy and any review response before publishing the link | July 11, 2026 |
+| Booking.com | Yes | Yes | Form completed; CJ save did not advance | Yes | No | CJ onboarding pending, 2 of 8 complete | Submit the prepared website property, then complete personal, tax and payment steps personally | July 11, 2026 |
 
 ## Application details
 
@@ -15,49 +15,50 @@ Last updated: July 11, 2026
 
 - Official application entry domain: partners.airalo.com
 - Affiliate management platform: Impact, reached through Airalo's official partner site
-- Account email: Not recorded
+- Account email: Not recorded in this file
 - Publisher or partner ID: Not assigned
-- Submission time: Not submitted
-- Review status: Website channel added; registration not completed
+- Submission time: July 11, 2026; exact time not recorded
+- Review status: In Review
 - Additional materials: None requested
 - Review email subject: None
-- Next step: Complete true country, mailing address, timezone and currency. Review the Partner Program Agreement checkbox and submit the Impact registration personally.
+- Next step: Wait for the Impact notification. Record the partner ID and approved tracking-link tools after approval.
 
 ### Klook
 
 - Official application entry domain: affiliate.klook.com
 - Affiliate management platform: Klook Affiliate Portal
-- Account email: Not recorded
-- Publisher or partner ID: Not assigned
-- Submission time: Not submitted
-- Review status: Account created; public website fields entered; application not submitted
+- Account email: Masked in platform; not recorded here
+- Publisher or partner ID: Affiliate ID (AID) 126918
+- Submission time: July 11, 2026; exact time not recorded
+- Review status: Active dashboard with Product Explorer and affiliate-link generation
 - Additional materials: None requested
-- Review email subject: None
-- Next step: Complete true first and last name, billing currency, primary target-audience country and country of residence. Review the Affiliate Agreement and submit personally.
+- Review email subject: Activate your Klook affiliate account
+- Next step: Use Product Explorer or Link Converter to generate approved Klook links. Complete tax and payment details personally before payout; do not store them in this project.
 
 ### SafetyWing
 
 - Official application entry domain: safetywing.com/ambassador
 - Affiliate management platform: SafetyWing Ambassador portal
-- Account email: Not recorded
-- Publisher or partner ID: Not assigned
-- Submission time: Not submitted
-- Review status: Account created; Ambassador registration opened; program terms not accepted
+- Account email: Not recorded in this file
+- Publisher or partner ID: Ambassador ID 26560790
+- Submission time: July 11, 2026; exact time not recorded
+- Review status: Ambassador dashboard active; submitted contract remains subject to review or rejection
 - Additional materials: None requested
-- Review email subject: None
-- Next step: Review the Company Product & Services, Fee Schedule, traffic-source and intellectual-property terms, then click "I understand, and agree not to run ads" personally if accepted.
+- Review email subject: Contract copy expected; subject not yet recorded
+- Official affiliate URL: https://safetywing.com/?referenceID=26560790&utm_source=26560790&utm_medium=Ambassador
+- Next step: Wait for the contract copy and review response. Do not publish the link until the application is treated as formally accepted.
 
 ### Booking.com
 
 - Official application entry domain: booking.com/affiliate-program
 - Affiliate management platform: CJ, reached through Booking.com's official affiliate page
-- Account email: Not recorded
-- Publisher or partner ID: Not assigned
+- Account email: Not recorded in this file
+- Publisher or partner ID: CJ CID 8012262
 - Submission time: Not submitted
-- Review status: CJ registration form opened; account not created
+- Review status: Booking.com North America application pending; CJ onboarding 2 of 8 complete
 - Additional materials: None requested
 - Review email subject: None
-- Next step: Choose the programme region, account language and true country. Enter a reachable email and private password, complete CAPTCHA and email verification, then review Booking.com and CJ legal terms. GA4 reported zero active users by country/region for June 13 to July 10, 2026, so no audience region was inferred.
+- Next step: The network profile is saved. The website property form is filled with Website, Content/Blog/Media, First China Trip Kit and the live URL, but CJ did not advance after Submit. Submit it manually, then complete user information, W-8BEN or other applicable tax forms, payment information and account activation personally. Do not send these details in chat.
 
 ## Website readiness check
 
