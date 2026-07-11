@@ -287,15 +287,82 @@ def create_cover(size, output, variant):
     img.save(OUT_DIR / output, quality=95)
 
 
+def create_checklist_payhip_cover():
+    w, h = 1600, 1200
+    img = Image.new("RGB", (w, h), CREAM)
+    draw = ImageDraw.Draw(img)
+    margin = 72
+
+    rounded(draw, (margin, margin, w - margin, h - margin), 36, PAPER, LINE, 3)
+    text(draw, (w / 2, margin + 64), "FIRST CHINA TRIP KIT", 28, RED, True, anchor="mm")
+    draw.line((margin + 70, margin + 118, w - margin - 70, margin + 118), fill=LINE, width=3)
+
+    text(
+        draw,
+        (w / 2, margin + 235),
+        "China First Trip\nChecklist",
+        72,
+        INK,
+        True,
+        anchor="mm",
+        align="center",
+        spacing=14,
+    )
+    text(
+        draw,
+        (w / 2, margin + 390),
+        "Visa · Payment · Apps · Internet\nTransport · Hotel Address · Emergency Phrases",
+        32,
+        MUTED,
+        anchor="mm",
+        align="center",
+        spacing=10,
+    )
+
+    rounded(draw, (w / 2 - 250, margin + 468, w / 2 + 250, margin + 532), 18, "#F8E7E3", RED, 2)
+    text(draw, (w / 2, margin + 500), "Printable 3-Page Checklist", 30, RED, True, anchor="mm")
+
+    cards_y = margin + 600
+    card_w = 390
+    card_h = 250
+    gap = 34
+    start_x = int((w - (card_w * 3 + gap * 2)) / 2)
+    cards = [
+        ("Before you fly", ["Documents", "Payment", "Essential apps"]),
+        ("Arrival day", ["Mobile data", "Transport", "Hotel address"]),
+        ("Offline backup", ["Phrase cards", "Emergency notes", "RMB cash"]),
+    ]
+    for i, (heading, items) in enumerate(cards):
+        x = start_x + i * (card_w + gap)
+        rounded(draw, (x, cards_y, x + card_w, cards_y + card_h), 26, "#F4EADD", LINE, 3)
+        text(draw, (x + card_w / 2, cards_y + 48), heading, 28, INK, True, anchor="mm")
+        for j, item in enumerate(items):
+            yy = cards_y + 92 + j * 46
+            rounded(draw, (x + 42, yy, x + 70, yy + 28), 7, MIST, GREEN, 2)
+            draw.line((x + 49, yy + 14, x + 56, yy + 21, x + 65, yy + 8), fill=GREEN, width=3)
+            text(draw, (x + 88, yy - 1), item, 22, INK)
+
+    draw_chips(draw, ["Print", "Save Offline", "Travel Ready"], margin + 890, w, h)
+
+    footer_y = h - margin - 58
+    draw.line((margin + 90, footer_y - 48, w - margin - 90, footer_y - 48), fill=LINE, width=2)
+    text(draw, (w / 2, footer_y), "Pay What You Want", 28, INK, True, anchor="mm")
+    text(draw, (w / 2, footer_y + 42), "www.firstchinatripkit.com", 24, MUTED, anchor="mm")
+
+    img.save(OUT_DIR / "first-trip-checklist-payhip-cover.png", quality=95)
+
+
 create_cover((1600, 1200), "payment-apps-guide-payhip-cover.png", "payhip")
 create_cover((1600, 1600), "payment-apps-guide-square-cover.png", "square")
 create_cover((1200, 800), "payment-apps-guide-store-cover.png", "store")
+create_checklist_payhip_cover()
 
 print("Generated product cover images:")
 for name in [
     "payment-apps-guide-payhip-cover.png",
     "payment-apps-guide-square-cover.png",
     "payment-apps-guide-store-cover.png",
+    "first-trip-checklist-payhip-cover.png",
 ]:
     path = OUT_DIR / name
     print(f"- {path} ({path.stat().st_size} bytes)")
