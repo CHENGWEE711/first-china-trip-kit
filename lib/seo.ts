@@ -11,6 +11,9 @@ type SeoInput = {
   description: string;
   path: string;
   image?: string;
+  imageAlt?: string;
+  imageHeight?: number;
+  imageWidth?: number;
   type?: "website" | "article";
 };
 
@@ -19,6 +22,9 @@ export function buildMetadata({
   description,
   path,
   image = siteConfig.heroImage,
+  imageAlt = `${siteConfig.name} travel planning visual`,
+  imageHeight = 900,
+  imageWidth = 1600,
   type = "website",
 }: SeoInput): Metadata {
   const url = absoluteUrl(path);
@@ -38,9 +44,9 @@ export function buildMetadata({
       images: [
         {
           url: imageUrl,
-          width: 1600,
-          height: 900,
-          alt: `${siteConfig.name} travel planning visual`,
+          width: imageWidth,
+          height: imageHeight,
+          alt: imageAlt,
         },
       ],
       locale: "en_US",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ChecklistDownloadWithTip } from "@/components/ChecklistDownloadWithTip";
+import { ChecklistShareCard } from "@/components/ChecklistShareCard";
 import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { PageIntro } from "@/components/PageIntro";
 import { PayhipChecklistLink } from "@/components/PayhipChecklistLink";
@@ -114,6 +115,7 @@ export default function ThankYouPage() {
           </div>
         </section>
       ) : null}
+      <ChecklistShareCard />
       <section className="bg-mist px-4 py-12">
         <div className="mx-auto max-w-5xl">
           <div className="mb-6 max-w-3xl">

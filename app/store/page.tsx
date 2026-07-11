@@ -15,6 +15,11 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Download the free China First Trip Checklist and get the $7 Payment & Apps Setup Guide for printable cards, setup checklists, and troubleshooting tables.",
   path: "/store",
+  image: "/share/china-first-trip-checklist-share-og.png",
+  imageWidth: 1200,
+  imageHeight: 630,
+  imageAlt:
+    "Free China First-Trip Visitor Checklist poster with a QR code linking to First China Trip Kit",
 });
 
 const freeVsPaidRows = [
