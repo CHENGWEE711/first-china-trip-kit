@@ -5,24 +5,53 @@ export async function POST(request: Request) {
   const contentType = request.headers.get("content-type") || "";
   let email = "";
   let sourcePage = "site";
+  let placement = "newsletter-form";
+  let leadMagnet = "China First Trip Checklist";
+  let utmSource = "";
+  let utmMedium = "";
+  let utmCampaign = "";
 
   if (contentType.includes("application/json")) {
     const body = (await request.json().catch(() => ({}))) as {
       email?: string;
       source_page?: string;
       source?: string;
+      placement?: string;
+      lead_magnet?: string;
+      utm_source?: string;
+      utm_medium?: string;
+      utm_campaign?: string;
     };
     email = String(body.email || "").trim().toLowerCase();
     sourcePage = String(body.source_page || body.source || "site").trim();
+    placement = String(body.placement || "newsletter-form").trim();
+    leadMagnet = String(body.lead_magnet || leadMagnet).trim();
+    utmSource = String(body.utm_source || "").trim();
+    utmMedium = String(body.utm_medium || "").trim();
+    utmCampaign = String(body.utm_campaign || "").trim();
   } else {
     const formData = await request.formData();
     email = String(formData.get("email") || "").trim().toLowerCase();
     sourcePage = String(
       formData.get("source_page") || formData.get("source") || "site",
     ).trim();
+    placement = String(formData.get("placement") || "newsletter-form").trim();
+    leadMagnet = String(formData.get("lead_magnet") || leadMagnet).trim();
+    utmSource = String(formData.get("utm_source") || "").trim();
+    utmMedium = String(formData.get("utm_medium") || "").trim();
+    utmCampaign = String(formData.get("utm_campaign") || "").trim();
   }
 
-  const result = await subscribeToNewsletter({ email, sourcePage });
+  const result = await subscribeToNewsletter({
+    email,
+    sourcePage,
+    placement,
+    leadMagnet,
+    utmSource,
+    utmMedium,
+    utmCampaign,
+    consentTimestamp: new Date().toISOString(),
+  });
 
   if (!result.ok) {
     return NextResponse.json(

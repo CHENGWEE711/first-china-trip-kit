@@ -1,6 +1,12 @@
 type SubscribeInput = {
   email: string;
   sourcePage?: string;
+  placement?: string;
+  leadMagnet?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  consentTimestamp?: string;
 };
 
 type SubscribeResult = {
@@ -18,7 +24,23 @@ const savedWithoutDeliveryMessage =
 export async function subscribeToNewsletter({
   email,
   sourcePage = "site",
+  placement = "newsletter-form",
+  leadMagnet = "China First Trip Checklist",
+  utmSource = "",
+  utmMedium = "",
+  utmCampaign = "",
+  consentTimestamp = new Date().toISOString(),
 }: SubscribeInput): Promise<SubscribeResult> {
+  const subscription = {
+    email,
+    sourcePage,
+    placement,
+    leadMagnet,
+    utmSource,
+    utmMedium,
+    utmCampaign,
+    consentTimestamp,
+  };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { ok: false, message: "Please enter a valid email address.", status: 400 };
   }
@@ -29,14 +51,14 @@ export async function subscribeToNewsletter({
   const brevoReady = Boolean(process.env.BREVO_API_KEY && process.env.BREVO_LIST_ID);
 
   if (supabaseReady) {
-    const stored = await subscribeWithSupabase({ email, sourcePage });
+    const stored = await subscribeWithSupabase(subscription);
 
     if (!stored.ok && stored.status !== 409) {
       return stored;
     }
 
     if (brevoReady) {
-      const delivered = await subscribeWithBrevo({ email, sourcePage });
+      const delivered = await subscribeWithBrevo(subscription);
 
       if (stored.status === 409) {
         return stored;
@@ -72,15 +94,15 @@ export async function subscribeToNewsletter({
   }
 
   if (brevoReady) {
-    return subscribeWithBrevo({ email, sourcePage });
+    return subscribeWithBrevo(subscription);
   }
 
   if (process.env.MAILCHIMP_API_KEY && process.env.MAILCHIMP_LIST_ID) {
-    return subscribeWithMailchimp({ email, sourcePage });
+    return subscribeWithMailchimp(subscription);
   }
 
   if (process.env.RESEND_API_KEY && process.env.RESEND_AUDIENCE_ID) {
-    return subscribeWithResend({ email, sourcePage });
+    return subscribeWithResend(subscription);
   }
 
   return {
@@ -94,7 +116,7 @@ export async function subscribeToNewsletter({
 async function subscribeWithSupabase({
   email,
   sourcePage,
-}: Required<SubscribeInput>): Promise<SubscribeResult> {
+}: SubscribeInput & { email: string; sourcePage: string }): Promise<SubscribeResult> {
   const table = process.env.SUPABASE_NEWSLETTER_TABLE || "newsletter_subscribers";
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
   const response = await fetch(
@@ -143,9 +165,25 @@ async function subscribeWithSupabase({
 
 async function subscribeWithBrevo({
   email,
-}: Required<SubscribeInput>): Promise<SubscribeResult> {
+  sourcePage,
+  placement,
+  leadMagnet,
+  utmSource,
+  utmMedium,
+  utmCampaign,
+  consentTimestamp,
+}: SubscribeInput & { email: string; sourcePage: string }): Promise<SubscribeResult> {
   const listId = Number(process.env.BREVO_LIST_ID);
   const apiKey = process.env.BREVO_API_KEY || "";
+  const attributes = {
+    SIGNUP_SOURCE: placement || "newsletter-form",
+    SIGNUP_PAGE: sourcePage,
+    UTM_SOURCE: utmSource || "",
+    UTM_MEDIUM: utmMedium || "",
+    UTM_CAMPAIGN: utmCampaign || "",
+    LEAD_MAGNET: leadMagnet || "China First Trip Checklist",
+    CONSENT_TIMESTAMP: consentTimestamp || new Date().toISOString(),
+  };
 
   if (!Number.isInteger(listId) || listId <= 0) {
     return {
@@ -185,7 +223,7 @@ async function subscribeWithBrevo({
         "api-key": apiKey,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ listIds: [listId] }),
+      body: JSON.stringify({ listIds: [listId], attributes }),
     });
 
     if (!addToList.ok) {
@@ -226,6 +264,7 @@ async function subscribeWithBrevo({
     body: JSON.stringify({
       email,
       listIds: [listId],
+      attributes,
       updateEnabled: false,
     }),
   });

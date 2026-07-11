@@ -3,20 +3,13 @@
 import { type FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { trackEvent } from "@/lib/analytics";
+import { captureUtmAttribution } from "@/lib/utm";
 
 type NewsletterFormProps = {
   source?: string;
   compact?: boolean;
 };
-
-declare global {
-  interface Window {
-    dataLayer?: Array<Record<string, unknown>>;
-    va?: {
-      track?: (eventName: string, properties?: Record<string, unknown>) => void;
-    };
-  }
-}
 
 export function NewsletterForm({ source = "site", compact = false }: NewsletterFormProps) {
   const router = useRouter();
@@ -32,6 +25,9 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
     const form = event.currentTarget;
     const formData = new FormData(form);
     const email = String(formData.get("email") || "").trim();
+    const attribution = captureUtmAttribution();
+    const sourcePage = window.location.pathname;
+    const leadMagnet = "China First Trip Checklist";
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setStatus("idle");
@@ -39,17 +35,25 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
       return;
     }
 
-    window.dataLayer?.push({
-      event: "newsletter_submit",
-      source_page: source,
-    });
-    window.va?.track?.("newsletter_submit", { source_page: source });
+    formData.set("source_page", sourcePage);
+    formData.set("placement", source);
+    formData.set("lead_magnet", leadMagnet);
+    Object.entries(attribution).forEach(([key, value]) => formData.set(key, value));
 
-    const response = await fetch("/api/newsletter", {
-      method: "POST",
-      body: formData,
-    });
-    const data = (await response.json()) as { message?: string };
+    let response: Response;
+    let data: { message?: string } = {};
+
+    try {
+      response = await fetch("/api/newsletter", {
+        method: "POST",
+        body: formData,
+      });
+      data = (await response.json()) as { message?: string };
+    } catch {
+      setStatus("idle");
+      setMessage("Newsletter signup is temporarily unavailable.");
+      return;
+    }
 
     if (!response.ok) {
       setStatus("idle");
@@ -59,6 +63,12 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
 
     setStatus("success");
     setMessage(data.message || "Thanks! Your China First Trip Checklist is on the way.");
+    trackEvent("newsletter_subscribed", {
+      source_page: sourcePage,
+      placement: source,
+      lead_magnet: leadMagnet,
+      ...attribution,
+    });
     form.reset();
     window.setTimeout(() => {
       router.push(`/thank-you?email=${encodeURIComponent(email)}`);
@@ -70,7 +80,6 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
       onSubmit={handleSubmit}
       className={compact ? "grid gap-3" : "grid gap-3 rounded-lg border border-white/12 bg-white/8 p-4"}
     >
-      <input type="hidden" name="source_page" value={source} />
       <label htmlFor={`newsletter-email-${source}`} className="text-sm font-semibold text-white/84">
         Email address
       </label>
