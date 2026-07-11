@@ -37,12 +37,12 @@ test("affiliate links use safe sponsored attributes and the shared event", async
   assert.match(source, /aria-disabled="true"/);
 });
 
-test("unresolved WhatsApp usernames do not render as contact links", async () => {
+test("WhatsApp username and official short links render safely", async () => {
   const { isValidWhatsAppContactUrl } = await import(
     new URL("../lib/whatsapp.ts", import.meta.url)
   );
 
-  assert.equal(isValidWhatsAppContactUrl("https://wa.me/firstchinatripkit"), false);
+  assert.equal(isValidWhatsAppContactUrl("https://wa.me/firstchinatripkit"), true);
   assert.equal(isValidWhatsAppContactUrl("https://wa.me/message/ABC123"), true);
   assert.equal(isValidWhatsAppContactUrl("https://example.com/contact"), false);
 });
