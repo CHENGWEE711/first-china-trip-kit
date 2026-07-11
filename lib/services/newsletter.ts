@@ -145,6 +145,7 @@ async function subscribeWithBrevo({
   email,
 }: Required<SubscribeInput>): Promise<SubscribeResult> {
   const listId = Number(process.env.BREVO_LIST_ID);
+  const apiKey = process.env.BREVO_API_KEY || "";
 
   if (!Number.isInteger(listId) || listId <= 0) {
     return {
@@ -156,17 +157,76 @@ async function subscribeWithBrevo({
     };
   }
 
+  const contactUrl = `https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`;
+  const existingContact = await fetch(contactUrl, {
+    headers: {
+      Accept: "application/json",
+      "api-key": apiKey,
+    },
+  });
+
+  if (existingContact.ok) {
+    const contact = (await existingContact.json()) as { listIds?: number[] };
+
+    if (contact.listIds?.includes(listId)) {
+      return {
+        ok: false,
+        message: "You’re already subscribed.",
+        provider: "brevo",
+        deliveryStatus: "active",
+        status: 409,
+      };
+    }
+
+    const addToList = await fetch(contactUrl, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ listIds: [listId] }),
+    });
+
+    if (!addToList.ok) {
+      return {
+        ok: false,
+        message: "Your email could not be added to the welcome sequence yet.",
+        provider: "brevo",
+        deliveryStatus: "failed",
+        status: addToList.status,
+      };
+    }
+
+    return {
+      ok: true,
+      message: successMessage,
+      provider: "brevo",
+      deliveryStatus: "active",
+    };
+  }
+
+  if (existingContact.status !== 404) {
+    return {
+      ok: false,
+      message: "Your email could not be added to the welcome sequence yet.",
+      provider: "brevo",
+      deliveryStatus: "failed",
+      status: existingContact.status,
+    };
+  }
+
   const response = await fetch("https://api.brevo.com/v3/contacts", {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "api-key": process.env.BREVO_API_KEY || "",
+      "api-key": apiKey,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       email,
       listIds: [listId],
-      updateEnabled: true,
+      updateEnabled: false,
     }),
   });
 
