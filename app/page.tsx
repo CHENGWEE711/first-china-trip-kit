@@ -3,14 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   BadgeCheck,
+  BookOpenCheck,
+  CircleDollarSign,
   ClipboardCheck,
+  MessageCircle,
+  RefreshCw,
   MapPinned,
+  ShieldCheck,
   Sparkles,
   Wrench,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { ProductActionButton } from "@/components/ProductActionButton";
 import { SectionHeader } from "@/components/SectionHeader";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { cities } from "@/data/cities";
 import { itineraries } from "@/data/itineraries";
 import {
@@ -31,6 +38,11 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function HomePage() {
+  const paymentGuideBuyUrl =
+    process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
+  const whatsappEnabled = (process.env.NEXT_PUBLIC_WHATSAPP_URL || "").startsWith(
+    "https://wa.me/",
+  );
   const featuredCities = cityKitSlugs
     .map((slug) => cities.find((city) => city.slug === slug))
     .filter(Boolean);
@@ -64,10 +76,31 @@ export default function HomePage() {
               recommendations, and ready-to-use itineraries for foreign visitors.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="#free-checklist">Get the Free China First Trip Checklist</ButtonLink>
-              <ButtonLink href="/city-kits" variant="secondary">
+              <ProductActionButton
+                canBuy
+                className="mt-0 w-full sm:w-auto"
+                eventName="home_free_checklist_clicked"
+                href="#free-checklist"
+                label="Get the Free China First Trip Checklist"
+                productId="china-first-trip-checklist"
+              />
+              <ProductActionButton
+                canBuy
+                className="mt-0 w-full border border-white/80 !bg-white !text-ink hover:!bg-sand hover:!text-ember sm:w-auto"
+                eventName="home_payment_guide_clicked"
+                href={paymentGuideBuyUrl || "/store#inside-the-guide"}
+                isExternal={Boolean(paymentGuideBuyUrl)}
+                label={paymentGuideBuyUrl ? "Buy the $7 Setup Guide" : "View the $7 Setup Guide"}
+                productId="china-payment-apps-setup-guide"
+              />
+            </div>
+            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold text-white/76">
+              <Link href="/city-kits" className="underline decoration-white/35 underline-offset-4 hover:text-white">
                 Browse City Kits
-              </ButtonLink>
+              </Link>
+              <Link href="/contact" className="underline decoration-white/35 underline-offset-4 hover:text-white">
+                Ask a China Trip Question
+              </Link>
             </div>
           </div>
 
@@ -87,6 +120,164 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-paper px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="Choose your starting point"
+            title="Free preparation, a printable setup kit, or human help"
+            description="Start at the level that matches your trip. The free checklist covers the essentials; the paid guide adds detailed offline backups; the question form is there when your route needs context."
+          />
+          <div className="grid gap-5 lg:grid-cols-3">
+            <article className="flex h-full flex-col rounded-lg border border-ink/10 bg-sand p-5">
+              <div className="flex items-start justify-between gap-4">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-paper text-jade">
+                  <BookOpenCheck aria-hidden="true" size={22} />
+                </span>
+                <span className="rounded-md bg-paper px-3 py-1 text-sm font-bold text-jade">$0+</span>
+              </div>
+              <h2 className="mt-5 text-2xl font-bold leading-tight text-ink">
+                China First Trip Checklist
+              </h2>
+              <p className="mt-3 flex-1 text-base leading-relaxed text-ink/68">
+                A printable three-page check for payment, apps, internet, hotel addresses,
+                transport, packing, and emergency phrases.
+              </p>
+              <div className="mt-5">
+                <ProductActionButton
+                  canBuy
+                  className="mt-0 w-full"
+                  eventName="home_free_checklist_clicked"
+                  href="#free-checklist"
+                  label="Get the free checklist"
+                  productId="china-first-trip-checklist"
+                />
+              </div>
+            </article>
+
+            <article className="flex h-full flex-col rounded-lg border border-ember/30 bg-paper p-5 shadow-soft">
+              <div className="flex items-start justify-between gap-4">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-sand text-ember">
+                  <CircleDollarSign aria-hidden="true" size={22} />
+                </span>
+                <span className="rounded-md bg-[#F8E7E3] px-3 py-1 text-sm font-bold text-ember">
+                  Available now · $7
+                </span>
+              </div>
+              <h2 className="mt-5 text-2xl font-bold leading-tight text-ink">
+                Payment & Apps Setup Guide
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-ink/68">
+                Detailed setup checklists, a payment failure decision tree, phrase cards,
+                and offline pages for the first days of your trip.
+              </p>
+              <ul className="mt-4 grid gap-2 text-sm text-ink/66">
+                <li>Alipay and WeChat Pay preparation</li>
+                <li>First-day payment test and troubleshooting</li>
+                <li>Taxi, hotel, and checkout backup cards</li>
+              </ul>
+              <div className="mt-5">
+                <ProductActionButton
+                  canBuy
+                  className="mt-0 w-full"
+                  eventName="home_payment_guide_clicked"
+                  href={paymentGuideBuyUrl || "/store#inside-the-guide"}
+                  isExternal={Boolean(paymentGuideBuyUrl)}
+                  label={paymentGuideBuyUrl ? "Buy now — $7" : "See what is inside"}
+                  productId="china-payment-apps-setup-guide"
+                />
+              </div>
+            </article>
+
+            <article className="flex h-full flex-col rounded-lg border border-ink/10 bg-mist p-5">
+              <div className="flex items-start justify-between gap-4">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-paper text-jade">
+                  <MessageCircle aria-hidden="true" size={22} />
+                </span>
+                <span className="rounded-md bg-paper px-3 py-1 text-sm font-bold text-jade">
+                  Human help
+                </span>
+              </div>
+              <h2 className="mt-5 text-2xl font-bold leading-tight text-ink">
+                Ask a China Trip Question
+              </h2>
+              <p className="mt-3 flex-1 text-base leading-relaxed text-ink/68">
+                Share your passport country, travel month, trip length, and cities. We will
+                point you toward the most practical next resource without promising official outcomes.
+              </p>
+              <div className="mt-5">
+                {whatsappEnabled ? (
+                  <WhatsAppLink
+                    placement="home_conversion_path"
+                    sourcePage="/"
+                    className="w-full"
+                  />
+                ) : (
+                  <ButtonLink href="/contact" variant="ghost" className="w-full" icon={false}>
+                    Ask a China Trip Question
+                  </ButtonLink>
+                )}
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-mist px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="Why trust the kit"
+            title="Practical guidance with clear limits"
+            description="We explain unfamiliar China-specific systems in plain English, show where official verification matters, and leave room for real travel delays."
+            actionHref="/about"
+            actionLabel="Read our editorial standards"
+          />
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              {
+                icon: MapPinned,
+                title: "China-based perspective",
+                body: "Guidance is organized around payment, station, hotel-address, app, and arrival-day friction travelers meet on the ground.",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Official-source-first",
+                body: "Policy-sensitive guides point readers toward official or provider resources and explain what to verify before booking.",
+              },
+              {
+                icon: RefreshCw,
+                title: "Visible update dates",
+                body: "Guide pages show when content was last updated so travelers can judge when another official check is needed.",
+              },
+              {
+                icon: BadgeCheck,
+                title: "No outcome guarantees",
+                body: "We do not promise visa-free entry, payment-app approval, card acceptance, or ticket availability.",
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <article key={item.title} className="border-t-2 border-ember/35 pt-4">
+                  <Icon aria-hidden="true" className="text-ember" size={22} />
+                  <h2 className="mt-3 text-xl font-bold leading-tight text-ink">{item.title}</h2>
+                  <p className="mt-2 text-base leading-relaxed text-ink/68">{item.body}</p>
+                </article>
+              );
+            })}
+          </div>
+          <div className="mt-8 flex flex-col gap-3 rounded-lg border border-ink/10 bg-paper p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-bold uppercase text-ember">Corrections welcome</p>
+              <p className="mt-1 max-w-3xl text-base text-ink/68">
+                Spot something outdated or confusing? Tell us what changed and which page needs review.
+              </p>
+            </div>
+            <ButtonLink href="/contact" variant="ghost" className="shrink-0" icon={false}>
+              Send a correction
+            </ButtonLink>
           </div>
         </div>
       </section>
