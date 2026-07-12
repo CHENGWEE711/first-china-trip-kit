@@ -221,15 +221,7 @@ export default function StorePage() {
                 placement="store_hero"
                 productId="china-first-trip-checklist"
               />
-              <ProductActionButton
-                canBuy={Boolean(paymentGuideBuyUrl)}
-                className="mt-0 border border-ink/12 !bg-paper !text-ink hover:border-ember/35 hover:!bg-paper hover:!text-ember"
-                href={paymentGuideBuyUrl || "/store#early-access"}
-                isExternal={Boolean(paymentGuideBuyUrl)}
-                label={paymentGuideBuyUrl ? "Buy Payment & Apps Guide — $7" : "Join waitlist"}
-                placement="store_hero"
-                productId="china-payment-apps-setup-guide"
-              />
+              {paymentGuideBuyUrl ? <ProductActionButton canBuy className="mt-0 border border-ink/12 !bg-paper !text-ink hover:border-ember/35 hover:!bg-paper hover:!text-ember" href={paymentGuideBuyUrl} isExternal label="Buy Payment & Apps Guide — $7" placement="store_hero" productId="china-payment-apps-setup-guide" /> : null}
             </div>
             <div className="mt-5 grid gap-2 text-sm text-ink/58 sm:grid-cols-2">
               <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
@@ -547,20 +539,12 @@ export default function StorePage() {
             <h2 className="text-2xl font-bold leading-tight text-ink">
               Ready to prepare your first-day payment setup?
             </h2>
-            <ProductActionButton
-              canBuy={Boolean(paymentGuideBuyUrl)}
-              className="mt-5"
-              href={paymentGuideBuyUrl || "/store#early-access"}
-              isExternal={Boolean(paymentGuideBuyUrl)}
-              label={paymentGuideBuyUrl ? "Buy Payment & Apps Guide — $7" : "Join the waitlist"}
-              placement="store_preview"
-              productId="china-payment-apps-setup-guide"
-            />
+            {paymentGuideBuyUrl ? <ProductActionButton canBuy className="mt-5" href={paymentGuideBuyUrl} isExternal label="Buy Payment & Apps Guide — $7" placement="store_preview" productId="china-payment-apps-setup-guide" /> : null}
           </div>
         </div>
       </section>
 
-      <section id="early-access" className="bg-ink px-4 py-10 text-white">
+      <section id="product-updates" className="bg-ink px-4 py-10 text-white">
         <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-[1fr_420px] md:items-center">
           <div>
             <p className="mb-3 text-sm font-bold uppercase text-clay">Product updates</p>

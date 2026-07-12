@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Clock, MapPin, Users } from "lucide-react";
 import type { City } from "@/data/cities";
@@ -8,7 +9,11 @@ type CityCardProps = {
 
 export function CityCard({ city }: CityCardProps) {
   return (
-    <article className="flex h-full flex-col rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft">
+      <Link href={`/city-kits/${city.slug}`} className="group relative block aspect-[4/3] overflow-hidden">
+        <Image src={city.cardImage.src} alt={city.cardImage.alt} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-[1.025]" />
+      </Link>
+      <div className="flex flex-1 flex-col p-5">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-2xl font-bold leading-tight text-ink">{city.cityName}</h3>
@@ -39,6 +44,7 @@ export function CityCard({ city }: CityCardProps) {
       >
         Open city kit
       </Link>
+      </div>
     </article>
   );
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
@@ -112,39 +113,41 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
     <>
       <SEOJsonLd data={itineraryJsonLd(itinerary, `/itinerary-kits/${itinerary.slug}`, content?.faq)} />
       <article>
-        <header className="bg-sand px-4 py-12">
-          <div className="mx-auto max-w-5xl">
-            <p className="mb-3 text-sm font-bold uppercase text-ember">Itinerary Kit</p>
-            <h1 className="text-4xl font-bold leading-tight text-ink">
+        <header className="relative isolate min-h-[560px] overflow-hidden bg-ink px-4 py-12 text-white">
+          <Image src={itinerary.heroImage.src} alt={itinerary.heroImage.alt} fill priority sizes="100vw" className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/72 to-ink/20" />
+          <div className="relative mx-auto flex min-h-[464px] max-w-5xl flex-col justify-end">
+            <p className="mb-3 text-sm font-bold uppercase text-clay">Itinerary Kit</p>
+            <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">
               {itinerary.title} Kit
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-ink/70">
+            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/80">
               {itinerary.summary}
             </p>
             {content?.importantNotice ? (
-              <div className="mt-6 rounded-md border border-ember/25 bg-paper p-4">
+              <div className="mt-6 rounded-md border border-white/20 bg-ink/65 p-4 backdrop-blur-sm">
                 <p className="text-sm font-bold uppercase text-ember">Important notice</p>
-                <p className="mt-2 text-base leading-relaxed text-ink/72">
+                <p className="mt-2 text-base leading-relaxed text-white/78">
                   {content.importantNotice}
                 </p>
               </div>
             ) : null}
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-md bg-paper p-4">
-                <p className="text-sm font-bold uppercase text-ink/45">Duration</p>
-                <p className="mt-1 text-base font-semibold text-ink">
+              <div className="rounded-md bg-white/12 p-4 backdrop-blur-sm">
+                <p className="text-sm font-bold uppercase text-white/55">Duration</p>
+                <p className="mt-1 text-base font-semibold text-white">
                   {itinerary.durationDays} days
                 </p>
               </div>
-              <div className="rounded-md bg-paper p-4">
-                <p className="text-sm font-bold uppercase text-ink/45">Cities</p>
-                <p className="mt-1 text-base font-semibold text-ink">
+              <div className="rounded-md bg-white/12 p-4 backdrop-blur-sm">
+                <p className="text-sm font-bold uppercase text-white/55">Cities</p>
+                <p className="mt-1 text-base font-semibold text-white">
                   {itinerary.cities.join(" + ")}
                 </p>
               </div>
-              <div className="rounded-md bg-paper p-4">
-                <p className="text-sm font-bold uppercase text-ink/45">Last updated</p>
-                <p className="mt-1 text-base font-semibold text-ink">{updatedDate}</p>
+              <div className="rounded-md bg-white/12 p-4 backdrop-blur-sm">
+                <p className="text-sm font-bold uppercase text-white/55">Last updated</p>
+                <p className="mt-1 text-base font-semibold text-white">{updatedDate}</p>
               </div>
             </div>
           </div>
@@ -185,6 +188,9 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
             ) : null}
 
             <Section title="Route overview">
+              <div className="mb-5 flex flex-wrap items-center gap-2 rounded-md bg-mist p-4" aria-label={`Route: ${itinerary.cities.join(" to ")}`}>
+                {itinerary.cities.map((cityName, index) => <div key={`${cityName}-${index}`} className="contents"><span className="rounded-full bg-paper px-4 py-2 text-sm font-bold text-jade shadow-sm">{cityName}</span>{index < itinerary.cities.length - 1 ? <span className="font-bold text-ember" aria-hidden="true">→</span> : null}</div>)}
+              </div>
               <ul className="grid gap-3">
                 {(content?.routeSummary || [itinerary.summary]).map((item) => (
                   <li key={item} className="border-l-2 border-ember/35 pl-3">
@@ -215,6 +221,9 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
                     <h3 className="mt-1 text-xl font-bold leading-tight text-ink">
                       {day.title}
                     </h3>
+                    <figure className="relative mt-4 aspect-[16/9] overflow-hidden rounded-md">
+                      <Image src={itinerary.routeImages[(day.day - 1) % itinerary.routeImages.length].src} alt={itinerary.routeImages[(day.day - 1) % itinerary.routeImages.length].alt} fill sizes="(min-width: 1024px) 860px, 100vw" className="object-cover" />
+                    </figure>
                     <div className="mt-4 grid gap-3">
                       <p>
                         <strong className="text-ink">Morning:</strong> {day.morning}
@@ -241,6 +250,9 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
             </Section>
 
             <Section title="Transport between cities">
+              <figure className="relative mb-5 aspect-[16/9] overflow-hidden rounded-md">
+                <Image src={itinerary.routeImages.at(-1)!.src} alt={itinerary.routeImages.at(-1)!.alt} fill sizes="(min-width: 1024px) 860px, 100vw" className="object-cover" />
+              </figure>
               <ul className="grid gap-3">
                 {itinerary.dayByDayPlan.map((day) => (
                   <li key={`${day.day}-transport`} className="border-l-2 border-ember/35 pl-3">
@@ -352,23 +364,6 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
               </Section>
             ) : null}
 
-            <section className="rounded-lg border border-ink/10 bg-ink p-5 text-white shadow-soft">
-              <p className="text-sm font-bold uppercase text-clay">Download PDF Kit</p>
-              <h2 className="mt-2 text-2xl font-bold leading-tight">
-                Printable route kit is being prepared
-              </h2>
-              <p className="mt-3 text-base text-white/72">
-                The future PDF version will include the route, booking reminders,
-                Chinese addresses, and a mobile-friendly checklist.
-              </p>
-              <button
-                type="button"
-                disabled
-                className="mt-5 inline-flex min-h-11 cursor-not-allowed items-center justify-center rounded-md bg-white/20 px-4 py-2 text-base font-semibold text-white/72"
-              >
-                Download PDF Kit
-              </button>
-            </section>
           </div>
         </section>
       </article>

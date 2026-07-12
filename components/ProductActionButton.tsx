@@ -30,6 +30,10 @@ export function ProductActionButton({
   placement = "product_action",
   isExternal = false,
 }: ProductActionButtonProps) {
+  if (!canBuy) {
+    return null;
+  }
+
   const trackedEvents =
     eventNames ||
     [eventName || (canBuy ? "payment_apps_guide_buy_clicked" : "store_waitlist_clicked")];

@@ -17,7 +17,6 @@ type AffiliateLinkProps = {
   affiliateUrl?: string;
   campaign?: string;
   className?: string;
-  disabledLabel?: string;
   fallbackHref?: string;
   label?: string;
   offerName?: string;
@@ -33,7 +32,6 @@ export function AffiliateLink({
   affiliateUrl,
   campaign,
   className,
-  disabledLabel = "Coming soon",
   fallbackHref,
   label,
   offerName,
@@ -103,16 +101,5 @@ export function AffiliateLink({
     );
   }
 
-  return (
-    <span
-      aria-disabled="true"
-      title="A verified partner link has not been configured yet."
-      className={cn(
-        sharedClassName,
-        "cursor-not-allowed !border !border-ink/12 !bg-sand !text-ink/55 !shadow-none",
-      )}
-    >
-      {disabledLabel}
-    </span>
-  );
+  return null;
 }

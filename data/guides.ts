@@ -14,9 +14,14 @@ export type Guide = {
   seoTitle: string;
   seoDescription: string;
   updatedAt: string;
+  featuredImage: ContentImage;
+  heroImage: ContentImage;
+  inlineImages: ContentImage[];
 };
 
-export const guides: Guide[] = [
+type GuideWithoutVisuals = Omit<Guide, "featuredImage" | "heroImage" | "inlineImages">;
+
+const guideEntries: GuideWithoutVisuals[] = [
   {
     id: "guide-pay-in-china-foreigner",
     slug: "how-to-pay-in-china-as-a-foreigner",
@@ -576,6 +581,15 @@ export const guides: Guide[] = [
   },
 ];
 
+export const guides: Guide[] = guideEntries.map((guide) => {
+  const visuals = guideVisuals[guide.slug];
+  if (!visuals) {
+    throw new Error(`Missing explicit image configuration for guide: ${guide.slug}`);
+  }
+  return { ...guide, ...visuals };
+});
+
 export function getGuideBySlug(slug: string) {
   return guides.find((guide) => guide.slug === slug);
 }
+import { guideVisuals, type ContentImage } from "@/data/images";

@@ -24,9 +24,14 @@ export type Itinerary = {
   tips: string[];
   seoTitle: string;
   seoDescription: string;
+  cardImage: ContentImage;
+  heroImage: ContentImage;
+  routeImages: ContentImage[];
 };
 
-export const itineraries: Itinerary[] = [
+type ItineraryWithoutVisuals = Omit<Itinerary, "cardImage" | "heroImage" | "routeImages">;
+
+const itineraryEntries: ItineraryWithoutVisuals[] = [
   {
     id: "itinerary-3-days-shanghai",
     slug: "3-days-in-shanghai",
@@ -646,6 +651,15 @@ export const itineraries: Itinerary[] = [
   },
 ];
 
+export const itineraries: Itinerary[] = itineraryEntries.map((itinerary) => {
+  const visuals = itineraryVisuals[itinerary.slug];
+  if (!visuals) {
+    throw new Error(`Missing explicit image configuration for itinerary: ${itinerary.slug}`);
+  }
+  return { ...itinerary, ...visuals };
+});
+
 export function getItineraryBySlug(slug: string) {
   return itineraries.find((itinerary) => itinerary.slug === slug);
 }
+import { itineraryVisuals, type ContentImage } from "@/data/images";

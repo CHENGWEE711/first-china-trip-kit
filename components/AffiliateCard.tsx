@@ -60,6 +60,10 @@ export function AffiliateCard({
   const Icon = icons[partner];
   const heading = title || config.label;
 
+  if (!resolvedAffiliateUrl && !fallbackHref) {
+    return null;
+  }
+
   return (
     <article
       id={anchorId}
@@ -95,11 +99,7 @@ export function AffiliateCard({
         <p className="mt-3 text-xs font-semibold uppercase text-ink/42">
           Affiliate partner · {partnerNames[partner]}
         </p>
-      ) : (
-        <p className="mt-3 text-xs leading-relaxed text-ink/48">
-          A verified partner link has not been configured yet.
-        </p>
-      )}
+      ) : null}
     </article>
   );
 }

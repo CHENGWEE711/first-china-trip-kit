@@ -16,7 +16,7 @@ import { getCityBySlug } from "@/data/cities";
 import { getCityGuideContent } from "@/data/city-guide-content";
 import { guides } from "@/data/guides";
 import { itineraries } from "@/data/itineraries";
-import { cityImages } from "@/data/images";
+import type { ContentImage } from "@/data/images";
 import { cityKitMeta, cityKitSlugs } from "@/data/kits";
 import { buildMetadata, cityJsonLd } from "@/lib/seo";
 
@@ -68,6 +68,33 @@ function Section({
   );
 }
 
+function CityStory({
+  title,
+  eyebrow,
+  image,
+  reverse = false,
+  children,
+}: {
+  title: string;
+  eyebrow: string;
+  image: ContentImage;
+  reverse?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <section className="grid overflow-hidden rounded-lg bg-mist lg:grid-cols-2 lg:items-stretch">
+      <figure className={`relative min-h-72 ${reverse ? "lg:order-2" : ""}`}>
+        <Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+      </figure>
+      <div className="p-6 md:p-8">
+        <p className="text-sm font-bold uppercase tracking-widest text-ember">{eyebrow}</p>
+        <h2 className="mt-2 text-3xl leading-tight text-ink">{title}</h2>
+        <div className="mt-5 text-base leading-relaxed text-ink/70">{children}</div>
+      </div>
+    </section>
+  );
+}
+
 export default async function CityKitDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const city = getCityBySlug(slug);
@@ -77,7 +104,6 @@ export default async function CityKitDetailPage({ params }: PageProps) {
   }
 
   const meta = cityKitMeta[city.slug];
-  const cityImage = cityImages[city.slug];
   const content = getCityGuideContent(city.slug);
   const relatedItineraries = itineraries
     .filter((itinerary) => itinerary.cities.includes(city.cityName))
@@ -104,7 +130,7 @@ export default async function CityKitDetailPage({ params }: PageProps) {
       <SEOJsonLd data={cityJsonLd(city, `/city-kits/${city.slug}`, content?.faq)} />
       <article>
         <header className="relative isolate min-h-[560px] overflow-hidden bg-ink text-white">
-          <Image src={cityImage.src} alt={cityImage.alt} fill priority sizes="100vw" style={{ objectPosition: cityImage.position }} className="object-cover" />
+          <Image src={city.heroImage.src} alt={city.heroImage.alt} fill priority sizes="100vw" style={{ objectPosition: city.heroImage.position }} className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/70 to-ink/15" />
           <div className="editorial-container relative flex min-h-[560px] items-end py-14">
             <div className="max-w-3xl">
@@ -132,21 +158,10 @@ export default async function CityKitDetailPage({ params }: PageProps) {
               </p>
             </Section>
 
-            <Section title="Overview">
+            <CityStory title={`Why visit ${city.cityName}`} eyebrow="City character" image={city.attractionImages[0]}>
               <p>{city.intro}</p>
-            </Section>
-
-            {content?.whyVisit ? (
-              <Section title="Why visit this city">
-                <ul className="grid gap-3">
-                  {content.whyVisit.map((reason) => (
-                    <li key={reason} className="border-l-2 border-ember/35 pl-3">
-                      {reason}
-                    </li>
-                  ))}
-                </ul>
-              </Section>
-            ) : null}
+              {content?.whyVisit ? <ul className="mt-4 grid gap-3">{content.whyVisit.slice(0, 3).map((reason) => <li key={reason} className="border-l-2 border-ember/35 pl-3">{reason}</li>)}</ul> : null}
+            </CityStory>
 
             <Section title="Step-by-step first-day setup">
               <ol className="grid list-decimal gap-3 pl-5">
@@ -176,7 +191,7 @@ export default async function CityKitDetailPage({ params }: PageProps) {
               </ul>
             </Section>
 
-            <Section title="Top attractions">
+            <CityStory title="Top attractions" eyebrow="What to see" image={city.attractionImages[1] || city.attractionImages[0]} reverse>
               <ul className="grid gap-3">
                 {(content?.topAttractionsDetailed || city.topAttractions.map((name) => ({
                   name,
@@ -192,9 +207,9 @@ export default async function CityKitDetailPage({ params }: PageProps) {
                   </li>
                 ))}
               </ul>
-            </Section>
+            </CityStory>
 
-            <Section title="Food to try">
+            {city.foodImage ? <CityStory title="Food to try" eyebrow="Local table" image={city.foodImage}>
               <ul className="grid gap-3">
                 {(content?.localFoodsDetailed || city.localFoods.map((food) => ({
                   name: food,
@@ -210,27 +225,14 @@ export default async function CityKitDetailPage({ params }: PageProps) {
                   </li>
                 ))}
               </ul>
-            </Section>
+            </CityStory> : null}
 
-            <Section title="Where to stay">
-              <ul className="grid gap-3">
-                {(content?.bestAreasToStay || city.whereToStay).map((area) => (
-                  <li key={area} className="border-l-2 border-ember/35 pl-3">
-                    {area}
-                  </li>
-                ))}
-              </ul>
-            </Section>
-
-            <Section title="How to get around">
-              <ul className="grid gap-3">
-                {city.transportTips.map((tip) => (
-                  <li key={tip} className="border-l-2 border-ember/35 pl-3">
-                    {tip}
-                  </li>
-                ))}
-              </ul>
-            </Section>
+            {city.transportImage ? <CityStory title="Where to stay & getting around" eyebrow="Sleep and move" image={city.transportImage} reverse>
+              <h3 className="text-lg font-bold text-ink">Best bases</h3>
+              <ul className="mt-3 grid gap-3">{(content?.bestAreasToStay || city.whereToStay).slice(0, 3).map((area) => <li key={area} className="border-l-2 border-ember/35 pl-3">{area}</li>)}</ul>
+              <h3 className="mt-6 text-lg font-bold text-ink">Transport</h3>
+              <ul className="mt-3 grid gap-3">{city.transportTips.slice(0, 3).map((tip) => <li key={tip} className="border-l-2 border-ember/35 pl-3">{tip}</li>)}</ul>
+            </CityStory> : null}
 
             {content?.arrivalTips ? (
               <Section title="Arrival and transfer troubleshooting">

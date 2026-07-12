@@ -1,20 +1,35 @@
 # Image sources
 
-All travel photography introduced in the July 2026 editorial redesign is stored locally and served through Next Image. The selected source pages explicitly identify the files as free to use under the Unsplash License. No Unsplash+ images, sponsored images, hotlinks, third-party app logos, or AI-generated travel scenes are used.
+All travel photography is stored locally and rendered through Next Image. New photography in the full-site visual pass comes only from Pexels and Unsplash detail pages marked free to use. No hotlinks, watermarked files, news imagery, partner-site imagery, AI-generated travel scenes, or simulated Alipay/WeChat screens are used.
 
-| Local file | Photographer | Original detail page | Used on | Checked |
-| --- | --- | --- | --- | --- |
-| `/images/cities/shanghai-bund-skyline.webp` | Declan Sun | https://unsplash.com/photos/shanghais-skyline-looms-over-a-river-qJMHCMgDgyI | Home, Shanghai | 2026-07-12 |
-| `/images/cities/beijing-forbidden-city-courtyard.webp` | Jean Carlo Emer | https://unsplash.com/photos/tourists-walk-through-the-forbidden-city-courtyard-in-beijing-IkrwU-FQFIk | Home hero, Beijing | 2026-07-12 |
-| `/images/cities/xian-city-wall-sunset.webp` | Yux Xiang | https://unsplash.com/photos/the-sun-is-setting-over-the-city-skyline-zvVX7prwg4c | Home, Xi'an | 2026-07-12 |
-| `/images/cities/chengdu-panda-base.webp` | Iewek Gnos | https://unsplash.com/photos/a-panda-bear-sitting-on-the-ground-eating-bamboo-hET5-AazvoE | Home, Chengdu | 2026-07-12 |
-| `/images/cities/hangzhou-west-lake.webp` | Luobing | https://unsplash.com/photos/a-pagoda-stands-in-the-middle-of-a-field-gRF1pO679ws | Hangzhou | 2026-07-12 |
-| `/images/cities/suzhou-lingering-garden.webp` | Terence Zheng | https://unsplash.com/photos/a-beautiful-chinese-garden-with-traditional-architecture-Of8w7PJk1yc | Suzhou | 2026-07-12 |
-| `/images/cities/guangzhou-canton-tower.webp` | Yue WU | https://unsplash.com/photos/a-city-skyline-towers-over-a-cloudy-day-zQz5l54zhtA | Guangzhou | 2026-07-12 |
-| `/images/cities/shenzhen-skyline.webp` | Cuvii | https://unsplash.com/photos/city-skyline-seen-from-a-green-hilltop-undergrowth--2Yke1bvVxk | Shenzhen | 2026-07-12 |
-| `/images/travel/china-high-speed-rail-platform.webp` | Eric Prouzet | https://unsplash.com/photos/a-high-speed-train-at-a-modern-station-platform-fvT-4J1RRoI | Home, Start Here, About | 2026-07-12 |
-| `/images/travel/china-railway-station-interior.webp` | Cuvii | https://unsplash.com/photos/empty-train-station-platform-with-modern-architecture-oz97oVbqlsM | Home, Start Here | 2026-07-12 |
-| `/images/essentials/chinese-dumplings-restaurant.webp` | SJ | https://unsplash.com/photos/dumplings-on-steamer-GZe_M6TUJ_k | Home | 2026-07-12 |
-| `/images/essentials/shanghai-shengjian-buns.webp` | CJ | https://unsplash.com/photos/a-close-up-of-some-food-in-a-pan-McLKSxIQdy8 | Home | 2026-07-12 |
+The complete machine-readable ledger is [`data/image-credits.json`](../data/image-credits.json). Every entry contains a stable `creditId`, local file, source platform, original detail page, photographer, download date, usage, and license check.
 
-Machine-readable records are in `data/image-credits.json`.
+## Guide photography
+
+| Guide subject | Local image | Source detail page |
+| --- | --- | --- |
+| Foreign visitor payments | `/images/travel/phone-scanning-qr.webp` | https://www.pexels.com/photo/person-taking-photo-of-the-qr-code-7289717/ |
+| Essential travel apps | `/images/guides/best-apps-metro-phone.webp` | https://www.pexels.com/photo/people-using-phones-in-a-subway-station-31216218/ |
+| High-speed rail | `/images/guides/high-speed-train-china.webp` | https://www.pexels.com/photo/high-speed-train-at-a-station-in-china-7494174/ |
+| Alipay and WeChat Pay | `/images/guides/alipay-cafe-qr.webp` | https://www.pexels.com/photo/cafe-interior-with-coffee-grinders-and-qr-code-33792076/ |
+| Packing list | `/images/guides/china-packing-essentials.webp` | https://www.pexels.com/photo/travel-documents-and-necessities-5405596/ |
+| Chinese phrases | `/images/guides/chinese-phrases-restaurant-phone.webp` | https://www.pexels.com/photo/hand-taking-a-photo-of-a-food-with-a-smart-phone-13639635/ |
+| eSIM and arrival data | `/images/guides/china-esim-airport-phone.webp` | https://www.pexels.com/photo/person-holding-a-phone-15068317/ |
+| Food ordering | `/images/guides/order-food-shanghai-stall.webp` | https://www.pexels.com/photo/street-food-market-shanghai-china-24349885/ |
+| Americans traveling to China | `/images/guides/americans-china-airport-arrivals.webp` | https://www.pexels.com/photo/busy-people-on-the-airport-terminal-6726195/ |
+| 240-hour transit | `/images/guides/visa-free-transit-airport.webp` | https://www.pexels.com/photo/crop-traveler-with-smartphone-and-boarding-pass-in-airport-4606721/ |
+| Alipay | `/images/travel/phone-qr-code.webp` | https://www.pexels.com/photo/qr-code-on-screengrab-278430/ |
+| WeChat Pay | `/images/guides/wechat-cafe-phone.webp` | https://www.pexels.com/photo/casual-interaction-at-a-modern-cafe-bar-counter-31713078/ |
+| Three days in Shanghai | `/images/guides/shanghai-three-days-street.webp` | https://www.pexels.com/photo/bustling-street-scene-in-shanghai-china-35554911/ |
+| Pre-flight checklist | `/images/guides/china-preflight-checklist.webp` | https://www.pexels.com/photo/close-up-shot-of-a-passport-and-tickets-on-top-of-a-laptop-7310015/ |
+
+## Destination and travel scenes
+
+The eight destination hero sources remain the verified Unsplash pages recorded in the ledger. The visual pass adds Beijing hutong street and market scenes, a Xi'an night market, Chengdu food and street-transport scenes, Suzhou canal/market/food scenes, a Chinese high-speed train, and QR-use close-ups. Their exact Pexels detail pages and photographer names are recorded in `data/image-credits.json`.
+
+## Processing
+
+- Downloaded originals were converted to 1800 × 1200 WebP at quality 78.
+- Card and hero layouts reserve aspect ratio space to prevent layout shift.
+- Hero images use `priority`; below-the-fold images use the Next Image default lazy loading.
+- Responsive `sizes` are set at each use site.

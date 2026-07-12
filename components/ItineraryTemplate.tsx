@@ -1,4 +1,3 @@
-import { CTASection } from "@/components/CTASection";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
@@ -263,16 +262,6 @@ export function ItineraryTemplate({ itinerary, content, products }: ItineraryTem
           />
         </div>
       </section>
-
-      <CTASection
-        eyebrow="Travel kit"
-        title="Get this route as a travel kit PDF"
-        description="Printable Travel Kits are planned for travelers who want addresses, booking reminders, daily timing, and backup notes in one compact file."
-        primaryHref="/store"
-        primaryLabel="View Travel Kits"
-        secondaryHref="/custom-itinerary"
-        secondaryLabel="Request a custom itinerary"
-      />
 
       <FAQSection faqs={faqs} />
 

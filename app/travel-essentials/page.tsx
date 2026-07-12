@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   Bed,
   CreditCard,
@@ -12,6 +13,7 @@ import {
 } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { PageIntro } from "@/components/PageIntro";
+import { editorialImages } from "@/data/images";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -141,6 +143,12 @@ const essentials = [
   },
 ];
 
+const journeyMoments = [
+  { title: "Before You Fly", description: "Documents, packing, apps and payment backups before the airport.", href: "/start-here", image: editorialImages.packing },
+  { title: "Arrival Day", description: "Test data, payment, maps and your Chinese hotel address before leaving the terminal.", href: "/guides/china-travel-checklist-before-you-fly", image: editorialImages.airportPhone },
+  { title: "Daily Travel", description: "Use the metro, high-speed rail and short translated notes with less friction.", href: "/guides/best-apps-for-traveling-in-china", image: editorialImages.transport },
+];
+
 export default function TravelEssentialsPage() {
   return (
     <>
@@ -149,6 +157,12 @@ export default function TravelEssentialsPage() {
         title="Practical China basics before you land"
         description="The first trip gets easier when payment, transport, internet, hotel addresses, and useful phrases are ready before your arrival day."
       />
+
+      <section className="px-4 pb-12">
+        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
+          {journeyMoments.map((moment) => <article key={moment.title} className="group overflow-hidden rounded-lg bg-paper shadow-soft"><div className="relative aspect-[3/2] overflow-hidden"><Image src={moment.image.src} alt={moment.image.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition duration-500 group-hover:scale-[1.025]" /></div><div className="p-5"><p className="text-sm font-bold uppercase tracking-widest text-ember">Travel moment</p><h2 className="mt-2 text-2xl text-ink">{moment.title}</h2><p className="mt-2 text-base text-ink/65">{moment.description}</p><div className="mt-4"><ButtonLink href={moment.href} variant="ghost">Open checklist</ButtonLink></div></div></article>)}
+        </div>
+      </section>
 
       <section className="bg-ink px-4 py-12 text-white">
         <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">

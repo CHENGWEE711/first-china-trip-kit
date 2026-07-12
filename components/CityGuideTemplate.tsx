@@ -212,7 +212,7 @@ export function CityGuideTemplate({
               ))}
             </div>
           ) : (
-            <p className="text-base text-ink/68">More routes for this city are coming soon.</p>
+            <ButtonLink href="/itinerary-kits" variant="ghost">Browse available itineraries</ButtonLink>
           )}
         </div>
       </section>

@@ -73,15 +73,10 @@ export default function TravelToolsPage() {
             </p>
             {hasEnabledPartner ? (
               <AffiliateDisclosureNote className="mt-4 max-w-4xl" />
-            ) : (
-              <p className="mt-4 text-sm leading-relaxed text-ink/58">
-                Verified partner links are not configured yet. The categories below remain
-                available as planning guidance without linking to unverified providers.
-              </p>
-            )}
+            ) : null}
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
+          {hasEnabledPartner ? <div className="grid gap-5 md:grid-cols-2">
             {affiliatePartnerOrder.map((partner) => {
               const item = content[partner];
               const config = getAffiliatePartner(partner);
@@ -98,7 +93,7 @@ export default function TravelToolsPage() {
                 />
               );
             })}
-          </div>
+          </div> : null}
 
           <div className="mt-10 rounded-lg border border-ink/10 bg-mist p-5">
             <h2 className="text-2xl font-bold leading-tight text-ink">

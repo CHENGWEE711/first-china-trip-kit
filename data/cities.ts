@@ -28,9 +28,16 @@ export type City = {
   usefulChineseAddresses: ChineseAddress[];
   seoTitle: string;
   seoDescription: string;
+  cardImage: ContentImage;
+  heroImage: ContentImage;
+  attractionImages: ContentImage[];
+  foodImage?: ContentImage;
+  transportImage?: ContentImage;
 };
 
-export const cities: City[] = [
+type CityWithoutVisuals = Omit<City, "cardImage" | "heroImage" | "attractionImages" | "foodImage" | "transportImage">;
+
+const cityEntries: CityWithoutVisuals[] = [
   {
     id: "city-shanghai",
     slug: "shanghai",
@@ -619,6 +626,15 @@ export const cities: City[] = [
   },
 ];
 
+export const cities: City[] = cityEntries.map((city) => {
+  const visuals = destinationVisuals[city.slug];
+  if (!visuals) {
+    throw new Error(`Missing explicit image configuration for destination: ${city.slug}`);
+  }
+  return { ...city, ...visuals };
+});
+
 export function getCityBySlug(slug: string) {
   return cities.find((city) => city.slug === slug);
 }
+import { destinationVisuals, type ContentImage } from "@/data/images";

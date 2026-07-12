@@ -16,7 +16,7 @@ test("affiliate partners stay disabled without verified URLs", async () => {
   }
 });
 
-test("affiliate links use safe sponsored attributes and the shared event", async () => {
+test("affiliate links use safe sponsored attributes and hide unverified destinations", async () => {
   const source = await readFile(new URL("components/AffiliateLink.tsx", root), "utf8");
 
   assert.match(source, /sponsored nofollow noopener noreferrer/);
@@ -35,7 +35,8 @@ test("affiliate links use safe sponsored attributes and the shared event", async
   ]) {
     assert.match(source, new RegExp(field));
   }
-  assert.match(source, /aria-disabled="true"/);
+  assert.match(source, /return null;/);
+  assert.doesNotMatch(source, /aria-disabled="true"/);
 });
 
 test("city Klook links support safe overrides with a generic fallback", async () => {

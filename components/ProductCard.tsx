@@ -20,27 +20,25 @@ export function ProductCard({ product }: ProductCardProps) {
   const canBuy = isChecklist
     ? Boolean(purchaseUrl || localDownloadUrl)
     : product.status === "available" && hasExternalPurchaseUrl;
+
+  if (!canBuy) {
+    return null;
+  }
   const purchaseIsExternal = Boolean(purchaseUrl && /^https?:\/\//.test(purchaseUrl));
-  const statusLabel = isChecklist
-    ? "Free / Pay what you want"
-    : product.status === "available"
-      ? "Available now"
-      : "Coming soon";
+  const statusLabel = isChecklist ? "Free / Pay what you want" : "Available now";
   const statusClass = isChecklist
     ? "bg-ember text-white"
     : product.status === "available"
       ? "bg-jade text-white"
       : "bg-mist text-ink/58";
-  const actionHref = purchaseUrl || localDownloadUrl || "/store#early-access";
+  const actionHref = purchaseUrl || localDownloadUrl || "/store";
   const actionLabel = isChecklist
     ? purchaseUrl
       ? "Download / Support on Payhip"
       : "Download Free Checklist"
     : isPaymentAppsGuide && purchaseUrl
       ? "Buy on Payhip — $7"
-      : product.status === "available" && purchaseUrl
-        ? `Buy now — ${product.price}`
-        : "Join waitlist";
+      : `Buy now — ${product.price}`;
   const actionEventName = isChecklist
     ? purchaseUrl
       ? "payhip_checklist_clicked"
@@ -117,35 +115,17 @@ export function ProductCard({ product }: ProductCardProps) {
       ) : null}
       <p className="mt-4 text-sm text-ink/58">{product.refundNote}</p>
       <div className="mt-auto pt-1">
-        {canBuy ? (
-          <ProductActionButton
-            href={actionHref}
-            className="mt-5"
-            download={isChecklist && !purchaseUrl}
-            eventName={actionEventName}
-            isExternal={purchaseIsExternal}
-            canBuy
-            label={actionLabel}
-            placement="store_product_card"
-            productId={product.id}
-          />
-        ) : (
-          <>
-            <ProductActionButton
-              href="/store#early-access"
-              className="mt-5"
-              canBuy={false}
-              label="Join waitlist"
-              placement="store_product_card"
-              productId={product.id}
-            />
-            <p className="mt-3 text-sm text-ink/58">
-              {product.status === "available"
-                ? "Join the newsletter to get notified when the Payhip purchase link opens."
-                : "Join the newsletter to get notified when this kit opens."}
-            </p>
-          </>
-        )}
+        <ProductActionButton
+          href={actionHref}
+          className="mt-5"
+          download={isChecklist && !purchaseUrl}
+          eventName={actionEventName}
+          isExternal={purchaseIsExternal}
+          canBuy
+          label={actionLabel}
+          placement="store_product_card"
+          productId={product.id}
+        />
       </div>
     </article>
   );

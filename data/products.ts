@@ -43,7 +43,7 @@ export const products: Product[] = [
     localDownloadUrl: "/china-first-time-visitor-checklist.pdf",
     previewPdfUrl: "",
     refundNote:
-      "Free local download is available. Payhip can also be used for $0+ pay-what-you-want support when configured.",
+      "Free local download is available. Optional support is offered only through an active checkout link.",
     updatedAt: "2026-07-08",
   },
   {

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BadgeDollarSign, BedDouble, MapPinned, Route, ShieldCheck, Signal, Smartphone } from "lucide-react";
 import { ProductActionButton } from "@/components/ProductActionButton";
-import { editorialImages } from "@/data/images";
+import { cityImages, editorialImages, guideVisuals, itineraryVisuals } from "@/data/images";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -13,13 +13,13 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const steps = [
-  { title: "Check your visa or transit eligibility", body: "Confirm your passport rules, route and permitted travel area before making non-refundable bookings.", href: "/tools/visa-free-eligibility-checker", label: "Check what to verify", icon: ShieldCheck },
-  { title: "Set up payments", body: "Prepare Alipay, a second payment option, a physical card and a small RMB cash backup.", href: "/guides/how-to-pay-in-china-as-a-foreigner", label: "Prepare payments", icon: BadgeDollarSign, image: editorialImages.payments },
-  { title: "Install essential apps", body: "Keep the first-day stack small: payment, translation, maps, mobile data, train support and offline screenshots.", href: "/tools/essential-apps-checklist", label: "Build your app stack", icon: Smartphone },
-  { title: "Arrange internet access", body: "Choose roaming, eSIM or a local SIM, then save key details for moments when mobile data fails.", href: "/guides/china-esim-guide-for-tourists", label: "Plan mobile data", icon: Signal },
+  { title: "Check your visa or transit eligibility", body: "Confirm your passport rules, route and permitted travel area before making non-refundable bookings.", href: "/tools/visa-free-eligibility-checker", label: "Check what to verify", icon: ShieldCheck, image: guideVisuals["china-240-hour-visa-free-transit-guide"].featuredImage },
+  { title: "Set up payments", body: "Prepare Alipay, a second payment option, a physical card and a small RMB cash backup.", href: "/guides/how-to-pay-in-china-as-a-foreigner", label: "Prepare payments", icon: BadgeDollarSign, image: guideVisuals["how-to-pay-in-china-as-a-foreigner"].featuredImage },
+  { title: "Install essential apps", body: "Keep the first-day stack small: payment, translation, maps, mobile data, train support and offline screenshots.", href: "/tools/essential-apps-checklist", label: "Build your app stack", icon: Smartphone, image: guideVisuals["best-apps-for-traveling-in-china"].featuredImage },
+  { title: "Arrange internet access", body: "Choose roaming, eSIM or a local SIM, then save key details for moments when mobile data fails.", href: "/guides/china-esim-guide-for-tourists", label: "Plan mobile data", icon: Signal, image: guideVisuals["china-esim-guide-for-tourists"].featuredImage },
   { title: "Save hotel and transport details", body: "Keep your hotel name, Chinese address, phone number, station name and booking confirmations offline.", href: "/guides/how-to-book-high-speed-trains-in-china", label: "Understand train travel", icon: BedDouble, image: editorialImages.transport },
-  { title: "Choose your cities", body: "Start with one strong base, then add cities only when transfers fit your available days and energy.", href: "/city-kits", label: "Compare destinations", icon: MapPinned },
-  { title: "Build your itinerary", body: "Use realistic daily pacing with room for jet lag, station transfers, weather and booking windows.", href: "/itinerary-kits", label: "Browse itinerary kits", icon: Route },
+  { title: "Choose your cities", body: "Start with one strong base, then add cities only when transfers fit your available days and energy.", href: "/city-kits", label: "Compare destinations", icon: MapPinned, image: cityImages.shanghai },
+  { title: "Build your itinerary", body: "Use realistic daily pacing with room for jet lag, station transfers, weather and booking windows.", href: "/itinerary-kits", label: "Browse itinerary kits", icon: Route, image: itineraryVisuals["10-days-classic-china-itinerary"].cardImage },
 ];
 
 export default function StartHerePage() {

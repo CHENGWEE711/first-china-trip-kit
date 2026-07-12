@@ -2,20 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 import type { Guide } from "@/data/guides";
-import { cityImages, editorialImages } from "@/data/images";
 
 type GuideCardProps = {
   guide: Guide;
 };
 
 export function GuideCard({ guide }: GuideCardProps) {
-  const image = guide.category === "Transportation"
-    ? editorialImages.transport
-    : guide.category === "Payment" || guide.category === "Apps"
-      ? editorialImages.payments
-      : guide.category === "Visa & Entry"
-        ? cityImages.shanghai
-        : editorialImages.food;
+  const image = guide.featuredImage;
   return (
     <article className="border-b border-ink/15 pb-6">
       <Link href={`/guides/${guide.slug}`} className="group block overflow-hidden rounded-lg">

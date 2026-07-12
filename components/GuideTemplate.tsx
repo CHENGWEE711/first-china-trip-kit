@@ -160,6 +160,27 @@ function formatUpdatedDate(value: string) {
   }).format(new Date(value));
 }
 
+function readingTime(guide: Guide) {
+  const words = [guide.title, guide.summary, ...guide.content.flatMap((section) => [section.heading, section.body, ...(section.bullets || [])])]
+    .join(" ")
+    .trim()
+    .split(/\s+/).length;
+  return Math.max(4, Math.ceil(words / 210));
+}
+
+function ArticleImage({ image, priority = false }: { image: Guide["heroImage"]; priority?: boolean }) {
+  return (
+    <figure>
+      <div className="relative aspect-[3/2] overflow-hidden rounded-lg bg-mist md:aspect-[16/9]">
+        <Image src={image.src} alt={image.alt} fill priority={priority} sizes="(min-width: 1200px) 1100px, 100vw" className="object-cover" />
+      </div>
+      <figcaption className="mt-2 text-sm leading-relaxed text-ink/52">
+        {image.caption || image.alt}
+      </figcaption>
+    </figure>
+  );
+}
+
 const paymentAppsGuideCtaSlugs = new Set([
   "how-to-pay-in-china-as-a-foreigner",
   "best-apps-for-traveling-in-china",
@@ -173,6 +194,10 @@ const paymentAppsGuideCtaSlugs = new Set([
 function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
   const paymentAppsGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
   const isAvailable = Boolean(paymentAppsGuideBuyUrl);
+
+  if (!isAvailable) {
+    return null;
+  }
 
   return (
     <section className="bg-ink px-4 py-12 text-white">
@@ -200,7 +225,7 @@ function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
         </ul>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
           <ProductActionButton
-            href={isAvailable ? paymentAppsGuideBuyUrl : "/store#early-access"}
+            href={paymentAppsGuideBuyUrl}
             className="mt-0"
             isExternal={isAvailable}
             canBuy={isAvailable}
@@ -209,7 +234,7 @@ function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
                 ? ["guide_paid_cta_clicked", "payment_apps_guide_buy_clicked"]
                 : ["store_waitlist_clicked"]
             }
-            label={isAvailable ? "Buy the $7 Guide" : "Join the waitlist"}
+            label="Buy the $7 Guide"
             productId="china-payment-apps-setup-guide"
             placement="guide_bottom_paid_cta"
             analyticsParams={{ guide_slug: guideSlug }}
@@ -324,13 +349,17 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
     <>
       <article>
         <header className="bg-sand px-4 py-12">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-6xl">
             <p className="mb-3 text-sm font-bold uppercase text-ember">{guide.category}</p>
             <h1 className="text-4xl font-bold leading-tight text-ink">{guide.title}</h1>
             <p className="mt-5 text-lg text-ink/70">{guide.summary}</p>
-            <p className="mt-4 text-sm font-semibold text-ink/50">
-              Last updated: {formatUpdatedDate(guide.updatedAt)}
-            </p>
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm font-semibold text-ink/50">
+              <p>Last updated: {formatUpdatedDate(guide.updatedAt)}</p>
+              <p>{readingTime(guide)} min read</p>
+            </div>
+            <div className="mt-8">
+              <ArticleImage image={guide.heroImage} priority />
+            </div>
           </div>
         </header>
 
@@ -354,7 +383,9 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             {content.featureSections && content.featureSections.length > 0 ? (
               <FeatureSections sections={content.featureSections} />
             ) : null}
+            <ArticleImage image={guide.inlineImages[0]} />
             <BulletSection title="Step-by-step guide" items={content.steps} />
+            <ArticleImage image={guide.inlineImages[1]} />
             <BulletSection title="Common mistakes" items={content.commonMistakes} />
             <BulletSection title="Troubleshooting" items={content.troubleshooting} />
             {content.backupPlan && content.backupPlan.length > 0 ? (
@@ -381,6 +412,8 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
               </section>
             ) : null}
             <BulletSection title="First-day checklist" items={content.firstDayChecklist} />
+
+            <ArticleImage image={guide.inlineImages[2]} />
 
             {content.appGroups ? <AppGuideCards groups={content.appGroups} /> : null}
 
@@ -506,3 +539,4 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
     </>
   );
 }
+import Image from "next/image";
