@@ -27,9 +27,10 @@ export type Itinerary = {
   cardImage: ContentImage;
   heroImage: ContentImage;
   routeImages: ContentImage[];
+  dailyImages?: ContentImage[];
 };
 
-type ItineraryWithoutVisuals = Omit<Itinerary, "cardImage" | "heroImage" | "routeImages">;
+type ItineraryWithoutVisuals = Omit<Itinerary, "cardImage" | "heroImage" | "routeImages" | "dailyImages">;
 
 const itineraryEntries: ItineraryWithoutVisuals[] = [
   {

@@ -24,6 +24,7 @@ export type ItineraryVisuals = {
   cardImage: ContentImage;
   heroImage: ContentImage;
   routeImages: ContentImage[];
+  dailyImages?: ContentImage[];
 };
 
 const image = (
@@ -109,6 +110,16 @@ const suzhouMarket = image("/images/cities/details/suzhou-market-street.webp", "
 const suzhouCanal = image("/images/cities/details/suzhou-canal-lanterns.webp", "Traditional houses and red lanterns beside a canal in Suzhou", "pexels-36466099");
 const suzhouFood = image("/images/cities/details/suzhou-street-food.webp", "Street food vendor serving customers in a Suzhou alley", "pexels-19954017");
 
+const classicChinaDay1 = image("/images/itineraries/classic-china/day-1-beijing-hutong.webp", "A quiet leafy hutong lane in Beijing with bicycles and local residents", "unsplash-classic-day1-beijing-hutong");
+const classicChinaDay2 = image("/images/itineraries/classic-china/day-2-forbidden-city.webp", "The central courtyard and imperial halls of Beijing's Forbidden City", "unsplash-classic-day2-forbidden-city");
+const classicChinaDay3 = image("/images/itineraries/classic-china/day-3-great-wall.webp", "The Great Wall winding across green mountains outside Beijing", "unsplash-classic-day3-great-wall");
+const classicChinaDay5 = image("/images/itineraries/classic-china/day-5-terracotta-warriors.webp", "A Terracotta Warrior displayed under museum lighting in Xi'an", "unsplash-classic-day5-terracotta-warriors", undefined, "center 38%");
+const classicChinaDay6 = image("/images/itineraries/classic-china/day-6-shanghai-bund.webp", "Shanghai's Pudong skyline reflected across the Huangpu River at night", "unsplash-classic-day6-shanghai-bund", undefined, "center 48%");
+const classicChinaDay7 = image("/images/itineraries/classic-china/day-7-yu-garden.webp", "Traditional pavilions and water at Shanghai's Yu Garden", "unsplash-classic-day7-yu-garden");
+const classicChinaDay8 = image("/images/itineraries/classic-china/day-8-hangzhou-west-lake.webp", "Traditional pavilion and lotus water at West Lake in Hangzhou", "unsplash-classic-day8-hangzhou-west-lake", undefined, "center 48%");
+const classicChinaDay9 = image("/images/itineraries/classic-china/day-9-shanghai-museum.webp", "The historic clock-tower building of Shanghai History Museum", "unsplash-classic-day9-shanghai-museum", undefined, "center 42%");
+const classicChinaDay10 = image("/images/itineraries/classic-china/day-10-airport-departure.webp", "Travelers pulling luggage through a modern airport departure hall", "unsplash-classic-day10-airport-departure");
+
 export const destinationVisuals: Record<string, DestinationVisuals> = {
   shanghai: { cardImage: cityImages.shanghai, heroImage: cityImages.shanghai, attractionImages: [shanghaiStreet, cityImages.shanghai], foodImage: foodStall, transportImage: editorialImages.station },
   beijing: { cardImage: cityImages.beijing, heroImage: cityImages.beijing, attractionImages: [beijingStreet, cityImages.beijing], foodImage: beijingMarket, transportImage: editorialImages.station },
@@ -126,6 +137,22 @@ export const itineraryVisuals: Record<string, ItineraryVisuals> = {
   "4-days-in-beijing": { cardImage: cityImages.beijing, heroImage: beijingMarket, routeImages: [cityImages.beijing, beijingStreet, beijingMarket] },
   "5-days-beijing-and-xian": { cardImage: cityImages.xian, heroImage: beijingStreet, routeImages: [cityImages.beijing, beijingStreet, cityImages.xian, xianFood] },
   "7-days-shanghai-hangzhou-suzhou": { cardImage: cityImages.hangzhou, heroImage: suzhouCanal, routeImages: [cityImages.shanghai, cityImages.hangzhou, suzhouCanal, suzhouMarket] },
-  "10-days-classic-china-itinerary": { cardImage: train, heroImage: train, routeImages: [cityImages.beijing, cityImages.xian, xianFood, cityImages.shanghai, cityImages.hangzhou, train] },
+  "10-days-classic-china-itinerary": {
+    cardImage: classicChinaDay3,
+    heroImage: classicChinaDay3,
+    routeImages: [train],
+    dailyImages: [
+      classicChinaDay1,
+      classicChinaDay2,
+      classicChinaDay3,
+      cityImages.xian,
+      classicChinaDay5,
+      classicChinaDay6,
+      classicChinaDay7,
+      classicChinaDay8,
+      classicChinaDay9,
+      classicChinaDay10,
+    ],
+  },
   "240-hour-visa-free-china-itinerary": { cardImage: boardingPass, heroImage: boardingPass, routeImages: [shanghaiStreet, cityImages.hangzhou, suzhouCanal, train] },
 };

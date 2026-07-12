@@ -36,6 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${itinerary.title} Kit | First China Trip Kit`,
     description: itinerary.seoDescription,
     path: `/itinerary-kits/${itinerary.slug}`,
+    image: itinerary.heroImage.src,
+    imageAlt: itinerary.heroImage.alt,
   });
 }
 
@@ -114,7 +116,7 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
       <SEOJsonLd data={itineraryJsonLd(itinerary, `/itinerary-kits/${itinerary.slug}`, content?.faq)} />
       <article>
         <header className="relative isolate min-h-[560px] overflow-hidden bg-ink px-4 py-12 text-white">
-          <Image src={itinerary.heroImage.src} alt={itinerary.heroImage.alt} fill priority sizes="100vw" className="object-cover" />
+          <Image src={itinerary.heroImage.src} alt={itinerary.heroImage.alt} fill priority loading="eager" sizes="100vw" className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/72 to-ink/20" />
           <div className="relative mx-auto flex min-h-[464px] max-w-5xl flex-col justify-end">
             <p className="mb-3 text-sm font-bold uppercase text-mist">Itinerary Kit</p>
@@ -211,7 +213,11 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
 
             <Section title="Day-by-day plan">
               <div className="grid gap-5">
-                {itinerary.dayByDayPlan.map((day) => (
+                {itinerary.dayByDayPlan.map((day) => {
+                  const dayImage =
+                    itinerary.dailyImages?.[day.day - 1] ||
+                    itinerary.routeImages[(day.day - 1) % itinerary.routeImages.length];
+                  return (
                   <section
                     key={day.day}
                     id={`day-${day.day}`}
@@ -222,7 +228,14 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
                       {day.title}
                     </h3>
                     <figure className="relative mt-4 aspect-[16/9] overflow-hidden rounded-md">
-                      <Image src={itinerary.routeImages[(day.day - 1) % itinerary.routeImages.length].src} alt={itinerary.routeImages[(day.day - 1) % itinerary.routeImages.length].alt} fill sizes="(min-width: 1024px) 860px, 100vw" className="object-cover" />
+                      <Image
+                        src={dayImage.src}
+                        alt={dayImage.alt}
+                        fill
+                        sizes="(min-width: 1024px) 860px, 100vw"
+                        style={{ objectPosition: dayImage.position }}
+                        className="object-cover"
+                      />
                     </figure>
                     <div className="mt-4 grid gap-3">
                       <p>
@@ -245,7 +258,8 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
                       </p>
                     </div>
                   </section>
-                ))}
+                  );
+                })}
               </div>
             </Section>
 
