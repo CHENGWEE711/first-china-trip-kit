@@ -90,7 +90,7 @@ export function ChecklistDownloadWithTip({
         href={href}
         download
         onClick={handleDownloadClick}
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-ember px-5 py-3 text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-auto"
+        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-ember px-5 py-3 text-base font-semibold text-white transition hover:bg-ember-hover sm:w-auto"
       >
         <Download aria-hidden="true" size={18} />
         {label}

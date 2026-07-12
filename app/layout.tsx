@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Header } from "@/components/Header";
 import { MetricoolAnalytics } from "@/components/MetricoolAnalytics";
+import { inter, sourceSerif } from "@/app/fonts";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${sourceSerif.variable}`}>
       <body>
         <a href="#main-content" className="skip-link">Skip to content</a>
         <AttributionCapture />

@@ -144,7 +144,7 @@ export default function ThankYouPage() {
                 <h3 className="mt-2 text-xl font-bold leading-tight text-ink">
                   {step.title}
                 </h3>
-                <p className="mt-4 text-base font-semibold text-ember group-hover:text-[#982F28]">
+                <p className="mt-4 text-base font-semibold text-ember group-hover:text-ember-hover">
                   Open guide
                 </p>
               </Link>

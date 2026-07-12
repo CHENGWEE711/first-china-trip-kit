@@ -40,7 +40,7 @@ export function CityCard({ city }: CityCardProps) {
       <p className="mt-4 flex-1 text-base text-ink/68">{city.intro}</p>
       <Link
         href={`/city-kits/${city.slug}`}
-        className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 text-base font-semibold text-white transition hover:bg-[#982F28]"
+        className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 text-base font-semibold text-white transition hover:bg-ember-hover"
       >
         Open city kit
       </Link>

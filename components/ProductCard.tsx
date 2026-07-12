@@ -108,7 +108,7 @@ export function ProductCard({ product }: ProductCardProps) {
       {product.previewPdfUrl && !isPaymentAppsGuide ? (
         <a
           href={product.previewPdfUrl}
-          className="mt-4 text-sm font-semibold text-ember hover:text-[#982F28]"
+          className="mt-4 text-sm font-semibold text-ember hover:text-ember-hover"
         >
           Preview sample PDF
         </a>

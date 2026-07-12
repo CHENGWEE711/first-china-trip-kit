@@ -64,7 +64,7 @@ export function ProductActionButton({
         );
       }}
       className={cn(
-        "inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-fit",
+        "inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-5 py-3 text-center text-[15px] font-semibold text-white shadow-soft transition hover:bg-ember-hover focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 sm:w-fit",
         className,
       )}
     >

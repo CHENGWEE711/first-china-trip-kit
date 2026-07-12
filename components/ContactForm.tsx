@@ -168,7 +168,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
               type="radio"
               name="interested_in_custom_itinerary"
               value="yes"
-              className="h-4 w-4 accent-[#B43D35]"
+              className="h-4 w-4 accent-ember"
             />
             Yes
           </label>
@@ -178,7 +178,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
               name="interested_in_custom_itinerary"
               value="no"
               defaultChecked
-              className="h-4 w-4 accent-[#B43D35]"
+              className="h-4 w-4 accent-ember"
             />
             No
           </label>
@@ -196,7 +196,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
               name="preferred_reply_method"
               value="email"
               defaultChecked
-              className="h-4 w-4 accent-[#B43D35]"
+              className="h-4 w-4 accent-ember"
             />
             Email
           </label>
@@ -205,7 +205,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
               type="radio"
               name="preferred_reply_method"
               value="whatsapp"
-              className="h-4 w-4 accent-[#B43D35]"
+              className="h-4 w-4 accent-ember"
             />
             WhatsApp
           </label>
@@ -215,7 +215,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="min-h-12 w-full rounded-md bg-ember px-5 py-3 text-base font-bold text-white transition hover:bg-[#982F28] disabled:cursor-wait disabled:opacity-70 sm:w-fit"
+        className="min-h-12 w-full rounded-md bg-ember px-5 py-3 text-base font-bold text-white transition hover:bg-ember-hover disabled:cursor-wait disabled:opacity-70 sm:w-fit"
       >
         {status === "success" ? "Message saved" : isSubmitting ? "Saving..." : "Send question"}
       </button>

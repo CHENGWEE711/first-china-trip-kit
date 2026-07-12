@@ -15,3 +15,4 @@ output
 *.tsbuildinfo
 playwright-report
 test-results
+tests/visual/diff

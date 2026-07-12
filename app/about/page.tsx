@@ -136,7 +136,7 @@ export default function AboutPage() {
               For questions, corrections, or partnerships, contact{" "}
               <a
                 href={`mailto:${siteConfig.contactEmail}`}
-                className="font-semibold text-ember hover:text-[#982F28]"
+                className="font-semibold text-ember hover:text-ember-hover"
               >
                 {siteConfig.contactEmail}
               </a>

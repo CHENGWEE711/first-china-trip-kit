@@ -134,7 +134,7 @@ export default async function CityKitDetailPage({ params }: PageProps) {
           <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/70 to-ink/15" />
           <div className="editorial-container relative flex min-h-[560px] items-end py-14">
             <div className="max-w-3xl">
-              <p className="mb-3 text-sm font-bold uppercase tracking-widest text-[#F0B3A7]">Destination guide · {city.chineseName}</p>
+              <p className="mb-3 text-sm font-bold uppercase tracking-widest text-mist">Destination guide · {city.chineseName}</p>
               <h1 className="text-5xl leading-[1.06] text-white md:text-6xl">{meta.kitTitle}</h1>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/82">{city.intro}</p>
             </div>
@@ -364,7 +364,7 @@ export default async function CityKitDetailPage({ params }: PageProps) {
       <section className="bg-ink px-4 py-12 text-white">
         <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-[1fr_auto] md:items-center">
           <div>
-            <p className="mb-2 text-sm font-bold uppercase text-clay">Printable setup help</p>
+            <p className="mb-2 text-sm font-bold uppercase text-mist">Printable setup help</p>
             <h2 className="text-3xl font-bold leading-tight">Need payment and app backup cards?</h2>
             <p className="mt-3 max-w-3xl text-base leading-relaxed text-white/72">
               The China Payment & Apps Setup Guide gives you printable checklists,

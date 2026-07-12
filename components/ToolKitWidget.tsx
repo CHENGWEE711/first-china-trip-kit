@@ -311,7 +311,7 @@ function VisaTool() {
               checked={checked.includes(item.id)}
               onChange={(event) => toggleVisaCheck(item.id, event.target.checked)}
               aria-describedby={`visa-${item.id}-description`}
-              className="mt-1 h-5 w-5 shrink-0 accent-[#B43D35] focus:outline-none"
+              className="mt-1 h-5 w-5 shrink-0 accent-ember focus:outline-none"
             />
             <span className="min-w-0">
               <span className="flex flex-wrap items-center gap-2 font-bold text-ink">
@@ -385,7 +385,7 @@ function VisaTool() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-base font-semibold text-ember hover:text-[#982F28]"
+              className="inline-flex items-center gap-2 text-base font-semibold text-ember hover:text-ember-hover"
             >
               {link.label}
               <ExternalLink aria-hidden="true" size={16} />
@@ -437,7 +437,7 @@ function DurationTool() {
                 checked={selectedDuration === option.id}
                 onChange={(event) => setSelectedDuration(event.target.value)}
                 aria-describedby={`duration-${option.id}-description`}
-                className="mt-1 h-5 w-5 shrink-0 accent-[#B43D35] focus:outline-none"
+                className="mt-1 h-5 w-5 shrink-0 accent-ember focus:outline-none"
               />
               <span className="min-w-0">
                 <span className="flex flex-wrap items-center gap-2 text-lg font-bold leading-tight text-ink">
@@ -603,7 +603,7 @@ function AppsTool() {
                 toggleItem(item.id, event.target.checked)
               }
               aria-describedby={`app-${item.id}-description`}
-              className="mt-1 h-5 w-5 shrink-0 accent-[#B43D35] focus:outline-none"
+              className="mt-1 h-5 w-5 shrink-0 accent-ember focus:outline-none"
             />
             <span className="min-w-0">
               <span className="flex flex-wrap items-center gap-2 text-sm font-bold uppercase text-ember">
@@ -697,7 +697,7 @@ function RouteTool() {
                 checked={selectedStyle === option.id}
                 onChange={(event) => setSelectedStyle(event.target.value)}
                 aria-describedby={`route-${option.id}-description`}
-                className="mt-1 h-5 w-5 shrink-0 accent-[#B43D35] focus:outline-none"
+                className="mt-1 h-5 w-5 shrink-0 accent-ember focus:outline-none"
               />
               <span className="min-w-0">
                 <span className="flex flex-wrap items-center gap-2 text-lg font-bold leading-tight text-ink">

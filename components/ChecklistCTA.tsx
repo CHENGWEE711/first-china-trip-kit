@@ -16,7 +16,7 @@ export function ChecklistCTA({
     <section className="bg-ink px-4 py-12 text-white">
       <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
-          <p className="mb-3 inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-1 text-sm font-bold uppercase text-clay">
+          <p className="mb-3 inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-1 text-sm font-bold uppercase text-mist">
             <FileCheck2 aria-hidden="true" size={16} />
             {eyebrow}
           </p>

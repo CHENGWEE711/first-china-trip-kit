@@ -547,7 +547,7 @@ export default function StorePage() {
       <section id="product-updates" className="bg-ink px-4 py-10 text-white">
         <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-[1fr_420px] md:items-center">
           <div>
-            <p className="mb-3 text-sm font-bold uppercase text-clay">Product updates</p>
+            <p className="mb-3 text-sm font-bold uppercase text-mist">Product updates</p>
             <h2 className="text-3xl font-bold leading-tight">Want future travel kits?</h2>
             <p className="mt-3 max-w-2xl text-base text-white/72">
               Join the list for new city kits, route packs, and China travel updates.

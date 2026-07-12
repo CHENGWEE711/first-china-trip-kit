@@ -106,7 +106,7 @@ export default function TravelToolsPage() {
             <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 href="/guides/china-esim-guide-for-tourists"
-                className="inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-5 py-3 text-center font-semibold text-white hover:bg-[#982F28]"
+                className="inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-5 py-3 text-center font-semibold text-white hover:bg-ember-hover"
               >
                 Read the China eSIM Guide
               </Link>

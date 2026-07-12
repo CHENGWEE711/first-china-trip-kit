@@ -81,7 +81,7 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
   return (
     <form
       onSubmit={handleSubmit}
-      className={compact ? "grid gap-3" : "grid gap-3 rounded-lg border border-white/12 bg-white/8 p-4"}
+      className={compact ? "grid gap-3" : "grid gap-3 rounded-lg border border-white/15 bg-white/5 p-4 md:p-6"}
     >
       <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
         <label htmlFor={`newsletter-website-${source}`}>Website</label>
@@ -104,12 +104,12 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
           required
           maxLength={254}
           aria-label="Email address"
-          className="min-h-12 rounded-md border border-white/18 bg-white px-4 text-base text-ink outline-none focus:border-clay"
+          className="min-h-12 rounded-md border border-white/20 bg-surface px-4 text-base text-ink outline-none focus:border-ember focus:ring-2 focus:ring-ember/25"
         />
         <button
           type="submit"
           disabled={isSubmitting}
-          className="min-h-12 rounded-md bg-clay px-5 text-base font-bold text-white transition hover:bg-ember disabled:cursor-wait disabled:opacity-70"
+          className="min-h-12 rounded-md bg-ember px-5 text-[15px] font-semibold text-white transition hover:bg-ember-hover disabled:cursor-wait disabled:opacity-70"
         >
           {status === "success" ? "Success" : isSubmitting ? "Saving..." : "Get the checklist"}
         </button>

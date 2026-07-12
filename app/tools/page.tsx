@@ -55,7 +55,7 @@ export default function ToolsPage() {
                 <p className="mt-3 text-base leading-relaxed text-ink/68">
                   {tool.summary}
                 </p>
-                <div className="mt-4 rounded-lg border border-ink/10 bg-[#F7F5EF] p-3">
+                <div className="mt-4 rounded-lg border border-ink/10 bg-sand p-3">
                   <p className="text-xs font-bold uppercase tracking-widest text-ink/42">Example input</p>
                   <div className="mt-2 grid gap-1.5">{preview.inputs.map((input) => <span key={input} className="rounded border border-ink/8 bg-paper px-2.5 py-2 text-xs font-semibold text-ink/65">{input}</span>)}</div>
                   <div className="mt-3 rounded-md bg-jade px-3 py-2.5 text-sm font-semibold text-white">{preview.result}</div>
@@ -67,7 +67,7 @@ export default function ToolsPage() {
                   </p>
                 </div>
                 <p className="mt-4 text-xs font-bold uppercase tracking-widest text-ink/42">Takes about 1 minute</p>
-                <span className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition group-hover:bg-[#982F28]">Open tool</span>
+                <span className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition group-hover:bg-ember-hover">Open tool</span>
               </Link>
             );
           })}

@@ -233,7 +233,7 @@ function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
   return (
     <section className="bg-ink px-4 py-12 text-white">
       <div className="mx-auto max-w-5xl">
-        <p className="mb-2 text-sm font-bold uppercase text-clay">Printable setup guide</p>
+        <p className="mb-2 text-sm font-bold uppercase text-mist">Printable setup guide</p>
         <h2 className="text-3xl font-bold leading-tight">
           Want the printable setup version?
         </h2>
@@ -249,7 +249,7 @@ function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
             "Taxi and checkout phrase cards",
             "First-day payment test",
           ].map((item) => (
-            <li key={item} className="border-l-2 border-clay/60 pl-3">
+            <li key={item} className="border-l-2 border-mist/60 pl-3">
               {item}
             </li>
           ))}
@@ -278,7 +278,7 @@ function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
               guide_slug: guideSlug,
               placement: "guide_bottom_paid_cta",
             }}
-            className="inline-flex min-h-11 items-center justify-center rounded-md px-2 py-2 text-base font-semibold text-clay underline-offset-4 transition hover:text-white hover:underline sm:w-auto"
+            className="inline-flex min-h-11 items-center justify-center rounded-md px-2 py-2 text-base font-semibold text-mist underline-offset-4 transition hover:text-white hover:underline sm:w-auto"
           >
             View what&apos;s inside
           </TrackedLink>
@@ -306,7 +306,7 @@ function GuideQuestionCta({ guideSlug }: { guideSlug: string }) {
               href={`/contact?source=guide-${guideSlug}`}
               eventName="guide_contact_clicked"
               eventParams={{ guide_slug: guideSlug }}
-              className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-5 py-3 text-center text-base font-semibold text-white transition hover:bg-[#982F28] sm:w-auto"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-5 py-3 text-center text-base font-semibold text-white transition hover:bg-ember-hover sm:w-auto"
             >
               Ask a China Trip Question
             </TrackedLink>
@@ -331,7 +331,7 @@ function GuideQuestionCta({ guideSlug }: { guideSlug: string }) {
               guide_slug: guideSlug,
               placement: "guide_bottom_free_checklist",
             }}
-            className="mt-5 inline-flex text-base font-semibold text-ember underline-offset-4 hover:text-[#982F28] hover:underline"
+            className="mt-5 inline-flex text-base font-semibold text-ember underline-offset-4 hover:text-ember-hover hover:underline"
           >
             Get the Free China First Trip Checklist
           </TrackedLink>
@@ -495,7 +495,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
 
             {content.ctaLinks && content.ctaLinks.length > 0 ? (
               <section className="rounded-lg border border-ink/10 bg-ink p-5 text-white shadow-soft">
-                <p className="mb-2 text-sm font-bold uppercase text-clay">Next step</p>
+                <p className="mb-2 text-sm font-bold uppercase text-mist">Next step</p>
                 <h2 className="text-2xl font-bold leading-tight">
                   Turn this guide into a working trip plan
                 </h2>

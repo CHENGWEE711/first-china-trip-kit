@@ -167,7 +167,7 @@ export default function TravelEssentialsPage() {
       <section className="bg-ink px-4 py-12 text-white">
         <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
-            <p className="mb-3 text-sm font-bold uppercase text-clay">
+            <p className="mb-3 text-sm font-bold uppercase text-mist">
               Start here if this is your first China trip
             </p>
             <h2 className="text-3xl font-bold leading-tight">

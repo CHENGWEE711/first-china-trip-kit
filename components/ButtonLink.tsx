@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
+import { buttonClassName } from "@/components/Button";
 import { cn } from "@/lib/utils";
 
 type ButtonLinkProps = {
@@ -22,13 +23,10 @@ export function ButtonLink({
     <Link
       href={href}
       className={cn(
-        "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-3 text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-ember focus:ring-offset-2",
-        variant === "primary" &&
-          "bg-ember text-white shadow-soft hover:bg-[#982F28]",
-        variant === "secondary" &&
-          "border border-white/70 bg-white/90 text-ink shadow-soft hover:bg-white",
+        variant === "primary" && buttonClassName("primary"),
+        variant === "secondary" && buttonClassName("secondary", "bg-surface"),
         variant === "ghost" &&
-          "border border-ink/12 bg-paper text-ink hover:border-ember/35 hover:text-ember",
+          "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-ink/15 bg-paper px-5 py-3 text-[15px] font-semibold text-ink transition hover:border-ember/40 hover:text-ember focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2",
         className,
       )}
     >

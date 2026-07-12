@@ -16,12 +16,12 @@ export function SectionHeader({
   actionLabel,
 }: SectionHeaderProps) {
   return (
-    <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div className="mb-8 flex flex-col gap-4 md:mb-10 md:flex-row md:items-end md:justify-between">
       <div className="max-w-3xl">
         {eyebrow ? (
-          <p className="mb-2 text-sm font-bold uppercase text-ember">{eyebrow}</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-ember">{eyebrow}</p>
         ) : null}
-        <h2 className="text-3xl font-bold leading-tight text-ink">{title}</h2>
+        <h2 className="text-4xl leading-tight text-ink md:text-5xl">{title}</h2>
         {description ? <p className="mt-3 text-base text-ink/68">{description}</p> : null}
       </div>
       {actionHref && actionLabel ? (

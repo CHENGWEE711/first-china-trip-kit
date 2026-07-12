@@ -117,7 +117,7 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
           <Image src={itinerary.heroImage.src} alt={itinerary.heroImage.alt} fill priority sizes="100vw" className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/72 to-ink/20" />
           <div className="relative mx-auto flex min-h-[464px] max-w-5xl flex-col justify-end">
-            <p className="mb-3 text-sm font-bold uppercase text-clay">Itinerary Kit</p>
+            <p className="mb-3 text-sm font-bold uppercase text-mist">Itinerary Kit</p>
             <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">
               {itinerary.title} Kit
             </h1>

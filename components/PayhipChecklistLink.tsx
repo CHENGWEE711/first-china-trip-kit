@@ -38,7 +38,7 @@ export function PayhipChecklistLink({
       }
       className={cn(
         "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-4 py-2 text-center text-base font-semibold transition focus:outline-none focus:ring-2 focus:ring-ember focus:ring-offset-2",
-        variant === "primary" && "bg-ember text-white shadow-soft hover:bg-[#982F28]",
+        variant === "primary" && "bg-ember text-white shadow-soft hover:bg-ember-hover",
         variant === "ghost" &&
           "border border-ink/12 bg-paper text-ink hover:border-ember/35 hover:text-ember",
         className,

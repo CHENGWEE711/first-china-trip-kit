@@ -87,7 +87,7 @@ export function AffiliateCard({
           placement={placement}
           sourcePage={sourcePage}
           fallbackHref={fallbackHref}
-          className="w-full bg-ember text-white shadow-soft hover:bg-[#982F28]"
+          className="w-full bg-ember text-white shadow-soft hover:bg-ember-hover"
         >
           <span className="inline-flex items-center gap-2">
             {label || config.label}

@@ -23,7 +23,7 @@ export function CTASection({
     <section className="bg-ink px-4 py-12 text-white">
       <div className="mx-auto max-w-5xl">
         {eyebrow ? (
-          <p className="mb-3 text-sm font-bold uppercase text-clay">{eyebrow}</p>
+          <p className="mb-3 text-sm font-bold uppercase text-mist">{eyebrow}</p>
         ) : null}
         <h2 className="max-w-3xl text-3xl font-bold leading-tight">{title}</h2>
         <p className="mt-3 max-w-3xl text-base text-white/72">{description}</p>

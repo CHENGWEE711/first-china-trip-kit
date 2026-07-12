@@ -104,7 +104,7 @@ export function ChecklistShareCard() {
             <button
               type="button"
               onClick={shareChecklist}
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-ember px-4 py-3 text-base font-semibold text-white transition hover:bg-[#982F28] focus:outline-none focus:ring-2 focus:ring-ember focus:ring-offset-2"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-ember px-4 py-3 text-base font-semibold text-white transition hover:bg-ember-hover focus:outline-none focus:ring-2 focus:ring-ember focus:ring-offset-2"
             >
               <Share2 aria-hidden="true" size={18} />
               Share checklist
