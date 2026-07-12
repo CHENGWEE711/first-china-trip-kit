@@ -69,6 +69,19 @@ The 159 skips are deliberate: desktop-only all-route semantic/SEO/image audits d
 - SEO: `docs/PHASE_6_GUIDE_SEO_AUDIT.md`
 - Images: `docs/IMAGE_USAGE_AUDIT.md`
 
+## Git evidence
+
+- Implementation commit: `d16cb03d765d039a8a1598ec5234417e7af05376`
+- Commit subject: `Finalize guide system integration`
+- Commit scope: 39 files; 642 insertions, 15 deletions
+- Production page code changed: yes, limited to Guides list/detail and shared Guide components
+- Design/documentation changed: yes, Phase 6 reports, evidence screenshots and approved visual baselines
+- Dependencies changed: no; `package.json` is unchanged
+- Remote status at evidence capture: local branch is one commit ahead of `origin/ui-professional-upgrade`
+- Push status: not pushed
+- Production deployment: not executed
+- Worktree immediately after the implementation commit: clean
+
 ## Remaining items
 
 - Complete approved Penpot desktop/mobile Guide list and article frames still do not exist.
