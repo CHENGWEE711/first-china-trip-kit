@@ -1,6 +1,6 @@
 # Image Usage Audit
 
-Generated: 2026-07-12T09:18:57.942Z
+Generated: 2026-07-12T10:58:50.161Z
 
 ## Result
 
@@ -13,11 +13,11 @@ Generated: 2026-07-12T09:18:57.942Z
 | Guide visual records | PASS | 14/14 |
 | Destination visual records | PASS | 8/8 |
 | Itinerary visual records | PASS | 7/7 |
-| how-to-pay-in-china-as-a-foreigner featuredImage | PASS | /images/travel/phone-scanning-qr.webp |
-| how-to-pay-in-china-as-a-foreigner heroImage | PASS | /images/travel/phone-scanning-qr.webp |
+| how-to-pay-in-china-as-a-foreigner featuredImage | PASS | /images/guides/payment-guide-qr-checkout.webp |
+| how-to-pay-in-china-as-a-foreigner heroImage | PASS | /images/guides/payment-guide-qr-checkout.webp |
 | how-to-pay-in-china-as-a-foreigner inlineImages | PASS | 3 configured |
 | how-to-pay-in-china-as-a-foreigner distinct inline files | PASS | 3/3 distinct |
-| how-to-pay-in-china-as-a-foreigner inline excludes hero | PASS | /images/travel/phone-scanning-qr.webp |
+| how-to-pay-in-china-as-a-foreigner inline excludes hero | PASS | /images/guides/payment-guide-qr-checkout.webp |
 | best-apps-for-traveling-in-china featuredImage | PASS | /images/guides/best-apps-metro-phone.webp |
 | best-apps-for-traveling-in-china heroImage | PASS | /images/guides/best-apps-metro-phone.webp |
 | best-apps-for-traveling-in-china inlineImages | PASS | 3 configured |
@@ -86,7 +86,7 @@ Generated: 2026-07-12T09:18:57.942Z
 
 ## Featured image uniqueness
 
-- `how-to-pay-in-china-as-a-foreigner` → `/images/travel/phone-scanning-qr.webp`
+- `how-to-pay-in-china-as-a-foreigner` → `/images/guides/payment-guide-qr-checkout.webp`
 - `best-apps-for-traveling-in-china` → `/images/guides/best-apps-metro-phone.webp`
 - `how-to-book-high-speed-trains-in-china` → `/images/guides/high-speed-train-china.webp`
 - `how-to-use-alipay-and-wechat-pay-in-china` → `/images/guides/alipay-cafe-qr.webp`

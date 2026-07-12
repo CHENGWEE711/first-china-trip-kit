@@ -8,7 +8,10 @@ The complete machine-readable ledger is [`data/image-credits.json`](../data/imag
 
 | Guide subject | Local image | Source detail page |
 | --- | --- | --- |
-| Foreign visitor payments | `/images/travel/phone-scanning-qr.webp` | https://www.pexels.com/photo/person-taking-photo-of-the-qr-code-7289717/ |
+| Foreign visitor payments — checkout QR | `/images/guides/payment-guide-qr-checkout.webp` | https://www.pexels.com/photo/a-close-up-shot-of-a-person-scanning-a-qr-code-12935051/ |
+| Foreign visitor payments — merchant scan | `/images/guides/payment-guide-merchant-scan.webp` | https://www.pexels.com/photo/a-close-up-shot-of-a-person-scanning-a-qr-code-12935064/ |
+| Foreign visitor payments — card setup | `/images/guides/payment-guide-card-setup.webp` | https://www.pexels.com/photo/man-making-online-payment-with-smartphone-28841475/ |
+| Foreign visitor payments — backup kit | `/images/guides/payment-guide-backup-kit.webp` | https://www.pexels.com/photo/travel-essentials-passport-credit-cards-and-boarding-pass-32642485/ |
 | Essential travel apps | `/images/guides/best-apps-metro-phone.webp` | https://www.pexels.com/photo/people-using-phones-in-a-subway-station-31216218/ |
 | High-speed rail | `/images/guides/high-speed-train-china.webp` | https://www.pexels.com/photo/high-speed-train-at-a-station-in-china-7494174/ |
 | Alipay and WeChat Pay | `/images/guides/alipay-cafe-qr.webp` | https://www.pexels.com/photo/cafe-interior-with-coffee-grinders-and-qr-code-33792076/ |
@@ -29,7 +32,7 @@ The eight destination hero sources remain the verified Unsplash pages recorded i
 
 ## Processing
 
-- Downloaded originals were converted to 1800 × 1200 WebP at quality 78.
+- Existing full-site originals were converted to 1800 × 1200 WebP at quality 78; the payment-guide replacements use 2400 × 1600 WebP at quality 82 for sharper article and social-preview crops.
 - Card and hero layouts reserve aspect ratio space to prevent layout shift.
 - Hero images use `priority`; below-the-fold images use the Next Image default lazy loading.
 - Responsive `sizes` are set at each use site.

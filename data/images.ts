@@ -78,9 +78,13 @@ const airport = guideImage("/images/guides/americans-china-airport-arrivals.webp
 const boardingPass = guideImage("/images/guides/visa-free-transit-airport.webp", "Traveler holding a smartphone and boarding pass beside an airport window", "pexels-4606721", "Visa-free transit planning depends on the exact arrival, onward destination and permitted stay.");
 const shanghaiStreet = guideImage("/images/guides/shanghai-three-days-street.webp", "Pedestrians on a Shanghai street framed by traditional shops and modern towers", "pexels-35554911", "Shanghai's street-level neighborhoods connect the historic city with its modern skyline.");
 const cafePhone = guideImage("/images/guides/wechat-cafe-phone.webp", "Customer using a smartphone while speaking with cafe staff", "pexels-31713078", "A separate cafe phone-payment scenario without a simulated wallet screen.");
+const paymentGuideHero = guideImage("/images/guides/payment-guide-qr-checkout.webp", "Traveler presenting a smartphone QR code at a payment terminal", "pexels-12935051", "A traveler presents a QR payment code at the checkout terminal.");
+const paymentGuideMerchantScan = guideImage("/images/guides/payment-guide-merchant-scan.webp", "Customer holding a smartphone over a merchant QR payment terminal", "pexels-12935064", "Merchant-scan and customer-scan payment flows use different QR code positions.");
+const paymentGuideCardSetup = guideImage("/images/guides/payment-guide-card-setup.webp", "Traveler adding a bank card to a payment app on a smartphone", "pexels-28841475", "Set up an international card and a second bank-card backup before departure.");
+const paymentGuideBackupKit = guideImage("/images/guides/payment-guide-backup-kit.webp", "Passport, boarding pass and several physical payment cards prepared for travel", "pexels-32642485", "Keep a passport, physical cards and travel documents accessible as payment backups.");
 
 export const guideVisuals: Record<string, GuideVisuals> = {
-  "how-to-pay-in-china-as-a-foreigner": { featuredImage: paymentScene, heroImage: paymentScene, inlineImages: [paymentTerminal, cafePhone, qrPhone] },
+  "how-to-pay-in-china-as-a-foreigner": { featuredImage: paymentGuideHero, heroImage: paymentGuideHero, inlineImages: [paymentGuideMerchantScan, paymentGuideCardSetup, paymentGuideBackupKit] },
   "best-apps-for-traveling-in-china": { featuredImage: metroPhone, heroImage: metroPhone, inlineImages: [airportPhone, qrPhone, station] },
   "how-to-book-high-speed-trains-in-china": { featuredImage: train, heroImage: train, inlineImages: [station, packing, airportPhone] },
   "how-to-use-alipay-and-wechat-pay-in-china": { featuredImage: paymentTerminal, heroImage: paymentTerminal, inlineImages: [qrPhone, cafePhone, paymentScene] },
