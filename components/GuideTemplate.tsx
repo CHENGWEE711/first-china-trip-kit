@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { AppGuideCards } from "@/components/AppGuideCards";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
@@ -62,13 +63,20 @@ function fallbackDetail(guide: Guide): GuideDetailContent {
   };
 }
 
+function sectionId(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 function BulletSection({ title, items }: { title: string; items: string[] }) {
   return (
-    <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
-      <h2 className="text-2xl font-bold leading-tight text-ink">{title}</h2>
-      <ul className="mt-4 grid gap-3 text-base text-ink/70">
+    <section id={sectionId(title)} className="scroll-mt-28 border-t border-ink/15 pt-8">
+      <h2 className="text-3xl leading-tight text-ink">{title}</h2>
+      <ul className="mt-5 grid gap-4 text-base leading-relaxed text-ink/70">
         {items.map((item) => (
-          <li key={item} className="border-l-2 border-ember/35 pl-3">
+          <li key={item} className="border-l-2 border-ember/45 pl-4">
             {item}
           </li>
         ))}
@@ -128,15 +136,15 @@ function FeatureSections({ sections }: { sections: NonNullable<GuideDetailConten
   return (
     <>
       {sections.map((section) => (
-        <section key={section.title} className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
-          <h2 className="text-2xl font-bold leading-tight text-ink">{section.title}</h2>
+        <section key={section.title} id={sectionId(section.title)} className="scroll-mt-28 border-t border-ink/15 pt-8">
+          <h2 className="text-3xl leading-tight text-ink">{section.title}</h2>
           {section.body ? (
             <p className="mt-3 text-base leading-relaxed text-ink/70">{section.body}</p>
           ) : null}
           {section.items && section.items.length > 0 ? (
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {section.items.map((item) => (
-                <div key={item} className="rounded-md border border-ink/10 bg-sand p-4 text-base leading-relaxed text-ink/70">
+                <div key={item} className="border-l-2 border-jade/35 bg-mist/55 px-4 py-3 text-base leading-relaxed text-ink/70">
                   {item}
                 </div>
               ))}
@@ -178,6 +186,36 @@ function ArticleImage({ image, priority = false }: { image: Guide["heroImage"]; 
         {image.caption || image.alt}
       </figcaption>
     </figure>
+  );
+}
+
+function GuideContents({ content }: { content: GuideDetailContent }) {
+  const entries = [
+    "Quick answer",
+    ...(content.whoThisGuideIsFor?.length ? ["Who this guide is for"] : []),
+    ...(content.featureSections?.map((section) => section.title) || []),
+    "Step-by-step guide",
+    "Common mistakes",
+    "Troubleshooting",
+    ...(content.backupPlan?.length ? ["Backup plan"] : []),
+    ...(content.usefulChinesePhrases?.length ? ["Useful Chinese phrases"] : []),
+    "First-day checklist",
+  ];
+
+  return (
+    <nav aria-label="Guide contents" className="sticky top-28 border-t border-ink/20 pt-5">
+      <p className="text-xs font-bold uppercase tracking-[0.14em] text-ember">In this guide</p>
+      <ol className="mt-4 grid gap-3 text-sm leading-snug text-ink/60">
+        {entries.map((entry, index) => (
+          <li key={entry} className="grid grid-cols-[1.5rem_1fr] gap-2">
+            <span className="font-editorial text-ink/35">{String(index + 1).padStart(2, "0")}</span>
+            <a href={`#${sectionId(entry)}`} className="transition hover:text-ember">
+              {entry}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
   );
 }
 
@@ -348,33 +386,40 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
   return (
     <>
       <article>
-        <header className="bg-sand px-4 py-12">
+        <header className="bg-paper px-4 pb-12 pt-14 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl">
-            <p className="mb-3 text-sm font-bold uppercase text-ember">{guide.category}</p>
-            <h1 className="text-4xl font-bold leading-tight text-ink">{guide.title}</h1>
-            <p className="mt-5 text-lg text-ink/70">{guide.summary}</p>
-            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm font-semibold text-ink/50">
+            <div className="max-w-4xl">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-ember">{guide.category} guide</p>
+              <h1 className="text-[2.65rem] leading-[1.04] text-ink sm:text-5xl md:text-6xl">{guide.title}</h1>
+              <p className="mt-6 max-w-3xl text-lg leading-relaxed text-ink/68 md:text-xl">{guide.summary}</p>
+            </div>
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-ink/12 pt-4 text-sm font-semibold text-ink/50">
               <p>Last updated: {formatUpdatedDate(guide.updatedAt)}</p>
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-ember/55" />
               <p>{readingTime(guide)} min read</p>
             </div>
-            <div className="mt-8">
+            <div className="mt-8 md:mt-10">
               <ArticleImage image={guide.heroImage} priority />
             </div>
           </div>
         </header>
 
-        <section className="px-4 py-12">
-          <div className="mx-auto grid max-w-5xl gap-5">
+        <section className="bg-sand px-4 py-14 md:py-20">
+          <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-between">
+            <aside className="hidden lg:block">
+              <GuideContents content={content} />
+            </aside>
+            <div className="grid min-w-0 gap-10">
             {content.importantNotice ? (
-              <section className="rounded-lg border border-ember/25 bg-sand p-5 shadow-soft">
-                <p className="mb-2 text-sm font-bold uppercase text-ember">Important notice</p>
+              <section className="border-l-4 border-ember bg-paper px-5 py-5">
+                <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-ember">Important notice</p>
                 <p className="text-base leading-relaxed text-ink/76">{content.importantNotice}</p>
               </section>
             ) : null}
 
-            <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
-              <p className="mb-2 text-sm font-bold uppercase text-ember">Quick answer</p>
-              <p className="text-lg text-ink/72">{content.quickAnswer}</p>
+            <section id="quick-answer" className="scroll-mt-28 bg-mist px-6 py-7 md:px-8 md:py-8">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-jade">Quick answer</p>
+              <p className="font-editorial text-xl leading-relaxed text-ink md:text-2xl">{content.quickAnswer}</p>
             </section>
 
             {content.whoThisGuideIsFor && content.whoThisGuideIsFor.length > 0 ? (
@@ -393,15 +438,15 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             ) : null}
 
             {content.usefulChinesePhrases && content.usefulChinesePhrases.length > 0 ? (
-              <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
-                <h2 className="text-2xl font-bold leading-tight text-ink">
+              <section id="useful-chinese-phrases" className="scroll-mt-28 border-t border-ink/15 pt-8">
+                <h2 className="text-3xl leading-tight text-ink">
                   Useful Chinese phrases
                 </h2>
                 <div className="mt-4 grid gap-3">
                   {content.usefulChinesePhrases.map((phrase) => (
                     <div
                       key={`${phrase.english}-${phrase.chinese}`}
-                      className="rounded-md border border-ink/10 bg-sand p-4"
+                      className="border-b border-ink/12 bg-paper px-5 py-4"
                     >
                       <p className="text-sm font-bold uppercase text-ink/45">{phrase.english}</p>
                       <p className="mt-2 text-lg font-bold text-ink">{phrase.chinese}</p>
@@ -417,7 +462,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
 
             {content.appGroups ? <AppGuideCards groups={content.appGroups} /> : null}
 
-            <section className="content-prose rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
+            <section className="content-prose border-t border-ink/15 pt-4">
               {guide.content.map((section) => (
                 <section key={section.heading}>
                   <h2>{section.heading}</h2>
@@ -434,8 +479,8 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             </section>
 
             {content.officialSourceLinks.length > 0 ? (
-              <section className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
-                <h2 className="text-2xl font-bold leading-tight text-ink">
+              <section className="border-t border-ink/15 pt-8">
+                <h2 className="text-3xl leading-tight text-ink">
                   Official resources to verify
                 </h2>
                 <div className="mt-4 grid gap-4">
@@ -482,6 +527,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
                 </div>
               </section>
             ) : null}
+            </div>
           </div>
         </section>
       </article>
@@ -539,4 +585,3 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
     </>
   );
 }
-import Image from "next/image";
