@@ -1,0 +1,47 @@
+{
+  "page": "guide-payment",
+  "route": "/guides/how-to-pay-in-china-as-a-foreigner",
+  "screenshot": "guide-payment-390.png",
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "How to Pay in China as a Foreigner: Alipay, WeChat Pay, Cards and Cash",
+  "pathname": "/guides/how-to-pay-in-china-as-a-foreigner",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "documentWidth": 390,
+  "documentHeight": 20075,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 7,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 13,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 4,
+  "headingCount": 31,
+  "mainWidth": 390,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/travel/phone-scanning-qr.webp",
+    "/images/guides/alipay-cafe-qr.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/travel/phone-scanning-qr.webp",
+    "alt": "Person scanning a merchant QR code with a smartphone",
+    "displayWidth": 358,
+    "displayHeight": 239,
+    "intrinsicWidth": 390,
+    "intrinsicHeight": 260,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 1
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

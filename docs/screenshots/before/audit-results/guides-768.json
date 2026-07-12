@@ -1,0 +1,47 @@
+{
+  "page": "guides",
+  "route": "/guides",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "China Travel Blog and Practical Guides | First China Trip Kit",
+  "pathname": "/guides",
+  "viewport": {
+    "width": 768,
+    "height": 1024
+  },
+  "documentWidth": 768,
+  "documentHeight": 4990,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 14,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 22,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 14,
+  "headingCount": 15,
+  "mainWidth": 768,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/travel/phone-scanning-qr.webp",
+    "/images/guides/best-apps-metro-phone.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/travel/phone-scanning-qr.webp",
+    "alt": "Person scanning a merchant QR code with a smartphone",
+    "displayWidth": 358,
+    "displayHeight": 239,
+    "intrinsicWidth": 384,
+    "intrinsicHeight": 256,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 1
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

@@ -1,0 +1,47 @@
+{
+  "page": "itinerary-shanghai-3-days",
+  "route": "/itinerary-kits/3-days-in-shanghai",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "3 Days in Shanghai Kit | First China Trip Kit",
+  "pathname": "/itinerary-kits/3-days-in-shanghai",
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "documentWidth": 375,
+  "documentHeight": 14168,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 5,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 8,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 1,
+  "headingCount": 23,
+  "mainWidth": 375,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/guides/shanghai-three-days-street.webp",
+    "/images/cities/shanghai-bund-skyline.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/guides/shanghai-three-days-street.webp",
+    "alt": "Pedestrians on a Shanghai street framed by traditional shops and modern towers",
+    "displayWidth": 375,
+    "displayHeight": 643,
+    "intrinsicWidth": 375,
+    "intrinsicHeight": 250,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.389
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

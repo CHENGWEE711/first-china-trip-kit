@@ -1,0 +1,47 @@
+{
+  "page": "city-chengdu",
+  "route": "/city-kits/chengdu",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "Chengdu First Trip Kit | First China Trip Kit",
+  "pathname": "/city-kits/chengdu",
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "documentWidth": 375,
+  "documentHeight": 18904,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 12,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 16,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 8,
+  "headingCount": 33,
+  "mainWidth": 375,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/cities/chengdu-panda-base.webp",
+    "/images/cities/chengdu-panda-base.webp"
+  ],
+  "repeatedFirstImage": "/images/cities/chengdu-panda-base.webp",
+  "hero": {
+    "source": "/images/cities/chengdu-panda-base.webp",
+    "alt": "Giant panda eating bamboo at the Chengdu panda base",
+    "displayWidth": 375,
+    "displayHeight": 560,
+    "intrinsicWidth": 375,
+    "intrinsicHeight": 250,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.446
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

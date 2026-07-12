@@ -1,0 +1,47 @@
+{
+  "page": "guide-visa-free-240-hour",
+  "route": "/guides/china-240-hour-visa-free-transit-guide",
+  "screenshot": "guide-visa-free-240-hour-390.png",
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "China 240-Hour Visa-Free Transit Guide for First-Time Visitors",
+  "pathname": "/guides/china-240-hour-visa-free-transit-guide",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "documentWidth": 390,
+  "documentHeight": 18341,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 7,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 16,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 4,
+  "headingCount": 28,
+  "mainWidth": 390,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/guides/visa-free-transit-airport.webp",
+    "/images/guides/high-speed-train-china.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/guides/visa-free-transit-airport.webp",
+    "alt": "Traveler holding a smartphone and boarding pass beside an airport window",
+    "displayWidth": 358,
+    "displayHeight": 239,
+    "intrinsicWidth": 390,
+    "intrinsicHeight": 260,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 1
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

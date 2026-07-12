@@ -1,0 +1,47 @@
+{
+  "page": "city-beijing",
+  "route": "/city-kits/beijing",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "Beijing First Trip Kit | First China Trip Kit",
+  "pathname": "/city-kits/beijing",
+  "viewport": {
+    "width": 1024,
+    "height": 768
+  },
+  "documentWidth": 1024,
+  "documentHeight": 12169,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 14,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 20,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 10,
+  "headingCount": 35,
+  "mainWidth": 1024,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/cities/beijing-forbidden-city-courtyard.webp",
+    "/images/cities/details/beijing-hutong-street.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/cities/beijing-forbidden-city-courtyard.webp",
+    "alt": "Visitors walking through a courtyard in Beijing's Forbidden City",
+    "displayWidth": 1024,
+    "displayHeight": 560,
+    "intrinsicWidth": 1024,
+    "intrinsicHeight": 678,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.826
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

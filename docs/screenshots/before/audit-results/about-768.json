@@ -1,0 +1,46 @@
+{
+  "page": "about",
+  "route": "/about",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "About First China Trip Kit",
+  "pathname": "/about",
+  "viewport": {
+    "width": 768,
+    "height": 1024
+  },
+  "documentWidth": 768,
+  "documentHeight": 3902,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 1,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 7,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 12,
+  "headingCount": 8,
+  "mainWidth": 768,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/travel/china-high-speed-rail-platform.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/travel/china-high-speed-rail-platform.webp",
+    "alt": "China high-speed train waiting at a modern railway platform",
+    "displayWidth": 736,
+    "displayHeight": 491,
+    "intrinsicWidth": 768,
+    "intrinsicHeight": 512,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 1
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

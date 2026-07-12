@@ -1,0 +1,47 @@
+{
+  "page": "city-shanghai",
+  "route": "/city-kits/shanghai",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "Shanghai First Trip Kit | First China Trip Kit",
+  "pathname": "/city-kits/shanghai",
+  "viewport": {
+    "width": 430,
+    "height": 932
+  },
+  "documentWidth": 430,
+  "documentHeight": 19285,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 14,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 18,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 10,
+  "headingCount": 35,
+  "mainWidth": 430,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/cities/shanghai-bund-skyline.webp",
+    "/images/guides/shanghai-three-days-street.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/cities/shanghai-bund-skyline.webp",
+    "alt": "Shanghai skyline across the Huangpu River near the Bund",
+    "displayWidth": 430,
+    "displayHeight": 560,
+    "intrinsicWidth": 430,
+    "intrinsicHeight": 286,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.511
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

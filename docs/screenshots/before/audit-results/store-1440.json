@@ -1,0 +1,47 @@
+{
+  "page": "store",
+  "route": "/store",
+  "screenshot": "store-1440.png",
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "Printable China Travel Kits | First China Trip Kit Store",
+  "pathname": "/store",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "documentWidth": 1440,
+  "documentHeight": 6737,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 6,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 19,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 16,
+  "headingCount": 45,
+  "mainWidth": 1440,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/products/previews/payment-apps-guide-store-cover.png",
+    "/products/previews/payment-apps-guide-cover.png"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/products/previews/payment-apps-guide-store-cover.png",
+    "alt": "Product cover for the China Payment and Apps Setup Guide",
+    "displayWidth": 549,
+    "displayHeight": 366,
+    "intrinsicWidth": 633,
+    "intrinsicHeight": 422,
+    "objectFit": "fill",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.999
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

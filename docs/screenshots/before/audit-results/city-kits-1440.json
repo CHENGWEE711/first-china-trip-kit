@@ -1,0 +1,47 @@
+{
+  "page": "city-kits",
+  "route": "/city-kits",
+  "screenshot": "city-kits-1440.png",
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "China Destinations for First-Time Visitors | First China Trip Kit",
+  "pathname": "/city-kits",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "documentWidth": 1440,
+  "documentHeight": 2972,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 8,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 17,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 8,
+  "headingCount": 9,
+  "mainWidth": 1440,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/cities/shanghai-bund-skyline.webp",
+    "/images/cities/beijing-forbidden-city-courtyard.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/cities/shanghai-bund-skyline.webp",
+    "alt": "Shanghai skyline across the Huangpu River near the Bund",
+    "displayWidth": 384,
+    "displayHeight": 288,
+    "intrinsicWidth": 475,
+    "intrinsicHeight": 317,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.89
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

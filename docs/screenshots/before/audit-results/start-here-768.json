@@ -1,0 +1,46 @@
+{
+  "page": "start-here",
+  "route": "/start-here",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "Start Here: Plan Your First China Trip Step by Step",
+  "pathname": "/start-here",
+  "viewport": {
+    "width": 768,
+    "height": 1024
+  },
+  "documentWidth": 768,
+  "documentHeight": 3354,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 1,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 10,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 7,
+  "headingCount": 9,
+  "mainWidth": 768,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/travel/china-railway-station-interior.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/travel/china-railway-station-interior.webp",
+    "alt": "Interior platform at a modern railway station in China",
+    "displayWidth": 736,
+    "displayHeight": 491,
+    "intrinsicWidth": 768,
+    "intrinsicHeight": 512,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 1
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

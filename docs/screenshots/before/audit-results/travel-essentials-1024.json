@@ -1,0 +1,47 @@
+{
+  "page": "travel-essentials",
+  "route": "/travel-essentials",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "China Travel Essentials for Foreign Visitors | First China Trip Kit",
+  "pathname": "/travel-essentials",
+  "viewport": {
+    "width": 1024,
+    "height": 768
+  },
+  "documentWidth": 1024,
+  "documentHeight": 4545,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 3,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 20,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 12,
+  "headingCount": 14,
+  "mainWidth": 1024,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/guides/china-packing-essentials.webp",
+    "/images/guides/china-esim-airport-phone.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/guides/china-packing-essentials.webp",
+    "alt": "Passport, tickets, map and travel essentials arranged before a trip",
+    "displayWidth": 317,
+    "displayHeight": 212,
+    "intrinsicWidth": 337,
+    "intrinsicHeight": 225,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.998
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

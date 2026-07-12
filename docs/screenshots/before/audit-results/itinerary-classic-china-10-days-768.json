@@ -1,0 +1,47 @@
+{
+  "page": "itinerary-classic-china-10-days",
+  "route": "/itinerary-kits/10-days-classic-china-itinerary",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "10 Days Classic China Itinerary Kit | First China Trip Kit",
+  "pathname": "/itinerary-kits/10-days-classic-china-itinerary",
+  "viewport": {
+    "width": 768,
+    "height": 1024
+  },
+  "documentWidth": 768,
+  "documentHeight": 12949,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 12,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 9,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 1,
+  "headingCount": 24,
+  "mainWidth": 768,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/guides/high-speed-train-china.webp",
+    "/images/cities/beijing-forbidden-city-courtyard.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/guides/high-speed-train-china.webp",
+    "alt": "Chinese high-speed train at a station platform",
+    "displayWidth": 768,
+    "displayHeight": 560,
+    "intrinsicWidth": 768,
+    "intrinsicHeight": 512,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.914
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

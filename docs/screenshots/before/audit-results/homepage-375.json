@@ -1,0 +1,47 @@
+{
+  "page": "homepage",
+  "route": "/",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "First China Trip Kit | Practical China Travel Guide for First-Time Visitors",
+  "pathname": "/",
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "documentWidth": 375,
+  "documentHeight": 8689,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 13,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 17,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 7,
+  "headingCount": 16,
+  "mainWidth": 375,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/cities/beijing-forbidden-city-courtyard.webp",
+    "/images/travel/phone-scanning-qr.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/cities/beijing-forbidden-city-courtyard.webp",
+    "alt": "Visitors walking through a courtyard in Beijing's Forbidden City",
+    "displayWidth": 375,
+    "displayHeight": 620,
+    "intrinsicWidth": 375,
+    "intrinsicHeight": 248,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.4
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

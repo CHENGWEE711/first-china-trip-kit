@@ -1,0 +1,47 @@
+{
+  "page": "guide-apps",
+  "route": "/guides/best-apps-for-traveling-in-china",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "Best Apps for Traveling in China: Payment, Maps, Translation, Trains and Taxis",
+  "pathname": "/guides/best-apps-for-traveling-in-china",
+  "viewport": {
+    "width": 430,
+    "height": 932
+  },
+  "documentWidth": 430,
+  "documentHeight": 23893,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 7,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 14,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 18,
+  "headingCount": 35,
+  "mainWidth": 430,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/guides/best-apps-metro-phone.webp",
+    "/images/guides/china-esim-airport-phone.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/guides/best-apps-metro-phone.webp",
+    "alt": "Travelers using smartphones while waiting in a metro station",
+    "displayWidth": 398,
+    "displayHeight": 265,
+    "intrinsicWidth": 430,
+    "intrinsicHeight": 286,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.998
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

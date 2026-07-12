@@ -1,0 +1,47 @@
+{
+  "page": "itinerary-kits",
+  "route": "/itinerary-kits",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "China Itinerary Kits by Trip Length | First China Trip Kit",
+  "pathname": "/itinerary-kits",
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "documentWidth": 375,
+  "documentHeight": 5690,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 7,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 13,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 7,
+  "headingCount": 8,
+  "mainWidth": 375,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/cities/shanghai-bund-skyline.webp",
+    "/images/cities/details/beijing-hutong-street.webp"
+  ],
+  "repeatedFirstImage": null,
+  "hero": {
+    "source": "/images/cities/shanghai-bund-skyline.webp",
+    "alt": "Shanghai skyline across the Huangpu River near the Bund",
+    "displayWidth": 341,
+    "displayHeight": 227,
+    "intrinsicWidth": 374,
+    "intrinsicHeight": 249,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.999
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}

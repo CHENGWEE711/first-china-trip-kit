@@ -1,0 +1,47 @@
+{
+  "page": "city-xian",
+  "route": "/city-kits/xian",
+  "screenshot": null,
+  "responseStatus": 200,
+  "browserIssues": [],
+  "title": "Xi'an First Trip Kit | First China Trip Kit",
+  "pathname": "/city-kits/xian",
+  "viewport": {
+    "width": 430,
+    "height": 932
+  },
+  "documentWidth": 430,
+  "documentHeight": 17849,
+  "horizontalScroll": false,
+  "h1Count": 1,
+  "imageCount": 12,
+  "failedImages": [],
+  "missingAltImages": [],
+  "emptyButtons": [],
+  "ctaCount": 16,
+  "unclickableCtas": [],
+  "visibleTechnicalStatuses": [],
+  "visibleDevelopmentIndicators": 1,
+  "articleCount": 8,
+  "headingCount": 33,
+  "mainWidth": 430,
+  "overflowingElements": [],
+  "firstTwoImageSources": [
+    "/images/cities/xian-city-wall-sunset.webp",
+    "/images/cities/xian-city-wall-sunset.webp"
+  ],
+  "repeatedFirstImage": "/images/cities/xian-city-wall-sunset.webp",
+  "hero": {
+    "source": "/images/cities/xian-city-wall-sunset.webp",
+    "alt": "Xi'an Ancient City Wall and watchtowers at sunset",
+    "displayWidth": 430,
+    "displayHeight": 560,
+    "intrinsicWidth": 430,
+    "intrinsicHeight": 292,
+    "objectFit": "cover",
+    "objectPosition": "50% 50%",
+    "cropRetention": 0.521
+  },
+  "navigationObstruction": false,
+  "fixedOverlays": []
+}
