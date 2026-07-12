@@ -165,6 +165,14 @@ Two independent Starter-plan limits were returned by Figma:
 
 The second limit blocks all further Figma writes and validations in this phase.
 
+### Continuation check — 2026-07-12
+
+After the user requested direct continuation, a new read-only Figma inspection was attempted against file `Xh52hXMXvSmgnbwvbf19uI`. Figma rejected the request before executing any JavaScript and returned the same Starter-plan MCP limit. No Figma objects were created, changed, or deleted by this attempt.
+
+Figma provided this upgrade URL for the connected team:
+
+https://www.figma.com/files/team/1658011231113311301/all-projects?upgrade=mcp_rate_limit_paywall
+
 ## Manual action required
 
 One of the following is required before Phase 3 can resume:
