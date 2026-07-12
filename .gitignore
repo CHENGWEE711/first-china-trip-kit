@@ -13,3 +13,5 @@ pnpm-debug.log*
 tmp
 output
 *.tsbuildinfo
+playwright-report
+test-results

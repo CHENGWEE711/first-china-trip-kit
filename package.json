@@ -24,6 +24,7 @@
     "postcss": "^8.5.10"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@types/node": "^22.10.2",
     "@types/react": "latest",
     "@types/react-dom": "latest",
