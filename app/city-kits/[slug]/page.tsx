@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
@@ -15,6 +16,7 @@ import { getCityBySlug } from "@/data/cities";
 import { getCityGuideContent } from "@/data/city-guide-content";
 import { guides } from "@/data/guides";
 import { itineraries } from "@/data/itineraries";
+import { cityImages } from "@/data/images";
 import { cityKitMeta, cityKitSlugs } from "@/data/kits";
 import { buildMetadata, cityJsonLd } from "@/lib/seo";
 
@@ -75,6 +77,7 @@ export default async function CityKitDetailPage({ params }: PageProps) {
   }
 
   const meta = cityKitMeta[city.slug];
+  const cityImage = cityImages[city.slug];
   const content = getCityGuideContent(city.slug);
   const relatedItineraries = itineraries
     .filter((itinerary) => itinerary.cities.includes(city.cityName))
@@ -100,31 +103,25 @@ export default async function CityKitDetailPage({ params }: PageProps) {
     <>
       <SEOJsonLd data={cityJsonLd(city, `/city-kits/${city.slug}`, content?.faq)} />
       <article>
-        <header className="bg-sand px-4 py-12">
-          <div className="mx-auto max-w-5xl">
-            <p className="mb-3 text-sm font-bold uppercase text-ember">City Kit</p>
-            <h1 className="text-4xl font-bold leading-tight text-ink">{meta.kitTitle}</h1>
-            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-ink/70">
-              {city.intro}
-            </p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-md bg-paper p-4">
-                <p className="text-sm font-bold uppercase text-ink/45">Recommended days</p>
-                <p className="mt-1 text-base font-semibold text-ink">{city.recommendedDays}</p>
-              </div>
-              <div className="rounded-md bg-paper p-4">
-                <p className="text-sm font-bold uppercase text-ink/45">Difficulty</p>
-                <p className="mt-1 text-base font-semibold text-ink">{meta.difficultyLevel}</p>
-              </div>
-              <div className="rounded-md bg-paper p-4">
-                <p className="text-sm font-bold uppercase text-ink/45">Last updated</p>
-                <p className="mt-1 text-base font-semibold text-ink">
-                  {formatUpdatedDate(city.lastUpdated)}
-                </p>
-              </div>
+        <header className="relative isolate min-h-[560px] overflow-hidden bg-ink text-white">
+          <Image src={cityImage.src} alt={cityImage.alt} fill priority sizes="100vw" style={{ objectPosition: cityImage.position }} className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/70 to-ink/15" />
+          <div className="editorial-container relative flex min-h-[560px] items-end py-14">
+            <div className="max-w-3xl">
+              <p className="mb-3 text-sm font-bold uppercase tracking-widest text-[#F0B3A7]">Destination guide · {city.chineseName}</p>
+              <h1 className="text-5xl leading-[1.06] text-white md:text-6xl">{meta.kitTitle}</h1>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/82">{city.intro}</p>
             </div>
           </div>
         </header>
+
+        <div className="border-b border-ink/10 bg-paper">
+          <div className="editorial-container grid divide-y divide-ink/10 py-3 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            <div className="px-4 py-3 sm:first:pl-0"><p className="text-xs font-bold uppercase text-ink/45">Recommended stay</p><p className="font-semibold">{city.recommendedDays}</p></div>
+            <div className="px-4 py-3"><p className="text-xs font-bold uppercase text-ink/45">Best for</p><p className="font-semibold">{city.bestFor.slice(0, 2).join(" · ")}</p></div>
+            <div className="px-4 py-3"><p className="text-xs font-bold uppercase text-ink/45">Last updated</p><p className="font-semibold">{formatUpdatedDate(city.lastUpdated)}</p></div>
+          </div>
+        </div>
 
         <section className="px-4 py-12">
           <div className="mx-auto grid max-w-5xl gap-5">

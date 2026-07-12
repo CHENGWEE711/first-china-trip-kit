@@ -10,16 +10,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#2F2A28",
-        ember: "#B13A2F",
+        ink: "#1D2320",
+        ember: "#B53A32",
         clay: "#D66A4F",
-        sand: "#F6EFE6",
-        paper: "#FFFDF9",
-        mist: "#EEF4F1",
-        jade: "#287568",
+        sand: "#F7F5F0",
+        paper: "#FCFBF8",
+        mist: "#E7EEE9",
+        jade: "#244C3D",
       },
       boxShadow: {
-        soft: "0 18px 50px rgba(47, 42, 40, 0.08)",
+        soft: "0 14px 40px rgba(24, 33, 29, 0.08)",
       },
     },
   },

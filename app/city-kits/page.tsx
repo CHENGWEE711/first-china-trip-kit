@@ -1,83 +1,41 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { BadgeCheck, MapPin } from "lucide-react";
-import { PageIntro } from "@/components/PageIntro";
+import { ArrowRight } from "lucide-react";
 import { getCityBySlug } from "@/data/cities";
+import { cityImages } from "@/data/images";
 import { cityKitMeta, cityKitSlugs } from "@/data/kits";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "China City Kits for First-Time Visitors | First China Trip Kit",
-  description:
-    "Browse practical China City Kits for Shanghai, Beijing, Xi'an, Chengdu, Hangzhou, Suzhou, Guangzhou, and Shenzhen with days, hotel areas, difficulty, attractions, food, and Chinese address support.",
+  title: "China Destinations for First-Time Visitors | First China Trip Kit",
+  description: "Compare practical China destination guides for Shanghai, Beijing, Xi'an, Chengdu, Hangzhou, Suzhou, Guangzhou, and Shenzhen.",
   path: "/city-kits",
 });
 
-const kitCities = cityKitSlugs.flatMap((slug) => {
-  const city = getCityBySlug(slug);
-  return city ? [city] : [];
-});
+const tags: Record<string, string[]> = {
+  shanghai: ["Modern China", "Easy First Stop"], beijing: ["History", "Classic China"], xian: ["Ancient History", "Food"], chengdu: ["Food", "Relaxed Pace"], hangzhou: ["Nature", "Culture"], suzhou: ["Gardens", "Easy Day Trip"], guangzhou: ["Food", "South China"], shenzhen: ["Modern China", "Easy Connections"],
+};
 
 export default function CityKitsPage() {
+  const kitCities = cityKitSlugs.flatMap((slug) => { const city = getCityBySlug(slug); return city ? [city] : []; });
   return (
     <>
-      <PageIntro
-        eyebrow="City Kits"
-        title="Practical city kits for your first China trip"
-        description="Choose a city by travel difficulty, recommended days, food, transport, hotel areas, and useful Chinese addresses."
-      />
-      <section className="px-4 py-12">
-        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {kitCities.map((city) => {
-            const meta = cityKitMeta[city.slug];
-            return (
-              <article
-                key={city.id}
-                className="flex h-full flex-col rounded-lg border border-ink/10 bg-paper p-5 shadow-soft"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h2 className="text-2xl font-bold leading-tight text-ink">
-                      {meta.kitTitle}
-                    </h2>
-                    <p className="mt-1 text-base font-semibold text-ember">
-                      {city.cityName} · {city.chineseName}
-                    </p>
-                  </div>
-                  <span className="rounded-md bg-mist px-2.5 py-1 text-sm font-semibold text-jade">
-                    {meta.difficultyLevel}
-                  </span>
-                </div>
-                <p className="mt-4 flex-1 text-base leading-relaxed text-ink/68">
-                  {city.intro}
-                </p>
-                <div className="mt-5 grid gap-3 text-base text-ink/70">
-                  <p>
-                    <strong className="text-ink">Recommended days:</strong>{" "}
-                    {city.recommendedDays}
-                  </p>
-                  <p>
-                    <strong className="text-ink">Best for:</strong>{" "}
-                    {city.bestFor.slice(0, 4).join(", ")}
-                  </p>
-                  <p className="flex items-start gap-2">
-                    <MapPin aria-hidden="true" className="mt-1 text-ember" size={17} />
-                    <span>{city.topAttractions.slice(0, 3).join(", ")}</span>
-                  </p>
-                  <p className="flex items-start gap-2">
-                    <BadgeCheck aria-hidden="true" className="mt-1 text-ember" size={17} />
-                    <span>{meta.chineseAddressSupport}</span>
-                  </p>
-                </div>
-                <Link
-                  href={`/city-kits/${city.slug}`}
-                  className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 text-base font-semibold text-white transition hover:bg-[#982F28]"
-                >
-                  Open City Kit
-                </Link>
-              </article>
-            );
-          })}
+      <header className="editorial-section bg-paper">
+        <div className="editorial-container"><p className="text-sm font-bold uppercase tracking-widest text-ember">Destinations</p><h1 className="mt-3 max-w-4xl text-5xl leading-[1.08] md:text-6xl">Choose your first China city with less guesswork</h1><p className="mt-6 max-w-3xl text-lg text-ink/65">Compare atmosphere, travel pace, transport friction, hotel areas, food, and useful Chinese addresses before you build a route.</p></div>
+      </header>
+      <section className="editorial-section">
+        <div className="editorial-container grid gap-x-6 gap-y-11 md:grid-cols-2 lg:grid-cols-3">
+          {kitCities.map((city) => { const image = cityImages[city.slug]; const meta = cityKitMeta[city.slug]; return (
+            <article key={city.id} className="group">
+              <Link href={`/city-kits/${city.slug}`} className="block overflow-hidden rounded-lg"><div className="relative aspect-[4/3]"><Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" style={{ objectPosition: image.position }} className="object-cover transition duration-500 group-hover:scale-[1.025]" /></div></Link>
+              <div className="mt-4 flex flex-wrap gap-2">{tags[city.slug].slice(0,2).map((tag) => <span key={tag} className="rounded-md bg-mist px-2.5 py-1 text-xs font-bold text-jade">{tag}</span>)}</div>
+              <h2 className="mt-3 text-3xl leading-tight">{city.cityName} <span className="text-lg text-ink/45">{city.chineseName}</span></h2>
+              <p className="mt-2 text-sm font-bold text-ember">{city.recommendedDays} · {meta.difficultyLevel}</p>
+              <p className="mt-3 line-clamp-3 text-base text-ink/65">{city.intro}</p>
+              <Link href={`/city-kits/${city.slug}`} className="mt-4 inline-flex min-h-11 items-center gap-2 font-bold text-ink transition group-hover:text-ember">Open destination guide <ArrowRight aria-hidden="true" size={18} /></Link>
+            </article>
+          ); })}
         </div>
       </section>
     </>

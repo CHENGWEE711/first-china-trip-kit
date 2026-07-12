@@ -16,11 +16,9 @@ export const siteConfig = {
 
 export const navItems = [
   { href: "/start-here", label: "Start Here" },
-  { href: "/city-kits", label: "City Kits" },
-  { href: "/itinerary-kits", label: "Itinerary Kits" },
-  { href: "/travel-essentials", label: "Travel Essentials" },
-  { href: "/tools", label: "Tools" },
-  { href: "/guides", label: "Blog" },
+  { href: "/city-kits", label: "Destinations" },
+  { href: "/itinerary-kits", label: "Plan Your Trip" },
+  { href: "/guides", label: "Guides" },
   { href: "/store", label: "Store" },
 ];
 

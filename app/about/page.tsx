@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
-import { PageIntro } from "@/components/PageIntro";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
+import { editorialImages } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "About First China Trip Kit",
@@ -51,11 +52,16 @@ const credibilityBlocks = [
 export default function AboutPage() {
   return (
     <>
-      <PageIntro
-        eyebrow="About"
-        title="First China Trip Kit helps first-time visitors plan with confidence"
-        description="The site turns China trip planning into clear city choices, realistic routes, payment preparation, transport notes, food ideas, and practical phrases."
-      />
+      <header className="editorial-section bg-paper">
+        <div className="editorial-container grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-widest text-ember">About</p>
+            <h1 className="mt-3 text-5xl leading-[1.06] md:text-6xl">China travel advice built around the moments that feel unfamiliar</h1>
+            <p className="mt-6 max-w-2xl text-lg text-ink/65">We help first-time visitors make practical decisions about payment, apps, transport, cities, food and realistic daily pacing.</p>
+          </div>
+          <div className="relative aspect-[3/2] overflow-hidden rounded-lg"><Image src={editorialImages.transport.src} alt={editorialImages.transport.alt} fill priority sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" /></div>
+        </div>
+      </header>
       <section className="px-4 py-12">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">

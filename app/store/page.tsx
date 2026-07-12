@@ -283,7 +283,7 @@ export default function StorePage() {
           </p>
         </div>
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
-          {products.map((product) => (
+          {products.filter((product) => product.status === "available").map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
