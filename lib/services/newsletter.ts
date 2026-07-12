@@ -76,6 +76,10 @@ export async function subscribeToNewsletter({
         };
       }
 
+      if (delivered.status === 409) {
+        return delivered;
+      }
+
       return {
         ok: true,
         message: savedWithoutDeliveryMessage,
