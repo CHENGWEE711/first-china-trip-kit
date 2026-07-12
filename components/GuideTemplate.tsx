@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { AppGuideCards } from "@/components/AppGuideCards";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ChecklistCTA } from "@/components/ChecklistCTA";
@@ -6,7 +7,8 @@ import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
 import { GuideCard } from "@/components/GuideCard";
-import { GuideTableOfContents } from "@/components/GuideTableOfContents";
+import { GuideTableOfContents, MobileGuideTableOfContents } from "@/components/GuideTableOfContents";
+import { Container } from "@/components/Container";
 import { GuideAffiliateRecommendations } from "@/components/GuideAffiliateRecommendations";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ProductActionButton } from "@/components/ProductActionButton";
@@ -382,6 +384,11 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
         <header className="bg-paper px-4 pb-12 pt-14 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl">
             <div className="max-w-4xl">
+              <nav aria-label="Breadcrumb" className="mb-6 text-sm text-ink/58">
+                <Link href="/" className="hover:text-ember">Home</Link>
+                <span aria-hidden="true" className="mx-2">/</span>
+                <Link href="/guides" className="hover:text-ember">Guides</Link>
+              </nav>
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-ember">{guide.category} guide</p>
               <h1 className="text-[2.65rem] leading-[1.04] text-ink sm:text-5xl md:text-6xl">{guide.title}</h1>
               <p className="mt-6 max-w-3xl text-lg leading-relaxed text-ink/68 md:text-xl">{guide.summary}</p>
@@ -396,6 +403,20 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             </div>
           </div>
         </header>
+
+        <Container className="-mt-px lg:hidden">
+          <MobileGuideTableOfContents entries={[
+            "Quick answer",
+            ...(content.whoThisGuideIsFor?.length ? ["Who this guide is for"] : []),
+            ...(content.featureSections?.map((section) => section.title) || []),
+            "Step-by-step guide",
+            "Common mistakes",
+            "Troubleshooting",
+            ...(content.backupPlan?.length ? ["Backup plan"] : []),
+            ...(content.usefulChinesePhrases?.length ? ["Useful Chinese phrases"] : []),
+            "First-day checklist",
+          ]} />
+        </Container>
 
         <section className="bg-sand px-4 py-14 md:py-20">
           <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[220px_minmax(0,760px)] lg:justify-between">

@@ -104,6 +104,7 @@ export function articleJsonLd(input: {
     description: input.description,
     url: absoluteUrl(input.path),
     dateModified: input.updatedAt,
+    datePublished: input.updatedAt,
     inLanguage: "en",
     author: {
       "@type": "Organization",

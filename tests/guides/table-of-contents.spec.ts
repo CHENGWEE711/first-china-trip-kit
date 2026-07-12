@@ -72,3 +72,29 @@ test.describe("Guide table of contents", () => {
     expect(createSectionId("Café & Métro")).toBe("cafe-metro");
   });
 });
+
+test.describe("Mobile guide table of contents", () => {
+  test.beforeEach(async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium-mobile", "Mobile accordion behavior");
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(guidePath);
+  });
+
+  test("is collapsed by default, expands, navigates, and closes", async ({ page }) => {
+    const toggle = page.getByRole("button", { name: /On this page/ });
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await page.getByRole("navigation", { name: "Mobile guide contents" }).getByRole("link", { name: "Troubleshooting" }).click();
+    await expect(page).toHaveURL(/#troubleshooting$/);
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  });
+
+  test("Escape closes the menu and restores focus", async ({ page }) => {
+    const toggle = page.getByRole("button", { name: /On this page/ });
+    await toggle.click();
+    await page.keyboard.press("Escape");
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await expect(toggle).toBeFocused();
+  });
+});

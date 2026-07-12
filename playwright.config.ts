@@ -2,8 +2,8 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
-  outputDir: "./tests/visual/diff/homepage",
-  snapshotPathTemplate: "{testDir}/visual/approved/homepage/{arg}{ext}",
+  outputDir: "./tests/visual/diff",
+  snapshotPathTemplate: "{testDir}/visual/approved/{testFileName}/{arg}{ext}",
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,

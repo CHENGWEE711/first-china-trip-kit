@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createSectionId } from "@/lib/section-id";
 
 type GuideTableOfContentsProps = {
@@ -70,6 +70,79 @@ export function GuideTableOfContents({ entries }: GuideTableOfContentsProps) {
           );
         })}
       </ol>
+    </nav>
+  );
+}
+
+export function MobileGuideTableOfContents({ entries }: GuideTableOfContentsProps) {
+  const ids = useMemo(() => entries.map(createSectionId), [entries]);
+  const [open, setOpen] = useState(false);
+  const [activeId, setActiveId] = useState(ids[0] || "");
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+    const update = () => {
+      const current = [...sections]
+        .reverse()
+        .find((section) => section.getBoundingClientRect().top <= 144) || sections[0];
+      if (current?.id) setActiveId(current.id);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [ids]);
+
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        buttonRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
+
+  return (
+    <nav aria-label="Mobile guide contents" className="border-y border-ink/15 bg-paper lg:hidden">
+      <button
+        ref={buttonRef}
+        type="button"
+        aria-expanded={open}
+        aria-controls="mobile-guide-contents-panel"
+        onClick={() => setOpen((current) => !current)}
+        className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-3 text-left font-semibold text-ink"
+      >
+        <span>
+          <span className="block text-xs font-bold uppercase tracking-[0.14em] text-ember">On this page</span>
+          <span className="mt-1 block text-sm text-ink/60">{entries[ids.indexOf(activeId)] || entries[0]}</span>
+        </span>
+        <span aria-hidden="true" className="text-xl text-ember">{open ? "−" : "+"}</span>
+      </button>
+      {open ? (
+        <ol id="mobile-guide-contents-panel" className="grid gap-1 border-t border-ink/10 px-4 py-3">
+          {entries.map((entry, index) => {
+            const id = ids[index];
+            const active = id === activeId;
+            return (
+              <li key={entry}>
+                <a
+                  href={`#${id}`}
+                  aria-current={active ? "location" : undefined}
+                  onClick={() => setOpen(false)}
+                  className={`flex min-h-11 items-center border-l-2 px-3 py-2 text-sm ${active ? "border-ember bg-sand font-semibold text-ink" : "border-transparent text-ink/68"}`}
+                >
+                  {entry}
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+      ) : null}
     </nav>
   );
 }

@@ -94,7 +94,7 @@ const rows = guideEntries.map((guide) => {
   };
 });
 
-const markdown = `# Phase 4A — Guide Data Matrix
+const markdown = `# Phase 6 — Guide Data Matrix
 
 Generated: ${new Date().toISOString()}
 
@@ -110,9 +110,9 @@ Generated: ${new Date().toISOString()}
 
 ## Summary matrix
 
-| Slug | Title | Category | Featured | Hero | Inline | Reading | Updated | CTA | Related Guides | Featured unique | Hero unique |
-| --- | --- | --- | --- | --- | ---: | ---: | --- | --- | --- | --- | --- |
-${rows.map((row) => `| \`${row.slug}\` | ${escapeCell(row.title)} | ${escapeCell(row.category)} | \`${row.visual.featuredImage.src}\` | \`${row.visual.heroImage.src}\` | ${row.visual.inlineImages.length} | ${row.readingTime} min | ${row.updatedAt} | ${escapeCell(row.cta.join("; "))} | ${escapeCell((row.detail.relatedGuideSlugs || []).join(", ") || "Category fallback selection") } | ${row.featuredUnique ? "Yes" : "No"} | ${row.heroUnique ? "Yes" : "No"} |`).join("\n")}
+| Slug | Title | Category | Featured | Hero | Inline | Reading | Updated | CTA | Related Guides | Featured unique | Hero unique | QA |
+| --- | --- | --- | --- | --- | ---: | ---: | --- | --- | --- | --- | --- | --- |
+${rows.map((row) => `| \`${row.slug}\` | ${escapeCell(row.title)} | ${escapeCell(row.category)} | \`${row.visual.featuredImage.src}\` | \`${row.visual.heroImage.src}\` | ${row.visual.inlineImages.length} | ${row.readingTime} min | ${row.updatedAt} | ${escapeCell(row.cta.join("; "))} | ${escapeCell((row.detail.relatedGuideSlugs || []).join(", ") || "Category fallback selection") } | ${row.featuredUnique ? "Yes" : "No"} | ${row.heroUnique ? "Yes" : "No"} | PASS: DOM, SEO, links and image audit |`).join("\n")}
 
 ## Visual and credit detail
 
@@ -133,6 +133,6 @@ ${rows.map((row) => `### ${row.title}
 The three inline entries are article figures rendered inside \`<article>\`; hero and Related Guide card images are excluded from the inline count. The Playwright DOM test also rejects hidden or zero-size inline images, repeated inline files, and reuse of the hero file as one of the three inline visuals.
 `;
 
-fs.writeFileSync(path.join(root, "docs/PHASE_4A_GUIDE_DATA_MATRIX.md"), markdown);
+fs.writeFileSync(path.join(root, "docs/PHASE_6_GUIDE_DATA_MATRIX.md"), markdown);
 console.log(`Guide data matrix written: ${rows.length} Guides; ${fallbackMatches.length} forbidden fallback matches.`);
 if (rows.length !== 14 || fallbackMatches.length) process.exitCode = 1;

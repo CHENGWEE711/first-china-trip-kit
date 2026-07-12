@@ -13,6 +13,9 @@ for (const route of guideRoutes) {
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", /\S+/);
     await expect(page.locator('meta[property="og:description"]')).toHaveAttribute("content", /\S+/);
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /^https?:\/\//);
+    await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute("content", /\S+/);
+    await expect(page.locator('meta[name="twitter:description"]')).toHaveAttribute("content", /\S+/);
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", /^https?:\/\//);
 
     const structuredData = await page.locator('script[type="application/ld+json"]').allTextContents();
     expect(structuredData.length).toBeGreaterThan(0);
@@ -23,6 +26,8 @@ for (const route of guideRoutes) {
     const article = objects.find((item) => item["@type"] === "Article");
     expect(article?.headline).toBeTruthy();
     expect(article?.dateModified).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(article?.datePublished).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(objects.some((item) => item["@type"] === "BreadcrumbList")).toBe(true);
 
     await expect(page.locator("article .content-prose")).toBeVisible();
     await expect(page.locator("#quick-answer")).toBeVisible();
