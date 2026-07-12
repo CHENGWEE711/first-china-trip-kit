@@ -76,7 +76,7 @@ export default function TravelToolsPage() {
             ) : (
               <p className="mt-4 text-sm leading-relaxed text-ink/58">
                 Verified partner links are not configured yet. The categories below remain
-                available as planning guidance and do not lead to placeholder websites.
+                available as planning guidance without linking to unverified providers.
               </p>
             )}
           </div>
@@ -128,4 +128,3 @@ export default function TravelToolsPage() {
     </>
   );
 }
-

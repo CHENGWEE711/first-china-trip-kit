@@ -11,6 +11,7 @@ export async function POST(request: Request) {
   let utmMedium = "";
   let utmCampaign = "";
   let utmContent = "";
+  let website = "";
 
   if (contentType.includes("application/json")) {
     const body = (await request.json().catch(() => ({}))) as {
@@ -23,6 +24,7 @@ export async function POST(request: Request) {
       utm_medium?: string;
       utm_campaign?: string;
       utm_content?: string;
+      website?: string;
     };
     email = String(body.email || "").trim().toLowerCase();
     sourcePage = String(body.source_page || body.source || "site").trim();
@@ -32,6 +34,7 @@ export async function POST(request: Request) {
     utmMedium = String(body.utm_medium || "").trim();
     utmCampaign = String(body.utm_campaign || "").trim();
     utmContent = String(body.utm_content || "").trim();
+    website = String(body.website || "").trim();
   } else {
     const formData = await request.formData();
     email = String(formData.get("email") || "").trim().toLowerCase();
@@ -44,6 +47,22 @@ export async function POST(request: Request) {
     utmMedium = String(formData.get("utm_medium") || "").trim();
     utmCampaign = String(formData.get("utm_campaign") || "").trim();
     utmContent = String(formData.get("utm_content") || "").trim();
+    website = String(formData.get("website") || "").trim();
+  }
+
+  if (website) {
+    return NextResponse.json(
+      { ok: false, message: "Subscription could not be completed." },
+      { status: 400 },
+    );
+  }
+
+  const valuesToLimit = [sourcePage, placement, leadMagnet, utmSource, utmMedium, utmCampaign];
+  if (email.length > 254 || valuesToLimit.some((value) => value.length > 160) || utmContent.length > 240) {
+    return NextResponse.json(
+      { ok: false, message: "Please shorten the submitted information and try again." },
+      { status: 400 },
+    );
   }
 
   const result = await subscribeToNewsletter({

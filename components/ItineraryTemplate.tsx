@@ -98,7 +98,7 @@ function ResourceBlock({ links }: { links?: LinkItem[] }) {
             key={link.href}
             href={link.href}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="border-l-2 border-ember/35 pl-3 text-base text-ink/70 hover:text-ember"
           >
             <span className="font-bold text-ink">{link.label}</span>

@@ -18,7 +18,8 @@ type SubscribeResult = {
   status?: number;
 };
 
-const successMessage = "Thanks! Your China First Trip Checklist is on the way.";
+const successMessage =
+  "Thanks! You're subscribed. Your China First Trip Checklist is ready on the next page.";
 const savedWithoutDeliveryMessage =
   "Thanks! Your email was saved. Automated email delivery is temporarily unavailable, so download the checklist on the next page.";
 

@@ -62,7 +62,10 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
     }
 
     setStatus("success");
-    setMessage(data.message || "Thanks! Your China First Trip Checklist is on the way.");
+    setMessage(
+      data.message ||
+        "Thanks! You're subscribed. Your China First Trip Checklist is ready on the next page.",
+    );
     trackEvent("newsletter_subscribed", {
       source_page: sourcePage,
       placement: source,
@@ -80,6 +83,16 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
       onSubmit={handleSubmit}
       className={compact ? "grid gap-3" : "grid gap-3 rounded-lg border border-white/12 bg-white/8 p-4"}
     >
+      <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+        <label htmlFor={`newsletter-website-${source}`}>Website</label>
+        <input
+          id={`newsletter-website-${source}`}
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
       <label htmlFor={`newsletter-email-${source}`} className="text-sm font-semibold text-white/84">
         Email address
       </label>
@@ -89,6 +102,7 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
           name="email"
           type="email"
           required
+          maxLength={254}
           aria-label="Email address"
           className="min-h-12 rounded-md border border-white/18 bg-white px-4 text-base text-ink outline-none focus:border-clay"
         />
@@ -104,8 +118,8 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
         Get the free China First-Time Visitor Checklist and practical planning notes.
       </p>
       <p className="text-xs leading-relaxed text-white/48">
-        By subscribing, you join the list for future China trip updates. Automated
-        email delivery is not active yet. Read our{" "}
+        By subscribing, you join the list for future China trip updates. Your
+        checklist opens on the next page. Read our{" "}
         <Link href="/privacy" className="underline underline-offset-2 hover:text-white/75">
           Privacy Policy
         </Link>

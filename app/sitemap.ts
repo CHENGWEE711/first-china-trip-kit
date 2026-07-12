@@ -21,7 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/terms",
     "/refund-policy",
     "/affiliate-disclosure",
-    "/thank-you",
   ].map((path) => ({
     url: absoluteUrl(path || "/"),
     lastModified: new Date(),

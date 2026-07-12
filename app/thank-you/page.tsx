@@ -10,12 +10,18 @@ import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { buildMetadata } from "@/lib/seo";
 import { hasWhatsAppContact } from "@/lib/whatsapp";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Thank You | China First-Time Visitor Checklist",
-  description:
-    "Download or review the China First-Time Visitor Checklist from First China Trip Kit.",
-  path: "/thank-you",
-});
+export const metadata: Metadata = {
+  ...buildMetadata({
+    title: "Thank You | China First-Time Visitor Checklist",
+    description:
+      "Download or review the China First-Time Visitor Checklist from First China Trip Kit.",
+    path: "/thank-you",
+  }),
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 const checklist = [
   "Before you fly: documents, visa or transit eligibility, and offline confirmations.",

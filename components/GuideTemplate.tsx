@@ -412,7 +412,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
                       href={link.href}
                       className="border-l-2 border-ember/35 pl-3 text-base text-ink/70 hover:text-ember"
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                     >
                       <span className="font-bold text-ink">{link.label}</span>
                       {link.note ? <span className="block text-sm text-ink/58">{link.note}</span> : null}

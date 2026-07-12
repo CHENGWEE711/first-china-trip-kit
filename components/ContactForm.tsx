@@ -103,36 +103,46 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       className="grid min-w-0 gap-4 rounded-lg border border-ink/10 bg-paper p-5 shadow-soft"
     >
       <input type="hidden" name="source" value={source} />
+      <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+        <label htmlFor="contact-website">Website</label>
+        <input
+          id="contact-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
       <div className="grid min-w-0 gap-4 md:grid-cols-2">
         <label className={labelClass}>
           Name
-          <input name="name" type="text" required className={inputClass} />
+          <input name="name" type="text" required maxLength={120} className={inputClass} />
         </label>
         <label className={labelClass}>
           Email
-          <input name="email" type="email" required className={inputClass} />
+          <input name="email" type="email" required maxLength={254} className={inputClass} />
         </label>
       </div>
 
       <div className="grid min-w-0 gap-4 md:grid-cols-2">
         <label className={labelClass}>
           Country or passport nationality
-          <input name="country_or_passport" type="text" className={inputClass} />
+          <input name="country_or_passport" type="text" maxLength={160} className={inputClass} />
         </label>
         <label className={labelClass}>
           Travel month
-          <input name="travel_month" type="text" placeholder="e.g. October 2026" className={inputClass} />
+          <input name="travel_month" type="text" maxLength={80} placeholder="e.g. October 2026" className={inputClass} />
         </label>
       </div>
 
       <div className="grid min-w-0 gap-4 md:grid-cols-2">
         <label className={labelClass}>
           Cities considered
-          <input name="cities_considered" type="text" placeholder="e.g. Shanghai, Beijing, Xi'an" className={inputClass} />
+          <input name="cities_considered" type="text" maxLength={500} placeholder="e.g. Shanghai, Beijing, Xi'an" className={inputClass} />
         </label>
         <label className={labelClass}>
           Trip length
-          <input name="trip_length" type="text" placeholder="e.g. 7 days" className={inputClass} />
+          <input name="trip_length" type="text" maxLength={80} placeholder="e.g. 7 days" className={inputClass} />
         </label>
       </div>
 
@@ -141,6 +151,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
         <textarea
           name="main_question"
           required
+          maxLength={5000}
           rows={6}
           placeholder="Tell us what you are trying to plan, what feels confusing, and any timing or route constraints."
           className="w-full min-w-0 rounded-md border border-ink/12 bg-paper px-4 py-3 text-base text-ink outline-none focus:border-ember"

@@ -120,7 +120,7 @@ export function AppGuideCards({ groups }: AppGuideCardsProps) {
                             key={link.label}
                             href={link.href}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-ink/12 bg-paper px-3 py-2 text-sm font-semibold text-ink transition hover:border-ember/35 hover:text-ember"
                           >
                             {link.label}

@@ -384,7 +384,7 @@ function VisaTool() {
               key={link.href}
               href={link.href}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-base font-semibold text-ember hover:text-[#982F28]"
             >
               {link.label}
