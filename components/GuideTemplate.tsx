@@ -6,6 +6,7 @@ import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { FAQSection } from "@/components/FAQSection";
 import { FeedbackCTA } from "@/components/FeedbackCTA";
 import { GuideCard } from "@/components/GuideCard";
+import { GuideTableOfContents } from "@/components/GuideTableOfContents";
 import { GuideAffiliateRecommendations } from "@/components/GuideAffiliateRecommendations";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ProductActionButton } from "@/components/ProductActionButton";
@@ -14,6 +15,7 @@ import { TrackedLink } from "@/components/TrackedLink";
 import type { Guide } from "@/data/guides";
 import type { GuideDetailContent } from "@/data/guide-detail-content";
 import type { Product } from "@/data/products";
+import { createSectionId } from "@/lib/section-id";
 
 type GuideTemplateProps = {
   guide: Guide;
@@ -63,16 +65,9 @@ function fallbackDetail(guide: Guide): GuideDetailContent {
   };
 }
 
-function sectionId(title: string) {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
 function BulletSection({ title, items }: { title: string; items: string[] }) {
   return (
-    <section id={sectionId(title)} className="scroll-mt-28 border-t border-ink/15 pt-8">
+    <section id={createSectionId(title)} className="scroll-mt-28 border-t border-ink/15 pt-8">
       <h2 className="text-3xl leading-tight text-ink">{title}</h2>
       <ul className="mt-5 grid gap-4 text-base leading-relaxed text-ink/70">
         {items.map((item) => (
@@ -101,24 +96,26 @@ function responsiveGridColumns(count: number) {
   return "md:grid-cols-5";
 }
 
-function FeatureTable({ columns, rows }: { columns: string[]; rows: string[][] }) {
+function FeatureTable({ label, columns, rows }: { label: string; columns: string[]; rows: string[][] }) {
   return (
-    <div className="mt-4 overflow-hidden rounded-lg border border-ink/10">
+    <div role="table" aria-label={`${label} comparison table`} className="mt-4 overflow-hidden rounded-lg border border-ink/10">
       <div
+        role="row"
         className={`hidden gap-4 bg-ink px-4 py-3 text-sm font-bold uppercase text-white md:grid ${responsiveGridColumns(columns.length)}`}
       >
         {columns.map((column) => (
-          <span key={column}>{column}</span>
+          <span role="columnheader" key={column}>{column}</span>
         ))}
       </div>
       <div className="divide-y divide-ink/10">
         {rows.map((row) => (
           <div
+            role="row"
             key={row.join("-")}
             className={`grid gap-3 bg-sand px-4 py-4 text-base text-ink/70 md:gap-4 ${responsiveGridColumns(columns.length)}`}
           >
             {row.map((cell, index) => (
-              <div key={`${cell}-${index}`}>
+              <div role="cell" key={`${cell}-${index}`}>
                 <p className="text-xs font-bold uppercase text-ink/42 md:hidden">
                   {columns[index]}
                 </p>
@@ -136,7 +133,7 @@ function FeatureSections({ sections }: { sections: NonNullable<GuideDetailConten
   return (
     <>
       {sections.map((section) => (
-        <section key={section.title} id={sectionId(section.title)} className="scroll-mt-28 border-t border-ink/15 pt-8">
+        <section key={section.title} id={createSectionId(section.title)} className="scroll-mt-28 border-t border-ink/15 pt-8">
           <h2 className="text-3xl leading-tight text-ink">{section.title}</h2>
           {section.body ? (
             <p className="mt-3 text-base leading-relaxed text-ink/70">{section.body}</p>
@@ -151,7 +148,7 @@ function FeatureSections({ sections }: { sections: NonNullable<GuideDetailConten
             </div>
           ) : null}
           {section.columns && section.rows ? (
-            <FeatureTable columns={section.columns} rows={section.rows} />
+            <FeatureTable label={section.title} columns={section.columns} rows={section.rows} />
           ) : null}
         </section>
       ))}
@@ -176,11 +173,21 @@ function readingTime(guide: Guide) {
   return Math.max(4, Math.ceil(words / 210));
 }
 
-function ArticleImage({ image, priority = false }: { image: Guide["heroImage"]; priority?: boolean }) {
+function ArticleImage({
+  image,
+  priority = false,
+  visualRole,
+  insertedBefore,
+}: {
+  image: Guide["heroImage"];
+  priority?: boolean;
+  visualRole: "hero" | "inline";
+  insertedBefore?: string;
+}) {
   return (
-    <figure>
+    <figure data-guide-visual={visualRole} data-inserted-before={insertedBefore}>
       <div className="relative aspect-[3/2] overflow-hidden rounded-lg bg-mist md:aspect-[16/9]">
-        <Image src={image.src} alt={image.alt} fill priority={priority} sizes="(min-width: 1200px) 1100px, 100vw" className="object-cover" />
+        <Image src={image.src} alt={image.alt} fill loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : undefined} sizes="(min-width: 1200px) 1100px, 100vw" className="object-cover" />
       </div>
       <figcaption className="mt-2 text-sm leading-relaxed text-ink/52">
         {image.caption || image.alt}
@@ -202,21 +209,7 @@ function GuideContents({ content }: { content: GuideDetailContent }) {
     "First-day checklist",
   ];
 
-  return (
-    <nav aria-label="Guide contents" className="sticky top-28 border-t border-ink/20 pt-5">
-      <p className="text-xs font-bold uppercase tracking-[0.14em] text-ember">In this guide</p>
-      <ol className="mt-4 grid gap-3 text-sm leading-snug text-ink/60">
-        {entries.map((entry, index) => (
-          <li key={entry} className="grid grid-cols-[1.5rem_1fr] gap-2">
-            <span className="font-editorial text-ink/35">{String(index + 1).padStart(2, "0")}</span>
-            <a href={`#${sectionId(entry)}`} className="transition hover:text-ember">
-              {entry}
-            </a>
-          </li>
-        ))}
-      </ol>
-    </nav>
-  );
+  return <GuideTableOfContents entries={entries} />;
 }
 
 const paymentAppsGuideCtaSlugs = new Set([
@@ -399,7 +392,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
               <p>{readingTime(guide)} min read</p>
             </div>
             <div className="mt-8 md:mt-10">
-              <ArticleImage image={guide.heroImage} priority />
+              <ArticleImage image={guide.heroImage} priority visualRole="hero" />
             </div>
           </div>
         </header>
@@ -411,7 +404,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             </aside>
             <div className="grid min-w-0 gap-10">
             {content.importantNotice ? (
-              <section className="border-l-4 border-ember bg-paper px-5 py-5">
+              <section role="note" aria-label="Important notice" className="border-l-4 border-ember bg-paper px-5 py-5">
                 <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-ember">Important notice</p>
                 <p className="text-base leading-relaxed text-ink/76">{content.importantNotice}</p>
               </section>
@@ -428,9 +421,9 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             {content.featureSections && content.featureSections.length > 0 ? (
               <FeatureSections sections={content.featureSections} />
             ) : null}
-            <ArticleImage image={guide.inlineImages[0]} />
+            <ArticleImage image={guide.inlineImages[0]} visualRole="inline" insertedBefore="Step-by-step guide" />
             <BulletSection title="Step-by-step guide" items={content.steps} />
-            <ArticleImage image={guide.inlineImages[1]} />
+            <ArticleImage image={guide.inlineImages[1]} visualRole="inline" insertedBefore="Common mistakes" />
             <BulletSection title="Common mistakes" items={content.commonMistakes} />
             <BulletSection title="Troubleshooting" items={content.troubleshooting} />
             {content.backupPlan && content.backupPlan.length > 0 ? (
@@ -449,8 +442,8 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
                       className="border-b border-ink/12 bg-paper px-5 py-4"
                     >
                       <p className="text-sm font-bold uppercase text-ink/45">{phrase.english}</p>
-                      <p className="mt-2 text-lg font-bold text-ink">{phrase.chinese}</p>
-                      <p className="mt-1 text-base text-ink/65">{phrase.pinyin}</p>
+                      <p lang="zh-Hans" className="mt-2 text-lg font-bold text-ink">{phrase.chinese}</p>
+                      <p lang="zh-Latn" className="mt-1 text-base text-ink/65">{phrase.pinyin}</p>
                     </div>
                   ))}
                 </div>
@@ -458,7 +451,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             ) : null}
             <BulletSection title="First-day checklist" items={content.firstDayChecklist} />
 
-            <ArticleImage image={guide.inlineImages[2]} />
+            <ArticleImage image={guide.inlineImages[2]} visualRole="inline" insertedBefore="Detailed guidance" />
 
             {content.appGroups ? <AppGuideCards groups={content.appGroups} /> : null}
 

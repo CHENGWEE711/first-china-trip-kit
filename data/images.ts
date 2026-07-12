@@ -80,17 +80,17 @@ const shanghaiStreet = guideImage("/images/guides/shanghai-three-days-street.web
 const cafePhone = guideImage("/images/guides/wechat-cafe-phone.webp", "Customer using a smartphone while speaking with cafe staff", "pexels-31713078", "A separate cafe phone-payment scenario without a simulated wallet screen.");
 
 export const guideVisuals: Record<string, GuideVisuals> = {
-  "how-to-pay-in-china-as-a-foreigner": { featuredImage: paymentScene, heroImage: paymentScene, inlineImages: [paymentTerminal, qrScan, qrPhone] },
+  "how-to-pay-in-china-as-a-foreigner": { featuredImage: paymentScene, heroImage: paymentScene, inlineImages: [paymentTerminal, cafePhone, qrPhone] },
   "best-apps-for-traveling-in-china": { featuredImage: metroPhone, heroImage: metroPhone, inlineImages: [airportPhone, qrPhone, station] },
   "how-to-book-high-speed-trains-in-china": { featuredImage: train, heroImage: train, inlineImages: [station, packing, airportPhone] },
-  "how-to-use-alipay-and-wechat-pay-in-china": { featuredImage: paymentTerminal, heroImage: paymentTerminal, inlineImages: [qrPhone, qrScan, paymentScene] },
+  "how-to-use-alipay-and-wechat-pay-in-china": { featuredImage: paymentTerminal, heroImage: paymentTerminal, inlineImages: [qrPhone, cafePhone, paymentScene] },
   "china-travel-packing-list": { featuredImage: packing, heroImage: packing, inlineImages: [passportLaptop, airportPhone, station] },
   "basic-chinese-phrases-for-travelers": { featuredImage: restaurantPhone, heroImage: restaurantPhone, inlineImages: [foodStall, metroPhone, airportPhone] },
   "china-esim-guide-for-tourists": { featuredImage: airportPhone, heroImage: airportPhone, inlineImages: [metroPhone, qrPhone, passportLaptop] },
-  "china-food-ordering-guide": { featuredImage: foodStall, heroImage: foodStall, inlineImages: [restaurantPhone, qrScan, paymentScene] },
+  "china-food-ordering-guide": { featuredImage: foodStall, heroImage: foodStall, inlineImages: [restaurantPhone, qrScan, paymentTerminal] },
   "can-americans-travel-to-china-in-2026": { featuredImage: airport, heroImage: airport, inlineImages: [boardingPass, passportLaptop, airportPhone] },
   "china-240-hour-visa-free-transit-guide": { featuredImage: boardingPass, heroImage: boardingPass, inlineImages: [train, shanghaiStreet, passportLaptop] },
-  "how-to-use-alipay-in-china-as-a-tourist": { featuredImage: qrPhone, heroImage: qrPhone, inlineImages: [qrScan, paymentTerminal, paymentScene] },
+  "how-to-use-alipay-in-china-as-a-tourist": { featuredImage: qrPhone, heroImage: qrPhone, inlineImages: [qrScan, paymentTerminal, cafePhone] },
   "how-to-use-wechat-pay-in-china-as-a-foreigner": { featuredImage: cafePhone, heroImage: cafePhone, inlineImages: [qrPhone, paymentTerminal, qrScan] },
   "3-days-in-shanghai-for-first-time-visitors": { featuredImage: shanghaiStreet, heroImage: shanghaiStreet, inlineImages: [cityImages.shanghai, foodStall, station] },
   "china-travel-checklist-before-you-fly": { featuredImage: passportLaptop, heroImage: passportLaptop, inlineImages: [packing, airport, airportPhone] },

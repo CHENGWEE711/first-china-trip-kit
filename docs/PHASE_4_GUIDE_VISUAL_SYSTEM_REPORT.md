@@ -1,5 +1,7 @@
 # Phase 4 — Guide Visual System Report
 
+> **Migrated report:** this document records the original implementation handoff for commit `9e6cd06`, but it must not be read as completion of the former full Phase 4. The authoritative acceptance report is now `docs/PHASE_4A_GUIDE_IMPLEMENTATION_REPORT.md`. Phase 4A covers the Guides page family only; City, Itinerary, Store, other approved page frames, and Production deployment remain outside its scope.
+
 Date: 2026-07-12  
 Branch: `ui-professional-upgrade`  
 Starting commit: `6338ae6355bdf2116fa0b3e22b5248e9576a92ea`
@@ -71,4 +73,4 @@ Phase 4 implements the first approved production-code unit from the Penpot desig
 
 ## Acceptance decision
 
-Phase 4 is ready for user acceptance. Do not begin the next phase until acceptance is explicitly given.
+Historical implementation handoff only. This statement is superseded by `docs/PHASE_4A_GUIDE_IMPLEMENTATION_REPORT.md`; it does not mean the former full Phase 4 is complete.

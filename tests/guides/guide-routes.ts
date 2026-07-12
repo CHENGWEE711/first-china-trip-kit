@@ -1,0 +1,16 @@
+export const guideRoutes = [
+  "/guides/how-to-pay-in-china-as-a-foreigner",
+  "/guides/best-apps-for-traveling-in-china",
+  "/guides/how-to-book-high-speed-trains-in-china",
+  "/guides/how-to-use-alipay-and-wechat-pay-in-china",
+  "/guides/china-travel-packing-list",
+  "/guides/basic-chinese-phrases-for-travelers",
+  "/guides/china-esim-guide-for-tourists",
+  "/guides/china-food-ordering-guide",
+  "/guides/can-americans-travel-to-china-in-2026",
+  "/guides/china-240-hour-visa-free-transit-guide",
+  "/guides/how-to-use-alipay-in-china-as-a-tourist",
+  "/guides/how-to-use-wechat-pay-in-china-as-a-foreigner",
+  "/guides/3-days-in-shanghai-for-first-time-visitors",
+  "/guides/china-travel-checklist-before-you-fly",
+] as const;

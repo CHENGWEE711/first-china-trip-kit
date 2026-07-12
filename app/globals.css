@@ -44,6 +44,22 @@ a, button, input, textarea, select { outline-offset: 3px; }
 :focus-visible { outline: 3px solid rgba(181, 58, 50, 0.45); }
 ::selection { background: rgba(181, 58, 50, 0.18); }
 
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(-180%);
+  border-radius: 0.25rem;
+  background: var(--background-dark);
+  color: var(--background-light);
+  padding: 0.65rem 1rem;
+  font-weight: 700;
+  transition: transform 150ms ease;
+}
+
+.skip-link:focus { transform: translateY(0); }
+
 .editorial-container {
   width: min(calc(100% - 2rem), var(--container-main));
   margin-inline: auto;
