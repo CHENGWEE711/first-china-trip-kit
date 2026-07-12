@@ -4,10 +4,13 @@ import { type FormEvent, useRef, useState } from "react";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { hasWhatsAppContact } from "@/lib/whatsapp";
 import { trackEvent } from "@/lib/analytics";
+import { siteConfig } from "@/lib/site";
 
 type ContactFormProps = {
   source?: string;
 };
+
+const unavailableMessage = `The contact form is temporarily unavailable. Please email ${siteConfig.contactEmail} directly with your travel month, passport country, trip length, cities, and question.`;
 
 export function ContactForm({ source = "contact-page" }: ContactFormProps) {
   const [message, setMessage] = useState("");
@@ -64,18 +67,13 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       data = (await response.json()) as { message?: string };
     } catch {
       setStatus("idle");
-      setMessage(
-        "The contact form is temporarily unavailable. Please email us or contact us through WhatsApp.",
-      );
+      setMessage(unavailableMessage);
       return;
     }
 
     if (!response.ok) {
       setStatus("idle");
-      setMessage(
-        data.message ||
-          "The contact form is temporarily unavailable. Please email us or contact us through WhatsApp.",
-      );
+      setMessage(data.message || unavailableMessage);
       return;
     }
 

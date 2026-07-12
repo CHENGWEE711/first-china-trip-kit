@@ -1,3 +1,5 @@
+import { siteConfig } from "@/lib/site";
+
 export type ContactMessageInput = {
   name: string;
   email: string;
@@ -10,6 +12,8 @@ export type ContactMessageInput = {
   preferredReplyMethod?: string;
   source?: string;
 };
+
+const unavailableMessage = `The contact form is temporarily unavailable. Please email ${siteConfig.contactEmail} directly with your travel month, passport country, trip length, cities, and question.`;
 
 type ContactMessageResult = {
   ok: boolean;
@@ -69,8 +73,7 @@ export async function saveContactMessage({
 
   return {
     ok: false,
-    message:
-      "The contact form is temporarily unavailable. Please email us or contact us through WhatsApp.",
+    message: unavailableMessage,
     status: 503,
   };
 }
@@ -110,7 +113,7 @@ async function saveWithSupabase(
   if (!response.ok) {
     return {
       ok: false,
-      message: "Your message could not be saved. Please email us directly for now.",
+      message: unavailableMessage,
       provider: "supabase",
       status: response.status,
     };
