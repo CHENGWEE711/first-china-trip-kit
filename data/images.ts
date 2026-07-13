@@ -86,7 +86,8 @@ const paymentGuideBackupKit = guideImage("/images/guides/payment-guide-backup-ki
 const guideInline = (
   source: ContentImage,
   placement: NonNullable<ContentImage["placement"]>,
-): ContentImage => ({ ...source, placement });
+  caption = source.caption,
+): ContentImage => ({ ...source, placement, caption });
 
 const phaseCPrimaryVisuals = (
   slug: string,
@@ -154,7 +155,11 @@ export const guideVisuals: Record<string, GuideVisuals> = {
     ),
     inlineImages: [
       guideInline(station, "before-steps"),
-      guideInline(editorialImages.transport, "before-details"),
+      guideInline(
+        editorialImages.transport,
+        "before-details",
+        "A CRH train at a Chinese high-speed rail platform reinforces what to look for on travel day.",
+      ),
     ],
   },
   "how-to-use-alipay-and-wechat-pay-in-china": {
@@ -287,7 +292,11 @@ export const guideVisuals: Record<string, GuideVisuals> = {
       "center 52%",
     ),
     inlineImages: [
-      guideInline(cityImages.shanghai, "before-steps"),
+      guideInline(
+        cityImages.shanghai,
+        "before-steps",
+        "The Bund and Pudong skyline provide a clear orientation point for a first Shanghai day.",
+      ),
       guideInline(foodStall, "before-common-mistakes"),
       guideInline(station, "before-details"),
     ],

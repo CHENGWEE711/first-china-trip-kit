@@ -419,8 +419,8 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     ],
     relatedGuideSlugs: [
       "how-to-pay-in-china-as-a-foreigner",
+      "china-esim-guide-for-tourists",
       "how-to-book-high-speed-trains-in-china",
-      "basic-chinese-phrases-for-travelers",
     ],
     relatedProductIds: ["china-payment-apps-setup-guide"],
     appGroups: chinaTravelAppGroups,
@@ -649,8 +649,8 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     ],
     relatedGuideSlugs: [
       "best-apps-for-traveling-in-china",
+      "china-travel-checklist-before-you-fly",
       "how-to-pay-in-china-as-a-foreigner",
-      "basic-chinese-phrases-for-travelers",
     ],
     relatedProductIds: ["china-payment-apps-setup-guide"],
   },
@@ -726,8 +726,8 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     ],
     relatedGuideSlugs: [
       "how-to-pay-in-china-as-a-foreigner",
-      "best-apps-for-traveling-in-china",
-      "basic-chinese-phrases-for-travelers",
+      "how-to-use-alipay-in-china-as-a-tourist",
+      "how-to-use-wechat-pay-in-china-as-a-foreigner",
     ],
     relatedProductIds: ["china-payment-apps-setup-guide"],
   },
@@ -1645,7 +1645,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     ],
     officialSourceLinks: [],
     relatedGuideSlugs: [
-      "how-to-pay-in-china-as-a-foreigner",
+      "china-240-hour-visa-free-transit-guide",
       "best-apps-for-traveling-in-china",
       "how-to-book-high-speed-trains-in-china",
     ],
