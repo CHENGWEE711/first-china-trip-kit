@@ -4,6 +4,7 @@ import { chinaTravelAppGroups } from "@/data/app-recommendations";
 
 export type GuideDetailContent = {
   importantNotice?: string;
+  lastVerified?: string;
   quickAnswer: string;
   whoThisGuideIsFor?: string[];
   featureSections?: {
@@ -1032,9 +1033,10 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
   },
   "china-240-hour-visa-free-transit-guide": {
     importantNotice:
-      "This guide is for trip planning only and is not legal or immigration advice. China's visa-free transit rules can change. Always verify current official requirements before booking flights, hotels, trains, or tours.",
+      "This guide is for trip planning only and is not legal or immigration advice. Rules can change. Confirm your eligibility and entry port with China’s National Immigration Administration or your airline before travel.",
+    lastVerified: "2026-07-13",
     quickAnswer:
-      "China's 240-hour visa-free transit policy may allow eligible travelers from certain countries to enter China through designated ports, stay within permitted areas, and continue to a third country or region without applying for a regular visa. Before relying on this policy, verify five things: your passport nationality, your third-country or region routing, confirmed onward transport, eligible entry and exit ports, and whether every city in your plan stays inside the permitted area.",
+      "As last verified on July 13, 2026, China's National Immigration Administration lists 55 eligible nationalities and 65 entry ports across 24 provincial-level regions for the 240-hour visa-free transit policy. Eligible travelers must continue to a third country or region, use a covered port, and stay within the permitted area. Before relying on the policy, verify your passport nationality, routing, confirmed onward transport, entry and exit ports, and every city in your plan.",
     whoThisGuideIsFor: [
       "Travelers planning a short China stopover of up to 10 days under a transit policy.",
       "Visitors considering Shanghai, Beijing, Guangzhou, Shenzhen, Hangzhou, Suzhou, Chengdu, Xi'an, or another covered area as a short route.",
@@ -1050,6 +1052,17 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
           "Verify before booking non-refundable flights, hotels, trains, or tours.",
           "Keep official source links and onward ticket proof offline and printed.",
           "If any item is unclear, apply for the appropriate visa or change the route.",
+        ],
+      },
+      {
+        title: "Current policy snapshot",
+        body:
+          "The official totals checked on July 13, 2026 are 55 eligible nationalities, 65 entry ports, and permitted areas in 24 provincial-level regions. NIA guidance generally calculates the 240-hour period from 00:00 on the day after entry, but the entry port determines the permitted travel area and the exact route still needs to qualify.",
+        items: [
+          "Confirm your passport nationality on the current NIA list.",
+          "Confirm both the entry port and the area where you plan to stay.",
+          "Carry a confirmed ticket onward to a third country or region.",
+          "Ask immigration at the entry port to confirm your exact departure deadline.",
         ],
       },
       {
@@ -1184,22 +1197,27 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         answer:
           "Print or save offline your passport page, onward ticket, hotel booking, full itinerary, Chinese hotel address, and any next-destination entry proof that may be relevant.",
       },
+      {
+        question: "When does the 240-hour period start?",
+        answer:
+          "NIA guidance generally calculates the 240-hour period from 00:00 on the day after entry. Confirm the exact permitted departure deadline with immigration at your entry port before relying on a final-day flight.",
+      },
     ],
     officialSourceLinks: [
       {
-        label: "China National Immigration Administration",
-        href: "https://en.nia.gov.cn/n147413/c178106/content.html",
-        note: "Use for the official 240-hour visa-free transit policy notice and current immigration updates.",
+        label: "National Immigration Administration: 10 new opening measures",
+        href: "https://www.nia.gov.cn/n897453/c1751080/content.html",
+        note: "Official Chinese announcement published November 3, 2025; it records the expansion to 65 eligible ports in 24 provincial-level regions.",
       },
       {
-        label: "Chinese embassy or consulate information",
-        href: "https://www.mfa.gov.cn/eng/",
-        note: "Use to locate official consular information before booking.",
+        label: "National Immigration Administration: 240-hour transit notice (English)",
+        href: "https://en.nia.gov.cn/n147418/n147468/c187308/content.html",
+        note: "Official English notice published November 3, 2025 for the latest port expansion.",
       },
       {
-        label: "Airline or transport operator",
-        href: "https://www.iata.org/",
-        note: "Confirm boarding and document checks with your carrier or booking channel before departure.",
+        label: "National Immigration Administration: visa-free transit policy",
+        href: "https://www.nia.gov.cn/n741440/n741577/c1731205/content.html",
+        note: "Official Chinese reference for eligible nationalities, ports, permitted areas, and transit conditions.",
       },
     ],
     ctaLinks: [

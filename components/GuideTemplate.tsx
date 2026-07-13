@@ -395,6 +395,12 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             </div>
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-ink/12 pt-4 text-sm font-semibold text-ink/50">
               <p>Last updated: {formatUpdatedDate(guide.updatedAt)}</p>
+              {content.lastVerified ? (
+                <>
+                  <span aria-hidden="true" className="h-1 w-1 rounded-full bg-ember/55" />
+                  <p>Policy last verified: {formatUpdatedDate(content.lastVerified)}</p>
+                </>
+              ) : null}
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-ember/55" />
               <p>{readingTime(guide)} min read</p>
             </div>
