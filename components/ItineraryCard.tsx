@@ -11,7 +11,15 @@ export function ItineraryCard({ itinerary }: ItineraryCardProps) {
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft">
       <Link href={`/itinerary-kits/${itinerary.slug}`} className="group relative block aspect-[3/2] overflow-hidden">
-        <Image src={itinerary.cardImage.src} alt={itinerary.cardImage.alt} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-[1.025]" />
+        <Image
+          src={itinerary.cardImage.src}
+          alt={itinerary.cardImage.alt}
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          style={{ objectPosition: itinerary.cardImage.position }}
+          className="object-cover transition duration-500 group-hover:scale-[1.025]"
+          data-testid={`itinerary-card-image-${itinerary.slug}`}
+        />
       </Link>
       <div className="flex flex-1 flex-col p-5">
       <div className="flex flex-wrap gap-2">

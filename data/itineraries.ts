@@ -660,6 +660,39 @@ export const itineraries: Itinerary[] = itineraryEntries.map((itinerary) => {
   return { ...itinerary, ...visuals };
 });
 
+export const phaseBItinerarySlugs = [
+  "4-days-in-beijing",
+  "5-days-beijing-and-xian",
+  "7-days-shanghai-hangzhou-suzhou",
+  "240-hour-visa-free-china-itinerary",
+] as const;
+
+const phaseBItineraries = phaseBItinerarySlugs.map((slug) => {
+  const itinerary = itineraries.find((candidate) => candidate.slug === slug);
+  if (!itinerary) {
+    throw new Error(`Missing Phase B itinerary: ${slug}`);
+  }
+  if (!itinerary.dailyImages || itinerary.dailyImages.length !== itinerary.dayByDayPlan.length) {
+    throw new Error(`Phase B itinerary requires one explicit image per day: ${slug}`);
+  }
+  if (new Set(itinerary.dailyImages.map((dailyImage) => dailyImage.src)).size !== itinerary.dailyImages.length) {
+    throw new Error(`Phase B itinerary repeats a daily image: ${slug}`);
+  }
+  for (const dailyImage of itinerary.dailyImages) {
+    if (!dailyImage.alt.trim() || !dailyImage.creditId.trim()) {
+      throw new Error(`Phase B itinerary daily image is missing alt text or credit: ${slug}`);
+    }
+  }
+  return itinerary;
+});
+
+for (const visualRole of ["cardImage", "heroImage"] as const) {
+  const sources = phaseBItineraries.map((itinerary) => itinerary[visualRole].src);
+  if (new Set(sources).size !== sources.length) {
+    throw new Error(`Phase B itineraries must use distinct ${visualRole} assets`);
+  }
+}
+
 export function getItineraryBySlug(slug: string) {
   return itineraries.find((itinerary) => itinerary.slug === slug);
 }

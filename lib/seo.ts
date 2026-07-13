@@ -212,12 +212,14 @@ export function guideJsonLd(guide: Guide, path: string, faqs: FAQ[] = []) {
 
 export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] = []) {
   const url = absoluteUrl(path);
+  const image = absoluteUrl(itinerary.heroImage.src);
   const article = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: itinerary.seoTitle,
     description: itinerary.seoDescription,
     url,
+    image,
     inLanguage: "en",
     author: {
       "@type": "Organization",
@@ -235,6 +237,7 @@ export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] 
     name: itinerary.title,
     description: itinerary.seoDescription,
     url,
+    image,
     inLanguage: "en",
     about: itinerary.cities.map((city) => ({
       "@type": "TouristDestination",
@@ -252,6 +255,7 @@ export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] 
     name: itinerary.title,
     description: itinerary.seoDescription,
     url,
+    image,
     touristType: itinerary.targetUser,
     itinerary: {
       "@type": "ItemList",

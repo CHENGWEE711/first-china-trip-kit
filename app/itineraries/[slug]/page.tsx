@@ -27,6 +27,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: itinerary.seoTitle,
     description: itinerary.seoDescription,
     path: `/itineraries/${itinerary.slug}`,
+    image: itinerary.heroImage.src,
+    imageAlt: itinerary.heroImage.alt,
   });
 }
 

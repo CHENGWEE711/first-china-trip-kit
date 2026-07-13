@@ -120,6 +120,105 @@ const classicChinaDay8 = image("/images/itineraries/classic-china/day-8-hangzhou
 const classicChinaDay9 = image("/images/itineraries/classic-china/day-9-shanghai-museum.webp", "The historic clock-tower building of Shanghai History Museum", "unsplash-classic-day9-shanghai-museum", undefined, "center 42%");
 const classicChinaDay10 = image("/images/itineraries/classic-china/day-10-airport-departure.webp", "Travelers pulling luggage through a modern airport departure hall", "unsplash-classic-day10-airport-departure");
 
+const beijingFourDayHero = image(
+  "/images/itineraries/4-days-beijing/hero-temple-of-heaven.webp",
+  "Temple of Heaven in Beijing beneath a wide summer sky",
+  "unsplash-temple-heaven-hongjin-wang",
+  undefined,
+  "center 48%",
+);
+const beijingFourDayCard = image(
+  "/images/itineraries/4-days-beijing/card-forbidden-city-moat.webp",
+  "Forbidden City walls, moat, and corner tower in Beijing",
+  "unsplash-forbidden-city-allan-n",
+  undefined,
+  "center 48%",
+);
+const beijingFourDaySummerPalace = image(
+  "/images/itineraries/4-days-beijing/day-4-summer-palace.webp",
+  "Longevity Hill and lakeside architecture at Beijing's Summer Palace",
+  "wikimedia-summer-palace-xiquinhosilva",
+  undefined,
+  "center 44%",
+);
+const beijingXianFiveDayHero = image(
+  "/images/itineraries/5-days-beijing-xian/hero-xian-bell-tower.webp",
+  "Xi'an Bell Tower illuminated at night in the city center",
+  "unsplash-xian-bell-tower-jun-huang",
+  undefined,
+  "center 45%",
+);
+const beijingXianFiveDayCard = image(
+  "/images/itineraries/5-days-beijing-xian/card-terracotta-army.webp",
+  "Rows of Terracotta Warriors inside the excavation hall near Xi'an",
+  "wikimedia-terracotta-army-xiquinhosilva",
+  undefined,
+  "center 48%",
+);
+const beijingXianFiveDayTerracottaPit = image(
+  "/images/itineraries/5-days-beijing-xian/day-5-terracotta-pit.webp",
+  "Wide view across the Terracotta Army excavation pits near Xi'an",
+  "wikimedia-terracotta-pit-will-clayton",
+  undefined,
+  "center 50%",
+);
+const easternChinaSevenDayHero = image(
+  "/images/itineraries/7-days-shanghai-hangzhou-suzhou/hero-west-lake-sunset.webp",
+  "West Lake and the Hangzhou skyline at sunset",
+  "wikimedia-west-lake-sunset-wanderingchina",
+  undefined,
+  "center 52%",
+);
+const easternChinaSevenDayCard = image(
+  "/images/itineraries/7-days-shanghai-hangzhou-suzhou/card-suzhou-garden.webp",
+  "Traditional pavilion and landscaped pond in a classical Suzhou garden",
+  "wikimedia-suzhou-garden-jason-zhang",
+  undefined,
+  "center 48%",
+);
+const longjingTeaFields = image(
+  "/images/itineraries/eastern-china/longjing-tea-fields.webp",
+  "Terraced Longjing tea fields in the hills outside Hangzhou",
+  "wikimedia-longjing-tea-peter-burian",
+  undefined,
+  "center 50%",
+);
+const transitTenDayHero = image(
+  "/images/itineraries/240-hour-transit/hero-pudong-airport.webp",
+  "Modern departure concourse inside Shanghai Pudong International Airport",
+  "unsplash-pudong-airport-declan-sun",
+  undefined,
+  "center 48%",
+);
+const transitTenDayCard = image(
+  "/images/itineraries/240-hour-transit/card-passport-luggage.webp",
+  "Passport, boarding pass, and luggage prepared for an international transit journey",
+  "wikimedia-passport-luggage-aatu-dorochenko",
+  undefined,
+  "center 50%",
+);
+const transitWestLake = image(
+  "/images/itineraries/240-hour-transit/day-6-west-lake.webp",
+  "Panoramic West Lake shoreline and hills in Hangzhou",
+  "wikimedia-west-lake-panorama-bjoertvedt",
+  undefined,
+  "center 50%",
+);
+const transitPudongSkyline = image(
+  "/images/itineraries/240-hour-transit/day-8-pudong-skyline.webp",
+  "Pudong skyline across the Huangpu River in modern Shanghai",
+  "wikimedia-pudong-2017-king-of-hearts",
+  undefined,
+  "center 48%",
+);
+const transitZhujiajiao = image(
+  "/images/itineraries/240-hour-transit/day-9-zhujiajiao.webp",
+  "Canal, stone bridge, and waterside houses in Zhujiajiao water town",
+  "wikimedia-zhujiajiao-chensiyuan",
+  undefined,
+  "center 48%",
+);
+
 export const destinationVisuals: Record<string, DestinationVisuals> = {
   shanghai: { cardImage: cityImages.shanghai, heroImage: cityImages.shanghai, attractionImages: [shanghaiStreet, cityImages.shanghai], foodImage: foodStall, transportImage: editorialImages.station },
   beijing: { cardImage: cityImages.beijing, heroImage: cityImages.beijing, attractionImages: [beijingStreet, cityImages.beijing], foodImage: beijingMarket, transportImage: editorialImages.station },
@@ -134,9 +233,24 @@ export const destinationVisuals: Record<string, DestinationVisuals> = {
 export const itineraryVisuals: Record<string, ItineraryVisuals> = {
   "3-days-in-shanghai": { cardImage: cityImages.shanghai, heroImage: shanghaiStreet, routeImages: [cityImages.shanghai, foodStall, shanghaiStreet] },
   "3-days-in-beijing": { cardImage: beijingStreet, heroImage: cityImages.beijing, routeImages: [beijingStreet, beijingMarket, cityImages.beijing] },
-  "4-days-in-beijing": { cardImage: cityImages.beijing, heroImage: beijingMarket, routeImages: [cityImages.beijing, beijingStreet, beijingMarket] },
-  "5-days-beijing-and-xian": { cardImage: cityImages.xian, heroImage: beijingStreet, routeImages: [cityImages.beijing, beijingStreet, cityImages.xian, xianFood] },
-  "7-days-shanghai-hangzhou-suzhou": { cardImage: cityImages.hangzhou, heroImage: suzhouCanal, routeImages: [cityImages.shanghai, cityImages.hangzhou, suzhouCanal, suzhouMarket] },
+  "4-days-in-beijing": {
+    cardImage: beijingFourDayCard,
+    heroImage: beijingFourDayHero,
+    routeImages: [beijingStreet],
+    dailyImages: [beijingStreet, classicChinaDay2, classicChinaDay3, beijingFourDaySummerPalace],
+  },
+  "5-days-beijing-and-xian": {
+    cardImage: beijingXianFiveDayCard,
+    heroImage: beijingXianFiveDayHero,
+    routeImages: [train],
+    dailyImages: [beijingMarket, cityImages.beijing, classicChinaDay3, train, beijingXianFiveDayTerracottaPit],
+  },
+  "7-days-shanghai-hangzhou-suzhou": {
+    cardImage: easternChinaSevenDayCard,
+    heroImage: easternChinaSevenDayHero,
+    routeImages: [train],
+    dailyImages: [cityImages.shanghai, classicChinaDay7, shanghaiStreet, train, longjingTeaFields, cityImages.suzhou, station],
+  },
   "10-days-classic-china-itinerary": {
     cardImage: classicChinaDay3,
     heroImage: classicChinaDay3,
@@ -154,5 +268,10 @@ export const itineraryVisuals: Record<string, ItineraryVisuals> = {
       classicChinaDay10,
     ],
   },
-  "240-hour-visa-free-china-itinerary": { cardImage: boardingPass, heroImage: boardingPass, routeImages: [shanghaiStreet, cityImages.hangzhou, suzhouCanal, train] },
+  "240-hour-visa-free-china-itinerary": {
+    cardImage: transitTenDayCard,
+    heroImage: transitTenDayHero,
+    routeImages: [train],
+    dailyImages: [airport, cityImages.shanghai, shanghaiStreet, train, longjingTeaFields, transitWestLake, suzhouCanal, transitPudongSkyline, transitZhujiajiao, classicChinaDay10],
+  },
 };
