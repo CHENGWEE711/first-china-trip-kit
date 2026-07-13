@@ -136,7 +136,7 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
               {itinerary.summary}
             </p>
             {content?.importantNotice ? (
-              <div className="mt-6 rounded-md border border-white/20 bg-ink/65 p-4 backdrop-blur-sm">
+              <div className="mt-6 hidden rounded-md border border-white/20 bg-ink/65 p-4 backdrop-blur-sm sm:block">
                 <p className="text-sm font-bold uppercase text-ember">Important notice</p>
                 <p className="mt-2 text-base leading-relaxed text-white/78">
                   {content.importantNotice}
@@ -163,6 +163,15 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
             </div>
           </div>
         </header>
+
+        {content?.importantNotice ? (
+          <section className="border-b border-ink/10 bg-sand px-4 py-5 sm:hidden" role="note" aria-label="Important notice">
+            <div className="mx-auto max-w-5xl rounded-md border border-ember/25 bg-paper p-4 shadow-soft">
+              <p className="text-sm font-bold uppercase text-ember">Important notice</p>
+              <p className="mt-2 text-base leading-relaxed text-ink/72">{content.importantNotice}</p>
+            </div>
+          </section>
+        ) : null}
 
         <section className="px-4 py-12">
           <div className="mx-auto grid max-w-5xl gap-5">

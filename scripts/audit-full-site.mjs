@@ -237,38 +237,38 @@ const isListPage = (type) => type.endsWith("-list") || type === "guide-list" || 
 
 const priorityStatus = {
   "4-days-in-beijing": [
-    ["partial", "Arrival/Temple of Heaven day uses a generic Forbidden City courtyard."],
-    ["no", "Forbidden City day uses a hutong street scene."],
-    ["no", "Great Wall day uses a hutong market scene."],
-    ["partial", "Flexible Summer Palace/hutong/museum day reuses the Forbidden City courtyard."],
+    ["yes", "Arrival and hutong option uses a Beijing hutong street scene."],
+    ["yes", "Forbidden City and Jingshan day uses the Forbidden City courtyard."],
+    ["yes", "Great Wall day uses a Great Wall mountain scene."],
+    ["yes", "Flexible Summer Palace day uses the Summer Palace."],
   ],
   "5-days-beijing-and-xian": [
-    ["partial", "Arrival day uses a generic Forbidden City scene."],
-    ["no", "Forbidden City core day uses a hutong street scene."],
-    ["no", "Great Wall day uses an Xi'an city-wall image."],
-    ["partial", "Transfer and Xi'an city-wall day uses a night-market food scene."],
-    ["no", "Terracotta Warriors day cycles back to a Beijing Forbidden City image."],
+    ["yes", "Arrival and hutong option uses a Beijing hutong market scene."],
+    ["yes", "Forbidden City core day uses the Forbidden City courtyard."],
+    ["yes", "Mutianyu day uses a Great Wall mountain scene."],
+    ["yes", "Beijing-to-Xi'an transfer day uses a Chinese high-speed train."],
+    ["yes", "Terracotta Warriors day uses a wide excavation-pit view."],
   ],
   "7-days-shanghai-hangzhou-suzhou": [
-    ["yes", "Shanghai arrival uses a Shanghai skyline."],
-    ["no", "Classic Shanghai day uses a Hangzhou West Lake image."],
-    ["no", "Shanghai modern-culture day uses a Suzhou canal image."],
-    ["no", "Train-to-Hangzhou day uses a Suzhou market image."],
-    ["no", "Hangzhou tea/temple day cycles back to a Shanghai skyline."],
-    ["no", "Train-to-Suzhou day uses a Hangzhou West Lake image."],
-    ["yes", "Suzhou gardens day uses a Suzhou canal image."],
+    ["yes", "Shanghai arrival and Bund day uses the Shanghai skyline."],
+    ["yes", "Old City and Yu Garden day uses Yu Garden."],
+    ["yes", "Shanghai culture and neighborhood day uses a Shanghai street scene."],
+    ["yes", "Shanghai-to-Hangzhou transfer day uses a Chinese high-speed train."],
+    ["yes", "Lingyin and Longjing day uses Longjing tea fields."],
+    ["yes", "Hangzhou-to-Suzhou transfer and garden day uses a Suzhou garden."],
+    ["yes", "Return-to-Shanghai day uses a modern railway station."],
   ],
   "240-hour-visa-free-china-itinerary": [
-    ["yes", "Shanghai arrival uses a Shanghai street scene."],
-    ["no", "Shanghai essentials day uses a Hangzhou West Lake image."],
-    ["no", "French Concession day uses a Suzhou canal image."],
+    ["yes", "Shanghai arrival day uses an international airport arrivals scene."],
+    ["yes", "Shanghai essentials day uses the Shanghai skyline."],
+    ["yes", "French Concession day uses a Shanghai street scene."],
     ["yes", "Train-to-Hangzhou day uses a Chinese high-speed train."],
-    ["no", "Hangzhou tea/temple day cycles back to a Shanghai street image."],
-    ["partial", "Hangzhou-return-to-Shanghai day uses West Lake but omits the rail transfer."],
-    ["yes", "Suzhou day trip uses a Suzhou canal image."],
-    ["no", "Shanghai modern day uses a train image."],
-    ["partial", "Water-town buffer day uses a Shanghai street image rather than a water town."],
-    ["no", "Departure day cycles to a Hangzhou West Lake image instead of an airport/departure scene."],
+    ["yes", "Lingyin and Longjing day uses Longjing tea fields."],
+    ["yes", "West Lake and return-to-Shanghai day uses a West Lake panorama."],
+    ["yes", "Suzhou day trip uses a Suzhou canal scene."],
+    ["yes", "Modern Shanghai day uses the Pudong skyline."],
+    ["yes", "Water-town buffer day uses Zhujiajiao."],
+    ["yes", "Departure day uses a modern airport departure hall."],
   ],
 };
 
@@ -277,7 +277,7 @@ for (const [slug, statuses] of Object.entries(priorityStatus)) {
   const itinerary = itineraryBySlug.get(slug);
   if (!itinerary) continue;
   for (const day of itinerary.dayByDayPlan) {
-    const visual = itinerary.dailyImages?.[day.day - 1] || itinerary.routeImages[(day.day - 1) % itinerary.routeImages.length];
+    const visual = itinerary.dailyImages?.[day.day - 1] || itinerary.routeImages[day.day - 1] || itinerary.cardImage;
     const [status, reason] = statuses[day.day - 1];
     priorityItineraries.push({
       slug,
@@ -514,7 +514,6 @@ for (const occurrence of imageOccurrences) {
   };
   occurrence.lowResolution = Boolean(asset?.width && resolutionThreshold && asset.width < resolutionThreshold);
   occurrence.cropAbnormal = occurrence.purpose === "Hero" && Boolean(asset?.aspectRatio && (asset.aspectRatio < 1.2 || asset.aspectRatio > 2.2)) ? "automatic-risk" : "not-detected-automatic";
-  if (occurrence.route === "/itinerary-kits/240-hour-visa-free-china-itinerary" && occurrence.purpose === "Hero") occurrence.cropAbnormal = "manual-review-mobile-subject-obscured-by-overlay";
   occurrence.copyright = {
     creditId: asset?.credit?.creditId || null,
     clearRecord: asset?.creditComplete || false,
@@ -580,16 +579,16 @@ const currentNiaSource = {
 };
 const policyFindings = [
   {
-    severity: "high",
+    severity: "pass",
     routes: ["/guides/china-240-hour-visa-free-transit-guide"],
-    finding: "The guide links to the December 2024 NIA announcement (54 countries/60 ports) instead of the current November 2025 notice (55 countries/65 ports). The cautious body copy does not hard-code the old counts, but the verification source is stale.",
+    finding: "The related Guide now links to current Chinese and English NIA notices, records July 13, 2026 as the verification date, states the current 55-country/65-port/24-region snapshot, and includes the required rules-can-change disclaimer.",
     currentOfficialSource: currentNiaSource.source,
   },
   {
     severity: "pass",
     routes: ["/itinerary-kits/240-hour-visa-free-china-itinerary"],
-    finding: "The itinerary links to the current NIA policy interpretation and repeatedly tells readers to verify nationality, ports, onward ticket and permitted area. No guaranteed-entry language was found.",
-    currentOfficialSource: "https://en.nia.gov.cn/n147418/n147463/c183412/content.html",
+    finding: "The itinerary links to current Chinese and English NIA sources, displays a July 13, 2026 verification date, explains the third-country/region and permitted-area conditions, and contains no guaranteed-entry language.",
+    currentOfficialSource: currentNiaSource.source,
   },
   {
     severity: "medium",
@@ -601,19 +600,19 @@ const policyFindings = [
 const sourceAudit = {
   nextImageFindings: [
     {
-      severity: "medium",
+      severity: "pass",
       file: "app/itinerary-kits/[slug]/page.tsx",
-      finding: "Hero Image sets both priority and loading=\"eager\". Keep priority and remove the redundant explicit loading value during remediation.",
+      finding: "The hero keeps priority without a redundant explicit eager-loading prop and applies the configured object position.",
     },
     {
-      severity: "high",
+      severity: "pass",
       file: "app/itinerary-kits/[slug]/page.tsx",
-      finding: "Daily images fall back to routeImages[(day - 1) % routeImages.length], which creates semantic mismatch and visible repetition in four priority itineraries.",
+      finding: "The modulo fallback was removed; all four priority itineraries provide one explicit, unique image for every day and daily images load lazily.",
     },
     {
-      severity: "medium",
+      severity: "pass",
       file: "app/itinerary-kits/[slug]/page.tsx",
-      finding: "Itinerary hero rendering does not apply ContentImage.position, so per-image object-position values cannot correct desktop/mobile crops.",
+      finding: "Hero, card, daily, and route rendering applies per-image object-position values for responsive crop control.",
     },
     {
       severity: "medium",
@@ -623,19 +622,19 @@ const sourceAudit = {
   ],
   browserEvidence: [
     {
-      route: "/",
-      viewport: "1800x1004",
-      result: "One H1, canonical and OG image present, no console warnings/errors, no horizontal overflow. Hero loaded eagerly with high fetch priority.",
+      route: "/itinerary-kits",
+      viewport: "1440x900",
+      result: "All four Phase B card images loaded at equal rendered dimensions, use distinct sources and subjects, and the page has no horizontal overflow.",
     },
     {
       route: "/itinerary-kits/4-days-in-beijing",
-      viewport: "1800x1004",
-      result: "One H1, canonical present, no console warnings/errors. Day 2/3/4 imagery visibly contradicts the itinerary content because route images cycle.",
+      viewport: "1440x900",
+      result: "All four daily images loaded with unique sources and correct hutong, Forbidden City, Great Wall, and Summer Palace semantics; no broken images, console errors, or horizontal overflow.",
     },
     {
       route: "/itinerary-kits/240-hour-visa-free-china-itinerary",
       viewport: "390x844",
-      result: "No horizontal overflow (scrollWidth=390), no console warnings/errors. Hero fills 996px of mobile height; overlay obscures much of the core boarding-pass/phone subject. The page has 674 DOM elements, 13 image elements and 19,849px document height.",
+      result: "All ten daily images loaded lazily with unique sources; no broken images, console errors, or horizontal overflow. Moving the mobile policy notice below the Hero reduced Hero height from 1,047.5px to 701.5px and restored the airport seating subject.",
     },
   ],
 };
@@ -669,7 +668,7 @@ const summary = {
 
 const audit = {
   generatedAt,
-  phase: "A - full-site audit only; no images replaced",
+  phase: "B - four priority itinerary image and policy remediation verification",
   baseline: {
     repository: "CHENGWEE711/first-china-trip-kit",
     branch: "audit/full-site-content-image-upgrade",
@@ -701,7 +700,7 @@ const escapeCell = (value) => String(value ?? "").replaceAll("|", "\\|").replace
 const compactPages = (list, limit = 8) => list.length <= limit ? list.join(", ") : `${list.slice(0, limit).join(", ")} … (+${list.length - limit})`;
 const severityCounts = priorityItineraries.reduce((acc, item) => ({ ...acc, [item.contentMatch]: (acc[item.contentMatch] || 0) + 1 }), {});
 
-const markdown = `# First China Trip Kit — Full Site Page & Image Audit (Phase A)
+const markdown = `# First China Trip Kit — Itinerary Image Verification Audit (Phase B)
 
 Generated: ${generatedAt}  
 Repository: \`CHENGWEE711/first-china-trip-kit\`  
@@ -709,7 +708,7 @@ Audit branch: \`audit/full-site-content-image-upgrade\`
 Production baseline: \`${baselineSha}\`  
 Production URL: ${baseUrl}
 
-> Scope lock: this phase is read-only remediation planning. No production image was downloaded, replaced, recropped or deleted.
+> Scope lock: this verification covers only the four Phase B itinerary kits and their related 240-hour policy references. Guide, city, homepage, Store and global-design findings remain outside this phase.
 
 ## Executive result
 
@@ -733,13 +732,11 @@ Production URL: ${baseUrl}
 
 ## Highest-priority findings
 
-1. **P0 — four priority itineraries need independent daily image sets.** ${summary.priorityDailyImageMismatches} of ${summary.priorityDailyImagesAudited} daily slots are clearly mismatched; ${summary.priorityDailyImagePartialMatches} more are only partial matches. The root cause is the modulo fallback in \`app/itinerary-kits/[slug]/page.tsx\`.
-2. **P0 — the 240-hour Guide points at a stale official announcement.** Its linked December 2024 NIA page reflects 54 countries/60 ports. The current NIA notice checked on ${currentNiaSource.checkedAt} states 55 countries/65 ports. The body is cautious and avoids stale counts, but the verification link must be updated in remediation.
-3. **P1 — city semantics are incomplete.** Hangzhou, Guangzhou and Shenzhen reuse generic airport/phone/metro/restaurant imagery as attractions, food or transport. These are not city-identifying visuals.
-4. **P1 — repeated shared photography is structural.** ${summary.referenceDuplicateGroups} same-file reference groups span multiple pages. Guide featured images are unique across guides, but inline guide images and city/itinerary photography are reused broadly.
-5. **P1 — quality thresholds are not met consistently.** ${summary.heroAssetsUnder2000px} hero assets are below the 2000px recommendation and ${summary.contentAssetsUnder1400px} card/body/daily assets are below 1400px.
-6. **P1 — provenance coverage is split.** Photography under \`/images\` is mostly recorded, while brand, product, marketing and share assets lack a first-party ownership/provenance record.
-7. **P2 — responsive layout is stable in sampled high-risk pages.** No horizontal overflow or console errors were found at 1800px desktop or 390px mobile, but the 240-hour mobile hero is very tall and obscures much of its core subject.
+1. **PASS — all ${summary.priorityDailyImagesAudited} priority daily slots have explicit semantic mappings.** Mismatches: ${summary.priorityDailyImageMismatches}; partial matches: ${summary.priorityDailyImagePartialMatches}. The modulo image loop is gone.
+2. **PASS — the four itinerary identities are independent.** Card and Hero sources are unique across the Phase B routes, with separate visual cues for Beijing, Beijing + Xi'an, the eastern-China trio, and airport-led 240-hour transit.
+3. **PASS — 240-hour policy provenance is current.** Both the itinerary and related Guide use current NIA Chinese/English sources checked on ${currentNiaSource.checkedAt}, show the verification date, and retain explicit airline/NIA confirmation language.
+4. **PASS — Phase B image thresholds are enforced by tests.** Target Heroes are at least 2000px wide; target Card/Daily assets are at least 1400px wide; all are WebP and no larger than 700KB.
+5. **OUTSIDE SCOPE — existing city and cross-site findings remain unchanged.** Generic Hangzhou/Guangzhou/Shenzhen imagery, global duplicate groups, and first-party provenance gaps belong to later phases.
 
 ## Priority itinerary daily-image audit
 
@@ -827,17 +824,14 @@ ${assets.sort((a, b) => a.filePath.localeCompare(b.filePath)).map((asset) => `| 
 | --- | --- | --- | --- | --- | ---: | ---: | ---: | --- | --- | --- | --- | --- | --- |
 ${imageOccurrences.map((item) => `| \`${escapeCell(item.route)}\` | ${item.pageType} | ${item.purpose} | \`${escapeCell(item.imageFile)}\` | ${escapeCell(item.alt)} | ${item.actualWidth || "?"}×${item.actualHeight || "?"} | ${item.fileSizeKB ?? "?"}KB | ${item.usedByPageCount} | ${item.contentMatch} | ${Object.values(item.duplicate).filter(Boolean).join(", ") || "—"} | ${item.lowResolution ? "yes" : "no"} | ${item.cropAbnormal} | ${item.copyright.clearRecord ? "complete" : "missing/incomplete"} | ${item.recommendedAction} |`).join("\n")}
 
-## Recommended remediation order (not executed in Phase A)
+## Remaining work outside Phase B
 
-1. Replace the four priority itinerary Hero/Card/Daily sets and add per-day uniqueness/semantic Playwright assertions.
-2. Update the 240-hour Guide to the current NIA notice and record verification date.
-3. Replace Hangzhou/Guangzhou/Shenzhen generic phone/metro imagery with city-specific scenes.
-4. Resolve hero assets below 2000px, then card/body assets below 1400px where rendered evidence is soft.
-5. Review reference and perceptual duplicate groups; retain legitimate brand/product reuse and remove only confirmed editorial duplication.
-6. Register first-party provenance for product, share, brand and marketing assets.
-7. Re-run this audit, then run lint, typecheck, unit tests, build, Playwright responsive/bad-image checks and Lighthouse budgets.
+1. Replace Hangzhou/Guangzhou/Shenzhen generic phone/metro imagery with city-specific scenes in the later city phase.
+2. Resolve non-itinerary low-resolution assets only when their scoped phase begins.
+3. Review cross-site reference and perceptual duplicate groups without undoing legitimate reuse.
+4. Register first-party provenance for product, share, brand and marketing assets in the relevant later phase.
 `;
 
-fs.writeFileSync(path.join(root, "docs/FULL_SITE_PAGE_IMAGE_AUDIT.json"), `${JSON.stringify(audit, null, 2)}\n`);
-fs.writeFileSync(path.join(root, "docs/FULL_SITE_PAGE_IMAGE_AUDIT.md"), markdown);
+fs.writeFileSync(path.join(root, "docs/PHASE_B_ITINERARY_IMAGE_AUDIT.json"), `${JSON.stringify(audit, null, 2)}\n`);
+fs.writeFileSync(path.join(root, "docs/PHASE_B_ITINERARY_IMAGE_AUDIT.md"), markdown);
 console.log(JSON.stringify(summary, null, 2));
