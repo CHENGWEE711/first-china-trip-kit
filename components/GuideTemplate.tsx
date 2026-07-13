@@ -186,16 +186,49 @@ function ArticleImage({
   visualRole: "hero" | "inline";
   insertedBefore?: string;
 }) {
+  const sizes = visualRole === "hero"
+    ? "(min-width: 1280px) 1152px, calc(100vw - 2rem)"
+    : "(min-width: 1024px) 760px, calc(100vw - 2rem)";
+
   return (
     <figure data-guide-visual={visualRole} data-inserted-before={insertedBefore}>
       <div className="relative aspect-[3/2] overflow-hidden rounded-lg bg-mist md:aspect-[16/9]">
-        <Image src={image.src} alt={image.alt} fill loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : undefined} sizes="(min-width: 1200px) 1100px, 100vw" className="object-cover" />
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          priority={priority}
+          sizes={sizes}
+          className="object-cover"
+          style={{ objectPosition: image.position || "center" }}
+        />
       </div>
       <figcaption className="mt-2 text-sm leading-relaxed text-ink/52">
         {image.caption || image.alt}
       </figcaption>
     </figure>
   );
+}
+
+function GuideInlineImages({
+  images,
+  placement,
+  insertedBefore,
+}: {
+  images: Guide["inlineImages"];
+  placement: NonNullable<Guide["inlineImages"][number]["placement"]>;
+  insertedBefore: string;
+}) {
+  return images
+    .filter((image) => image.placement === placement)
+    .map((image) => (
+      <ArticleImage
+        key={`${placement}-${image.src}`}
+        image={image}
+        visualRole="inline"
+        insertedBefore={insertedBefore}
+      />
+    ));
 }
 
 function GuideContents({ content }: { content: GuideDetailContent }) {
@@ -398,7 +431,7 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
               {content.lastVerified ? (
                 <>
                   <span aria-hidden="true" className="h-1 w-1 rounded-full bg-ember/55" />
-                  <p>Policy last verified: {formatUpdatedDate(content.lastVerified)}</p>
+                  <p>{content.verificationLabel || "Policy last verified"}: {formatUpdatedDate(content.lastVerified)}</p>
                 </>
               ) : null}
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-ember/55" />
@@ -448,9 +481,17 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             {content.featureSections && content.featureSections.length > 0 ? (
               <FeatureSections sections={content.featureSections} />
             ) : null}
-            <ArticleImage image={guide.inlineImages[0]} visualRole="inline" insertedBefore="Step-by-step guide" />
+            <GuideInlineImages
+              images={guide.inlineImages}
+              placement="before-steps"
+              insertedBefore="Step-by-step guide"
+            />
             <BulletSection title="Step-by-step guide" items={content.steps} />
-            <ArticleImage image={guide.inlineImages[1]} visualRole="inline" insertedBefore="Common mistakes" />
+            <GuideInlineImages
+              images={guide.inlineImages}
+              placement="before-common-mistakes"
+              insertedBefore="Common mistakes"
+            />
             <BulletSection title="Common mistakes" items={content.commonMistakes} />
             <BulletSection title="Troubleshooting" items={content.troubleshooting} />
             {content.backupPlan && content.backupPlan.length > 0 ? (
@@ -478,7 +519,11 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
             ) : null}
             <BulletSection title="First-day checklist" items={content.firstDayChecklist} />
 
-            <ArticleImage image={guide.inlineImages[2]} visualRole="inline" insertedBefore="Detailed guidance" />
+            <GuideInlineImages
+              images={guide.inlineImages}
+              placement="before-details"
+              insertedBefore="Detailed guidance"
+            />
 
             {content.appGroups ? <AppGuideCards groups={content.appGroups} /> : null}
 

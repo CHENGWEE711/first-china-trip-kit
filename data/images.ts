@@ -4,6 +4,7 @@ export type ContentImage = {
   caption?: string;
   creditId: string;
   position?: string;
+  placement?: "before-steps" | "before-common-mistakes" | "before-details";
 };
 
 export type GuideVisuals = {
@@ -78,27 +79,233 @@ const foodStall = guideImage("/images/guides/order-food-shanghai-stall.webp", "C
 const airport = guideImage("/images/guides/americans-china-airport-arrivals.webp", "International passengers with luggage inside an airport terminal", "pexels-6726195", "International arrivals should keep passport and onward details accessible.");
 const boardingPass = guideImage("/images/guides/visa-free-transit-airport.webp", "Traveler holding a smartphone and boarding pass beside an airport window", "pexels-4606721", "Visa-free transit planning depends on the exact arrival, onward destination and permitted stay.");
 const shanghaiStreet = guideImage("/images/guides/shanghai-three-days-street.webp", "Pedestrians on a Shanghai street framed by traditional shops and modern towers", "pexels-35554911", "Shanghai's street-level neighborhoods connect the historic city with its modern skyline.");
-const cafePhone = guideImage("/images/guides/wechat-cafe-phone.webp", "Customer using a smartphone while speaking with cafe staff", "pexels-31713078", "A separate cafe phone-payment scenario without a simulated wallet screen.");
-const paymentGuideHero = guideImage("/images/guides/payment-guide-qr-checkout.webp", "Traveler presenting a smartphone QR code at a payment terminal", "pexels-12935051", "A traveler presents a QR payment code at the checkout terminal.");
 const paymentGuideMerchantScan = guideImage("/images/guides/payment-guide-merchant-scan.webp", "Customer holding a smartphone over a merchant QR payment terminal", "pexels-12935064", "Merchant-scan and customer-scan payment flows use different QR code positions.");
 const paymentGuideCardSetup = guideImage("/images/guides/payment-guide-card-setup.webp", "Traveler adding a bank card to a payment app on a smartphone", "pexels-28841475", "Set up an international card and a second bank-card backup before departure.");
 const paymentGuideBackupKit = guideImage("/images/guides/payment-guide-backup-kit.webp", "Passport, boarding pass and several physical payment cards prepared for travel", "pexels-32642485", "Keep a passport, physical cards and travel documents accessible as payment backups.");
 
+const guideInline = (
+  source: ContentImage,
+  placement: NonNullable<ContentImage["placement"]>,
+): ContentImage => ({ ...source, placement });
+
+const phaseCPrimaryVisuals = (
+  slug: string,
+  heroAlt: string,
+  cardAlt: string,
+  heroCaption: string,
+  heroPosition = "center",
+  cardPosition = "center",
+): Pick<GuideVisuals, "featuredImage" | "heroImage"> => ({
+  heroImage: image(
+    `/images/guides/phase-c/${slug}/hero.webp`,
+    heroAlt,
+    `phase-c-${slug}-hero`,
+    heroCaption,
+    heroPosition,
+  ),
+  featuredImage: image(
+    `/images/guides/phase-c/${slug}/card.webp`,
+    cardAlt,
+    `phase-c-${slug}-card`,
+    undefined,
+    cardPosition,
+  ),
+});
+
 export const guideVisuals: Record<string, GuideVisuals> = {
-  "how-to-pay-in-china-as-a-foreigner": { featuredImage: paymentGuideHero, heroImage: paymentGuideHero, inlineImages: [paymentGuideMerchantScan, paymentGuideCardSetup, paymentGuideBackupKit] },
-  "best-apps-for-traveling-in-china": { featuredImage: metroPhone, heroImage: metroPhone, inlineImages: [airportPhone, qrPhone, station] },
-  "how-to-book-high-speed-trains-in-china": { featuredImage: train, heroImage: train, inlineImages: [station, packing, airportPhone] },
-  "how-to-use-alipay-and-wechat-pay-in-china": { featuredImage: paymentTerminal, heroImage: paymentTerminal, inlineImages: [qrPhone, cafePhone, paymentScene] },
-  "china-travel-packing-list": { featuredImage: packing, heroImage: packing, inlineImages: [passportLaptop, airportPhone, station] },
-  "basic-chinese-phrases-for-travelers": { featuredImage: restaurantPhone, heroImage: restaurantPhone, inlineImages: [foodStall, metroPhone, airportPhone] },
-  "china-esim-guide-for-tourists": { featuredImage: airportPhone, heroImage: airportPhone, inlineImages: [metroPhone, qrPhone, passportLaptop] },
-  "china-food-ordering-guide": { featuredImage: foodStall, heroImage: foodStall, inlineImages: [restaurantPhone, qrScan, paymentTerminal] },
-  "can-americans-travel-to-china-in-2026": { featuredImage: airport, heroImage: airport, inlineImages: [boardingPass, passportLaptop, airportPhone] },
-  "china-240-hour-visa-free-transit-guide": { featuredImage: boardingPass, heroImage: boardingPass, inlineImages: [train, shanghaiStreet, passportLaptop] },
-  "how-to-use-alipay-in-china-as-a-tourist": { featuredImage: qrPhone, heroImage: qrPhone, inlineImages: [qrScan, paymentTerminal, cafePhone] },
-  "how-to-use-wechat-pay-in-china-as-a-foreigner": { featuredImage: cafePhone, heroImage: cafePhone, inlineImages: [qrPhone, paymentTerminal, qrScan] },
-  "3-days-in-shanghai-for-first-time-visitors": { featuredImage: shanghaiStreet, heroImage: shanghaiStreet, inlineImages: [cityImages.shanghai, foodStall, station] },
-  "china-travel-checklist-before-you-fly": { featuredImage: passportLaptop, heroImage: passportLaptop, inlineImages: [packing, airport, airportPhone] },
+  "how-to-pay-in-china-as-a-foreigner": {
+    ...phaseCPrimaryVisuals(
+      "how-to-pay-in-china-as-a-foreigner",
+      "Traveler presenting a smartphone QR code at a checkout terminal",
+      "Close view of a traveler using a QR payment code at checkout",
+      "A real checkout scene showing the customer-presented QR payment flow without a simulated wallet interface.",
+      "center 52%",
+      "center 54%",
+    ),
+    inlineImages: [
+      guideInline(paymentGuideMerchantScan, "before-steps"),
+      guideInline(paymentGuideCardSetup, "before-common-mistakes"),
+      guideInline(paymentGuideBackupKit, "before-details"),
+    ],
+  },
+  "best-apps-for-traveling-in-china": {
+    ...phaseCPrimaryVisuals(
+      "best-apps-for-traveling-in-china",
+      "Travelers using smartphones while waiting in a metro station",
+      "Two travelers checking phones on a metro platform",
+      "Maps, translation, payment and transport tools matter most while moving through real stations and streets.",
+      "center 46%",
+      "center 48%",
+    ),
+    inlineImages: [
+      guideInline(airportPhone, "before-steps"),
+      guideInline(qrPhone, "before-common-mistakes"),
+      guideInline(station, "before-details"),
+    ],
+  },
+  "how-to-book-high-speed-trains-in-china": {
+    ...phaseCPrimaryVisuals(
+      "how-to-book-high-speed-trains-in-china",
+      "CRH high-speed train at a platform inside a Chinese railway station",
+      "Chinese CRH high-speed train beside a station platform",
+      "Chinese high-speed rail is identified by the train, station and platform context—not by a generic overseas train image.",
+      "center 48%",
+      "center 50%",
+    ),
+    inlineImages: [
+      guideInline(station, "before-steps"),
+      guideInline(editorialImages.transport, "before-details"),
+    ],
+  },
+  "how-to-use-alipay-and-wechat-pay-in-china": {
+    ...phaseCPrimaryVisuals(
+      "how-to-use-alipay-and-wechat-pay-in-china",
+      "Merchant QR payment sign displayed at a cafe counter",
+      "QR payment sign positioned beside a cafe checkout",
+      "A merchant QR scene introduces the two wallet flows without reproducing an app interface or exposing account details.",
+      "center 52%",
+      "center 54%",
+    ),
+    inlineImages: [
+      guideInline(qrPhone, "before-steps"),
+      guideInline(paymentScene, "before-details"),
+    ],
+  },
+  "china-travel-packing-list": {
+    ...phaseCPrimaryVisuals(
+      "china-travel-packing-list",
+      "Passport, tickets, map and compact travel essentials arranged before packing",
+      "Passport and practical travel items arranged on a map",
+      "Useful packing imagery focuses on the documents, power and offline backups that belong in the checklist.",
+      "center 48%",
+      "center 50%",
+    ),
+    inlineImages: [
+      guideInline(passportLaptop, "before-steps"),
+      guideInline(paymentGuideBackupKit, "before-details"),
+    ],
+  },
+  "basic-chinese-phrases-for-travelers": {
+    ...phaseCPrimaryVisuals(
+      "basic-chinese-phrases-for-travelers",
+      "Traveler using a smartphone to understand a restaurant setting",
+      "Smartphone held above a restaurant table while ordering",
+      "The phone-in-context image supports camera translation; the phrase tables carry the exact Chinese text without risky generated lettering.",
+      "center 48%",
+      "center 50%",
+    ),
+    inlineImages: [],
+  },
+  "china-esim-guide-for-tourists": {
+    ...phaseCPrimaryVisuals(
+      "china-esim-guide-for-tourists",
+      "Traveler checking a smartphone beside luggage before leaving an airport",
+      "Smartphone held beside airport luggage during connectivity setup",
+      "Connectivity is shown as a practical arrival task without an outdated settings screenshot or an implied VPN guarantee.",
+      "center 50%",
+      "center 50%",
+    ),
+    inlineImages: [],
+  },
+  "china-food-ordering-guide": {
+    ...phaseCPrimaryVisuals(
+      "china-food-ordering-guide",
+      "Cook preparing food beneath Chinese menu signs at a Shanghai street stall",
+      "Chinese street-food cook working beneath a visible menu",
+      "A real Shanghai food stall anchors the guide in an everyday Chinese ordering environment.",
+      "center 47%",
+      "center 50%",
+    ),
+    inlineImages: [
+      guideInline(restaurantPhone, "before-steps"),
+      guideInline(qrScan, "before-details"),
+    ],
+  },
+  "can-americans-travel-to-china-in-2026": {
+    ...phaseCPrimaryVisuals(
+      "can-americans-travel-to-china-in-2026",
+      "International passengers with luggage moving through an airport terminal",
+      "International traveler pulling luggage through an airport terminal",
+      "The entry-planning theme uses a neutral international terminal scene and does not imply guaranteed admission.",
+      "center 50%",
+      "center 52%",
+    ),
+    inlineImages: [
+      guideInline(boardingPass, "before-steps"),
+      guideInline(passportLaptop, "before-details"),
+    ],
+  },
+  "china-240-hour-visa-free-transit-guide": {
+    ...phaseCPrimaryVisuals(
+      "china-240-hour-visa-free-transit-guide",
+      "Traveler holding a boarding pass beside an airport window during an international transit",
+      "Boarding pass held against an airport apron and onward aircraft",
+      "The boarding pass and onward aircraft make the transit requirement visible without depicting a fabricated visa or entry stamp.",
+      "center 54%",
+      "center 52%",
+    ),
+    inlineImages: [
+      guideInline(train, "before-steps"),
+      guideInline(passportLaptop, "before-details"),
+    ],
+  },
+  "how-to-use-alipay-in-china-as-a-tourist": {
+    ...phaseCPrimaryVisuals(
+      "how-to-use-alipay-in-china-as-a-tourist",
+      "Smartphone showing a customer QR code for a cashier to scan",
+      "Close view of a customer-presented QR payment code",
+      "The blue customer-code scene distinguishes this setup guide without claiming to reproduce the current Alipay interface.",
+      "center 50%",
+      "center 50%",
+    ),
+    inlineImages: [
+      guideInline(qrScan, "before-steps"),
+      guideInline(paymentTerminal, "before-details"),
+    ],
+  },
+  "how-to-use-wechat-pay-in-china-as-a-foreigner": {
+    ...phaseCPrimaryVisuals(
+      "how-to-use-wechat-pay-in-china-as-a-foreigner",
+      "Customer using a smartphone while speaking with staff at a cafe counter",
+      "Cafe customer holding a phone during a merchant interaction",
+      "The merchant-conversation scene emphasizes the social and mini-program context without a simulated WeChat screen.",
+      "center 46%",
+      "center 48%",
+    ),
+    inlineImages: [
+      guideInline(qrPhone, "before-steps"),
+      guideInline(paymentScene, "before-details"),
+    ],
+  },
+  "3-days-in-shanghai-for-first-time-visitors": {
+    ...phaseCPrimaryVisuals(
+      "3-days-in-shanghai-for-first-time-visitors",
+      "Shanghai street framed by historic storefronts and modern towers",
+      "Historic Shanghai storefronts beneath the modern city skyline",
+      "This itinerary-style Guide intentionally keeps an editorial city image that identifies Shanghai at street level.",
+      "center 48%",
+      "center 52%",
+    ),
+    inlineImages: [
+      guideInline(cityImages.shanghai, "before-steps"),
+      guideInline(foodStall, "before-common-mistakes"),
+      guideInline(station, "before-details"),
+    ],
+  },
+  "china-travel-checklist-before-you-fly": {
+    ...phaseCPrimaryVisuals(
+      "china-travel-checklist-before-you-fly",
+      "Passport and boarding passes arranged on a laptop before a flight",
+      "Passport and flight documents laid out for a final pre-flight check",
+      "A document-led still life clearly separates the final checklist from the broader packing Guide.",
+      "center 49%",
+      "center 50%",
+    ),
+    inlineImages: [
+      guideInline(packing, "before-steps"),
+      guideInline(airport, "before-details"),
+    ],
+  },
 };
 
 const beijingStreet = image("/images/cities/details/beijing-hutong-street.webp", "Pedestrians, scooters and traditional buildings on a Beijing hutong street", "pexels-32067787");

@@ -13,7 +13,14 @@ export function GuideCard({ guide }: GuideCardProps) {
     <article className="border-b border-ink/15 pb-6">
       <Link href={`/guides/${guide.slug}`} className="group block overflow-hidden rounded-lg">
         <div className="relative aspect-[3/2]">
-          <Image src={image.src} alt={image.alt} fill sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-[1.025]" />
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+            className="object-cover transition duration-500 group-hover:scale-[1.025]"
+            style={{ objectPosition: image.position || "center" }}
+          />
         </div>
       </Link>
       <p className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-ember">
