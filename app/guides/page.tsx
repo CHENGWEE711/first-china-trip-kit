@@ -45,7 +45,7 @@ export default async function GuidesPage({ searchParams }: GuidesPageProps) {
       <Section variant="light" className="pt-12 md:pt-16">
         <p className="text-sm font-bold uppercase tracking-widest text-ember">Featured guide</p>
         <div className="mt-5 grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <GuideCard guide={featuredGuide} />
+          <GuideCard guide={featuredGuide} priority />
           <div className="rounded-lg bg-mist p-6 md:p-8">
             <h2 className="text-3xl leading-tight text-ink">Start with the setup that unlocks your first day</h2>
             <p className="mt-4 text-ink/68">Payments are the foundation for taxis, meals, metro rides and bookings. This guide gives first-time visitors a tested setup order and practical backups.</p>

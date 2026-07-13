@@ -5,9 +5,10 @@ import type { Guide } from "@/data/guides";
 
 type GuideCardProps = {
   guide: Guide;
+  priority?: boolean;
 };
 
-export function GuideCard({ guide }: GuideCardProps) {
+export function GuideCard({ guide, priority = false }: GuideCardProps) {
   const image = guide.featuredImage;
   return (
     <article className="border-b border-ink/15 pb-6">
@@ -17,6 +18,7 @@ export function GuideCard({ guide }: GuideCardProps) {
             src={image.src}
             alt={image.alt}
             fill
+            priority={priority}
             sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
             className="object-cover transition duration-500 group-hover:scale-[1.025]"
             style={{ objectPosition: image.position || "center" }}
