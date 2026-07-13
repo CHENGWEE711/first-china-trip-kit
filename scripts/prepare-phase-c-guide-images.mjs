@@ -164,7 +164,7 @@ for (const asset of assets) {
   const heroBuffer = await sharp(buffer)
     .rotate()
     .resize(2400, 1600, { fit: "cover", position: asset.heroPosition })
-    .webp({ quality: 82, effort: 5, smartSubsample: true })
+    .webp({ quality: 78, effort: 5, smartSubsample: true })
     .toBuffer();
   fs.writeFileSync(heroFile, heroBuffer);
 
@@ -176,7 +176,7 @@ for (const asset of assets) {
   const top = Math.round(asset.cardFocus[1] * 400);
   const cardBuffer = await sharp(cardBase)
     .extract({ left, top, width: 1800, height: 1200 })
-    .webp({ quality: 82, effort: 5, smartSubsample: true })
+    .webp({ quality: 78, effort: 5, smartSubsample: true })
     .toBuffer();
   fs.writeFileSync(cardFile, cardBuffer);
 
@@ -256,4 +256,3 @@ const manifest = assets.map((asset) => {
 });
 fs.writeFileSync(path.join(root, "docs/PHASE_C_GUIDE_ASSET_MANIFEST.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 console.log(`Prepared ${records.length} Guide Hero/Card assets and 1 Guide-scope first-party provenance record.`);
-
