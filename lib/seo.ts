@@ -95,6 +95,8 @@ export function articleJsonLd(input: {
   title: string;
   description: string;
   path: string;
+  image?: string;
+  publishedAt?: string;
   updatedAt?: string;
 }) {
   return {
@@ -103,8 +105,9 @@ export function articleJsonLd(input: {
     headline: input.title,
     description: input.description,
     url: absoluteUrl(input.path),
+    image: input.image ? absoluteUrl(input.image) : undefined,
     dateModified: input.updatedAt,
-    datePublished: input.updatedAt,
+    datePublished: input.publishedAt || input.updatedAt,
     inLanguage: "en",
     author: {
       "@type": "Organization",
@@ -198,6 +201,8 @@ export function guideJsonLd(guide: Guide, path: string, faqs: FAQ[] = []) {
     title: guide.seoTitle,
     description: guide.seoDescription,
     path,
+    image: guide.heroImage.src,
+    publishedAt: guide.publishedAt,
     updatedAt: guide.updatedAt,
   });
   const faq = faqJsonLd(faqs, path);

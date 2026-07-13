@@ -5,6 +5,7 @@ import { chinaTravelAppGroups } from "@/data/app-recommendations";
 export type GuideDetailContent = {
   importantNotice?: string;
   lastVerified?: string;
+  verificationLabel?: string;
   quickAnswer: string;
   whoThisGuideIsFor?: string[];
   featureSections?: {
@@ -34,6 +35,10 @@ export type GuideDetailContent = {
 
 export const guideDetailContent: Record<string, GuideDetailContent> = {
   "how-to-pay-in-china-as-a-foreigner": {
+    importantNotice:
+      "Payment app interfaces, card support, verification and transaction handling can change. Confirm current requirements in the official app and with your card issuer; keep cash and a second payment method ready.",
+    lastVerified: "2026-07-13",
+    verificationLabel: "Payment guidance last verified",
     quickAnswer:
       "For most foreign visitors, the most reliable China payment setup is Alipay with at least one international card, WeChat Pay as a backup when available, a physical card for hotels and deposits, and a small amount of RMB cash for emergencies. Do the app setup before you fly, then test it with a low-value purchase on your first day before relying on it for taxis, restaurants, or train station snacks.",
     whoThisGuideIsFor: [
@@ -190,8 +195,8 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     officialSourceLinks: [
       {
         label: "China government payment service guidance for overseas visitors",
-        href: "https://english.www.gov.cn/news/202404/11/content_WS6617c858c6d0868f4e8e5f4d.html",
-        note: "Use for current official payment service guidance and policy updates for overseas visitors.",
+        href: "https://english.www.gov.cn/news/202408/22/content_WS66c71b3ec6d0868f4e8ea2b1.html",
+        note: "Official guide covering bank cards, mobile payment, cash, bank accounts and e-CNY for overseas visitors.",
       },
       {
         label: "Alipay",
@@ -241,6 +246,10 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     relatedProductIds: ["china-payment-apps-setup-guide"],
   },
   "best-apps-for-traveling-in-china": {
+    importantNotice:
+      "App availability, foreign-number registration, identity checks, map coverage and interface labels can change by device and account. Install only the tools your route needs and verify them shortly before travel.",
+    lastVerified: "2026-07-13",
+    verificationLabel: "App guidance last verified",
     quickAnswer:
       "The essential China app stack is payment, maps, translation, ride-hailing, train support, and offline backups. Do not download every app you see on social media. Instead, install a small core set, log in before departure, save Chinese addresses, and test payment, maps, and translation before your first full sightseeing day.",
     whoThisGuideIsFor: [
@@ -417,6 +426,10 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     appGroups: chinaTravelAppGroups,
   },
   "how-to-book-high-speed-trains-in-china": {
+    importantNotice:
+      "Train schedules, sales windows, passport verification and change or refund rules can change. Confirm the current rule and station name in China Railway 12306 or with the platform that issued your ticket.",
+    lastVerified: "2026-07-13",
+    verificationLabel: "Rail guidance last verified",
     quickAnswer:
       "Foreign visitors can take China's high-speed trains using passport-based real-name ticketing. The most common booking options are 12306, Trip.com or another travel platform, a station ticket counter, and hotel or local travel help. For a smooth trip, make sure your ticket name and passport information match exactly, arrive early at the correct station, and keep your passport, train number, gate, carriage, and seat details ready offline.",
     whoThisGuideIsFor: [
@@ -603,8 +616,8 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       },
       {
         label: "12306 passenger notices and FAQ",
-        href: "https://www.12306.cn/en/index.html",
-        note: "Use for current passenger rules, ticket changes, refunds, and station notices where available.",
+        href: "https://www.12306.cn/en/faq.html?item=2",
+        note: "Official FAQ covering real-name tickets, foreign passports, check-in, security and ticket handling.",
       },
       {
         label: "Your booking platform",
@@ -642,6 +655,10 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     relatedProductIds: ["china-payment-apps-setup-guide"],
   },
   "how-to-use-alipay-and-wechat-pay-in-china": {
+    importantNotice:
+      "Wallet interfaces, card support and verification can change. Use this guide to understand the two QR payment patterns, then confirm the current setup inside the official Alipay and WeChat apps.",
+    lastVerified: "2026-07-13",
+    verificationLabel: "Payment guidance last verified",
     quickAnswer:
       "Use Alipay as your main first-trip wallet, set up WeChat Pay as a backup if it works for your account, and learn the two QR payment flows: sometimes you scan the merchant's QR code, and sometimes the merchant scans your payment code. Keep cash and a physical card available because app verification, data, or card issuer checks can still interrupt a payment.",
     steps: [
@@ -838,6 +855,10 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     relatedProductIds: [],
   },
   "china-esim-guide-for-tourists": {
+    importantNotice:
+      "eSIM activation, roaming routes, mainland coverage and access to specific foreign services vary by phone and provider. Confirm device compatibility and current coverage before purchase; no provider, app or VPN is guaranteed to work everywhere.",
+    lastVerified: "2026-07-13",
+    verificationLabel: "Connectivity guidance last verified",
     quickAnswer:
       "For a first China trip, choose your mobile data plan before you fly and prepare offline backups even if you expect data to work. Your phone is not just for messaging; it is your payment wallet, map, translator, hotel address card, train folder, and emergency backup. The safest setup is one primary data option, one backup way to reach Wi-Fi, and a screenshot folder that works without signal.",
     steps: [
@@ -892,7 +913,13 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
           "Some services work with foreign numbers and some are easier through Alipay or WeChat mini programs. Set up core apps before travel and keep hotel staff as a backup for tricky bookings.",
       },
     ],
-    officialSourceLinks: [],
+    officialSourceLinks: [
+      {
+        label: "China government guide to mobile communication services",
+        href: "https://english.www.gov.cn/2025special/bizexpatsinchina2025",
+        note: "Official reference for passport-based local SIM registration and mobile communication services; travel eSIM and roaming terms still depend on the provider.",
+      },
+    ],
     relatedGuideSlugs: [
       "best-apps-for-traveling-in-china",
       "how-to-pay-in-china-as-a-foreigner",
@@ -964,8 +991,12 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     relatedProductIds: ["china-payment-apps-setup-guide"],
   },
   "can-americans-travel-to-china-in-2026": {
+    importantNotice:
+      "Visa and entry rules can change, and admission is decided by Chinese border inspection authorities. Verify the correct visa or visa-free route for your passport, purpose and itinerary before booking non-refundable travel.",
+    lastVerified: "2026-07-13",
+    verificationLabel: "Entry information last verified",
     quickAnswer:
-      "Yes, U.S. passport holders can plan China travel in 2026, but most tourist trips require checking visa requirements before booking. Treat entry planning as the first step: verify your passport, visa path, route, hotels, flights, and current official notices before paying for non-refundable travel.",
+      "Yes, U.S. passport holders can plan China travel in 2026. As verified on July 13, 2026, U.S. passports are not included in the Chinese Embassy's current 50-country unilateral 30-day visa-free list, so an ordinary tourism trip generally requires the appropriate visa unless the exact route qualifies under a separate policy such as 240-hour visa-free transit. Verify your passport, purpose, route and official requirements before paying for non-refundable travel.",
     steps: [
       "Check your passport validity and make sure the passport name matches flights, hotels, trains, and any visa application.",
       "Confirm the correct entry path for your purpose of travel. Most ordinary sightseeing trips should start by checking tourist visa requirements through official consular sources.",
@@ -1019,9 +1050,14 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         note: "Use for U.S. government travel information and advisory context.",
       },
       {
-        label: "Embassy of the People's Republic of China in the United States",
-        href: "http://us.china-embassy.gov.cn/eng/",
-        note: "Use for current consular and visa information for U.S. applicants.",
+        label: "Chinese Embassy: visa-free entry FAQ updated February 2026",
+        href: "https://us.china-embassy.gov.cn/eng/lsfw/zj/notice/202412/t20241224_11516392.htm",
+        note: "Current official list and conditions for China's unilateral 30-day visa-free policy.",
+      },
+      {
+        label: "Chinese Embassy: visa application requirements updated September 2025",
+        href: "https://us.china-embassy.gov.cn/eng/lsfw/zj/notice/202509/t20250920_11712385.htm",
+        note: "Specific official visa application process and L-visa document guidance for applicants in the United States.",
       },
     ],
     relatedGuideSlugs: [
@@ -1250,6 +1286,10 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     relatedProductIds: ["10-day-classic-china-itinerary"],
   },
   "how-to-use-alipay-in-china-as-a-tourist": {
+    importantNotice:
+      "Alipay screens, verification, supported cards and limits can change by account and card issuer. Do not use screenshots in this article as interface instructions; confirm the current flow in the official app.",
+    lastVerified: "2026-07-13",
+    verificationLabel: "Payment guidance last verified",
     quickAnswer:
       "Tourists should set up Alipay before departure, add at least one international card, keep mobile data active, and test a small purchase on day one. Use Alipay as your main payment tool, but keep WeChat Pay, a physical card, and some RMB cash as backups.",
     whoThisGuideIsFor: [
@@ -1383,8 +1423,8 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       },
       {
         label: "China government payment service guidance for overseas visitors",
-        href: "https://english.www.gov.cn/news/202404/11/content_WS6617c858c6d0868f4e8e5f4d.html",
-        note: "Use for official payment guidance and available payment options for overseas visitors.",
+        href: "https://english.www.gov.cn/news/202408/22/content_WS66c71b3ec6d0868f4e8ea2b1.html",
+        note: "Official guide to payment options available to overseas visitors.",
       },
     ],
     ctaLinks: [
@@ -1407,6 +1447,10 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     relatedProductIds: ["china-payment-apps-setup-guide"],
   },
   "how-to-use-wechat-pay-in-china-as-a-foreigner": {
+    importantNotice:
+      "WeChat and WeChat Pay screens, verification, supported cards and mini-program access can change. Confirm the current setup inside the official app and keep Alipay, cash and a physical card as backups.",
+    lastVerified: "2026-07-13",
+    verificationLabel: "Payment guidance last verified",
     quickAnswer:
       "Foreign visitors should treat WeChat Pay as an important backup wallet and mini-program tool. Set it up before relying on it, test a small transaction, and keep Alipay, cash, and a physical card ready because account and card verification can vary.",
     whoThisGuideIsFor: [
@@ -1529,8 +1573,8 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       },
       {
         label: "China government payment service guidance for overseas visitors",
-        href: "https://english.www.gov.cn/news/202404/11/content_WS6617c858c6d0868f4e8e5f4d.html",
-        note: "Use for official payment guidance and available payment options for overseas visitors.",
+        href: "https://english.www.gov.cn/news/202408/22/content_WS66c71b3ec6d0868f4e8ea2b1.html",
+        note: "Official guide to payment options available to overseas visitors.",
       },
     ],
     ctaLinks: [
