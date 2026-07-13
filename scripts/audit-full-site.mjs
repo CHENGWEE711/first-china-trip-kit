@@ -7,6 +7,9 @@ import ts from "typescript";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const publicRoot = path.join(root, "public");
+const auditOutputDir = process.env.AUDIT_OUTPUT_DIR
+  ? path.resolve(process.env.AUDIT_OUTPUT_DIR)
+  : path.join(root, "docs");
 const baseUrl = process.env.AUDIT_BASE_URL || "https://www.firstchinatripkit.com";
 const baselineSha = "bf41908596635695cd85a24cef6c7d6f6d71db0e";
 const generatedAt = new Date().toISOString();
@@ -832,6 +835,7 @@ ${imageOccurrences.map((item) => `| \`${escapeCell(item.route)}\` | ${item.pageT
 4. Register first-party provenance for product, share, brand and marketing assets in the relevant later phase.
 `;
 
-fs.writeFileSync(path.join(root, "docs/PHASE_B_ITINERARY_IMAGE_AUDIT.json"), `${JSON.stringify(audit, null, 2)}\n`);
-fs.writeFileSync(path.join(root, "docs/PHASE_B_ITINERARY_IMAGE_AUDIT.md"), markdown);
+fs.mkdirSync(auditOutputDir, { recursive: true });
+fs.writeFileSync(path.join(auditOutputDir, "PHASE_B_ITINERARY_IMAGE_AUDIT.json"), `${JSON.stringify(audit, null, 2)}\n`);
+fs.writeFileSync(path.join(auditOutputDir, "PHASE_B_ITINERARY_IMAGE_AUDIT.md"), markdown);
 console.log(JSON.stringify(summary, null, 2));
