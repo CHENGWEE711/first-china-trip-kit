@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-07-13T17:28:23.004Z",
+  "label": "baseline",
+  "baseUrl": "http://localhost:3101",
+  "environment": "Local Next.js dev server, warmed routes, fresh browser context per sample, Chromium 1440x900",
+  "routes": [
+    "/guides/how-to-pay-in-china-as-a-foreigner",
+    "/guides/best-apps-for-traveling-in-china",
+    "/guides/china-240-hour-visa-free-transit-guide"
+  ],
+  "summary": {
+    "lcpMs": 116,
+    "cls": 0,
+    "requestCount": 24,
+    "imageRequestCount": 1,
+    "imageTransferBytes": 63138,
+    "maxImageBytes": 74950,
+    "jsTransferBytes": 786786,
+    "domElementCount": 707,
+    "unusedLoadedImages": 0
+  },
+  "samples": [
+    {
+      "route": "/guides/how-to-pay-in-china-as-a-foreigner",
+      "status": 200,
+      "lcpMs": 108,
+      "cls": 0,
+      "requestCount": 24,
+      "imageRequestCount": 1,
+      "imageTransferBytes": 25856,
+      "maxImageBytes": 25856,
+      "jsTransferBytes": 786786,
+      "domElementCount": 604,
+      "loadedDomImages": 1,
+      "unusedLoadedImages": 0,
+      "lazyImages": 6,
+      "eagerImages": 1
+    },
+    {
+      "route": "/guides/best-apps-for-traveling-in-china",
+      "status": 200,
+      "lcpMs": 132,
+      "cls": 0,
+      "requestCount": 25,
+      "imageRequestCount": 2,
+      "imageTransferBytes": 116232,
+      "maxImageBytes": 74950,
+      "jsTransferBytes": 786786,
+      "domElementCount": 884,
+      "loadedDomImages": 2,
+      "unusedLoadedImages": 0,
+      "lazyImages": 6,
+      "eagerImages": 1
+    },
+    {
+      "route": "/guides/china-240-hour-visa-free-transit-guide",
+      "status": 200,
+      "lcpMs": 108,
+      "cls": 0,
+      "requestCount": 24,
+      "imageRequestCount": 1,
+      "imageTransferBytes": 47326,
+      "maxImageBytes": 47326,
+      "jsTransferBytes": 786786,
+      "domElementCount": 634,
+      "loadedDomImages": 1,
+      "unusedLoadedImages": 0,
+      "lazyImages": 6,
+      "eagerImages": 1
+    }
+  ]
+}
