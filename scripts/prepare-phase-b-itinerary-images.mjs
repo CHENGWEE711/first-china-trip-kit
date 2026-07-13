@@ -80,6 +80,14 @@ const assets = [
     minimumSourceWidth: 1400,
   },
   {
+    id: "wikimedia-yu-garden-stefan-fussan",
+    sourceUrl: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Shanghai_-_Yu_Garden_-_0034.jpg?width=2400",
+    output: "public/images/itineraries/eastern-china/yu-garden-shanghai.webp",
+    width: 2000,
+    height: 1125,
+    minimumSourceWidth: 1400,
+  },
+  {
     id: "unsplash-pudong-airport-declan-sun",
     sourceUrl: "https://images.unsplash.com/photo-1757206637677-330df0d7dfe8?auto=format&fit=max&fm=jpg&q=88&w=3000",
     output: "public/images/itineraries/240-hour-transit/hero-pudong-airport.webp",

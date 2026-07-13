@@ -183,6 +183,13 @@ const longjingTeaFields = image(
   undefined,
   "center 50%",
 );
+const easternChinaYuGarden = image(
+  "/images/itineraries/eastern-china/yu-garden-shanghai.webp",
+  "Tingtao Tower, stonework, and a pond inside Shanghai's Yu Garden",
+  "wikimedia-yu-garden-stefan-fussan",
+  undefined,
+  "center 48%",
+);
 const transitTenDayHero = image(
   "/images/itineraries/240-hour-transit/hero-pudong-airport.webp",
   "Modern departure concourse inside Shanghai Pudong International Airport",
@@ -237,7 +244,7 @@ export const itineraryVisuals: Record<string, ItineraryVisuals> = {
     cardImage: beijingFourDayCard,
     heroImage: beijingFourDayHero,
     routeImages: [beijingStreet],
-    dailyImages: [beijingStreet, classicChinaDay2, classicChinaDay3, beijingFourDaySummerPalace],
+    dailyImages: [beijingStreet, cityImages.beijing, classicChinaDay3, beijingFourDaySummerPalace],
   },
   "5-days-beijing-and-xian": {
     cardImage: beijingXianFiveDayCard,
@@ -249,7 +256,7 @@ export const itineraryVisuals: Record<string, ItineraryVisuals> = {
     cardImage: easternChinaSevenDayCard,
     heroImage: easternChinaSevenDayHero,
     routeImages: [train],
-    dailyImages: [cityImages.shanghai, classicChinaDay7, shanghaiStreet, train, longjingTeaFields, cityImages.suzhou, station],
+    dailyImages: [cityImages.shanghai, easternChinaYuGarden, shanghaiStreet, train, longjingTeaFields, cityImages.suzhou, station],
   },
   "10-days-classic-china-itinerary": {
     cardImage: classicChinaDay3,

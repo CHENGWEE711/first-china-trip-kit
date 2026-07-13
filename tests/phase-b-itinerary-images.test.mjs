@@ -70,6 +70,7 @@ test("Phase B itinerary assets meet size, format, and provenance thresholds", as
       assert.ok(credit, `${itinerary.slug} ${role} credit record`);
       assert.equal(credit.localFile, image.src, `${itinerary.slug} ${role} credit path`);
       assert.equal(credit.licenseChecked, true, `${itinerary.slug} ${role} license`);
+      assert.doesNotMatch(credit.sourcePage, /\/s\/photos\//, `${itinerary.slug} ${role} needs a specific source page`);
       for (const field of ["sourcePlatform", "sourcePage", "photographer", "downloadDate", "usage"]) {
         assert.ok(credit[field], `${itinerary.slug} ${role} credit ${field}`);
       }
