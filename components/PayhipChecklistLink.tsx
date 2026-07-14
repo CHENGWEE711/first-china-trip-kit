@@ -3,6 +3,7 @@
 import { ExternalLink } from "lucide-react";
 import type { ReactNode } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { buildUtmUrl } from "@/lib/utm";
 import { cn } from "@/lib/utils";
 
 type PayhipChecklistLinkProps = {
@@ -24,9 +25,15 @@ export function PayhipChecklistLink({
     return null;
   }
 
+  const trackedPayhipUrl = buildUtmUrl(payhipChecklistUrl, {
+    utm_source: "firstchinatripkit",
+    utm_medium: "website",
+    utm_content: `${source}_china-first-trip-checklist`,
+  });
+
   return (
     <a
-      href={payhipChecklistUrl}
+      href={trackedPayhipUrl}
       target="_blank"
       rel="noopener noreferrer"
       onClick={() =>
