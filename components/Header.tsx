@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Globe2, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { navItems, siteConfig } from "@/lib/site";
 
 export function Header() {
@@ -34,9 +35,14 @@ export function Header() {
     <header className="sticky top-0 z-50 h-16 border-b border-ink/10 bg-paper/95">
       <div className="editorial-container flex h-16 items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2.5 font-bold text-ink" aria-label={`${siteConfig.name} home`}>
-          <span className="grid h-9 w-9 place-items-center rounded-md bg-ember text-white shadow-sm">
-            <Globe2 aria-hidden="true" size={20} />
-          </span>
+          <Image
+            src="/brand/first-china-trip-kit-logo.svg"
+            alt=""
+            aria-hidden="true"
+            width={40}
+            height={40}
+            className="h-9 w-9 shrink-0"
+          />
           <span className="text-base sm:text-lg">{siteConfig.name}</span>
         </Link>
         <nav aria-label="Primary navigation" className="hidden items-center gap-1 lg:flex">
@@ -46,7 +52,7 @@ export function Header() {
           })}
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="/#free-checklist" className="hidden min-h-11 items-center rounded-md bg-ember px-4 py-2 text-sm font-semibold text-white transition hover:bg-ember-hover sm:inline-flex">Get the Free Checklist</Link>
+          <Link href="/#free-checklist" className="hidden min-h-11 items-center rounded-md bg-ember px-4 py-2 text-sm font-semibold text-white transition hover:bg-ember-hover xl:inline-flex">Get the Free Checklist</Link>
           <button ref={menuButtonRef} type="button" className="grid h-11 w-11 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-ember/40 hover:text-ember focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 lg:hidden" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => open ? closeMenu() : setOpen(true)}>
             {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
@@ -61,7 +67,7 @@ export function Header() {
               const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
               return <Link key={item.href} href={item.href} onClick={() => closeMenu()} aria-current={active ? "page" : undefined} className={`rounded-md px-4 py-3 text-base font-semibold ${active ? "bg-mist text-jade" : "text-ink/72 hover:bg-sand hover:text-ink"}`}>{item.label}</Link>;
             })}
-            <Link href="/#free-checklist" onClick={() => closeMenu()} className="mt-3 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 font-semibold text-white hover:bg-ember-hover sm:hidden">Get the Free Checklist</Link>
+            <Link href="/#free-checklist" onClick={() => closeMenu()} className="mt-3 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 font-semibold text-white hover:bg-ember-hover">Get the Free Checklist</Link>
           </div>
           </nav>
         </>
