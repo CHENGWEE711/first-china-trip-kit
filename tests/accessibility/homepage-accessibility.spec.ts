@@ -35,8 +35,15 @@ test("mobile navigation supports ARIA, Escape and focus return", async ({ page }
   await menuButton.press("Enter");
   await expect(menuButton).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#mobile-navigation")).toBeVisible();
+  const firstMenuLink = page.locator("#mobile-navigation a").first();
+  const lastMenuLink = page.locator("#mobile-navigation a").last();
+  await expect(firstMenuLink).toBeFocused();
+  await firstMenuLink.press("Shift+Tab");
+  await expect(lastMenuLink).toBeFocused();
+  await lastMenuLink.press("Tab");
+  await expect(firstMenuLink).toBeFocused();
   await expect(page.locator("body")).toHaveCSS("overflow-y", "hidden");
-  await menuButton.press("Escape");
+  await firstMenuLink.press("Escape");
   await expect(menuButton).toHaveAttribute("aria-expanded", "false");
   await expect(page.locator("#mobile-navigation")).toHaveCount(0);
   await expect(menuButton).toBeFocused();

@@ -31,8 +31,8 @@ export default function ItineraryKitsPage() {
       />
       <section className="px-4 py-12">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {kitItineraries.map((itinerary) => (
-            <ItineraryCard key={itinerary.id} itinerary={itinerary} />
+          {kitItineraries.map((itinerary, index) => (
+            <ItineraryCard key={itinerary.id} itinerary={itinerary} priority={index < 3} />
           ))}
         </div>
       </section>

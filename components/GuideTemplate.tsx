@@ -26,6 +26,19 @@ type GuideTemplateProps = {
   products: Product[];
 };
 
+const companionItineraryByGuide: Record<string, { href: string; label: string; note: string }> = {
+  "china-240-hour-visa-free-transit-guide": {
+    href: "/itinerary-kits/240-hour-visa-free-china-itinerary",
+    label: "Open the route-planning itinerary",
+    note: "This Guide explains eligibility and policy checks. The itinerary is a separate route framework to use only after those checks pass.",
+  },
+  "3-days-in-shanghai-for-first-time-visitors": {
+    href: "/itinerary-kits/3-days-in-shanghai",
+    label: "Open the day-by-day Shanghai itinerary",
+    note: "This Guide helps you choose and pace the experience. The itinerary turns that advice into an executable three-day schedule.",
+  },
+};
+
 function fallbackDetail(guide: Guide): GuideDetailContent {
   return {
     quickAnswer: guide.summary,
@@ -405,6 +418,7 @@ function GuideSupportCta({ guideSlug }: { guideSlug: string }) {
 
 export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideTemplateProps) {
   const content = detail || fallbackDetail(guide);
+  const companionItinerary = companionItineraryByGuide[guide.slug];
   const showPaymentAppsGuideCta = paymentAppsGuideCtaSlugs.has(guide.slug);
   const useCoreGuideBottomCta = paymentAppsGuideCtaSlugs.has(guide.slug);
   const displayedProducts = showPaymentAppsGuideCta
@@ -474,6 +488,15 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-jade">Quick answer</p>
               <p className="font-editorial text-xl leading-relaxed text-ink md:text-2xl">{content.quickAnswer}</p>
             </section>
+
+            {companionItinerary ? (
+              <aside className="border-l-2 border-jade bg-paper px-5 py-4" aria-label="Related itinerary">
+                <p className="text-base leading-relaxed text-ink/70">{companionItinerary.note}</p>
+                <Link href={companionItinerary.href} className="mt-3 inline-flex min-h-11 items-center font-bold text-jade hover:text-ember">
+                  {companionItinerary.label}
+                </Link>
+              </aside>
+            ) : null}
 
             {content.whoThisGuideIsFor && content.whoThisGuideIsFor.length > 0 ? (
               <BulletSection title="Who this guide is for" items={content.whoThisGuideIsFor} />

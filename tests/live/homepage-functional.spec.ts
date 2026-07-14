@@ -4,9 +4,10 @@ test("homepage core planning links keep their real destinations", async ({ page 
   await page.goto("/");
   await expect(page.locator('#home-hero a[href="#free-checklist"]')).toHaveCount(1);
   await expect(page.locator('#home-hero a[href="/start-here"]')).toHaveCount(1);
-  await expect(page.locator('#home-help a[href="/guides/how-to-pay-in-china-as-a-foreigner"]')).toHaveCount(1);
-  await expect(page.locator('#home-help a[href="/city-kits"]')).toHaveCount(1);
-  await expect(page.locator('#home-help a[href="/itinerary-kits"]')).toHaveCount(1);
+  await expect(page.locator('#home-problems a[href="/guides/how-to-pay-in-china-as-a-foreigner"]')).toHaveCount(1);
+  await expect(page.locator('#home-start a[href="/start-here"]')).toHaveCount(1);
+  await expect(page.locator('#home-destinations a[href="/city-kits"]')).toHaveCount(1);
+  await expect(page.locator('#home-guides a[href="/guides"]')).toHaveCount(1);
 
   for (const slug of ["shanghai", "beijing", "xian", "chengdu"]) {
     await expect(page.locator(`#home-destinations a[href="/city-kits/${slug}"]`)).toHaveCount(2);
@@ -70,14 +71,18 @@ test("homepage SEO and analytics hooks remain intact", async ({ page }) => {
   await expect(page.locator('script#google-analytics')).toHaveCount(0);
   await expect(page.locator('script#metricool-analytics')).toHaveCount(0);
 
+  await page.goto("/store");
   await page.evaluate(() => {
-    const testWindow = window as typeof window & { __analyticsEvents: string[] };
-    testWindow.__analyticsEvents = [];
-    window.gtag = (_command, eventName) => testWindow.__analyticsEvents.push(eventName);
+    sessionStorage.setItem("__analyticsEvents", "[]");
+    window.gtag = (_command, eventName) => {
+      const events = JSON.parse(sessionStorage.getItem("__analyticsEvents") || "[]") as string[];
+      events.push(eventName);
+      sessionStorage.setItem("__analyticsEvents", JSON.stringify(events));
+    };
   });
-  await page.locator('#home-hero a[href="#free-checklist"]').click();
+  await page.getByRole("link", { name: "Download Free Checklist", exact: true }).first().click();
   const analyticsEvents = await page.evaluate(() =>
-    (window as typeof window & { __analyticsEvents: string[] }).__analyticsEvents,
+    JSON.parse(sessionStorage.getItem("__analyticsEvents") || "[]") as string[],
   );
   expect(analyticsEvents).toContain("checklist_download_clicked");
 });

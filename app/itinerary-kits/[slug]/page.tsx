@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
@@ -79,6 +80,19 @@ const usefulPhrases = [
   },
 ];
 
+const companionGuideByItinerary: Record<string, { href: string; label: string; note: string }> = {
+  "240-hour-visa-free-china-itinerary": {
+    href: "/guides/china-240-hour-visa-free-transit-guide",
+    label: "Check the 240-hour policy Guide first",
+    note: "This page is route planning, not an eligibility decision. Use the policy Guide to verify nationality, ports, onward routing and permitted areas before relying on this itinerary.",
+  },
+  "3-days-in-shanghai": {
+    href: "/guides/3-days-in-shanghai-for-first-time-visitors",
+    label: "Read the Shanghai planning Guide",
+    note: "This itinerary is an executable schedule. Use the editorial Guide when you still need help choosing stops, pacing and neighborhood priorities.",
+  },
+};
+
 function formatDate(value?: string) {
   if (!value) {
     return null;
@@ -102,6 +116,7 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
 
   const content = getItineraryGuideContent(itinerary.slug);
   const products = getProductsByIds(content?.relatedProductIds || []);
+  const companionGuide = companionGuideByItinerary[itinerary.slug];
   const bookingReminders = content?.bookingReminders || itinerary.tips;
   const updatedDate = formatDate(content?.lastUpdated || content?.lastVerified || "2026-07-08");
   const skipItems =
@@ -180,6 +195,14 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
                 {content?.routeSummary?.[0] ||
                   `${itinerary.title} is a practical first-trip route for ${itinerary.cities.join(", ")} with ${itinerary.durationDays} days of planning structure.`}
               </p>
+              {companionGuide ? (
+                <aside className="mt-5 border-l-2 border-jade bg-mist px-4 py-3" aria-label="Related planning guide">
+                  <p>{companionGuide.note}</p>
+                  <Link href={companionGuide.href} className="mt-3 inline-flex min-h-11 items-center font-bold text-jade hover:text-ember">
+                    {companionGuide.label}
+                  </Link>
+                </aside>
+              ) : null}
             </Section>
 
             <Section title="Who this itinerary is for">

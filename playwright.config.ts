@@ -45,5 +45,33 @@ export default defineConfig({
         browserName: "chromium",
       },
     },
+    {
+      name: "chromium-mobile-320",
+      use: {
+        ...devices["iPhone 13"],
+        browserName: "chromium",
+        viewport: { width: 320, height: 568 },
+      },
+    },
+    {
+      name: "webkit-desktop",
+      use: {
+        ...devices["Desktop Safari"],
+        viewport: { width: 1440, height: 900 },
+      },
+    },
+    {
+      name: "webkit-mobile",
+      use: {
+        ...devices["iPhone 13"],
+      },
+    },
+    {
+      name: "firefox-desktop",
+      use: {
+        ...devices["Desktop Firefox"],
+        viewport: { width: 1440, height: 900 },
+      },
+    },
   ],
 });

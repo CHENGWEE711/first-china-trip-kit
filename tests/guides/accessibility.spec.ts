@@ -12,7 +12,7 @@ test("Guide template retains basic semantic and keyboard accessibility", async (
 
   await expect(page.getByRole("navigation", { name: "Guide contents" })).toBeVisible();
   await expect(page.getByRole("table", { name: /comparison table/ })).toHaveCount(1);
-  await expect(page.locator('[role="note"][aria-label="Important notice"]')).toHaveCount(0);
+  await expect(page.locator('[role="note"][aria-label="Important notice"]')).toHaveCount(1);
   await expect(page.locator('[lang="zh-Hans"]')).not.toHaveCount(0);
   await expect(page.locator('article img[alt=""]')).toHaveCount(0);
 

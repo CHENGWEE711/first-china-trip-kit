@@ -78,7 +78,7 @@ for (const route of routes) {
 test("240-hour page shows current policy verification and reachable official sources", async ({ page, request }, testInfo) => {
   await page.goto("/itinerary-kits/240-hour-visa-free-china-itinerary");
   await expect(page.getByText("July 13, 2026", { exact: true })).toBeVisible();
-  const notice = testInfo.project.name === "chromium-desktop"
+  const notice = !testInfo.project.name.includes("mobile")
     ? page.locator("article > header").getByText(/Rules can change\. Confirm your eligibility and entry port/i)
     : page.getByLabel("Important notice").getByText(/Rules can change\. Confirm your eligibility and entry port/i);
   await expect(notice).toBeVisible();

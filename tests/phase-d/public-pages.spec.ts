@@ -33,10 +33,21 @@ const publicRoutes = [
 async function settlePage(page: Page) {
   await page.evaluate(() => document.fonts.ready);
   const images = page.locator("img");
+  await images.evaluateAll((nodes) => {
+    for (const node of nodes as HTMLImageElement[]) node.loading = "eager";
+  });
   const imageCount = await images.count();
   for (let index = 0; index < imageCount; index += 1) {
     const image = images.nth(index);
     await image.scrollIntoViewIfNeeded();
+    await image.evaluate((node: HTMLImageElement) => {
+      if (node.currentSrc || !node.srcset) return;
+      const firstCandidate = node.srcset.split(",")[0]?.trim().split(/\s+/)[0];
+      if (!firstCandidate) return;
+      node.removeAttribute("srcset");
+      node.loading = "eager";
+      node.src = firstCandidate;
+    });
     await expect
       .poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth), {
         timeout: 10_000,

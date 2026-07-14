@@ -11,6 +11,7 @@ export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
 
   function closeMenu(returnFocus = true) {
     setOpen(false);
@@ -21,13 +22,35 @@ export function Header() {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeMenu();
+    const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const frame = window.requestAnimationFrame(() => {
+      mobileNavRef.current?.querySelector<HTMLElement>(focusableSelector)?.focus();
+    });
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMenu();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(
+        mobileNavRef.current?.querySelectorAll<HTMLElement>(focusableSelector) || [],
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable.at(-1)!;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener("keydown", handleEscape);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
+      window.cancelAnimationFrame(frame);
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleEscape);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
 
@@ -61,7 +84,7 @@ export function Header() {
       {open ? (
         <>
           <button type="button" aria-label="Close navigation menu overlay" onClick={() => closeMenu()} className="fixed inset-x-0 bottom-0 top-16 z-30 bg-ink/45 lg:hidden" />
-          <nav id="mobile-navigation" aria-label="Mobile navigation" className="fixed inset-x-0 top-16 z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-ink/10 bg-paper px-4 pb-[max(24px,env(safe-area-inset-bottom))] pt-4 shadow-editorial lg:hidden">
+          <nav ref={mobileNavRef} id="mobile-navigation" aria-label="Mobile navigation" className="fixed inset-x-0 top-16 z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-ink/10 bg-paper px-4 pb-[max(24px,env(safe-area-inset-bottom))] pt-4 shadow-editorial lg:hidden">
           <div className="editorial-container grid gap-1">
             {navItems.map((item) => {
               const active = pathname === item.href || pathname.startsWith(`${item.href}/`);

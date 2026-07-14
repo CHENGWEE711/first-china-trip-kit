@@ -262,7 +262,7 @@ function CopyResultButton({ value }: { value: string }) {
 
 function VisaTool() {
   const [checked, setChecked] = useState<string[]>([]);
-  const trackedResultRef = useRef<string | null>(null);
+  const completionTrackedRef = useRef(false);
   const missing = visaChecks.filter((item) => !checked.includes(item.id));
   const score = checked.length;
   const progressPercent = Math.round((score / visaChecks.length) * 100);
@@ -300,18 +300,18 @@ function VisaTool() {
           };
 
   useEffect(() => {
-    if (checked.length === 0 || trackedResultRef.current === result.title) {
+    if (score !== visaChecks.length || completionTrackedRef.current) {
       return;
     }
 
-    trackedResultRef.current = result.title;
+    completionTrackedRef.current = true;
     trackEvent("visa_free_checker_completed", {
       source_page: "/tools/visa-free-eligibility-checker",
       tool: "visa-free-eligibility-checker",
       checked_count: score,
       result: result.title,
     });
-  }, [checked.length, result.title, score]);
+  }, [result.title, score]);
 
   function toggleVisaCheck(id: string, nextChecked: boolean) {
     setChecked((current) =>

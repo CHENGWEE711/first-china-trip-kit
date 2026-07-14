@@ -95,3 +95,22 @@ test("Classic China provenance uses exact Unsplash photo pages with a fresh veri
     assert.equal(credit.verificationDate, "2026-07-14");
   }
 });
+
+test("Policy and Shanghai Guides are explicitly separated from their executable itineraries", () => {
+  const guideTemplate = read("components/GuideTemplate.tsx");
+  const itineraryPage = read("app/itinerary-kits/[slug]/page.tsx");
+  for (const href of [
+    "/itinerary-kits/240-hour-visa-free-china-itinerary",
+    "/itinerary-kits/3-days-in-shanghai",
+  ]) {
+    assert.ok(guideTemplate.includes(href), href);
+  }
+  for (const href of [
+    "/guides/china-240-hour-visa-free-transit-guide",
+    "/guides/3-days-in-shanghai-for-first-time-visitors",
+  ]) {
+    assert.ok(itineraryPage.includes(href), href);
+  }
+  assert.match(guideTemplate, /explains eligibility and policy checks/);
+  assert.match(itineraryPage, /route planning, not an eligibility decision/);
+});
