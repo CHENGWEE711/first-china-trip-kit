@@ -1,6 +1,7 @@
 "use client";
 
 import { trackEvent } from "@/lib/analytics";
+import { buildUtmUrl } from "@/lib/utm";
 import { cn } from "@/lib/utils";
 
 type ProductActionButtonProps = {
@@ -37,10 +38,18 @@ export function ProductActionButton({
   const trackedEvents =
     eventNames ||
     [eventName || (canBuy ? "payment_apps_guide_buy_clicked" : "store_waitlist_clicked")];
+  const trackedHref =
+    isExternal && /^https:\/\/(?:www\.)?payhip\.com\//i.test(href)
+      ? buildUtmUrl(href, {
+          utm_source: "firstchinatripkit",
+          utm_medium: "website",
+          utm_content: `${placement}_${productId}`,
+        })
+      : href;
 
   return (
     <a
-      href={href}
+      href={trackedHref}
       download={download}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}

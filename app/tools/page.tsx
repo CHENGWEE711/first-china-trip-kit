@@ -32,7 +32,7 @@ export default function ToolsPage() {
       <PageIntro
         eyebrow="Tools"
         title="Simple tools for first-time China planning"
-        description="These lightweight tools help you spot planning risks before you book flights, hotels, trains, or paid kits."
+        description="Choose an input, get a clear next step, and copy the result. These working tools run in your browser without an account or sensitive personal data."
       />
       <section className="px-4 py-12">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -66,8 +66,10 @@ export default function ToolsPage() {
                     {tool.bestFor}
                   </p>
                 </div>
-                <p className="mt-4 text-xs font-bold uppercase tracking-widest text-ink/42">Takes about 1 minute</p>
-                <span className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition group-hover:bg-ember-hover">Open tool</span>
+                <p className="mt-4 text-xs font-bold uppercase tracking-widest text-ink/42">
+                  Runs in your browser · no sign-in · about 1 minute
+                </p>
+                <span className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition group-hover:bg-ember-hover">Open working tool</span>
               </Link>
             );
           })}

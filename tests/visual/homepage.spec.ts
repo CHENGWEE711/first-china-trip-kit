@@ -1,6 +1,10 @@
 import { expect, test } from "@playwright/test";
 
 test("homepage matches the approved desktop and mobile baseline", async ({ page }, testInfo) => {
+  test.skip(
+    !["chromium-desktop", "chromium-mobile"].includes(testInfo.project.name),
+    "Chromium owns the approved pixel baselines; other engines use functional visual QA.",
+  );
   const mobile = testInfo.project.name === "chromium-mobile";
   const viewport = mobile ? { width: 390, height: 844 } : { width: 1440, height: 1000 };
   await page.setViewportSize(viewport);

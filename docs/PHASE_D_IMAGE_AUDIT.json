@@ -1,0 +1,56 @@
+{
+  "phase": "D",
+  "generatedAt": "2026-07-14T16:30:00+08:00",
+  "branch": "audit/full-site-content-image-upgrade",
+  "scope": "Homepage, Start Here, destinations, city details, Store, Tools and shared public surfaces",
+  "result": {
+    "errors": 0,
+    "warnings": 0,
+    "status": "pass"
+  },
+  "destinationChecks": {
+    "liveCities": 8,
+    "citiesWithCompleteExplicitVisualSets": 8,
+    "uniqueHeroSources": 8,
+    "uniqueCardSources": 8,
+    "citiesWhereCardEqualsHero": 0,
+    "heroFilesAtLeast2000pxWide": 8,
+    "cardFilesAtLeast1400pxWide": 8,
+    "heroOrCardFilesOver700KB": 0,
+    "missingHeroOrCardFiles": 0,
+    "heroOrCardProvenanceGaps": 0,
+    "obviousDestinationMismatches": 0
+  },
+  "publicAssetChecks": {
+    "homepageHasIndependentHero": true,
+    "homepageHasIndependentOgImage": true,
+    "homepageUsesTargetCardData": true,
+    "homepageOrStartHereFallbackImages": 0,
+    "missingPublicImageFiles": 0,
+    "oversizedPublicImages": 0,
+    "incompleteSiteImageLicenseRecords": 0,
+    "firstPartyAssetsWithoutProvenance": 0,
+    "confirmedUnusedImagesDeleted": 5,
+    "remainingWebsiteAuditUnusedAssets": 16,
+    "remainingUnusedAssetsAreRetainedForExternalBrandMarketingOrCommerceUse": true
+  },
+  "seoAndRuntimeChecks": {
+    "cityListItemListJsonLd": true,
+    "legacyRoutesChecked": 17,
+    "legacyRoutesPermanentRedirects": 17,
+    "sitemapCanonicalUrls": 49,
+    "legacyUrlsInSitemap": 0,
+    "brokenInternalLinks": 0,
+    "indexableRoutesMissingFromSitemap": 0,
+    "desktopOrMobileBrokenImages": 0,
+    "desktopOrMobileHorizontalOverflow": 0,
+    "consoleErrors": 0
+  },
+  "evidence": {
+    "staticTests": "38 passed, including 14 Phase D checks",
+    "playwright": "10 passed, 2 intentionally skipped",
+    "fullSiteAudit": "docs/phase-d-audit/PHASE_B_ITINERARY_IMAGE_AUDIT.json",
+    "screenshots": "docs/screenshots/phase-d",
+    "note": "The full-site audit retains one out-of-scope SEO advisory on /itinerary-kits (missing ItemList JSON-LD). It is not a Phase D image error or warning and no Phase B page was changed for it."
+  }
+}

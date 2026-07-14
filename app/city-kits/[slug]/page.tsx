@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
@@ -41,6 +42,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${meta.kitTitle} | First China Trip Kit`,
     description: `A practical ${city.cityName} City Kit for first-time visitors with recommended days, hotel areas, attractions, food, transport tips, common mistakes, and Chinese addresses.`,
     path: `/city-kits/${city.slug}`,
+    image: city.heroImage.src,
+    imageAlt: city.heroImage.alt,
+    imageWidth: 2400,
+    imageHeight: 1600,
   });
 }
 
@@ -84,7 +89,8 @@ function CityStory({
   return (
     <section className="grid overflow-hidden rounded-lg bg-mist lg:grid-cols-2 lg:items-stretch">
       <figure className={`relative min-h-72 ${reverse ? "lg:order-2" : ""}`}>
-        <Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+        <Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" style={{ objectPosition: image.position }} className="object-cover" />
+        {image.caption ? <figcaption className="absolute inset-x-0 bottom-0 bg-ink/82 px-4 py-3 text-xs leading-relaxed text-white/82">{image.caption}</figcaption> : null}
       </figure>
       <div className="p-6 md:p-8">
         <p className="text-sm font-bold uppercase tracking-widest text-ember">{eyebrow}</p>
@@ -130,26 +136,29 @@ export default async function CityKitDetailPage({ params }: PageProps) {
       <SEOJsonLd data={cityJsonLd(city, `/city-kits/${city.slug}`, content?.faq)} />
       <article>
         <header className="relative isolate min-h-[560px] overflow-hidden bg-ink text-white">
-          <Image src={city.heroImage.src} alt={city.heroImage.alt} fill priority sizes="100vw" style={{ objectPosition: city.heroImage.position }} className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/70 to-ink/15" />
+          <Image src={city.heroImage.src} alt={city.heroImage.alt} fill priority loading="eager" sizes="100vw" style={{ objectPosition: city.heroImage.position }} className="object-cover" />
+          <div className="absolute inset-0 bg-ink/52" />
           <div className="editorial-container relative flex min-h-[560px] items-end py-14">
             <div className="max-w-3xl">
-              <p className="mb-3 text-sm font-bold uppercase tracking-widest text-mist">Destination guide · {city.chineseName}</p>
+              <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-2 text-sm text-white/72"><Link href="/city-kits" className="underline decoration-white/30 underline-offset-4 hover:text-white">Destinations</Link><span aria-hidden="true">/</span><span>{city.cityName}</span></nav>
+              <p className="mb-3 text-sm font-bold uppercase tracking-widest text-mist">First-trip destination guide · {city.chineseName}</p>
               <h1 className="text-5xl leading-[1.06] text-white md:text-6xl">{meta.kitTitle}</h1>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/82">{city.intro}</p>
+              <a href="#city-plan" className="mt-7 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-5 py-3 font-bold text-white hover:bg-ember-hover">Build your {city.cityName} plan</a>
             </div>
           </div>
         </header>
 
         <div className="border-b border-ink/10 bg-paper">
-          <div className="editorial-container grid divide-y divide-ink/10 py-3 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          <div className="editorial-container grid divide-y divide-ink/10 py-3 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
             <div className="px-4 py-3 sm:first:pl-0"><p className="text-xs font-bold uppercase text-ink/45">Recommended stay</p><p className="font-semibold">{city.recommendedDays}</p></div>
             <div className="px-4 py-3"><p className="text-xs font-bold uppercase text-ink/45">Best for</p><p className="font-semibold">{city.bestFor.slice(0, 2).join(" · ")}</p></div>
+            <div className="px-4 py-3"><p className="text-xs font-bold uppercase text-ink/45">Planning level</p><p className="font-semibold">{meta.difficultyLevel}</p></div>
             <div className="px-4 py-3"><p className="text-xs font-bold uppercase text-ink/45">Last updated</p><p className="font-semibold">{formatUpdatedDate(city.lastUpdated)}</p></div>
           </div>
         </div>
 
-        <section className="px-4 py-12">
+        <section id="city-plan" className="scroll-mt-24 px-4 py-12">
           <div className="mx-auto grid max-w-5xl gap-5">
             <Section title="Quick answer">
               <p>

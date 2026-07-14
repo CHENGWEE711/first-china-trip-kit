@@ -13,6 +13,7 @@ export type Guide = {
   content: GuideSection[];
   seoTitle: string;
   seoDescription: string;
+  publishedAt: string;
   updatedAt: string;
   featuredImage: ContentImage;
   heroImage: ContentImage;
@@ -29,7 +30,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Payment",
     summary:
       "A practical introduction to mobile payments, cash, cards, and what to set up before your first meal in China.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "How to Pay in China as a Foreigner: Alipay, WeChat Pay, Cards and Cash",
     seoDescription:
       "A practical China payment guide for foreign visitors: how to use Alipay, WeChat Pay, international cards, cash backup, and what to test before your first day in China.",
@@ -88,7 +90,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Apps",
     summary:
       "The essential apps for maps, translation, mobile payment, ride-hailing, trains, restaurants, and staying connected.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "Best Apps for Traveling in China: Payment, Maps, Translation, Trains and Taxis",
     seoDescription:
       "A practical app checklist for first-time visitors to China, including payment apps, maps, translation, ride-hailing, train booking, eSIM, food, and offline backups.",
@@ -147,7 +150,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Transportation",
     summary:
       "A practical foreign visitor's guide to booking Chinese high-speed trains, choosing the right station, using your passport, boarding, luggage, seat classes, and missed-train backups.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "How to Book High-Speed Trains in China as a Foreigner",
     seoDescription:
       "A practical guide for foreign visitors booking China high-speed trains: 12306, passport real-name tickets, Trip.com, station arrival, boarding, seat classes, changes, refunds, and common mistakes.",
@@ -217,7 +221,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Payment",
     summary:
       "How QR payments work, when to scan, when to show your code, and how to keep a backup ready.",
-    updatedAt: "2026-07-07",
+    publishedAt: "2026-07-07",
+    updatedAt: "2026-07-13",
     seoTitle: "How to Use Alipay and WeChat Pay in China",
     seoDescription:
       "A foreign visitor's guide to using Alipay and WeChat Pay in China, including QR codes, transport, restaurants, and backups.",
@@ -246,7 +251,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Planning",
     summary:
       "A practical packing checklist for documents, mobile data, payment backups, train travel, weather, and daily comfort.",
-    updatedAt: "2026-07-07",
+    publishedAt: "2026-07-07",
+    updatedAt: "2026-07-13",
     seoTitle: "China Travel Packing List for First-Time Visitors",
     seoDescription:
       "Pack confidently for China with this checklist covering passport, payment, SIM/eSIM, adapters, weather, trains, medicine, and daily essentials.",
@@ -281,7 +287,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Basic Chinese",
     summary:
       "Simple Mandarin phrases for taxis, restaurants, hotels, train stations, payment problems, and polite daily interactions.",
-    updatedAt: "2026-07-07",
+    publishedAt: "2026-07-07",
+    updatedAt: "2026-07-13",
     seoTitle: "Basic Chinese Phrases for Travelers",
     seoDescription:
       "Learn useful Mandarin phrases for travel in China, including greetings, taxis, restaurants, hotels, payment, and emergencies.",
@@ -318,7 +325,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Internet & eSIM",
     summary:
       "How to prepare mobile data, eSIM, roaming, Wi-Fi, offline screenshots, and app access before your first arrival day in China.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "China eSIM Guide for Tourists",
     seoDescription:
       "Prepare internet access for China with this first-time visitor guide to eSIMs, roaming, SIM cards, Wi-Fi, app access, offline backups, and arrival-day setup.",
@@ -352,7 +360,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Food",
     summary:
       "A practical guide to menus, QR ordering, spice levels, dietary phrases, payment, street food, and easy first meals in China.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "How to Order Food in China as a First-Time Visitor",
     seoDescription:
       "Learn how to order food in China with QR menus, translation apps, useful Chinese phrases, spice levels, payment tips, and first-day meal ideas.",
@@ -386,7 +395,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Visa & Entry",
     summary:
       "A practical planning guide for U.S. passport holders considering China travel in 2026, including visa planning, passport checks, flights, hotels, and official verification.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "Can Americans Travel to China in 2026? | First China Trip Kit",
     seoDescription:
       "Can Americans travel to China in 2026? Learn the practical steps U.S. travelers should verify before booking, including visa requirements, passport validity, flights, hotels, and official sources.",
@@ -420,7 +430,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Visa & Entry",
     summary:
       "A cautious planning guide to China's 240-hour visa-free transit policy, including eligibility checks, onward tickets, permitted areas, ports, and common mistakes.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "China 240-Hour Visa-Free Transit Guide for First-Time Visitors",
     seoDescription:
       "A practical guide to China's 240-hour visa-free transit policy: who may be eligible, documents to prepare, third-country rule, ports, permitted areas, route examples, and official verification checklist.",
@@ -454,7 +465,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Payment",
     summary:
       "A tourist-focused Alipay setup guide covering cards, QR codes, ride-hailing, restaurants, small purchases, limits, and backup payment habits.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "How to Use Alipay in China as a Tourist | First China Trip Kit",
     seoDescription:
       "Learn how tourists can use Alipay in China for QR payments, taxis, restaurants, metro tools, card setup, small test purchases, and payment troubleshooting.",
@@ -488,7 +500,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Payment",
     summary:
       "A practical guide to using WeChat Pay as a foreign visitor, including setup expectations, QR payments, mini programs, restaurants, taxis, and backups.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "How to Use WeChat Pay in China as a Foreigner",
     seoDescription:
       "Learn how foreign visitors can prepare WeChat Pay for China travel, including QR code payments, mini programs, taxis, restaurants, account setup, and backup options.",
@@ -522,7 +535,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Itinerary",
     summary:
       "A practical first-time Shanghai plan with arrival setup, The Bund, Yu Garden, French Concession, food, metro tips, rainy-day backups, and what to skip.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "3 Days in Shanghai for First-Time Visitors | First China Trip Kit",
     seoDescription:
       "Plan 3 days in Shanghai with a first-time visitor route covering The Bund, Yu Garden, French Concession, local food, transport, payment setup, and realistic pacing.",
@@ -551,7 +565,8 @@ const guideEntries: GuideWithoutVisuals[] = [
     category: "Planning",
     summary:
       "A pre-flight checklist for first-time China visitors covering documents, visa checks, payment, apps, eSIM, hotel addresses, transport, food, packing, and emergency phrases.",
-    updatedAt: "2026-07-08",
+    publishedAt: "2026-07-08",
+    updatedAt: "2026-07-13",
     seoTitle: "China Travel Checklist Before You Fly | First China Trip Kit",
     seoDescription:
       "Use this China travel checklist before you fly: documents, visa or visa-free checks, Alipay, WeChat Pay, apps, eSIM, hotel addresses, transport, packing, and emergency phrases.",

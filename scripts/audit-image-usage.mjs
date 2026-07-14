@@ -30,7 +30,12 @@ const featuredPaths = new Map();
 for (const [slug, visual] of Object.entries(guideVisuals)) {
   recordCheck(`${slug} featuredImage`, Boolean(visual.featuredImage?.src), visual.featuredImage?.src || "missing");
   recordCheck(`${slug} heroImage`, Boolean(visual.heroImage?.src), visual.heroImage?.src || "missing");
-  recordCheck(`${slug} inlineImages`, (visual.inlineImages?.length || 0) >= 3, `${visual.inlineImages?.length || 0} configured`);
+  recordCheck(`${slug} inlineImages`, (visual.inlineImages?.length || 0) <= 4, `${visual.inlineImages?.length || 0} configured (0-4 allowed)`);
+  recordCheck(
+    `${slug} inline placement`,
+    visual.inlineImages.every((item) => ["before-steps", "before-common-mistakes", "before-details"].includes(item.placement)),
+    visual.inlineImages.map((item) => item.placement).join(", ") || "no inline images",
+  );
   const inlinePaths = visual.inlineImages.map((item) => item.src);
   recordCheck(`${slug} distinct inline files`, new Set(inlinePaths).size === inlinePaths.length, `${new Set(inlinePaths).size}/${inlinePaths.length} distinct`);
   recordCheck(`${slug} inline excludes hero`, !inlinePaths.includes(visual.heroImage.src), visual.heroImage.src);
@@ -98,7 +103,7 @@ ${[...featuredPaths].map(([src, slug]) => `- \`${slug}\` → \`${src}\``).join("
 
 ## DOM rendering verification
 
-File and data checks are complemented by \`tests/guides/content-visuals.spec.ts\`. That browser test verifies every Guide route renders one visible hero and three visible, distinct inline figures inside \`<article>\`; Related Guide card images are not counted.
+File and data checks are complemented by \`tests/guides/content-visuals.spec.ts\`. That browser test verifies every Guide route renders one visible Hero and zero to four visible, distinct, intentionally placed inline figures inside \`<article>\`; Related Guide Card images are not counted.
 
 ## Errors
 

@@ -42,3 +42,11 @@ test("baseline security headers are configured globally", async () => {
   assert.match(config, /X-Frame-Options/);
   assert.match(config, /Permissions-Policy/);
 });
+
+test("reduced-motion users do not inherit animated scrolling or long transitions", async () => {
+  const styles = await read("app/globals.css");
+
+  assert.match(styles, /prefers-reduced-motion:\s*reduce/);
+  assert.match(styles, /scroll-behavior:\s*auto/);
+  assert.match(styles, /transition-duration:\s*0\.01ms/);
+});

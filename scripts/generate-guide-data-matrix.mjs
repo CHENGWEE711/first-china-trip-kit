@@ -48,7 +48,11 @@ const paidCtaSlugs = new Set([
   "how-to-book-high-speed-trains-in-china",
   "china-240-hour-visa-free-transit-guide",
 ]);
-const insertionPoints = ["Before Step-by-step guide", "Before Common mistakes", "Before Detailed guidance"];
+const insertionPoint = (image) => ({
+  "before-steps": "Before Step-by-step guide",
+  "before-common-mistakes": "Before Common mistakes",
+  "before-details": "Before Detailed guidance",
+})[image.placement] || "Placement missing";
 const readingTime = (guide) => {
   const words = [guide.title, guide.summary, ...guide.content.flatMap((section) => [section.heading, section.body, ...(section.bullets || [])])]
     .join(" ")
@@ -102,7 +106,7 @@ Generated: ${new Date().toISOString()}
 
 - Guide records: **${rows.length}/14**
 - Explicit hero images: **${rows.filter((row) => row.visual.heroImage?.src).length}/14**
-- Guides with at least three inline visuals: **${rows.filter((row) => row.visual.inlineImages.length >= 3).length}/14**
+- Guides using the intentional 0-4 inline-visual range: **${rows.filter((row) => row.visual.inlineImages.length <= 4).length}/14**
 - Unique featured images across Guides: **${rows.filter((row) => row.featuredUnique).length}/14**
 - Unique hero images across Guides: **${rows.filter((row) => row.heroUnique).length}/14**
 - DOM rendering evidence: \`tests/guides/content-visuals.spec.ts\` checks one hero and three visible, distinct inline figures on every Guide route.
@@ -121,16 +125,14 @@ ${rows.map((row) => `### ${row.title}
 - Slug: \`${row.slug}\`
 - Featured: \`${row.visual.featuredImage.src}\` — credit \`${row.visual.featuredImage.creditId}\` (${creditById.get(row.visual.featuredImage.creditId)?.sourcePlatform || "missing credit"}); alt: “${row.visual.featuredImage.alt}”
 - Hero: \`${row.visual.heroImage.src}\` — credit \`${row.visual.heroImage.creditId}\` (${creditById.get(row.visual.heroImage.creditId)?.sourcePlatform || "missing credit"}); alt: “${row.visual.heroImage.alt}”
-- Inline visual 1 — ${insertionPoints[0]}: “${row.visual.inlineImages[0]?.caption || row.visual.inlineImages[0]?.alt}”; \`${row.visual.inlineImages[0]?.src}\`; credit \`${row.visual.inlineImages[0]?.creditId}\`; alt: “${row.visual.inlineImages[0]?.alt}”
-- Inline visual 2 — ${insertionPoints[1]}: “${row.visual.inlineImages[1]?.caption || row.visual.inlineImages[1]?.alt}”; \`${row.visual.inlineImages[1]?.src}\`; credit \`${row.visual.inlineImages[1]?.creditId}\`; alt: “${row.visual.inlineImages[1]?.alt}”
-- Inline visual 3 — ${insertionPoints[2]}: “${row.visual.inlineImages[2]?.caption || row.visual.inlineImages[2]?.alt}”; \`${row.visual.inlineImages[2]?.src}\`; credit \`${row.visual.inlineImages[2]?.creditId}\`; alt: “${row.visual.inlineImages[2]?.alt}”
+${row.visual.inlineImages.length ? row.visual.inlineImages.map((image, index) => `- Inline visual ${index + 1} — ${insertionPoint(image)}: “${image.caption || image.alt}”; \`${image.src}\`; credit \`${image.creditId}\`; alt: “${image.alt}”`).join("\n") : "- Inline visuals: none; the article uses its structured text or tables instead of decorative filler."}
 - CTA: ${row.cta.join("; ")}
 - Related Guides: ${(row.detail.relatedGuideSlugs || []).map((slug) => `\`${slug}\``).join(", ") || "Resolved from same category when no explicit list exists."}
 `).join("\n")}
 
 ## Interpretation
 
-The three inline entries are article figures rendered inside \`<article>\`; hero and Related Guide card images are excluded from the inline count. The Playwright DOM test also rejects hidden or zero-size inline images, repeated inline files, and reuse of the hero file as one of the three inline visuals.
+Inline entries are article figures rendered inside \`<article>\`; Hero and Related Guide Card images are excluded from the inline count. The Playwright DOM test allows zero to four figures based on instructional value and rejects hidden or zero-size images, repeated inline files, and reuse of the Hero file as an inline visual.
 `;
 
 fs.writeFileSync(path.join(root, "docs/PHASE_6_GUIDE_DATA_MATRIX.md"), markdown);

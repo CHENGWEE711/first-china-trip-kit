@@ -107,6 +107,16 @@ a, button, input, textarea, select { outline-offset: 3px; }
   :root { --page-gutter: 24px; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .content-prose h2 {
   margin-top: 2.4rem;
   margin-bottom: 0.75rem;

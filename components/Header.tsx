@@ -1,15 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Globe2, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { navItems, siteConfig } from "@/lib/site";
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
 
   function closeMenu(returnFocus = true) {
     setOpen(false);
@@ -20,13 +22,35 @@ export function Header() {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeMenu();
+    const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const frame = window.requestAnimationFrame(() => {
+      mobileNavRef.current?.querySelector<HTMLElement>(focusableSelector)?.focus();
+    });
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMenu();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(
+        mobileNavRef.current?.querySelectorAll<HTMLElement>(focusableSelector) || [],
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable.at(-1)!;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener("keydown", handleEscape);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
+      window.cancelAnimationFrame(frame);
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleEscape);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
 
@@ -34,9 +58,14 @@ export function Header() {
     <header className="sticky top-0 z-50 h-16 border-b border-ink/10 bg-paper/95">
       <div className="editorial-container flex h-16 items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2.5 font-bold text-ink" aria-label={`${siteConfig.name} home`}>
-          <span className="grid h-9 w-9 place-items-center rounded-md bg-ember text-white shadow-sm">
-            <Globe2 aria-hidden="true" size={20} />
-          </span>
+          <Image
+            src="/brand/first-china-trip-kit-logo.svg"
+            alt=""
+            aria-hidden="true"
+            width={40}
+            height={40}
+            className="h-9 w-9 shrink-0"
+          />
           <span className="text-base sm:text-lg">{siteConfig.name}</span>
         </Link>
         <nav aria-label="Primary navigation" className="hidden items-center gap-1 lg:flex">
@@ -46,7 +75,7 @@ export function Header() {
           })}
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="/#free-checklist" className="hidden min-h-11 items-center rounded-md bg-ember px-4 py-2 text-sm font-semibold text-white transition hover:bg-ember-hover sm:inline-flex">Get the Free Checklist</Link>
+          <Link href="/#free-checklist" className="hidden min-h-11 items-center rounded-md bg-ember px-4 py-2 text-sm font-semibold text-white transition hover:bg-ember-hover xl:inline-flex">Get the Free Checklist</Link>
           <button ref={menuButtonRef} type="button" className="grid h-11 w-11 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-ember/40 hover:text-ember focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 lg:hidden" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => open ? closeMenu() : setOpen(true)}>
             {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
@@ -55,13 +84,13 @@ export function Header() {
       {open ? (
         <>
           <button type="button" aria-label="Close navigation menu overlay" onClick={() => closeMenu()} className="fixed inset-x-0 bottom-0 top-16 z-30 bg-ink/45 lg:hidden" />
-          <nav id="mobile-navigation" aria-label="Mobile navigation" className="fixed inset-x-0 top-16 z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-ink/10 bg-paper px-4 pb-[max(24px,env(safe-area-inset-bottom))] pt-4 shadow-editorial lg:hidden">
+          <nav ref={mobileNavRef} id="mobile-navigation" aria-label="Mobile navigation" className="fixed inset-x-0 top-16 z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-ink/10 bg-paper px-4 pb-[max(24px,env(safe-area-inset-bottom))] pt-4 shadow-editorial lg:hidden">
           <div className="editorial-container grid gap-1">
             {navItems.map((item) => {
               const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
               return <Link key={item.href} href={item.href} onClick={() => closeMenu()} aria-current={active ? "page" : undefined} className={`rounded-md px-4 py-3 text-base font-semibold ${active ? "bg-mist text-jade" : "text-ink/72 hover:bg-sand hover:text-ink"}`}>{item.label}</Link>;
             })}
-            <Link href="/#free-checklist" onClick={() => closeMenu()} className="mt-3 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 font-semibold text-white hover:bg-ember-hover sm:hidden">Get the Free Checklist</Link>
+            <Link href="/#free-checklist" onClick={() => closeMenu()} className="mt-3 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 font-semibold text-white hover:bg-ember-hover">Get the Free Checklist</Link>
           </div>
           </nav>
         </>

@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useRef, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { hasWhatsAppContact } from "@/lib/whatsapp";
 import { trackEvent } from "@/lib/analytics";
@@ -16,9 +16,15 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [continueOnWhatsApp, setContinueOnWhatsApp] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
   const hasTrackedStart = useRef(false);
   const isSubmitting = status === "loading";
   const whatsappEnabled = hasWhatsAppContact();
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIsHydrated(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   function trackFormStart() {
     if (hasTrackedStart.current) {
@@ -98,6 +104,8 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
 
   return (
     <form
+      action="/api/contact"
+      method="post"
       onSubmit={handleSubmit}
       onFocusCapture={trackFormStart}
       className="grid min-w-0 gap-4 rounded-lg border border-ink/10 bg-paper p-5 shadow-soft"
@@ -214,10 +222,16 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={!isHydrated || isSubmitting}
         className="min-h-12 w-full rounded-md bg-ember px-5 py-3 text-base font-bold text-white transition hover:bg-ember-hover disabled:cursor-wait disabled:opacity-70 sm:w-fit"
       >
-        {status === "success" ? "Message saved" : isSubmitting ? "Saving..." : "Send question"}
+        {!isHydrated
+          ? "Loading form..."
+          : status === "success"
+            ? "Message saved"
+            : isSubmitting
+              ? "Saving..."
+              : "Send question"}
       </button>
       <p className="text-sm leading-relaxed text-ink/58">
         We do not provide legal, immigration, visa, financial, or official government
@@ -225,7 +239,11 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       </p>
 
       {message ? (
-        <div role="status" aria-live="polite" className="grid gap-3">
+        <div
+          role={status === "success" ? "status" : "alert"}
+          aria-live="polite"
+          className="grid gap-3"
+        >
           <p
             className={`text-base font-semibold ${status === "success" ? "text-jade" : "text-ember"}`}
           >

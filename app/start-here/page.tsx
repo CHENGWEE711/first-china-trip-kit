@@ -1,36 +1,42 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeDollarSign, BedDouble, MapPinned, Route, ShieldCheck, Signal, Smartphone } from "lucide-react";
-import { ProductActionButton } from "@/components/ProductActionButton";
-import { cityImages, editorialImages, guideVisuals, itineraryVisuals } from "@/data/images";
+import { ArrowRight, Clock3, ShieldCheck } from "lucide-react";
+import { StartHerePath } from "@/components/StartHerePath";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Start Here: Plan Your First China Trip Step by Step",
-  description: "A clear seven-step China trip preparation path covering entry rules, payments, apps, internet, hotels, cities, and realistic itineraries.",
+  title: "Start Here: Your 8-Step First China Trip Plan",
+  description:
+    "Prepare your first China trip in order: entry rules, payments, apps, internet, transport, Chinese addresses, checklist, then cities and itineraries.",
   path: "/start-here",
 });
 
-const steps = [
-  { title: "Check your visa or transit eligibility", body: "Confirm your passport rules, route and permitted travel area before making non-refundable bookings.", href: "/tools/visa-free-eligibility-checker", label: "Check what to verify", icon: ShieldCheck, image: guideVisuals["china-240-hour-visa-free-transit-guide"].featuredImage },
-  { title: "Set up payments", body: "Prepare Alipay, a second payment option, a physical card and a small RMB cash backup.", href: "/guides/how-to-pay-in-china-as-a-foreigner", label: "Prepare payments", icon: BadgeDollarSign, image: guideVisuals["how-to-pay-in-china-as-a-foreigner"].featuredImage },
-  { title: "Install essential apps", body: "Keep the first-day stack small: payment, translation, maps, mobile data, train support and offline screenshots.", href: "/tools/essential-apps-checklist", label: "Build your app stack", icon: Smartphone, image: guideVisuals["best-apps-for-traveling-in-china"].featuredImage },
-  { title: "Arrange internet access", body: "Choose roaming, eSIM or a local SIM, then save key details for moments when mobile data fails.", href: "/guides/china-esim-guide-for-tourists", label: "Plan mobile data", icon: Signal, image: guideVisuals["china-esim-guide-for-tourists"].featuredImage },
-  { title: "Save hotel and transport details", body: "Keep your hotel name, Chinese address, phone number, station name and booking confirmations offline.", href: "/guides/how-to-book-high-speed-trains-in-china", label: "Understand train travel", icon: BedDouble, image: editorialImages.transport },
-  { title: "Choose your cities", body: "Start with one strong base, then add cities only when transfers fit your available days and energy.", href: "/city-kits", label: "Compare destinations", icon: MapPinned, image: cityImages.shanghai },
-  { title: "Build your itinerary", body: "Use realistic daily pacing with room for jet lag, station transfers, weather and booking windows.", href: "/itinerary-kits", label: "Browse itinerary kits", icon: Route, image: itineraryVisuals["10-days-classic-china-itinerary"].cardImage },
-];
-
 export default function StartHerePage() {
-  const buyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
   return (
     <>
-      <header className="editorial-section bg-paper"><div className="editorial-container grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-end"><div><p className="text-sm font-bold uppercase tracking-widest text-ember">Start here</p><h1 className="mt-3 text-5xl leading-[1.06] md:text-6xl">Seven steps before your first China trip</h1><p className="mt-6 max-w-2xl text-lg text-ink/65">Work through the decisions in order. You do not need every app or every booking today; you need a dependable arrival plan.</p></div><div className="relative aspect-[3/2] overflow-hidden rounded-lg"><Image src={editorialImages.station.src} alt={editorialImages.station.alt} fill priority sizes="(min-width: 1024px) 52vw, 100vw" className="object-cover" /></div></div></header>
-      <section className="editorial-section"><div className="editorial-container max-w-5xl"><div className="relative grid gap-8 before:absolute before:bottom-6 before:left-6 before:top-6 before:hidden before:w-px before:bg-ink/15 md:before:block">
-        {steps.map((step, index) => { const Icon = step.icon; return <article key={step.title} className="relative grid gap-5 border-b border-ink/12 pb-8 md:grid-cols-[3rem_1fr] md:border-0 md:pb-0"><div className="z-10 grid h-12 w-12 place-items-center rounded-full bg-jade text-white"><Icon aria-hidden="true" size={21} /></div><div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center"><div><p className="text-xs font-bold uppercase tracking-widest text-ember">Step {index + 1}</p><h2 className="mt-2 text-3xl leading-tight">{step.title}</h2><p className="mt-3 max-w-2xl text-ink/65">{step.body}</p><Link href={step.href} className="mt-4 inline-flex min-h-11 items-center gap-2 font-bold text-ember">{step.label}<ArrowRight aria-hidden="true" size={17} /></Link></div>{step.image ? <div className="relative hidden h-36 w-56 overflow-hidden rounded-lg lg:block"><Image src={step.image.src} alt={step.image.alt} fill sizes="224px" className="object-cover" /></div> : null}</div></article>; })}
-      </div></div></section>
-      <section className="bg-jade py-14 text-white"><div className="editorial-container flex flex-col justify-between gap-6 md:flex-row md:items-center"><div><h2 className="text-4xl text-white">Take the plan offline</h2><p className="mt-3 max-w-2xl text-white/72">Download the free checklist for quick preparation, or use the printable setup guide for payment and app troubleshooting.</p></div><div className="flex flex-col gap-3 sm:flex-row"><ProductActionButton canBuy href="/thank-you" label="Download the Free Checklist" productId="china-first-trip-checklist" eventName="checklist_download_clicked" placement="start_here_bottom" /><ProductActionButton canBuy={Boolean(buyUrl)} href={buyUrl || "/store#inside-the-guide"} isExternal={Boolean(buyUrl)} label={buyUrl ? "Get the $7 Setup Guide" : "See the $7 Setup Guide"} productId="china-payment-apps-setup-guide" placement="start_here_bottom" className="border border-white/35 !bg-transparent hover:!bg-white hover:!text-ink" /></div></div></section>
+      <header className="border-b border-ink/10 bg-sand px-4 py-14 md:py-20">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_0.72fr] lg:items-end">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-widest text-ember">Start Here</p>
+            <h1 className="mt-3 max-w-4xl text-5xl leading-[1.04] text-ink md:text-6xl">Eight steps before your first China trip</h1>
+            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-ink/68">Work from entry rules to an offline-ready arrival plan. Choose cities only after the systems that support the trip are clear.</p>
+          </div>
+          <aside className="border-l-2 border-ember pl-5">
+            <p className="flex items-center gap-2 text-sm font-bold uppercase text-ink/48"><Clock3 aria-hidden="true" size={18} />About 20–30 minutes to map the gaps</p>
+            <p className="mt-4 text-base leading-relaxed text-ink/66">You do not need to finish every setup today. Mark what is ready, open the action you need, then return to this path.</p>
+            <p className="mt-4 flex items-start gap-2 text-sm leading-relaxed text-ink/58"><ShieldCheck aria-hidden="true" className="mt-0.5 shrink-0 text-jade" size={18} />Entry and transit rules can change. This path helps organize checks; it does not guarantee visa-free transit or entry.</p>
+          </aside>
+        </div>
+      </header>
+
+      <StartHerePath />
+
+      <section className="bg-ink px-4 py-12 text-white">
+        <div className="mx-auto flex max-w-5xl flex-col justify-between gap-6 md:flex-row md:items-center">
+          <div><p className="text-xs font-bold uppercase tracking-widest text-mist">Still unsure?</p><h2 className="mt-2 text-3xl text-white">Ask one focused planning question.</h2><p className="mt-3 max-w-2xl text-white/68">Include your passport country, travel month, trip length and cities considered so the next step is practical.</p></div>
+          <Link href="/contact" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-ember px-5 py-3 font-bold text-white hover:bg-ember-hover md:w-fit">Contact us<ArrowRight aria-hidden="true" size={17} /></Link>
+        </div>
+      </section>
     </>
   );
 }

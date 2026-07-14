@@ -20,14 +20,22 @@ export function ProductCard({ product }: ProductCardProps) {
   const canBuy = isChecklist
     ? Boolean(purchaseUrl || localDownloadUrl)
     : product.status === "available" && hasExternalPurchaseUrl;
+  const checkoutUnavailable =
+    isPaymentAppsGuide && product.status === "available" && !hasExternalPurchaseUrl;
 
-  if (!canBuy) {
+  if (!canBuy && !checkoutUnavailable) {
     return null;
   }
   const purchaseIsExternal = Boolean(purchaseUrl && /^https?:\/\//.test(purchaseUrl));
-  const statusLabel = isChecklist ? "Free / Pay what you want" : "Available now";
+  const statusLabel = isChecklist
+    ? "Free / Pay what you want"
+    : checkoutUnavailable
+      ? "Checkout temporarily unavailable"
+      : "Available now";
   const statusClass = isChecklist
     ? "bg-ember text-white"
+    : checkoutUnavailable
+      ? "bg-sand text-ink"
     : product.status === "available"
       ? "bg-jade text-white"
       : "bg-mist text-ink/58";
@@ -115,17 +123,33 @@ export function ProductCard({ product }: ProductCardProps) {
       ) : null}
       <p className="mt-4 text-sm text-ink/58">{product.refundNote}</p>
       <div className="mt-auto pt-1">
-        <ProductActionButton
-          href={actionHref}
-          className="mt-5"
-          download={isChecklist && !purchaseUrl}
-          eventName={actionEventName}
-          isExternal={purchaseIsExternal}
-          canBuy
-          label={actionLabel}
-          placement="store_product_card"
-          productId={product.id}
-        />
+        {canBuy ? (
+          <ProductActionButton
+            href={actionHref}
+            className="mt-5"
+            download={isChecklist && !purchaseUrl}
+            eventName={actionEventName}
+            isExternal={purchaseIsExternal}
+            canBuy
+            label={actionLabel}
+            placement="store_product_card"
+            productId={product.id}
+          />
+        ) : (
+          <div className="mt-5 rounded-md border border-ember/25 bg-sand p-4" role="status">
+            <p className="font-bold text-ink">Secure checkout is temporarily unavailable.</p>
+            <p className="mt-2 text-sm leading-relaxed text-ink/68">
+              You can review every preview page now. Please contact us if you want
+              to be notified when the Payhip checkout link is restored.
+            </p>
+            <a
+              href="/contact"
+              className="mt-3 inline-flex min-h-11 items-center font-semibold text-ember hover:text-ember-hover"
+            >
+              Contact support
+            </a>
+          </div>
+        )}
       </div>
     </article>
   );

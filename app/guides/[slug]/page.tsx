@@ -34,6 +34,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     path: `/guides/${guide.slug}`,
     image: guide.heroImage.src,
     imageAlt: guide.heroImage.alt,
+    imageWidth: 2400,
+    imageHeight: 1600,
     type: "article",
   });
 }

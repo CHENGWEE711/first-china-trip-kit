@@ -234,29 +234,30 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
   },
   "240-hour-visa-free-china-itinerary": {
     importantNotice:
-      "This is a planning guide, not immigration advice. 240-hour visa-free transit eligibility can depend on nationality, entry and exit ports, confirmed onward ticket, third country or region routing, and the permitted stay area for the port you use. Verify official requirements before booking flights or hotels.",
-    lastVerified: "2026-07-08",
+      "This is a planning guide, not immigration advice. 240-hour visa-free transit eligibility can depend on nationality, entry and exit ports, confirmed onward ticket, third country or region routing, and the permitted stay area for the port you use. Rules can change. Confirm your eligibility and entry port with China’s National Immigration Administration or your airline before travel.",
+    lastVerified: "2026-07-13",
     officialSourceLinks: [
       {
-        label: "China National Immigration Administration",
-        href: "https://en.nia.gov.cn/n147418/n147463/c183412/content.html",
-        note: "Official English policy information for China's expanded 240-hour visa-free transit rules.",
+        label: "National Immigration Administration: 10 new opening measures",
+        href: "https://www.nia.gov.cn/n897453/c1751080/content.html",
+        note: "Official Chinese announcement published November 3, 2025; it records 65 eligible ports across 24 provincial-level regions under the 240-hour policy.",
       },
       {
-        label: "National Immigration Administration news",
-        href: "https://en.nia.gov.cn/",
-        note: "Use for current immigration notices and policy updates.",
+        label: "National Immigration Administration: 240-hour transit notice (English)",
+        href: "https://en.nia.gov.cn/n147418/n147468/c187308/content.html",
+        note: "Official English notice published November 3, 2025 for the latest port expansion.",
       },
       {
-        label: "Chinese embassy or consulate for your country",
-        href: "https://www.mfa.gov.cn/eng/",
-        note: "Use for local consular notices before booking.",
+        label: "National Immigration Administration: visa-free transit policy",
+        href: "https://www.nia.gov.cn/n741440/n741577/c1731205/content.html",
+        note: "Official Chinese policy reference covering eligible nationalities, ports, permitted areas, and transit conditions.",
       },
     ],
     routeSummary: [
+      "As last verified on July 13, 2026, the National Immigration Administration lists 55 eligible nationalities, 65 entry ports, and permitted travel areas across 24 provincial-level regions. Those totals can change, so use the linked NIA pages for your final check.",
       "This route is built around Shanghai plus nearby high-speed rail cities that are commonly paired with a visa-free transit stay. It is practical, low-friction, and easy to adjust if eligibility rules or arrival times change.",
       "The plan intentionally includes buffer time because transit immigration rules, onward ticket checks, and airport transfers can take longer than a normal domestic arrival.",
-      "Use it as a route framework only after confirming your nationality, port, onward ticket, third country or region requirement, and allowed travel area.",
+      "Use it as a route framework only after confirming your nationality, port, onward ticket to a third country or region, and allowed travel area. NIA guidance generally calculates the 240-hour period from 00:00 on the day after entry; confirm the exact departure deadline at your entry port.",
     ],
     bestForDetails: [
       "Eligible travelers using Shanghai as a transit entry point.",
@@ -309,6 +310,11 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
         question: "Do I need an onward ticket?",
         answer:
           "Visa-free transit policies typically require proof of onward travel to a third country or region. Carry offline and printed copies in case airport staff ask for them.",
+      },
+      {
+        question: "When does the 240-hour period start?",
+        answer:
+          "NIA guidance generally calculates the 240-hour period from 00:00 on the day after entry. Confirm the exact permitted departure deadline with immigration at your entry port because your route and port still need to qualify.",
       },
       {
         question: "Can I leave Shanghai during a visa-free transit stay?",

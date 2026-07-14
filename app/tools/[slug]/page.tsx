@@ -50,10 +50,15 @@ export default async function ToolDetailPage({ params }: PageProps) {
       <section className="px-4 py-12">
         <div className="mx-auto max-w-4xl">
           <ToolKitWidget type={tool.type} />
-          <p className="mt-5 text-sm leading-relaxed text-ink/56">
-            This tool is for planning only. Always verify official requirements,
-            booking rules, and current local conditions before paying for travel.
-          </p>
+          <div className="mt-5 rounded-md border border-ink/10 bg-sand p-4 text-sm leading-relaxed text-ink/62">
+            <p className="font-bold text-ink">Private by design</p>
+            <p className="mt-1">
+              Your answers stay in this browser; this tool does not ask for a
+              passport number, bank details, or an account. Results are planning
+              guidance only. Always verify official requirements, booking rules,
+              and current local conditions before paying for travel.
+            </p>
+          </div>
           <Link
             href="/tools"
             className="mt-6 inline-flex min-h-11 items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
@@ -79,6 +80,19 @@ const usefulPhrases = [
   },
 ];
 
+const companionGuideByItinerary: Record<string, { href: string; label: string; note: string }> = {
+  "240-hour-visa-free-china-itinerary": {
+    href: "/guides/china-240-hour-visa-free-transit-guide",
+    label: "Check the 240-hour policy Guide first",
+    note: "This page is route planning, not an eligibility decision. Use the policy Guide to verify nationality, ports, onward routing and permitted areas before relying on this itinerary.",
+  },
+  "3-days-in-shanghai": {
+    href: "/guides/3-days-in-shanghai-for-first-time-visitors",
+    label: "Read the Shanghai planning Guide",
+    note: "This itinerary is an executable schedule. Use the editorial Guide when you still need help choosing stops, pacing and neighborhood priorities.",
+  },
+};
+
 function formatDate(value?: string) {
   if (!value) {
     return null;
@@ -102,6 +116,7 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
 
   const content = getItineraryGuideContent(itinerary.slug);
   const products = getProductsByIds(content?.relatedProductIds || []);
+  const companionGuide = companionGuideByItinerary[itinerary.slug];
   const bookingReminders = content?.bookingReminders || itinerary.tips;
   const updatedDate = formatDate(content?.lastUpdated || content?.lastVerified || "2026-07-08");
   const skipItems =
@@ -116,7 +131,16 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
       <SEOJsonLd data={itineraryJsonLd(itinerary, `/itinerary-kits/${itinerary.slug}`, content?.faq)} />
       <article>
         <header className="relative isolate min-h-[560px] overflow-hidden bg-ink px-4 py-12 text-white">
-          <Image src={itinerary.heroImage.src} alt={itinerary.heroImage.alt} fill priority loading="eager" sizes="100vw" className="object-cover" />
+          <Image
+            src={itinerary.heroImage.src}
+            alt={itinerary.heroImage.alt}
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectPosition: itinerary.heroImage.position }}
+            className="object-cover"
+            data-testid="itinerary-hero-image"
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/72 to-ink/20" />
           <div className="relative mx-auto flex min-h-[464px] max-w-5xl flex-col justify-end">
             <p className="mb-3 text-sm font-bold uppercase text-mist">Itinerary Kit</p>
@@ -127,7 +151,7 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
               {itinerary.summary}
             </p>
             {content?.importantNotice ? (
-              <div className="mt-6 rounded-md border border-white/20 bg-ink/65 p-4 backdrop-blur-sm">
+              <div className="mt-6 hidden rounded-md border border-white/20 bg-ink/65 p-4 backdrop-blur-sm sm:block">
                 <p className="text-sm font-bold uppercase text-ember">Important notice</p>
                 <p className="mt-2 text-base leading-relaxed text-white/78">
                   {content.importantNotice}
@@ -155,6 +179,15 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
           </div>
         </header>
 
+        {content?.importantNotice ? (
+          <section className="border-b border-ink/10 bg-sand px-4 py-5 sm:hidden" role="note" aria-label="Important notice">
+            <div className="mx-auto max-w-5xl rounded-md border border-ember/25 bg-paper p-4 shadow-soft">
+              <p className="text-sm font-bold uppercase text-ember">Important notice</p>
+              <p className="mt-2 text-base leading-relaxed text-ink/72">{content.importantNotice}</p>
+            </div>
+          </section>
+        ) : null}
+
         <section className="px-4 py-12">
           <div className="mx-auto grid max-w-5xl gap-5">
             <Section title="Quick answer">
@@ -162,6 +195,14 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
                 {content?.routeSummary?.[0] ||
                   `${itinerary.title} is a practical first-trip route for ${itinerary.cities.join(", ")} with ${itinerary.durationDays} days of planning structure.`}
               </p>
+              {companionGuide ? (
+                <aside className="mt-5 border-l-2 border-jade bg-mist px-4 py-3" aria-label="Related planning guide">
+                  <p>{companionGuide.note}</p>
+                  <Link href={companionGuide.href} className="mt-3 inline-flex min-h-11 items-center font-bold text-jade hover:text-ember">
+                    {companionGuide.label}
+                  </Link>
+                </aside>
+              ) : null}
             </Section>
 
             <Section title="Who this itinerary is for">
@@ -215,13 +256,15 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
               <div className="grid gap-5">
                 {itinerary.dayByDayPlan.map((day) => {
                   const dayImage =
-                    itinerary.dailyImages?.[day.day - 1] ||
-                    itinerary.routeImages[(day.day - 1) % itinerary.routeImages.length];
+                    itinerary.dailyImages?.[day.day - 1] ??
+                    itinerary.routeImages[day.day - 1] ??
+                    itinerary.cardImage;
                   return (
                   <section
                     key={day.day}
                     id={`day-${day.day}`}
                     className="rounded-md border border-ink/10 bg-sand p-4"
+                    data-testid={`itinerary-day-${day.day}`}
                   >
                     <p className="text-sm font-bold uppercase text-ember">Day {day.day}</p>
                     <h3 className="mt-1 text-xl font-bold leading-tight text-ink">
@@ -232,9 +275,11 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
                         src={dayImage.src}
                         alt={dayImage.alt}
                         fill
+                        loading="lazy"
                         sizes="(min-width: 1024px) 860px, 100vw"
                         style={{ objectPosition: dayImage.position }}
                         className="object-cover"
+                        data-testid={`itinerary-day-image-${day.day}`}
                       />
                     </figure>
                     <div className="mt-4 grid gap-3">
@@ -265,7 +310,15 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
 
             <Section title="Transport between cities">
               <figure className="relative mb-5 aspect-[16/9] overflow-hidden rounded-md">
-                <Image src={itinerary.routeImages.at(-1)!.src} alt={itinerary.routeImages.at(-1)!.alt} fill sizes="(min-width: 1024px) 860px, 100vw" className="object-cover" />
+                <Image
+                  src={itinerary.routeImages.at(-1)!.src}
+                  alt={itinerary.routeImages.at(-1)!.alt}
+                  fill
+                  loading="lazy"
+                  sizes="(min-width: 1024px) 860px, 100vw"
+                  style={{ objectPosition: itinerary.routeImages.at(-1)!.position }}
+                  className="object-cover"
+                />
               </figure>
               <ul className="grid gap-3">
                 {itinerary.dayByDayPlan.map((day) => (

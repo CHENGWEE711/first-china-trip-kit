@@ -12,9 +12,9 @@ const planLinks = [
 ];
 
 const learnLinks = [
-  { href: "/guides", label: "Travel Guides" },
+  { href: "/guides", label: "Guides" },
   { href: "/travel-essentials", label: "Travel Essentials" },
-  { href: "/tools", label: "Planning Tools" },
+  { href: "/tools", label: "Tools" },
   { href: "/#free-checklist", label: "Free Checklist" },
 ];
 
