@@ -1,0 +1,197 @@
+{
+  "phase": "D",
+  "generatedAt": "2026-07-14T04:20:00+08:00",
+  "branch": "audit/full-site-content-image-upgrade",
+  "baselineCommit": "cd48ce85a6080e24c279fd3a89e3d085f940e0ee",
+  "scope": [
+    "homepage",
+    "start-here",
+    "destinations",
+    "destination-details",
+    "travel-essentials",
+    "tools",
+    "store",
+    "checklist-and-product-support",
+    "about-contact-newsletter-policies-thank-you-404",
+    "header-footer",
+    "legacy-routes-sitemap-robots-public-metadata"
+  ],
+  "summary": {
+    "liveCities": 8,
+    "uniqueHeroFiles": 8,
+    "uniqueCardFiles": 8,
+    "citiesWhereCardEqualsHero": 8,
+    "cityHeroesAtLeast2000pxWide": 4,
+    "cityHeroWideCropRisks": 3,
+    "destinationMappingsWithGenericOrMismatchedBodyImage": 8,
+    "existingCityFilesWithCompleteCredit": 16,
+    "indexableLegacyRoutesMissingFromSitemap": 17,
+    "brokenInternalLinks": 0,
+    "imageOccurrences": 499,
+    "referenceDuplicateGroups": 43,
+    "perceptualNearDuplicateGroups": 14,
+    "heroOccurrencesUnder2000px": 19,
+    "contentOccurrencesUnder1400px": 7,
+    "missingFiles": 2,
+    "pageIssues": 5
+  },
+  "cities": [
+    {
+      "slug": "shanghai",
+      "card": "/images/cities/shanghai-bund-skyline.webp",
+      "hero": "/images/cities/shanghai-bund-skyline.webp",
+      "cardEqualsHero": true,
+      "width": 2000,
+      "height": 1333,
+      "sizeKB": 327,
+      "qualityFlags": [],
+      "bodyIssues": ["single skyline file used across card, hero, body and itinerary contexts"],
+      "action": "separate skyline hero from street-life card and Shanghai-only body roles"
+    },
+    {
+      "slug": "beijing",
+      "card": "/images/cities/beijing-forbidden-city-courtyard.webp",
+      "hero": "/images/cities/beijing-forbidden-city-courtyard.webp",
+      "cardEqualsHero": true,
+      "width": 2000,
+      "height": 1326,
+      "sizeKB": 281,
+      "qualityFlags": [],
+      "bodyIssues": ["generic station transport image", "courtyard image repeated across multiple roles"],
+      "action": "use distinct imperial hero, hutong/life card and Beijing transport image"
+    },
+    {
+      "slug": "xian",
+      "card": "/images/cities/xian-city-wall-sunset.webp",
+      "hero": "/images/cities/xian-city-wall-sunset.webp",
+      "cardEqualsHero": true,
+      "width": 2000,
+      "height": 1362,
+      "sizeKB": 212,
+      "qualityFlags": ["near-duplicate-review"],
+      "bodyIssues": ["night-market image doubles as attraction and food support"],
+      "action": "separate City Wall or Terracotta hero from market/food card and body roles"
+    },
+    {
+      "slug": "chengdu",
+      "card": "/images/cities/chengdu-panda-base.webp",
+      "hero": "/images/cities/chengdu-panda-base.webp",
+      "cardEqualsHero": true,
+      "width": 2000,
+      "height": 1333,
+      "sizeKB": 301,
+      "qualityFlags": [],
+      "bodyIssues": ["panda image dominates identity", "street file doubles as transport"],
+      "action": "reserve panda for one role and add teahouse/street and real transport semantics"
+    },
+    {
+      "slug": "hangzhou",
+      "card": "/images/cities/hangzhou-west-lake.webp",
+      "hero": "/images/cities/hangzhou-west-lake.webp",
+      "cardEqualsHero": true,
+      "width": 1333,
+      "height": 2000,
+      "sizeKB": 128,
+      "qualityFlags": ["hero-under-2000px", "content-under-1400px", "hero-crop-risk"],
+      "bodyIssues": ["airport-phone attraction mismatch", "generic restaurant-phone food mismatch"],
+      "action": "replace with landscape lake hero, tea-village card and Hangzhou-specific body set"
+    },
+    {
+      "slug": "suzhou",
+      "card": "/images/cities/suzhou-lingering-garden.webp",
+      "hero": "/images/cities/suzhou-lingering-garden.webp",
+      "cardEqualsHero": true,
+      "width": 1800,
+      "height": 1200,
+      "sizeKB": 370,
+      "qualityFlags": ["hero-under-2000px"],
+      "bodyIssues": ["generic high-speed-rail transport image"],
+      "action": "use garden hero, canal card and Suzhou-specific transport context"
+    },
+    {
+      "slug": "guangzhou",
+      "card": "/images/cities/guangzhou-canton-tower.webp",
+      "hero": "/images/cities/guangzhou-canton-tower.webp",
+      "cardEqualsHero": true,
+      "width": 1432,
+      "height": 2000,
+      "sizeKB": 317,
+      "qualityFlags": ["hero-under-2000px", "hero-crop-risk"],
+      "bodyIssues": ["metro-phone attraction mismatch", "generic food and station imagery"],
+      "action": "replace with landscape Pearl River hero, old-town/food card and correct transport context"
+    },
+    {
+      "slug": "shenzhen",
+      "card": "/images/cities/shenzhen-skyline.webp",
+      "hero": "/images/cities/shenzhen-skyline.webp",
+      "cardEqualsHero": true,
+      "width": 1333,
+      "height": 2000,
+      "sizeKB": 306,
+      "qualityFlags": ["hero-under-2000px", "content-under-1400px", "hero-crop-risk", "near-duplicate-review"],
+      "bodyIssues": ["metro-phone attraction mismatch", "generic restaurant and airport-phone mismatches"],
+      "action": "replace with landscape modern-city hero and Shenzhen-specific card/food/transport set"
+    }
+  ],
+  "functionalBaseline": {
+    "freeChecklist": {
+      "realLocalFallback": "/china-first-time-visitor-checklist.pdf",
+      "optionalExternalProvider": "Payhip",
+      "status": "functional-with-local-fallback"
+    },
+    "paidGuide": {
+      "price": "$7",
+      "provider": "Payhip",
+      "configuration": "NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL",
+      "status": "honest-cta-hidden-when-unconfigured-locally"
+    },
+    "contact": {
+      "provider": "Supabase when configured",
+      "clientValidation": true,
+      "serverValidation": true,
+      "honeypot": true,
+      "falseSuccess": false
+    },
+    "newsletter": {
+      "providers": ["Supabase", "Brevo", "Mailchimp", "Resend"],
+      "validation": true,
+      "honeypot": true,
+      "utmCapture": true,
+      "falseSuccess": false,
+      "currentConcern": "email is passed in thank-you URL query"
+    },
+    "tools": {
+      "count": 4,
+      "clientOnlyInputs": true,
+      "serverSubmission": false,
+      "localStorage": ["essential-apps-checklist"],
+      "missingAffordances": ["explicit empty state on every tool", "copy result action", "consistent privacy note"]
+    }
+  },
+  "legacyRoutes": [
+    "/cities",
+    "/cities/beijing",
+    "/cities/chengdu",
+    "/cities/guangzhou",
+    "/cities/hangzhou",
+    "/cities/shanghai",
+    "/cities/shenzhen",
+    "/cities/suzhou",
+    "/cities/xian",
+    "/itineraries",
+    "/itineraries/10-days-classic-china-itinerary",
+    "/itineraries/240-hour-visa-free-china-itinerary",
+    "/itineraries/3-days-in-beijing",
+    "/itineraries/3-days-in-shanghai",
+    "/itineraries/4-days-in-beijing",
+    "/itineraries/5-days-beijing-and-xian",
+    "/itineraries/7-days-shanghai-hangzhou-suzhou"
+  ],
+  "constraints": {
+    "noGuideOrItineraryRewrite": true,
+    "noStageE": true,
+    "noDeployment": true,
+    "noEnvironmentChange": true,
+    "noNewVercelProject": true
+  }
+}
