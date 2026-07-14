@@ -41,9 +41,7 @@ export const cityImages: Record<string, ContentImage> = {
   beijing: image("/images/cities/beijing-forbidden-city-courtyard.webp", "Visitors walking through a courtyard in Beijing's Forbidden City", "unsplash-beijing-forbidden-city"),
   xian: image("/images/cities/xian-city-wall-sunset.webp", "Xi'an Ancient City Wall and watchtowers at sunset", "unsplash-xian-city-wall"),
   chengdu: image("/images/cities/chengdu-panda-base.webp", "Giant panda eating bamboo at the Chengdu panda base", "unsplash-chengdu-panda"),
-  hangzhou: image("/images/cities/hangzhou-west-lake.webp", "Pagoda and lotus-covered water at West Lake in Hangzhou", "unsplash-hangzhou-west-lake", undefined, "center 58%"),
   suzhou: image("/images/cities/suzhou-lingering-garden.webp", "Traditional architecture and trees in Suzhou's Lingering Garden", "unsplash-suzhou-garden"),
-  guangzhou: image("/images/cities/guangzhou-canton-tower.webp", "Guangzhou skyline with Canton Tower", "unsplash-guangzhou-canton-tower", undefined, "center 56%"),
   shenzhen: image("/images/cities/shenzhen-skyline.webp", "Modern Shenzhen skyline viewed from a green hillside", "unsplash-shenzhen-skyline", undefined, "center 55%"),
 };
 
@@ -51,10 +49,19 @@ export const editorialImages = {
   hero: cityImages.beijing,
   payments: image("/images/travel/phone-scanning-qr.webp", "Traveler scanning a QR code with a smartphone", "pexels-7289717"),
   transport: image("/images/travel/china-high-speed-rail-platform.webp", "China high-speed train waiting at a modern railway platform", "unsplash-china-hsr-platform"),
-  food: image("/images/essentials/chinese-dumplings-restaurant.webp", "Chinese dumplings served in bamboo steamers at a restaurant", "unsplash-chinese-dumplings"),
   station: image("/images/travel/china-railway-station-interior.webp", "Interior platform at a modern railway station in China", "unsplash-china-station"),
   airportPhone: image("/images/guides/china-esim-airport-phone.webp", "Traveler holding a smartphone beside luggage in an airport terminal", "pexels-15068317"),
   packing: image("/images/guides/china-packing-essentials.webp", "Passport, tickets, map and travel essentials arranged before a trip", "pexels-5405596"),
+};
+
+export const publicPageImages = {
+  homeHero: image(
+    "/images/home/phase-d/first-trip-phone-metro-hero.webp",
+    "Traveler checking a smartphone on a Shanghai metro platform",
+    "phase-d-unsplash-home-shanghai-metro-phone",
+    "A real Shanghai metro scene connects phone preparation with the moment a first-time visitor needs it.",
+    "center 48%",
+  ),
 };
 
 const guideImage = (
@@ -68,7 +75,6 @@ const paymentScene = guideImage("/images/travel/phone-scanning-qr.webp", "Person
 const paymentTerminal = guideImage("/images/guides/alipay-cafe-qr.webp", "QR payment sign displayed at a cafe counter", "pexels-33792076", "A merchant QR payment option at a cafe counter.");
 const qrPhone = guideImage("/images/travel/phone-qr-code.webp", "Smartphone displaying a QR code for scanning", "pexels-278430", "QR codes are used for both merchant-scan and customer-scan payment flows.");
 const qrScan = guideImage("/images/travel/phone-scanning-qr.webp", "Person scanning a QR code with a smartphone", "pexels-7289717", "Scanning a QR code with a smartphone.");
-const metroPhone = guideImage("/images/guides/best-apps-metro-phone.webp", "Travelers using smartphones while waiting in a metro station", "pexels-31216218", "Maps, translation and payment tools are most useful when they are ready before the first metro ride.");
 const airportPhone = guideImage("/images/guides/china-esim-airport-phone.webp", "Traveler holding a smartphone beside luggage in an airport terminal", "pexels-15068317", "Test mobile data before leaving the airport terminal.");
 const train = guideImage("/images/guides/high-speed-train-china.webp", "Chinese high-speed train at a station platform", "pexels-7494174", "A Chinese high-speed train at the platform.");
 const station = guideImage("/images/travel/china-railway-station-interior.webp", "Modern railway station platform in China", "unsplash-china-station", "Confirm the exact station name before travel day.");
@@ -322,9 +328,72 @@ const beijingMarket = image("/images/cities/details/beijing-hutong-market.webp",
 const xianFood = image("/images/cities/details/xian-night-market.webp", "Food stall at a lively Xi'an night market", "pexels-34650024");
 const chengduFood = image("/images/cities/details/chengdu-food-vendor.webp", "Street food vendor serving fried snacks in Chengdu", "pexels-5404035");
 const chengduStreet = image("/images/cities/details/chengdu-street-transport.webp", "Delivery rider and local shops on a Chengdu street", "pexels-5412818");
-const suzhouMarket = image("/images/cities/details/suzhou-market-street.webp", "Traditional shops and food stalls along a market street in Suzhou", "pexels-37248396");
 const suzhouCanal = image("/images/cities/details/suzhou-canal-lanterns.webp", "Traditional houses and red lanterns beside a canal in Suzhou", "pexels-36466099");
 const suzhouFood = image("/images/cities/details/suzhou-street-food.webp", "Street food vendor serving customers in a Suzhou alley", "pexels-19954017");
+
+const phaseDGuangzhouHero = image(
+  "/images/cities/phase-d/guangzhou-pearl-river-hero.webp",
+  "Canton Tower and the Pearl River across central Guangzhou",
+  "phase-d-unsplash-guangzhou-pearl-river",
+  "Canton Tower and the Pearl River establish Guangzhou's South China scale.",
+  "center 52%",
+);
+const phaseDGuangzhouCard = image(
+  "/images/cities/phase-d/guangzhou-heritage-street-card.webp",
+  "Cyclists and pedestrians moving through a heritage street in Guangzhou",
+  "phase-d-pexels-guangzhou-heritage-street",
+  "A lived-in Guangzhou street shows the city's everyday Cantonese character.",
+  "center 52%",
+);
+const phaseDGuangzhouFood = image(
+  "/images/cities/phase-d/guangzhou-dim-sum.webp",
+  "Assorted dim sum served in bamboo steamers for a Cantonese yum cha meal",
+  "phase-d-pexels-guangzhou-dim-sum",
+  "Dim sum in bamboo steamers directly supports Guangzhou's local-food section.",
+  "center 52%",
+);
+const phaseDGuangzhouTransport = image(
+  "/images/cities/phase-d/guangzhou-metro.webp",
+  "Passengers waiting as a train moves through Guangzhou's Huadiwan metro station",
+  "phase-d-unsplash-guangzhou-metro",
+  "A documented Guangzhou Metro platform supports practical getting-around advice.",
+  "center 54%",
+);
+const phaseDShenzhenHero = image(
+  "/images/cities/phase-d/shenzhen-bay-hero.webp",
+  "Shenzhen Bay skyline at twilight beneath dramatic clouds",
+  "phase-d-unsplash-shenzhen-bay",
+  "Shenzhen Bay at twilight introduces the city's modern coastal scale.",
+  "center 54%",
+);
+const phaseDShenzhenCard = image(
+  "/images/cities/phase-d/shenzhen-modern-architecture-card.webp",
+  "Contemporary waterfront architecture and public lawn in Shenzhen",
+  "phase-d-pexels-shenzhen-modern-architecture",
+  "Contemporary public architecture reinforces Shenzhen's design-forward identity.",
+  "center 48%",
+);
+const phaseDShenzhenFood = image(
+  "/images/cities/phase-d/shenzhen-chaoshan-hot-pot.webp",
+  "Beef and vegetables arranged around a Chaoshan-style hot pot",
+  "phase-d-unsplash-shenzhen-chaoshan-hot-pot",
+  "Chaoshan beef hot pot is one of the Greater Bay Area foods listed for Shenzhen.",
+  "center 52%",
+);
+const phaseDShenzhenTransport = image(
+  "/images/cities/phase-d/shenzhen-metro.webp",
+  "Passengers using smartphones inside a Shenzhen Metro train",
+  "phase-d-unsplash-shenzhen-metro",
+  "A documented Shenzhen Metro interior supports the city's cross-district transport guidance.",
+  "center 50%",
+);
+const phaseDSuzhouHero = image(
+  "/images/cities/phase-d/suzhou-pingjiang-canal-hero.webp",
+  "Canal boats, whitewashed houses and red lanterns in Suzhou's old town",
+  "phase-d-unsplash-suzhou-pingjiang-canal",
+  "A working canal scene makes Suzhou immediately distinct from nearby Hangzhou and Shanghai.",
+  "center 50%",
+);
 
 const classicChinaDay1 = image("/images/itineraries/classic-china/day-1-beijing-hutong.webp", "A quiet leafy hutong lane in Beijing with bicycles and local residents", "unsplash-classic-day1-beijing-hutong");
 const classicChinaDay2 = image("/images/itineraries/classic-china/day-2-forbidden-city.webp", "The central courtyard and imperial halls of Beijing's Forbidden City", "unsplash-classic-day2-forbidden-city");
@@ -443,14 +512,14 @@ const transitZhujiajiao = image(
 );
 
 export const destinationVisuals: Record<string, DestinationVisuals> = {
-  shanghai: { cardImage: cityImages.shanghai, heroImage: cityImages.shanghai, attractionImages: [shanghaiStreet, cityImages.shanghai], foodImage: foodStall, transportImage: editorialImages.station },
-  beijing: { cardImage: cityImages.beijing, heroImage: cityImages.beijing, attractionImages: [beijingStreet, cityImages.beijing], foodImage: beijingMarket, transportImage: editorialImages.station },
-  xian: { cardImage: cityImages.xian, heroImage: cityImages.xian, attractionImages: [cityImages.xian, xianFood], foodImage: xianFood, transportImage: editorialImages.transport },
-  chengdu: { cardImage: cityImages.chengdu, heroImage: cityImages.chengdu, attractionImages: [cityImages.chengdu, chengduStreet], foodImage: chengduFood, transportImage: chengduStreet },
-  hangzhou: { cardImage: cityImages.hangzhou, heroImage: cityImages.hangzhou, attractionImages: [cityImages.hangzhou, airportPhone], foodImage: restaurantPhone, transportImage: editorialImages.transport },
-  suzhou: { cardImage: cityImages.suzhou, heroImage: cityImages.suzhou, attractionImages: [suzhouCanal, suzhouMarket], foodImage: suzhouFood, transportImage: editorialImages.transport },
-  guangzhou: { cardImage: cityImages.guangzhou, heroImage: cityImages.guangzhou, attractionImages: [cityImages.guangzhou, metroPhone], foodImage: editorialImages.food, transportImage: editorialImages.station },
-  shenzhen: { cardImage: cityImages.shenzhen, heroImage: cityImages.shenzhen, attractionImages: [cityImages.shenzhen, metroPhone], foodImage: restaurantPhone, transportImage: airportPhone },
+  shanghai: { cardImage: shanghaiStreet, heroImage: cityImages.shanghai, attractionImages: [easternChinaYuGarden, shanghaiStreet], foodImage: foodStall, transportImage: editorialImages.station },
+  beijing: { cardImage: beijingStreet, heroImage: beijingFourDayHero, attractionImages: [cityImages.beijing, beijingFourDaySummerPalace], foodImage: beijingMarket, transportImage: editorialImages.station },
+  xian: { cardImage: beijingXianFiveDayCard, heroImage: beijingXianFiveDayHero, attractionImages: [cityImages.xian, beijingXianFiveDayTerracottaPit], foodImage: xianFood, transportImage: editorialImages.transport },
+  chengdu: { cardImage: chengduStreet, heroImage: cityImages.chengdu, attractionImages: [cityImages.chengdu, chengduStreet], foodImage: chengduFood, transportImage: editorialImages.transport },
+  hangzhou: { cardImage: longjingTeaFields, heroImage: easternChinaSevenDayHero, attractionImages: [transitWestLake, longjingTeaFields], foodImage: longjingTeaFields, transportImage: editorialImages.transport },
+  suzhou: { cardImage: easternChinaSevenDayCard, heroImage: phaseDSuzhouHero, attractionImages: [suzhouCanal, cityImages.suzhou], foodImage: suzhouFood, transportImage: editorialImages.transport },
+  guangzhou: { cardImage: phaseDGuangzhouCard, heroImage: phaseDGuangzhouHero, attractionImages: [phaseDGuangzhouHero, phaseDGuangzhouCard], foodImage: phaseDGuangzhouFood, transportImage: phaseDGuangzhouTransport },
+  shenzhen: { cardImage: phaseDShenzhenCard, heroImage: phaseDShenzhenHero, attractionImages: [phaseDShenzhenCard, cityImages.shenzhen], foodImage: phaseDShenzhenFood, transportImage: phaseDShenzhenTransport },
 };
 
 export const itineraryVisuals: Record<string, ItineraryVisuals> = {

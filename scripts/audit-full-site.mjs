@@ -300,10 +300,6 @@ const semanticOverrides = new Map([
   ["/cities/hangzhou|/images/guides/china-esim-airport-phone.webp", ["no", "Airport-phone image is used as a Hangzhou attraction image."]],
   ["/city-kits/hangzhou|/images/guides/chinese-phrases-restaurant-phone.webp", ["no", "Generic diner-with-phone image does not identify Hangzhou food."]],
   ["/cities/hangzhou|/images/guides/chinese-phrases-restaurant-phone.webp", ["no", "Generic diner-with-phone image does not identify Hangzhou food."]],
-  ["/city-kits/guangzhou|/images/guides/best-apps-metro-phone.webp", ["no", "Generic metro-phone scene is used as a Guangzhou attraction image."]],
-  ["/cities/guangzhou|/images/guides/best-apps-metro-phone.webp", ["no", "Generic metro-phone scene is used as a Guangzhou attraction image."]],
-  ["/city-kits/shenzhen|/images/guides/best-apps-metro-phone.webp", ["no", "Generic metro-phone scene is used as a Shenzhen attraction image."]],
-  ["/cities/shenzhen|/images/guides/best-apps-metro-phone.webp", ["no", "Generic metro-phone scene is used as a Shenzhen attraction image."]],
   ["/city-kits/shenzhen|/images/guides/china-esim-airport-phone.webp", ["no", "Generic airport-phone scene is used as Shenzhen transport imagery."]],
   ["/cities/shenzhen|/images/guides/china-esim-airport-phone.webp", ["no", "Generic airport-phone scene is used as Shenzhen transport imagery."]],
 ]);
