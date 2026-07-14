@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { ItineraryCard } from "@/components/ItineraryCard";
+import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { PageIntro } from "@/components/PageIntro";
 import { getItineraryBySlug } from "@/data/itineraries";
 import { itineraryKitSlugs } from "@/data/kits";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, itineraryCollectionJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "China Itinerary Kits by Trip Length | First China Trip Kit",
@@ -17,9 +18,12 @@ const kitItineraries = itineraryKitSlugs.flatMap((slug) => {
   return itinerary ? [itinerary] : [];
 });
 
+const itemListSchema = itineraryCollectionJsonLd(kitItineraries);
+
 export default function ItineraryKitsPage() {
   return (
     <>
+      <SEOJsonLd data={itemListSchema} />
       <PageIntro
         eyebrow="Itinerary Kits"
         title="Ready-to-use China routes with practical pacing"

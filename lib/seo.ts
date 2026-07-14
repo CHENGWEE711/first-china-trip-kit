@@ -215,6 +215,22 @@ export function guideJsonLd(guide: Guide, path: string, faqs: FAQ[] = []) {
   return faq ? [article, faq, breadcrumb] : [article, breadcrumb];
 }
 
+export function itineraryCollectionJsonLd(itineraries: Itinerary[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "China itinerary kits for first-time visitors",
+    numberOfItems: itineraries.length,
+    itemListElement: itineraries.map((itinerary, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: itinerary.title,
+      url: absoluteUrl(`/itinerary-kits/${itinerary.slug}`),
+      image: absoluteUrl(itinerary.cardImage.src),
+    })),
+  };
+}
+
 export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] = []) {
   const url = absoluteUrl(path);
   const image = absoluteUrl(itinerary.heroImage.src);
