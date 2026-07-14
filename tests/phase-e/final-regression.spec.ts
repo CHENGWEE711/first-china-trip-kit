@@ -254,16 +254,40 @@ test("Store exposes only working commercial actions and an honest paid-product s
     await expect(page.getByText("Paid checkout is temporarily unavailable; previews remain open.")).toBeVisible();
     await expect(page.getByRole("link", { name: "Preview the $7 guide", exact: true })).toHaveAttribute("href", "#preview-pages");
   }
+
+  const payhipLinks = page.locator('a[href^="https://payhip.com"]');
+  for (let index = 0; index < await payhipLinks.count(); index += 1) {
+    const href = await payhipLinks.nth(index).getAttribute("href");
+    const url = new URL(href!);
+    expect(url.searchParams.get("utm_source"), href!).toBe("firstchinatripkit");
+    expect(url.searchParams.get("utm_medium"), href!).toBe("website");
+    expect(url.searchParams.get("utm_campaign"), href!).toBe("china_first_trip_launch");
+    expect(url.searchParams.get("utm_content"), href!).toBeTruthy();
+  }
 });
 
 test("tracked interactions emit each required event once", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One analytics verification is sufficient.");
   await page.goto("/store");
   await installAnalyticsRecorder(page);
-  await page.getByRole("link", { name: "Download Free Checklist", exact: true }).first().click();
-  await expect(page).toHaveURL("/thank-you");
+  const checklistAction = page.getByRole("link", { name: "Download Free Checklist", exact: true }).first();
+  const checklistHref = await checklistAction.getAttribute("href");
+  if (checklistHref?.startsWith("http")) {
+    const [popup] = await Promise.all([
+      page.waitForEvent("popup"),
+      checklistAction.click(),
+    ]);
+    await popup.close();
+    await expect(page).toHaveURL("/store");
+  } else {
+    await checklistAction.click();
+    await expect(page).toHaveURL("/thank-you");
+  }
   let events = await analyticsEvents(page);
-  expect(events.filter((event) => event === "checklist_download_clicked")).toHaveLength(1);
+  const expectedChecklistEvent = checklistHref?.startsWith("http")
+    ? "payhip_checklist_clicked"
+    : "checklist_download_clicked";
+  expect(events.filter((event) => event === expectedChecklistEvent)).toHaveLength(1);
 
   await page.goto("/tools/essential-apps-checklist");
   await installAnalyticsRecorder(page);

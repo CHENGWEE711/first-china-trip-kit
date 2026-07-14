@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { Coffee } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
+import { buildUtmUrl } from "@/lib/utm";
 import { cn } from "@/lib/utils";
 
 type CoffeeTipLinkProps = {
@@ -24,9 +25,15 @@ export function CoffeeTipLink({
     return null;
   }
 
+  const trackedCoffeeTipUrl = buildUtmUrl(coffeeTipUrl, {
+    utm_source: "firstchinatripkit",
+    utm_medium: "website",
+    utm_content: `${source}_coffee-tip`,
+  });
+
   return (
     <a
-      href={coffeeTipUrl}
+      href={trackedCoffeeTipUrl}
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackEvent("coffee_tip_clicked", { source })}

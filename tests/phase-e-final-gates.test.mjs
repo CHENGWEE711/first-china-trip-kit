@@ -121,10 +121,11 @@ test("Store explains how the Payhip checklist remains free", () => {
   assert.match(storePage, /Download Free Checklist/);
 });
 
-test("Payhip buttons add website attribution without changing internal links", () => {
+test("commercial outbound buttons add website attribution without changing internal links", () => {
   const actionButton = read("components/ProductActionButton.tsx");
   const checklistLink = read("components/PayhipChecklistLink.tsx");
-  for (const source of [actionButton, checklistLink]) {
+  const coffeeTipLink = read("components/CoffeeTipLink.tsx");
+  for (const source of [actionButton, checklistLink, coffeeTipLink]) {
     assert.match(source, /buildUtmUrl/);
     assert.match(source, /utm_source: "firstchinatripkit"/);
     assert.match(source, /utm_medium: "website"/);
