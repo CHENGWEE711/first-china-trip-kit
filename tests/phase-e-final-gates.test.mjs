@@ -114,3 +114,9 @@ test("Policy and Shanghai Guides are explicitly separated from their executable 
   assert.match(guideTemplate, /explains eligibility and policy checks/);
   assert.match(itineraryPage, /route planning, not an eligibility decision/);
 });
+
+test("Store explains how the Payhip checklist remains free", () => {
+  const storePage = read("app/store/page.tsx");
+  assert.match(storePage, /enter \$0, or leave an optional tip/);
+  assert.match(storePage, /Download Free Checklist/);
+});

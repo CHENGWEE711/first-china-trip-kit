@@ -242,6 +242,11 @@ export default function StorePage() {
             </div>
             <div className="mt-5 grid gap-2 text-sm text-ink/58 sm:grid-cols-2">
               <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
+                {checklistPayhipUrl
+                  ? "The checklist stays free on Payhip: enter $0, or leave an optional tip."
+                  : "The free checklist is available as an immediate local download."}
+              </p>
+              <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
                 {paymentGuideBuyUrl
                   ? "Secure Payhip checkout for digital delivery."
                   : "Paid checkout is temporarily unavailable; previews remain open."}
