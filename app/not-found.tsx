@@ -1,11 +1,14 @@
+import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ButtonLink";
-import { buildMetadata } from "@/lib/seo";
 
-export const metadata = buildMetadata({
+export const metadata: Metadata = {
   title: "Page Not Found | First China Trip Kit",
   description: "This First China Trip Kit page is not available.",
-  path: "/404",
-});
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function NotFound() {
   return (
@@ -16,8 +19,14 @@ export default function NotFound() {
         <p className="mt-4 text-lg text-ink/70">
           The guide may have moved, or the route has not been published yet.
         </p>
-        <div className="mt-7">
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
           <ButtonLink href="/">Return home</ButtonLink>
+          <ButtonLink href="/start-here" variant="ghost">
+            Open Start Here
+          </ButtonLink>
+          <ButtonLink href="/guides" variant="ghost">
+            Browse Guides
+          </ButtonLink>
         </div>
       </div>
     </section>

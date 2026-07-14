@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { trackEvent } from "@/lib/analytics";
@@ -15,7 +15,13 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [isHydrated, setIsHydrated] = useState(false);
   const isSubmitting = status === "loading";
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIsHydrated(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -74,12 +80,14 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
     });
     form.reset();
     window.setTimeout(() => {
-      router.push(`/thank-you?email=${encodeURIComponent(email)}`);
+      router.push("/thank-you");
     }, 350);
   }
 
   return (
     <form
+      action="/api/newsletter"
+      method="post"
       onSubmit={handleSubmit}
       className={compact ? "grid gap-3" : "grid gap-3 rounded-lg border border-white/15 bg-white/5 p-4 md:p-6"}
     >
@@ -108,10 +116,16 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
         />
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={!isHydrated || isSubmitting}
           className="min-h-12 rounded-md bg-ember px-5 text-[15px] font-semibold text-white transition hover:bg-ember-hover disabled:cursor-wait disabled:opacity-70"
         >
-          {status === "success" ? "Success" : isSubmitting ? "Saving..." : "Get the checklist"}
+          {!isHydrated
+            ? "Loading form..."
+            : status === "success"
+              ? "Success"
+              : isSubmitting
+                ? "Saving..."
+                : "Get the checklist"}
         </button>
       </div>
       <p className="text-sm text-white/55">
@@ -126,7 +140,11 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
         .
       </p>
       {message ? (
-        <p className="text-sm font-semibold text-white" aria-live="polite">
+        <p
+          className="text-sm font-semibold text-white"
+          role={status === "success" ? "status" : "alert"}
+          aria-live="polite"
+        >
           {message}
         </p>
       ) : null}

@@ -221,11 +221,30 @@ export default function StorePage() {
                 placement="store_hero"
                 productId="china-first-trip-checklist"
               />
-              {paymentGuideBuyUrl ? <ProductActionButton canBuy className="mt-0 border border-ink/12 !bg-paper !text-ink hover:border-ember/35 hover:!bg-paper hover:!text-ember" href={paymentGuideBuyUrl} isExternal label="Buy Payment & Apps Guide — $7" placement="store_hero" productId="china-payment-apps-setup-guide" /> : null}
+              {paymentGuideBuyUrl ? (
+                <ProductActionButton
+                  canBuy
+                  className="mt-0 border border-ink/12 !bg-paper !text-ink hover:border-ember/35 hover:!bg-paper hover:!text-ember"
+                  href={paymentGuideBuyUrl}
+                  isExternal
+                  label="Buy Payment & Apps Guide — $7"
+                  placement="store_hero"
+                  productId="china-payment-apps-setup-guide"
+                />
+              ) : (
+                <Link
+                  href="#preview-pages"
+                  className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-center text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember sm:w-auto"
+                >
+                  Preview the $7 guide
+                </Link>
+              )}
             </div>
             <div className="mt-5 grid gap-2 text-sm text-ink/58 sm:grid-cols-2">
               <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
-                Payhip checkout for digital delivery.
+                {paymentGuideBuyUrl
+                  ? "Secure Payhip checkout for digital delivery."
+                  : "Paid checkout is temporarily unavailable; previews remain open."}
               </p>
               <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
                 Printable offline cards for arrival day.
@@ -254,6 +273,8 @@ export default function StorePage() {
                 alt="Product cover for the China Payment and Apps Setup Guide"
                 width={1200}
                 height={800}
+                priority
+                loading="eager"
                 sizes="(min-width: 1024px) 44vw, 100vw"
                 className="h-auto w-full"
               />
@@ -270,8 +291,8 @@ export default function StorePage() {
           </h2>
           <p className="mt-3 max-w-3xl text-base text-ink/68">
             Products open through Payhip when a public product link is configured.
-            If a paid product is not open yet, the store shows a waitlist instead
-            of an inactive checkout link.
+            If a paid product is not open yet, the store shows a clear unavailable
+            status and working preview instead of an inactive checkout link.
           </p>
         </div>
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
@@ -539,7 +560,31 @@ export default function StorePage() {
             <h2 className="text-2xl font-bold leading-tight text-ink">
               Ready to prepare your first-day payment setup?
             </h2>
-            {paymentGuideBuyUrl ? <ProductActionButton canBuy className="mt-5" href={paymentGuideBuyUrl} isExternal label="Buy Payment & Apps Guide — $7" placement="store_preview" productId="china-payment-apps-setup-guide" /> : null}
+            {paymentGuideBuyUrl ? (
+              <ProductActionButton
+                canBuy
+                className="mt-5"
+                href={paymentGuideBuyUrl}
+                isExternal
+                label="Buy Payment & Apps Guide — $7"
+                placement="store_preview"
+                productId="china-payment-apps-setup-guide"
+              />
+            ) : (
+              <div className="mt-5 rounded-md border border-ember/25 bg-sand p-4" role="status">
+                <p className="font-bold text-ink">Secure checkout is temporarily unavailable.</p>
+                <p className="mt-2 text-sm leading-relaxed text-ink/68">
+                  The preview pages are real and available above. Contact support
+                  if you would like a notification when Payhip checkout returns.
+                </p>
+                <Link
+                  href="/contact"
+                  className="mt-3 inline-flex min-h-11 items-center font-semibold text-ember hover:text-ember-hover"
+                >
+                  Contact support
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -564,9 +609,11 @@ export default function StorePage() {
               Digital delivery and refund notes
             </h2>
             <p className="mt-3 text-base text-ink/68">
-              Digital kits are delivered through Payhip after purchase. Because these
-              are downloadable digital planning files, refunds may be limited after
-              download. If you purchased the wrong file or cannot access your guide,
+              {paymentGuideBuyUrl
+                ? "Digital kits are delivered through Payhip after purchase. "
+                : "When checkout is available, digital kits are delivered through Payhip after purchase. "}
+              Because these are downloadable digital planning files, refunds may be
+              limited after download. If you purchased the wrong file or cannot access your guide,
               contact{" "}
               <a href={`mailto:${siteConfig.contactEmail}`} className="font-semibold text-ember">
                 {siteConfig.contactEmail}

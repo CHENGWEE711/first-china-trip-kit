@@ -1,6 +1,13 @@
 "use client";
 
-import { AlertTriangle, CheckCircle2, ExternalLink, RotateCcw } from "lucide-react";
+import {
+  AlertTriangle,
+  Check,
+  CheckCircle2,
+  Copy,
+  ExternalLink,
+  RotateCcw,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { appTrademarkDisclaimer } from "@/data/app-recommendations";
@@ -188,19 +195,69 @@ const routeStyleOptions = [
 ];
 
 export function ToolKitWidget({ type }: ToolKitWidgetProps) {
-  if (type === "visa") {
-    return <VisaTool />;
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIsReady(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  if (!isReady) {
+    return (
+      <div
+        className="rounded-lg border border-ink/10 bg-paper p-5 text-base text-ink/62 shadow-soft"
+        data-tool-ready="false"
+        aria-busy="true"
+        aria-live="polite"
+      >
+        Loading the planning tool…
+      </div>
+    );
   }
 
-  if (type === "duration") {
-    return <DurationTool />;
+  const tool = type === "visa"
+    ? <VisaTool />
+    : type === "duration"
+      ? <DurationTool />
+      : type === "apps"
+        ? <AppsTool />
+        : <RouteTool />;
+
+  return <div data-tool-ready="true">{tool}</div>;
+}
+
+function CopyResultButton({ value }: { value: string }) {
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "error">("idle");
+
+  async function copyResult() {
+    try {
+      await window.navigator.clipboard.writeText(value);
+      setCopyState("copied");
+      window.setTimeout(() => setCopyState("idle"), 2200);
+    } catch {
+      setCopyState("error");
+    }
   }
 
-  if (type === "apps") {
-    return <AppsTool />;
-  }
-
-  return <RouteTool />;
+  return (
+    <div className="mt-4">
+      <button
+        type="button"
+        onClick={copyResult}
+        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-current/25 bg-white/10 px-4 py-2 text-sm font-bold transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-current focus:ring-offset-2"
+      >
+        {copyState === "copied" ? <Check aria-hidden="true" size={17} /> : <Copy aria-hidden="true" size={17} />}
+        {copyState === "copied" ? "Result copied" : "Copy result"}
+      </button>
+      <p className="sr-only" role="status" aria-live="polite">
+        {copyState === "copied"
+          ? "Result copied to clipboard."
+          : copyState === "error"
+            ? "Could not copy the result. Please select the text manually."
+            : ""}
+      </p>
+    </div>
+  );
 }
 
 function VisaTool() {
@@ -210,7 +267,15 @@ function VisaTool() {
   const score = checked.length;
   const progressPercent = Math.round((score / visaChecks.length) * 100);
   const result =
-    score === visaChecks.length
+    score === 0
+      ? {
+          title: "Start with the five route checks",
+          tone: "bg-sand text-ink",
+          nextStep: "Select only the items you have verified, then compare the result with official sources.",
+          body:
+            "Nothing is selected yet. This checker does not decide eligibility; it helps you see which route facts still need official verification.",
+        }
+      : score === visaChecks.length
       ? {
           title: "Likely worth checking official eligibility",
           tone: "bg-jade text-white",
@@ -366,6 +431,9 @@ function VisaTool() {
             </ul>
           </div>
         ) : null}
+        <CopyResultButton
+          value={`${result.title}\n${result.body}\nNext: ${result.nextStep}`}
+        />
       </div>
       <section className="mt-5 rounded-md border border-ink/10 bg-paper p-4">
         <h2 className="text-xl font-bold leading-tight text-ink">Official resources</h2>
@@ -404,10 +472,9 @@ function VisaTool() {
 }
 
 function DurationTool() {
-  const [selectedDuration, setSelectedDuration] = useState("6-8");
+  const [selectedDuration, setSelectedDuration] = useState("");
   const selectedOption =
-    tripDurationOptions.find((option) => option.id === selectedDuration) ||
-    tripDurationOptions[0];
+    tripDurationOptions.find((option) => option.id === selectedDuration) || null;
 
   return (
     <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
@@ -462,12 +529,23 @@ function DurationTool() {
       </fieldset>
       <div className="mt-5 rounded-md bg-sand p-4" role="status" aria-live="polite">
         <p className="text-sm font-bold uppercase text-ember">Recommended route type</p>
-        <h2 className="mt-2 text-2xl font-bold leading-tight text-ink">
-          {selectedOption.label}
-        </h2>
-        <p className="mt-2 text-base leading-relaxed text-ink/72">
-          {selectedOption.result}
-        </p>
+        {selectedOption ? (
+          <>
+            <h2 className="mt-2 text-2xl font-bold leading-tight text-ink">
+              {selectedOption.label}
+            </h2>
+            <p className="mt-2 text-base leading-relaxed text-ink/72">
+              {selectedOption.result}
+            </p>
+            <CopyResultButton
+              value={`${selectedOption.label}\n${selectedOption.result}`}
+            />
+          </>
+        ) : (
+          <p className="mt-2 text-base leading-relaxed text-ink/72">
+            Choose a trip length above to see a route recommendation.
+          </p>
+        )}
       </div>
     </div>
   );
@@ -481,7 +559,13 @@ function AppsTool() {
   const totalCount = appChecks.length;
   const progressPercent = Math.round((readyCount / totalCount) * 100);
   const result =
-    readyCount >= 7
+    readyCount === 0
+      ? {
+          title: "Start with one setup item",
+          body: "Nothing is selected yet. Work through the list before departure; your progress is saved only in this browser.",
+          tone: "bg-sand text-ink",
+        }
+      : readyCount >= 7
       ? {
           title: "First-day ready",
           body: "Your app setup covers the essentials for payment, navigation, translation, transport, and offline backup.",
@@ -639,6 +723,9 @@ function AppsTool() {
         <p className="text-sm font-bold uppercase opacity-80">Checklist result</p>
         <h2 className="mt-2 text-2xl font-bold leading-tight">{result.title}</h2>
         <p className="mt-2 text-base opacity-85">{result.body}</p>
+        <CopyResultButton
+          value={`${result.title}\n${result.body}\nProgress: ${readyCount}/${totalCount}`}
+        />
       </div>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -664,10 +751,9 @@ function AppsTool() {
 }
 
 function RouteTool() {
-  const [selectedStyle, setSelectedStyle] = useState("easy-landing");
+  const [selectedStyle, setSelectedStyle] = useState("");
   const selectedOption =
-    routeStyleOptions.find((option) => option.id === selectedStyle) ||
-    routeStyleOptions[0];
+    routeStyleOptions.find((option) => option.id === selectedStyle) || null;
 
   return (
     <div className="rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
@@ -722,12 +808,23 @@ function RouteTool() {
       </fieldset>
       <div className="mt-5 rounded-md bg-sand p-4" role="status" aria-live="polite">
         <p className="text-sm font-bold uppercase text-ember">Recommended route</p>
-        <h2 className="mt-2 text-2xl font-bold leading-tight text-ink">
-          {selectedOption.result}
-        </h2>
-        <p className="mt-2 text-base text-ink/72">
-          Based on: {selectedOption.label}
-        </p>
+        {selectedOption ? (
+          <>
+            <h2 className="mt-2 text-2xl font-bold leading-tight text-ink">
+              {selectedOption.result}
+            </h2>
+            <p className="mt-2 text-base text-ink/72">
+              Based on: {selectedOption.label}
+            </p>
+            <CopyResultButton
+              value={`${selectedOption.result}\nBased on: ${selectedOption.label}`}
+            />
+          </>
+        ) : (
+          <p className="mt-2 text-base leading-relaxed text-ink/72">
+            Choose a travel style above to see a suggested first route.
+          </p>
+        )}
       </div>
     </div>
   );
