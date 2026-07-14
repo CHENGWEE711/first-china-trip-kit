@@ -23,8 +23,8 @@ export function buildMetadata({
   path,
   image = siteConfig.heroImage,
   imageAlt = `${siteConfig.name} travel planning visual`,
-  imageHeight = 900,
-  imageWidth = 1600,
+  imageHeight = 630,
+  imageWidth = 1200,
   type = "website",
 }: SeoInput): Metadata {
   const url = absoluteUrl(path);
