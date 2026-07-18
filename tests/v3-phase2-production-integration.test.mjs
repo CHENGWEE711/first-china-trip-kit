@@ -46,6 +46,9 @@ test("Store contains customer language and one responsive comparison DOM", () =>
     "Payhip can also be used for $0+ pay-what-you-want support when configured.",
     "A verified partner link has not been configured yet.",
     "Partner link not configured",
+    "public product link",
+    "environment",
+    "partner link",
   ]) assert.doesNotMatch(source, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
 });
 
@@ -57,7 +60,8 @@ test("Related Guides render each target Guide featuredImage without fallbacks", 
 
   assert.match(card, /const image = guide\.featuredImage/);
   assert.match(template, /<GuideCard[^>]+guide=\{relatedGuide\}/);
-  assert.match(route, /guides\s*\.filter/);
+  assert.match(route, /relatedGuideSlugs\s*\.map/);
+  assert.match(route, /guides\.find\(\(candidate\) => candidate\.slug === relatedSlug\)/);
   assert.match(imageData, /featuredImage:\s*image\([\s\S]*?`\/images\/guides\/phase-c\/\$\{slug\}\/card\.webp`/);
   assert.match(imageData, /"best-apps-for-traveling-in-china":\s*\{[\s\S]*?phaseCPrimaryVisuals\([\s\S]*?"best-apps-for-traveling-in-china"/);
   assert.match(imageData, /"how-to-use-alipay-in-china-as-a-tourist":\s*\{[\s\S]*?phaseCPrimaryVisuals\([\s\S]*?"how-to-use-alipay-in-china-as-a-tourist"/);

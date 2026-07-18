@@ -4,10 +4,14 @@ test("Payment Hub has canonical metadata, structured data and sitemap coverage",
   test.skip(testInfo.project.name !== "chromium-desktop", "One SEO pass is sufficient");
   const response = await page.goto("/payments-and-apps");
   expect(response?.status()).toBe(200);
+  await expect(page.locator("h1")).toHaveCount(1);
   await expect(page).toHaveTitle(/China Payments & Essential Apps Hub/);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /payments, essential apps, internet/i);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://www.firstchinatripkit.com/payments-and-apps");
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", /Payments & Essential Apps Hub/);
+  await expect(page.locator('meta[property="og:description"]')).toHaveAttribute("content", /payments, essential apps, internet/i);
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /^https:\/\/www\.firstchinatripkit\.com\//);
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
 
   const objects = await page.locator('script[type="application/ld+json"]').evaluateAll((scripts) =>
     scripts.flatMap((script) => {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { GuideTemplate } from "@/components/GuideTemplate";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
-import { getGuideBySlug, guides } from "@/data/guides";
+import { getGuideBySlug, guides, type Guide } from "@/data/guides";
 import { getGuideDetailContent } from "@/data/guide-detail-content";
 import { getProductsByIds } from "@/data/products";
 import { buildMetadata, guideJsonLd } from "@/lib/seo";
@@ -60,8 +60,9 @@ export default async function GuideDetailPage({ params }: PageProps) {
     guides
       .filter((candidate) => candidate.slug !== guide.slug && candidate.category === guide.category)
       .map((candidate) => candidate.slug);
-  const relatedGuides = guides
-    .filter((candidate) => candidate.slug !== guide.slug && relatedGuideSlugs.includes(candidate.slug))
+  const relatedGuides = relatedGuideSlugs
+    .map((relatedSlug) => guides.find((candidate) => candidate.slug === relatedSlug))
+    .filter((candidate): candidate is Guide => candidate !== undefined && candidate.slug !== guide.slug)
     .slice(0, 3);
   const faqs = detail?.faq || [
     {
