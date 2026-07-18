@@ -316,7 +316,7 @@ export default function VisaFreeTransitHubPage() {
                 className="object-cover"
                 style={{ objectPosition: transitVisuals.heroImage.position || "center" }}
               />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-ink/86 px-5 py-4 text-xs leading-relaxed text-white/82 backdrop-blur-sm">
+              <figcaption className="absolute inset-x-0 bottom-0 bg-ink/90 px-5 py-4 text-xs leading-relaxed text-white/90 backdrop-blur-sm">
                 Real airport photography. Your immediate inbound and onward segments—not the first and last cities in a long holiday—shape the transit check.
               </figcaption>
             </figure>
