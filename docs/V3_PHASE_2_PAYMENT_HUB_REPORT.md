@@ -244,7 +244,7 @@ After：
 - 分支：`v3/phase-2-payment-apps-hub`
 - 开始 Commit：`b2ccf5b859d576e2339711bf04a149b8acbd3393`
 - 实施提交信息：`Implement V3 payment and essential apps hub`
-- 实施 Commit SHA：将在代码、截图与测试成果提交后写入本报告的后续文档提交；不伪造尚未生成的 SHA。
+- 实施 Commit SHA：`c6a3b39a076cda01f5b56504971cbd9fd533d552`
 
 ## 15. 验收状态
 

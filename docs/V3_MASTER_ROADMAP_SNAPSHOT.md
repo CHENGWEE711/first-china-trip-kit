@@ -474,7 +474,7 @@ Penpot Frame：
 ```text
 阶段：2 — Payment & Apps Hub
 开始Commit：b2ccf5b859d576e2339711bf04a149b8acbd3393
-结束Commit：见 V3_PHASE_2_PAYMENT_HUB_REPORT.md 与阶段2 Git提交
+结束Commit：c6a3b39a076cda01f5b56504971cbd9fd533d552
 Penpot Frame：当前环境无Penpot写入连接器；未伪造ID；项目内保存两张概念参考
 修改页面：/payments-and-apps，以及现有支付主题Cluster与高意图站内入口
 测试结果：Lint、TypeScript、49个单元测试、Build、全量Playwright、定向Playwright、图片/SEO/可访问性审计通过
