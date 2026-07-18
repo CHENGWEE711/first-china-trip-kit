@@ -66,9 +66,9 @@ internal links. Generate campaign URLs with `buildUtmUrl` from `lib/utm.ts`.
 | Channel | Example URL |
 | --- | --- |
 | Reddit | `https://www.firstchinatripkit.com/start-here?utm_source=reddit&utm_medium=organic_social&utm_campaign=china_first_trip_launch&utm_content=first_trip_checklist` |
-| Quora | `https://www.firstchinatripkit.com/start-here?utm_source=quora&utm_medium=organic_social&utm_campaign=china_first_trip_launch&utm_content=payment_answer` |
+| Quora | `https://www.firstchinatripkit.com/payments-and-apps?utm_source=quora&utm_medium=organic_social&utm_campaign=china_first_trip_launch&utm_content=payment_answer` |
 | Threads | `https://www.firstchinatripkit.com/start-here?utm_source=threads&utm_medium=organic_social&utm_campaign=china_first_trip_launch&utm_content=launch_post` |
-| TikTok | `https://www.firstchinatripkit.com/start-here?utm_source=tiktok&utm_medium=organic_social&utm_campaign=china_first_trip_launch&utm_content=payment_video` |
+| TikTok | `https://www.firstchinatripkit.com/payments-and-apps?utm_source=tiktok&utm_medium=organic_social&utm_campaign=china_first_trip_launch&utm_content=payment_video` |
 | Instagram | `https://www.firstchinatripkit.com/start-here?utm_source=instagram&utm_medium=organic_social&utm_campaign=china_first_trip_launch&utm_content=bio_link` |
 | YouTube | `https://www.firstchinatripkit.com/start-here?utm_source=youtube&utm_medium=organic_video&utm_campaign=china_first_trip_launch&utm_content=video_description` |
 | Pinterest | `https://www.firstchinatripkit.com/start-here?utm_source=pinterest&utm_medium=organic_social&utm_campaign=china_first_trip_launch&utm_content=checklist_pin` |

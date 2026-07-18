@@ -657,8 +657,8 @@ export default function PaymentsAndAppsPage() {
                 )}
               </div>
               <p className="mt-4 text-xs leading-relaxed text-ink/48">
-                Digital delivery is handled by Payhip when the public purchase link is configured.
-                Review the preview and current checkout details before purchase.
+                Secure checkout and instant digital delivery through Payhip. Review
+                the preview and current checkout details before purchase.
               </p>
             </div>
             <GuidePreview />

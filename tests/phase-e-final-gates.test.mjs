@@ -117,7 +117,7 @@ test("Policy and Shanghai Guides are explicitly separated from their executable 
 
 test("Store explains how the Payhip checklist remains free", () => {
   const storePage = read("app/store/page.tsx");
-  assert.match(storePage, /enter \$0, or leave an optional tip/);
+  assert.match(storePage, /Download the checklist for free, or optionally support future updates through Payhip/);
   assert.match(storePage, /Download Free Checklist/);
 });
 

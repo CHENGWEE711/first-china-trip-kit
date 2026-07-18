@@ -240,10 +240,16 @@ export default function StorePage() {
                 </Link>
               )}
             </div>
+            <Link
+              href="/payments-and-apps"
+              className="mt-4 inline-flex min-h-11 items-center font-semibold text-ember underline decoration-ember/30 underline-offset-4 transition hover:decoration-ember"
+            >
+              Start with the free Payments & Apps Hub →
+            </Link>
             <div className="mt-5 grid gap-2 text-sm text-ink/58 sm:grid-cols-2">
               <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
                 {checklistPayhipUrl
-                  ? "The checklist stays free on Payhip: enter $0, or leave an optional tip."
+                  ? "Download the checklist for free, or optionally support future updates through Payhip."
                   : "The free checklist is available as an immediate local download."}
               </p>
               <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
@@ -295,9 +301,9 @@ export default function StorePage() {
             Start free, then add the setup pack you need
           </h2>
           <p className="mt-3 max-w-3xl text-base text-ink/68">
-            Products open through Payhip when a public product link is configured.
-            If a paid product is not open yet, the store shows a clear unavailable
-            status and working preview instead of an inactive checkout link.
+            Secure checkout and instant digital delivery through Payhip. Start with
+            the free checklist, then choose the printable setup guide if you need
+            deeper troubleshooting and offline backup cards.
           </p>
         </div>
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
@@ -398,7 +404,7 @@ export default function StorePage() {
               Free checklist vs. paid setup guide
             </h2>
           </div>
-          <div className="hidden overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft md:block">
+          <div className="overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft">
             <div className="hidden grid-cols-[1.1fr_0.9fr_1fr] gap-4 border-b border-ink/10 bg-ink px-5 py-4 text-sm font-bold uppercase text-white md:grid">
               <span>Feature</span>
               <span>Free Checklist</span>
@@ -429,33 +435,6 @@ export default function StorePage() {
                 </div>
               ))}
             </div>
-          </div>
-          <div className="grid gap-4 md:hidden">
-            {freeVsPaidRows.map((row) => (
-              <article
-                key={row.feature}
-                className="rounded-lg border border-ink/10 bg-paper p-4 shadow-soft"
-              >
-                <p className="text-xs font-bold uppercase text-ember">Feature</p>
-                <h3 className="mt-1 text-lg font-bold leading-tight text-ink">
-                  {row.feature}
-                </h3>
-                <div className="mt-4 grid gap-3">
-                  <div className="rounded-md bg-sand p-3">
-                    <p className="text-xs font-bold uppercase text-ink/45">
-                      Free Checklist
-                    </p>
-                    <p className="mt-1 text-base text-ink/72">{row.free}</p>
-                  </div>
-                  <div className="rounded-md bg-mist p-3">
-                    <p className="text-xs font-bold uppercase text-ink/45">
-                      Payment & Apps Setup Guide
-                    </p>
-                    <p className="mt-1 text-base text-ink/72">{row.paid}</p>
-                  </div>
-                </div>
-              </article>
-            ))}
           </div>
         </div>
       </section>
@@ -614,9 +593,7 @@ export default function StorePage() {
               Digital delivery and refund notes
             </h2>
             <p className="mt-3 text-base text-ink/68">
-              {paymentGuideBuyUrl
-                ? "Digital kits are delivered through Payhip after purchase. "
-                : "When checkout is available, digital kits are delivered through Payhip after purchase. "}
+              Digital kits are delivered through Payhip after purchase. {" "}
               Because these are downloadable digital planning files, refunds may be
               limited after download. If you purchased the wrong file or cannot access your guide,
               contact{" "}

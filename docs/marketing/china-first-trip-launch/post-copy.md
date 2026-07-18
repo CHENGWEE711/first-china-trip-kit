@@ -20,7 +20,7 @@ Test a small purchase near your hotel before depending on mobile payment for tax
 dinner. App and card support may change, so keep a backup.
 
 Practical setup guide:
-https://www.firstchinatripkit.com/guides/how-to-pay-in-china-as-a-foreigner?utm_source=threads&utm_medium=social&utm_campaign=china_first_trip_launch&utm_content=day1_payment_stack_threads
+https://www.firstchinatripkit.com/payments-and-apps?utm_source=threads&utm_medium=social&utm_campaign=china_first_trip_launch&utm_content=day1_payment_stack_threads
 
 ## Day 1 - Instagram carousel caption
 
@@ -36,7 +36,7 @@ Payment-app availability and card acceptance may change. This is travel planning
 not financial or banking advice.
 
 Read the practical guide through the link in bio or:
-https://www.firstchinatripkit.com/guides/how-to-pay-in-china-as-a-foreigner?utm_source=instagram&utm_medium=social&utm_campaign=china_first_trip_launch&utm_content=day1_payment_stack_carousel
+https://www.firstchinatripkit.com/payments-and-apps?utm_source=instagram&utm_medium=social&utm_campaign=china_first_trip_launch&utm_content=day1_payment_stack_carousel
 
 #chinatravel #chinatriptips #alipay #firsttimeinchina #travelplanning
 
@@ -79,7 +79,7 @@ sent by strangers. Use only official in-app verification.
 
 No setup is guaranteed, and support can change. I put the full first-day decision process and
 Chinese payment phrases here:
-https://www.firstchinatripkit.com/guides/how-to-pay-in-china-as-a-foreigner?utm_source=reddit&utm_medium=social&utm_campaign=china_first_trip_launch&utm_content=day2_payment_backup_reddit
+https://www.firstchinatripkit.com/payments-and-apps?utm_source=reddit&utm_medium=social&utm_campaign=china_first_trip_launch&utm_content=day2_payment_backup_reddit
 
 ## Day 2 - Quora long answer
 
@@ -107,7 +107,7 @@ still fails, use cash, a physical card where accepted, or ask the hotel for prac
 
 Payment-app support, card acceptance, and verification rules may change. The detailed checklist
 and troubleshooting table are here:
-https://www.firstchinatripkit.com/guides/how-to-pay-in-china-as-a-foreigner?utm_source=quora&utm_medium=social&utm_campaign=china_first_trip_launch&utm_content=day2_payment_setup_quora
+https://www.firstchinatripkit.com/payments-and-apps?utm_source=quora&utm_medium=social&utm_campaign=china_first_trip_launch&utm_content=day2_payment_setup_quora
 
 ## Day 3 - Threads
 

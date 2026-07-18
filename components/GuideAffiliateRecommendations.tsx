@@ -69,9 +69,10 @@ const recommendations: Record<
 };
 
 export function GuideAffiliateRecommendations({ guideSlug }: { guideSlug: string }) {
-  const items = recommendations[guideSlug];
+  const items = recommendations[guideSlug]?.filter(
+    (item) => getAffiliatePartner(item.partner).enabled,
+  );
   if (!items?.length) return null;
-  const hasEnabledPartner = items.some((item) => getAffiliatePartner(item.partner).enabled);
 
   return (
     <section className="bg-mist px-4 py-12">
@@ -84,9 +85,7 @@ export function GuideAffiliateRecommendations({ guideSlug }: { guideSlug: string
           These recommendations match the setup described in this guide. Compare the
           provider details with your own device, route, dates, and coverage needs.
         </p>
-        {hasEnabledPartner ? (
-          <AffiliateDisclosureNote className="mt-4 max-w-3xl" />
-        ) : null}
+        <AffiliateDisclosureNote className="mt-4 max-w-3xl" />
         <div className="mt-6 grid gap-5 md:grid-cols-3">
           {items.map((item) => (
             <AffiliateCard

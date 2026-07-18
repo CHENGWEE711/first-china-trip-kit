@@ -136,7 +136,8 @@ test("Homepage 3.0 keeps policy, SEO, Header and Footer safeguards", async ({ pa
   await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(1);
   await expect(page.locator('script#google-analytics')).toHaveCount(0);
   await expect(page.locator('script#metricool-analytics')).toHaveCount(0);
-  await expect(page.locator('nav[aria-label="Primary navigation"] a')).toHaveCount(5);
+  await expect(page.locator('nav[aria-label="Primary navigation"] a')).toHaveCount(6);
+  await expect(page.locator('nav[aria-label="Primary navigation"] a[href="/payments-and-apps"]')).toHaveCount(1);
   await expect(page.getByText(/verify official requirements before relying/i)).toBeVisible();
   await expect(page.locator("footer a[href=\"/contact\"]")).toHaveCount(1);
 

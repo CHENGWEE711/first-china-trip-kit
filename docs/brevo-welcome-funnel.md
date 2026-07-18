@@ -94,7 +94,7 @@ on mobile payment for taxis or dinner.
 
 **Primary button:** Read the foreign visitor payment guide
 
-**URL:** `https://www.firstchinatripkit.com/guides/how-to-pay-in-china-as-a-foreigner?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day2_payment`
+**URL:** `https://www.firstchinatripkit.com/payments-and-apps?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day2_payment`
 
 Want the printable setup version? The $7 Payment & Apps Setup Guide includes a
 payment failure decision tree, setup checklists, phrase cards, and offline backup

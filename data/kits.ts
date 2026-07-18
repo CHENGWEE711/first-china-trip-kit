@@ -118,12 +118,12 @@ export const essentialKits = [
   },
   {
     title: "Payment Kit",
-    href: "/guides/how-to-pay-in-china-as-a-foreigner",
+    href: "/payments-and-apps#payments",
     summary: "Set up Alipay, WeChat Pay, cash backup, hotel cards, and payment troubleshooting.",
   },
   {
     title: "China Apps Kit",
-    href: "/guides/best-apps-for-traveling-in-china",
+    href: "/payments-and-apps#apps",
     summary: "Prepare maps, translation, ride-hailing, train support, payment, and offline backups.",
   },
   {
@@ -133,7 +133,7 @@ export const essentialKits = [
   },
   {
     title: "Internet & eSIM Kit",
-    href: "/guides/china-esim-guide-for-tourists",
+    href: "/payments-and-apps#internet",
     summary: "Plan mobile data, offline screenshots, phone setup, and app access before arrival.",
   },
   {

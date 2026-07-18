@@ -52,5 +52,5 @@ https://www.firstchinatripkit.com/guides/best-apps-for-traveling-in-china?utm_so
 Build the backup before you are tired, hungry, or far from your hotel. No payment setup is
 guaranteed, so verify support and carry alternatives.
 
-https://www.firstchinatripkit.com/guides/how-to-pay-in-china-as-a-foreigner?utm_source=tiktok&utm_medium=video&utm_campaign=china_first_trip_launch&utm_content=day7_payment_backup_short
+https://www.firstchinatripkit.com/payments-and-apps?utm_source=tiktok&utm_medium=video&utm_campaign=china_first_trip_launch&utm_content=day7_payment_backup_short
 

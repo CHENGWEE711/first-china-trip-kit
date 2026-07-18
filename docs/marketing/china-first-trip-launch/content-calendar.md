@@ -18,13 +18,13 @@ newsletter signups, paid guide interest, purchases, Klook clicks, and contact ac
 
 | Day | Theme | Platforms | Asset | Landing page | Primary signal |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Build a four-layer China payment stack | Threads, Instagram | Short post + 6-slide carousel | Payment guide | Engaged sessions, guide clicks |
-| 2 | What to do when mobile payment fails | Reddit, Quora, Pinterest | Long answers + payment-stack pin | Payment guide | Checklist downloads, contact actions |
+| 1 | Build a four-layer China payment stack | Threads, Instagram | Short post + 6-slide carousel | Payments & Apps Hub | Engaged sessions, guide clicks |
+| 2 | What to do when mobile payment fails | Reddit, Quora, Pinterest | Long answers + payment-stack pin | Payments & Apps Hub | Checklist downloads, contact actions |
 | 3 | Apps to install before arrival | Pinterest, Threads | App-stack pin + short post | Apps guide | Engaged sessions, newsletter signups |
 | 4 | Eight-item first-day apps check | TikTok, YouTube Shorts | 35-second vertical video | Apps guide | Video traffic, checklist downloads |
 | 5 | Five checks before relying on transit policy | Quora, Reddit | Long answers | 240-hour guide | Engaged sessions, tool use |
 | 6 | Verify before booking a transit route | Pinterest, Threads | Transit pin + short post | 240-hour guide | Klook clicks after guide reading |
-| 7 | First-day setup recap | Instagram, TikTok | Carousel repost + 30-second video | Apps or payment guide | Newsletter signups, paid guide clicks |
+| 7 | First-day setup recap | Instagram, TikTok | Carousel repost + 30-second video | Apps guide or Payments & Apps Hub | Newsletter signups, paid guide clicks |
 
 ## Daily operating rhythm
 
@@ -36,7 +36,6 @@ newsletter signups, paid guide interest, purchases, Klook clicks, and contact ac
 
 ## Approved landing pages
 
-- `/guides/how-to-pay-in-china-as-a-foreigner`
+- `/payments-and-apps`
 - `/guides/best-apps-for-traveling-in-china`
 - `/guides/china-240-hour-visa-free-transit-guide`
-

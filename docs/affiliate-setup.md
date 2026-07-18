@@ -40,8 +40,8 @@ Enabled partner links open in a new tab with:
 rel="sponsored nofollow noopener noreferrer"
 ```
 
-When a URL is missing, directory buttons render a non-clickable `Coming soon` state. Home
-cards use an internal fallback to `/travel-tools` so they never point to a fake partner URL.
+When a URL is missing, the related visitor-facing button, card, or recommendation module
+does not render. The site never exposes a configuration state or fake partner destination.
 
 ## GA4 event
 

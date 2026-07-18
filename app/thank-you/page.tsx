@@ -37,11 +37,11 @@ const checklist = [
 const nextSteps = [
   {
     title: "Set up payment before you fly",
-    href: "/guides/how-to-pay-in-china-as-a-foreigner",
+    href: "/payments-and-apps#payments",
   },
   {
     title: "Prepare essential apps",
-    href: "/guides/best-apps-for-traveling-in-china",
+    href: "/payments-and-apps#apps",
   },
   {
     title: "Choose your first city base",
