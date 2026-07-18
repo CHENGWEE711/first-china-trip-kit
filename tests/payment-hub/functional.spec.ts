@@ -109,10 +109,24 @@ test("Payment Hub sends the required GA4 event names", async ({ page }, testInfo
   await backup.getByRole("button", { name: /what if alipay fails/i }).click();
   await page.locator('[data-testid="payment-guide-preview"]').getByRole("button", { name: /open the 5-page preview/i }).click();
 
-  const events = await page.evaluate(() =>
-    JSON.parse(sessionStorage.getItem("__paymentHubEvents") || "[]") as Array<{ eventName: string }>,
-  );
-  expect(events.map((event) => event.eventName)).toEqual(
+  const eventNames = await page.evaluate(() => {
+    const recorded = JSON.parse(
+      sessionStorage.getItem("__paymentHubEvents") || "[]",
+    ) as Array<{ eventName: string }>;
+    const productionEvents = (window.dataLayer || [])
+      .map((entry) => {
+        if (Array.isArray(entry)) return entry;
+        if (typeof entry === "object" && entry !== null && "0" in entry) {
+          return Array.from(entry as unknown as ArrayLike<unknown>);
+        }
+        return [];
+      })
+      .filter((entry) => entry[0] === "event" && typeof entry[1] === "string")
+      .map((entry) => entry[1] as string);
+
+    return [...recorded.map((event) => event.eventName), ...productionEvents];
+  });
+  expect(eventNames).toEqual(
     expect.arrayContaining([
       "payment_hub_view",
       "payment_step_clicked",

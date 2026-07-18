@@ -38,14 +38,22 @@ try {
       }
       await page.evaluate(async () => {
         await document.fonts.ready;
+        for (let offset = 0; offset < document.documentElement.scrollHeight; offset += 700) {
+          window.scrollTo(0, offset);
+          await new Promise((resolve) => window.setTimeout(resolve, 35));
+        }
+        window.scrollTo(0, 0);
         await Promise.all(
           Array.from(document.images, (image) =>
             image.complete
               ? Promise.resolve()
-              : new Promise((resolve) => {
-                  image.addEventListener("load", resolve, { once: true });
-                  image.addEventListener("error", resolve, { once: true });
-                }),
+              : Promise.race([
+                  new Promise((resolve) => {
+                    image.addEventListener("load", resolve, { once: true });
+                    image.addEventListener("error", resolve, { once: true });
+                  }),
+                  new Promise((resolve) => window.setTimeout(resolve, 5000)),
+                ]),
           ),
         );
       });
