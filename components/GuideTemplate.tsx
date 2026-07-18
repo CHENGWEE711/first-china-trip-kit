@@ -270,6 +270,54 @@ const paymentAppsGuideCtaSlugs = new Set([
   "china-240-hour-visa-free-transit-guide",
 ]);
 
+const paymentClusterSlugs = new Set([
+  "how-to-pay-in-china-as-a-foreigner",
+  "how-to-use-alipay-and-wechat-pay-in-china",
+  "how-to-use-alipay-in-china-as-a-tourist",
+  "how-to-use-wechat-pay-in-china-as-a-foreigner",
+  "best-apps-for-traveling-in-china",
+  "china-esim-guide-for-tourists",
+  "china-travel-checklist-before-you-fly",
+]);
+
+const paymentClusterLinks = [
+  { href: "/payments-and-apps", label: "Hub", slug: "hub" },
+  { href: "/guides/how-to-pay-in-china-as-a-foreigner", label: "How to Pay", slug: "how-to-pay-in-china-as-a-foreigner" },
+  { href: "/guides/how-to-use-alipay-in-china-as-a-tourist", label: "Alipay", slug: "how-to-use-alipay-in-china-as-a-tourist" },
+  { href: "/guides/how-to-use-wechat-pay-in-china-as-a-foreigner", label: "WeChat Pay", slug: "how-to-use-wechat-pay-in-china-as-a-foreigner" },
+  { href: "/guides/best-apps-for-traveling-in-china", label: "Apps", slug: "best-apps-for-traveling-in-china" },
+  { href: "/guides/china-esim-guide-for-tourists", label: "eSIM", slug: "china-esim-guide-for-tourists" },
+  { href: "/guides/china-travel-checklist-before-you-fly", label: "Checklist", slug: "china-travel-checklist-before-you-fly" },
+] as const;
+
+function PaymentClusterRail({ currentSlug }: { currentSlug: string }) {
+  if (!paymentClusterSlugs.has(currentSlug)) return null;
+
+  return (
+    <nav aria-label="China payments and essential apps guides" className="border-y border-ink/10 bg-mist px-4">
+      <div className="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto py-4 text-sm [scrollbar-width:thin]">
+        <Link href="/payments-and-apps" className="shrink-0 font-bold text-jade hover:text-ember">
+          Payments &amp; Apps Hub
+        </Link>
+        <span aria-hidden="true" className="h-5 w-px shrink-0 bg-ink/15" />
+        {paymentClusterLinks.slice(1).map((item) => {
+          const active = item.slug === currentSlug;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={active ? "page" : undefined}
+              className={`shrink-0 border-b py-1 font-semibold transition ${active ? "border-ember text-ink" : "border-transparent text-ink/58 hover:border-ink/20 hover:text-ink"}`}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
+
 function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
   const paymentAppsGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
   const isAvailable = Boolean(paymentAppsGuideBuyUrl);
@@ -619,6 +667,8 @@ export function GuideTemplate({ guide, detail, relatedGuides, products }: GuideT
           </div>
         </section>
       </article>
+
+      <PaymentClusterRail currentSlug={guide.slug} />
 
       <FAQSection faqs={content.faq} />
 

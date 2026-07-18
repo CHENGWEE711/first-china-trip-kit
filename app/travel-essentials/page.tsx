@@ -48,7 +48,7 @@ const essentials = [
       "Keep a small RMB cash backup for arrival day.",
     ],
     mistake: "Expecting foreign cards to work everywhere like they do at home.",
-    href: "/guides/how-to-pay-in-china-as-a-foreigner",
+    href: "/payments-and-apps#payments",
   },
   {
     title: "Transportation",
@@ -74,7 +74,7 @@ const essentials = [
       "Save hotel addresses and ticket screenshots offline.",
     ],
     mistake: "Waiting until the airport arrival hall to solve data access.",
-    href: "/guides/china-esim-guide-for-tourists",
+    href: "/payments-and-apps#internet",
   },
   {
     title: "Hotels",
@@ -139,14 +139,14 @@ const essentials = [
       "Keep screenshots for train, hotel, and attraction bookings.",
     ],
     mistake: "Installing apps but not testing login, payment, or address search.",
-    href: "/guides/best-apps-for-traveling-in-china",
+    href: "/payments-and-apps#apps",
   },
 ];
 
 const journeyMoments = [
   { title: "Before You Fly", description: "Documents, packing, apps and payment backups before the airport.", href: "/start-here", image: editorialImages.packing },
-  { title: "Arrival Day", description: "Test data, payment, maps and your Chinese hotel address before leaving the terminal.", href: "/guides/china-travel-checklist-before-you-fly", image: editorialImages.airportPhone },
-  { title: "Daily Travel", description: "Use the metro, high-speed rail and short translated notes with less friction.", href: "/guides/best-apps-for-traveling-in-china", image: editorialImages.transport },
+  { title: "Arrival Day", description: "Test data, payment, maps and your Chinese hotel address before leaving the terminal.", href: "/payments-and-apps#arrival-day", image: editorialImages.airportPhone },
+  { title: "Daily Travel", description: "Use the metro, high-speed rail and short translated notes with less friction.", href: "/payments-and-apps#apps", image: editorialImages.transport },
 ];
 
 export default function TravelEssentialsPage() {

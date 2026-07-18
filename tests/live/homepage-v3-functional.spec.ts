@@ -19,7 +19,7 @@ test("Homepage 3.0 exposes only real planning destinations", async ({ page }) =>
 
   await expect(page.locator('#home-hero a[href="/start-here"]')).toHaveCount(1);
   await expect(
-    page.locator('#home-hero a[href="/guides/how-to-pay-in-china-as-a-foreigner"]'),
+    page.locator('#home-hero a[href="/payments-and-apps"]'),
   ).toHaveCount(1);
   await expect(page.locator("#home-tasks a")).toHaveCount(4);
   await expect(page.locator("#home-popular a")).toHaveCount(3);

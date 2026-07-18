@@ -105,10 +105,10 @@ export default function TravelToolsPage() {
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
-                href="/guides/china-esim-guide-for-tourists"
+                href="/payments-and-apps#internet"
                 className="inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-5 py-3 text-center font-semibold text-white hover:bg-ember-hover"
               >
-                Read the China eSIM Guide
+                Choose Your Internet Setup
               </Link>
               <Link
                 href="/city-kits"

@@ -16,7 +16,7 @@ for (const viewport of viewports) {
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator("#home-hero")).toBeVisible();
     await expect(page.locator('#home-hero a[href="/start-here"]')).toBeVisible();
-    await expect(page.locator('#home-hero a[href="/guides/how-to-pay-in-china-as-a-foreigner"]')).toBeVisible();
+    await expect(page.locator('#home-hero a[href="/payments-and-apps"]')).toBeVisible();
 
     const productPreview = page.locator('[data-testid="product-preview"]');
     await productPreview.scrollIntoViewIfNeeded();

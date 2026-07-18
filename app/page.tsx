@@ -64,7 +64,7 @@ const taskLinks = [
     title: "Set Up Payments & Apps",
     body: "Prepare mobile payment, essential apps and arrival-day backups before flying.",
     result: "Use the payment setup guide",
-    href: "/guides/how-to-pay-in-china-as-a-foreigner",
+    href: "/payments-and-apps",
     icon: WalletCards,
   },
   {
@@ -99,7 +99,7 @@ const beforeYouFlyItems = [
   {
     number: "02",
     title: "Payments",
-    href: "/guides/how-to-pay-in-china-as-a-foreigner",
+    href: "/payments-and-apps",
     label: "Build a payment backup plan",
     icon: WalletCards,
     bullets: [
@@ -111,7 +111,7 @@ const beforeYouFlyItems = [
   {
     number: "03",
     title: "Apps & Internet",
-    href: "/guides/best-apps-for-traveling-in-china",
+    href: "/payments-and-apps#apps",
     label: "Prepare the essential app stack",
     icon: Wifi,
     bullets: [
@@ -268,7 +268,7 @@ export default function HomePage() {
                 <ArrowRight aria-hidden="true" size={18} />
               </TrackedLink>
               <TrackedLink
-                href="/guides/how-to-pay-in-china-as-a-foreigner"
+                href="/payments-and-apps"
                 eventName="homepage_task_clicked"
                 eventParams={{
                   item_name: "Set Up Payments & Apps",

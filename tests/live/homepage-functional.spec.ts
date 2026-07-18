@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("homepage core planning links keep their real destinations", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator('#home-hero a[href="/start-here"]')).toHaveCount(1);
-  await expect(page.locator('#home-hero a[href="/guides/how-to-pay-in-china-as-a-foreigner"]')).toHaveCount(1);
+  await expect(page.locator('#home-hero a[href="/payments-and-apps"]')).toHaveCount(1);
   await expect(page.locator("#home-tasks a")).toHaveCount(4);
   await expect(page.locator("#home-popular a")).toHaveCount(3);
   await expect(page.locator("#home-trending a")).toHaveCount(3);

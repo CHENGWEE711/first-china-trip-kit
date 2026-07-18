@@ -71,8 +71,8 @@
 
 | 阶段 | 名称 | 核心目标 | 状态 |
 |---|---|---|---|
-| 1 | Homepage 3.0 | 首页从栏目展示页变成商业导航首页 | 完成，待验收 |
-| 2 | Payment & Apps Hub | 建立支付、App、网络的核心转化中心 | 未开始 |
+| 1 | Homepage 3.0 | 首页从栏目展示页变成商业导航首页 | 已验收 |
+| 2 | Payment & Apps Hub | 建立支付、App、网络的核心转化中心 | 完成，待验收 |
 | 3 | Visa-Free Transit Hub | 建立免签、过境和资格判断中心 | 未开始 |
 | 4 | Social Landing System | 为社媒热点建立专用落地页系统 | 未开始 |
 | 5 | Hot Destinations & Experiences | 建立重庆、张家界等热点专题与体验入口 | 未开始 |
@@ -425,16 +425,16 @@
 
 - Penpot设计系统：已完成；
 - Guide视觉系统：已实施；
-- 全局设计系统与首页基础：已进入阶段流程；
-- V3商业化升级：从阶段1正式开始。
+- 全局设计系统与首页基础：阶段1已验收；
+- V3商业化升级：阶段2已完成，等待验收。
 
 ### 当前进行阶段
 
-阶段1：Homepage 3.0
+阶段2：Payment & Apps Hub
 
 ### 下一阶段
 
-阶段2：Payment & Apps Hub
+阶段3：Visa-Free Transit Hub（阶段2验收后才可开始）
 
 ### 当前禁止提前实施
 
@@ -466,3 +466,20 @@ Penpot Frame：
 每完成两个阶段，复制为：
 
 `docs/V3_MASTER_ROADMAP_SNAPSHOT.md`
+
+---
+
+## 九、阶段2结束记录
+
+```text
+阶段：2 — Payment & Apps Hub
+开始Commit：b2ccf5b859d576e2339711bf04a149b8acbd3393
+结束Commit：见 V3_PHASE_2_PAYMENT_HUB_REPORT.md 与阶段2 Git提交
+Penpot Frame：当前环境无Penpot写入连接器；未伪造ID；项目内保存两张概念参考
+修改页面：/payments-and-apps，以及现有支付主题Cluster与高意图站内入口
+测试结果：Lint、TypeScript、49个单元测试、Build、全量Playwright、定向Playwright、图片/SEO/可访问性审计通过
+部署状态：未部署Preview或Production；未修改Vercel、域名或环境变量
+遗留问题：Penpot写回；已配置Payhip Preview真实跳转验收；上线后定期复核官方规则
+验收结论：完成，等待阶段2验收
+下一阶段：阶段3 — Visa-Free Transit Hub（验收后才可开始）
+```
