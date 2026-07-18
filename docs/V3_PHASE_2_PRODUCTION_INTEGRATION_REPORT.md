@@ -1,6 +1,6 @@
 # V3 Phase 2 Production Integration Report
 
-验收日期：2026-07-18（Asia/Shanghai）  
+验收日期：2026-07-18（Asia/Shanghai）
 范围：只处理 China Payments & Essential Apps Hub 的生产接线与 P0 修复；未进入 V3 阶段 3。
 
 ## 1. 版本与生产部署
