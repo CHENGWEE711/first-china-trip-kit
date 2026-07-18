@@ -165,6 +165,13 @@ export default async function CityKitDetailPage({ params }: PageProps) {
                 {content?.whyVisit?.[0] ||
                   `${city.cityName} is a practical first China stop for travelers who want a manageable base, clear transport choices, local food, and useful Chinese addresses before adding more complex routes.`}
               </p>
+              <p className="mt-4 border-l-2 border-jade bg-mist px-4 py-3 text-sm">
+                If this city is part of a visa-free transit itinerary, verify the immediate route, eligible ports and permitted activity area in the{" "}
+                <Link href="/visa-free-transit" className="font-bold text-ember hover:text-ember-hover">
+                  Visa-Free Transit Hub
+                </Link>{" "}
+                before booking.
+              </p>
             </Section>
 
             <CityStory title={`Why visit ${city.cityName}`} eyebrow="City character" image={city.attractionImages[0]}>

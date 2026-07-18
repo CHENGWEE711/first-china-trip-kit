@@ -12,6 +12,7 @@ const planLinks = [
 ];
 
 const learnLinks = [
+  { href: "/visa-free-transit", label: "Visa-Free Transit" },
   { href: "/payments-and-apps", label: "Payments & Apps" },
   { href: "/guides", label: "Guides" },
   { href: "/travel-essentials", label: "Travel Essentials" },

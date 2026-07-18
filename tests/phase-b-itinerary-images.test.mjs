@@ -83,10 +83,10 @@ test("240-hour policy copy uses current NIA sources, verification date, and requ
   const guideContent = read("data/guide-detail-content.ts");
   const requiredDisclaimer = "Rules can change. Confirm your eligibility and entry port with China’s National Immigration Administration or your airline before travel.";
   for (const content of [itineraryContent, guideContent]) {
-    assert.match(content, /lastVerified: "2026-07-13"/);
+    assert.match(content, /lastVerified: "2026-07-18"/);
     assert.ok(content.includes(requiredDisclaimer));
     assert.ok(content.includes("https://www.nia.gov.cn/n897453/c1751080/content.html"));
-    assert.ok(content.includes("https://en.nia.gov.cn/n147418/n147468/c187308/content.html"));
+    assert.ok(content.includes("https://en.nia.gov.cn/n147413/c187308/content.html"));
     assert.doesNotMatch(content, /n147413\/c178106\/content\.html/);
     assert.doesNotMatch(content, /\b54 countries\b|\b60 (eligible )?ports\b/i);
     assert.doesNotMatch(content, /guaranteed (visa|entry)/i);

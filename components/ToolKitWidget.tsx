@@ -461,12 +461,20 @@ function VisaTool() {
           ))}
         </div>
       </section>
-      <Link
-        href="/guides/china-240-hour-visa-free-transit-guide"
-        className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-center text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember sm:w-auto"
-      >
-        Read the full 240-hour transit guide
-      </Link>
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+        <Link
+          href="/visa-free-transit"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition hover:bg-ember-hover sm:w-auto"
+        >
+          Use the full route checker
+        </Link>
+        <Link
+          href="/guides/china-240-hour-visa-free-transit-guide"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-center text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember sm:w-auto"
+        >
+          Read the detailed 240-hour Guide
+        </Link>
+      </div>
     </div>
   );
 }

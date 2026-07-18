@@ -35,7 +35,7 @@ const essentials = [
       "Keep passport details consistent across every booking.",
     ],
     mistake: "Assuming a social media route is valid for your nationality and entry port.",
-    href: "/itinerary-kits/240-hour-visa-free-china-itinerary",
+    href: "/visa-free-transit",
   },
   {
     title: "Payment",

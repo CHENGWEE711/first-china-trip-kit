@@ -57,7 +57,7 @@ const taskLinks = [
     title: "Can I Enter Visa-Free?",
     body: "Check the passport, port, onward-route and permitted-area questions that matter.",
     result: "Open the eligibility checklist",
-    href: "/tools/visa-free-eligibility-checker",
+    href: "/visa-free-transit",
     icon: ShieldCheck,
   },
   {
@@ -87,7 +87,7 @@ const beforeYouFlyItems = [
   {
     number: "01",
     title: "Visa",
-    href: "/tools/visa-free-eligibility-checker",
+    href: "/visa-free-transit",
     label: "Check the visa-free questions",
     icon: ShieldCheck,
     bullets: [

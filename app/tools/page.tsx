@@ -43,7 +43,7 @@ export default function ToolsPage() {
             return (
               <Link
                 key={tool.slug}
-                href={`/tools/${tool.slug}`}
+                href={tool.type === "visa" ? "/visa-free-transit" : `/tools/${tool.slug}`}
                 className="group flex h-full min-w-0 flex-col rounded-lg border border-ink/10 bg-paper p-5 shadow-soft transition hover:-translate-y-0.5 hover:border-ember/35 focus:outline-none focus:ring-2 focus:ring-ember focus:ring-offset-2"
               >
                 <span className="grid h-11 w-11 place-items-center rounded-md bg-sand text-ember">

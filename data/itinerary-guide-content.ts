@@ -235,7 +235,7 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
   "240-hour-visa-free-china-itinerary": {
     importantNotice:
       "This is a planning guide, not immigration advice. 240-hour visa-free transit eligibility can depend on nationality, entry and exit ports, confirmed onward ticket, third country or region routing, and the permitted stay area for the port you use. Rules can change. Confirm your eligibility and entry port with China’s National Immigration Administration or your airline before travel.",
-    lastVerified: "2026-07-13",
+    lastVerified: "2026-07-18",
     officialSourceLinks: [
       {
         label: "National Immigration Administration: 10 new opening measures",
@@ -244,7 +244,7 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
       },
       {
         label: "National Immigration Administration: 240-hour transit notice (English)",
-        href: "https://en.nia.gov.cn/n147418/n147468/c187308/content.html",
+        href: "https://en.nia.gov.cn/n147413/c187308/content.html",
         note: "Official English notice published November 3, 2025 for the latest port expansion.",
       },
       {
@@ -254,7 +254,7 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
       },
     ],
     routeSummary: [
-      "As last verified on July 13, 2026, the National Immigration Administration lists 55 eligible nationalities, 65 entry ports, and permitted travel areas across 24 provincial-level regions. Those totals can change, so use the linked NIA pages for your final check.",
+      "As last verified on July 18, 2026, the National Immigration Administration lists 55 eligible nationalities, 65 entry ports, and permitted travel areas across 24 provincial-level regions. Those totals can change, so use the linked NIA pages for your final check.",
       "This route is built around Shanghai plus nearby high-speed rail cities that are commonly paired with a visa-free transit stay. It is practical, low-friction, and easy to adjust if eligibility rules or arrival times change.",
       "The plan intentionally includes buffer time because transit immigration rules, onward ticket checks, and airport transfers can take longer than a normal domestic arrival.",
       "Use it as a route framework only after confirming your nationality, port, onward ticket to a third country or region, and allowed travel area. NIA guidance generally calculates the 240-hour period from 00:00 on the day after entry; confirm the exact departure deadline at your entry port.",

@@ -113,7 +113,7 @@ export const cityKitMeta: Record<
 export const essentialKits = [
   {
     title: "Visa & Entry Kit",
-    href: "/itinerary-kits/240-hour-visa-free-china-itinerary",
+    href: "/visa-free-transit",
     summary: "Understand visa-free routing, entry documents, onward tickets, and official checks.",
   },
   {

@@ -20,8 +20,8 @@ const steps = [
     id: "entry",
     title: "Check entry rules",
     body: "Confirm your passport eligibility, exact ports, permitted travel area and onward route before paying for non-refundable travel.",
-    href: "/tools/visa-free-eligibility-checker",
-    label: "Organize the entry checks",
+    href: "/visa-free-transit",
+    label: "Check the visa-free transit Hub",
     icon: ShieldCheck,
   },
   {

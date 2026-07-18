@@ -16,6 +16,7 @@ export const siteConfig = {
 
 export const navItems = [
   { href: "/start-here", label: "Start Here" },
+  { href: "/visa-free-transit", label: "Visa-Free" },
   { href: "/payments-and-apps", label: "Payments & Apps" },
   { href: "/city-kits", label: "Destinations" },
   { href: "/itinerary-kits", label: "Plan Your Trip" },
