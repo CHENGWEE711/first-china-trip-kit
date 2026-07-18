@@ -56,11 +56,11 @@ export const editorialImages = {
 
 export const publicPageImages = {
   homeHero: image(
-    "/images/home/phase-d/first-trip-phone-metro-hero.webp",
-    "Traveler checking a smartphone on a Shanghai metro platform",
-    "phase-d-unsplash-home-shanghai-metro-phone",
-    "A real Shanghai metro scene connects phone preparation with the moment a first-time visitor needs it.",
-    "center 48%",
+    "/images/cities/phase-d/suzhou-pingjiang-canal-hero.webp",
+    "Traveler overlooking lantern-lined canals and whitewashed houses on Suzhou's Pingjiang Road",
+    "phase-d-unsplash-suzhou-pingjiang-canal",
+    "A real traveler overlooks the lantern-lined canals and whitewashed houses of Suzhou's Pingjiang Road.",
+    "center 50%",
   ),
 };
 

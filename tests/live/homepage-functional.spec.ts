@@ -2,15 +2,15 @@ import { expect, test } from "@playwright/test";
 
 test("homepage core planning links keep their real destinations", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator('#home-hero a[href="#free-checklist"]')).toHaveCount(1);
   await expect(page.locator('#home-hero a[href="/start-here"]')).toHaveCount(1);
-  await expect(page.locator('#home-problems a[href="/guides/how-to-pay-in-china-as-a-foreigner"]')).toHaveCount(1);
-  await expect(page.locator('#home-start a[href="/start-here"]')).toHaveCount(1);
-  await expect(page.locator('#home-destinations a[href="/city-kits"]')).toHaveCount(1);
+  await expect(page.locator('#home-hero a[href="/guides/how-to-pay-in-china-as-a-foreigner"]')).toHaveCount(1);
+  await expect(page.locator("#home-tasks a")).toHaveCount(4);
+  await expect(page.locator("#home-popular a")).toHaveCount(3);
+  await expect(page.locator("#home-trending a")).toHaveCount(3);
   await expect(page.locator('#home-guides a[href="/guides"]')).toHaveCount(1);
 
-  for (const slug of ["shanghai", "beijing", "xian", "chengdu"]) {
-    await expect(page.locator(`#home-destinations a[href="/city-kits/${slug}"]`)).toHaveCount(2);
+  for (const slug of ["shanghai", "xian"]) {
+    await expect(page.locator(`#home-trending a[href="/city-kits/${slug}"]`)).toHaveCount(1);
   }
   for (const slug of [
     "how-to-pay-in-china-as-a-foreigner",
@@ -22,8 +22,9 @@ test("homepage core planning links keep their real destinations", async ({ page 
 });
 
 test("checklist CTA scrolls to the real newsletter form", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  const checklist = page.locator('#home-hero a[href="#free-checklist"]');
+  const checklist = page.getByRole("link", { name: "Get the Free Checklist" });
   await checklist.click();
   await expect(page).toHaveURL(/#free-checklist$/);
   await expect(page.getByLabel("Email address")).toBeVisible();
@@ -40,7 +41,7 @@ test("newsletter preserves local validation without transmitting invalid data", 
 
 test("product, contact, WhatsApp and footer links expose only configured targets", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator('#home-product a[href="/store#inside-the-guide"]')).toHaveCount(1);
+  await expect(page.locator('#home-product a[href="/store#inside-the-guide"]')).toHaveCount(2);
   const buyLinks = page.locator('#home-product a[target="_blank"]');
   const buyCount = await buyLinks.count();
   if (buyCount === 1) await expect(buyLinks).toHaveAttribute("href", /^https:\/\//);

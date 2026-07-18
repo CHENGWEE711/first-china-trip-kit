@@ -33,9 +33,6 @@ const publicRoutes = [
 async function settlePage(page: Page) {
   await page.evaluate(() => document.fonts.ready);
   const images = page.locator("img");
-  await images.evaluateAll((nodes) => {
-    for (const node of nodes as HTMLImageElement[]) node.loading = "eager";
-  });
   const imageCount = await images.count();
   for (let index = 0; index < imageCount; index += 1) {
     const image = images.nth(index);

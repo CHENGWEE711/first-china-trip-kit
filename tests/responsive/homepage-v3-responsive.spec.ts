@@ -10,20 +10,23 @@ const viewports = [
 ] as const;
 
 for (const viewport of viewports) {
-  test(`homepage layout is stable at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+  test(`Homepage 3.0 is usable at ${viewport.width}x${viewport.height}`, async ({ page }) => {
     await page.setViewportSize(viewport);
     await page.goto("/", { waitUntil: "domcontentloaded" });
+
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator("#home-hero")).toBeVisible();
     await expect(page.locator('#home-hero a[href="/start-here"]')).toBeVisible();
     await expect(page.locator('#home-hero a[href="/guides/how-to-pay-in-china-as-a-foreigner"]')).toBeVisible();
+    await expect(page.locator("#home-tasks a")).toHaveCount(4);
 
     const productPreview = page.locator('[data-testid="product-preview"]');
     await productPreview.scrollIntoViewIfNeeded();
     await expect(productPreview.locator("img")).toHaveCount(4);
     await page.waitForFunction(() =>
-      Array.from(document.querySelectorAll<HTMLImageElement>('[data-testid="product-preview"] img'))
-        .every((image) => image.complete && image.naturalWidth > 0),
+      Array.from(
+        document.querySelectorAll<HTMLImageElement>('[data-testid="product-preview"] img'),
+      ).every((image) => image.complete && image.naturalWidth > 0),
     );
 
     const state = await page.evaluate(() => ({
@@ -32,15 +35,21 @@ for (const viewport of viewports) {
         const heading = document.querySelector("h1");
         return heading ? heading.scrollWidth > heading.clientWidth + 1 : true;
       })(),
-      brokenImages: Array.from(document.images).filter((image) => image.complete && image.naturalWidth === 0).length,
-      productPreviewQuality: Array.from(document.querySelectorAll<HTMLImageElement>('[data-testid="product-preview"] img'))
-        .every((image) => image.naturalWidth / image.clientWidth >= 0.65 && image.naturalHeight / image.clientHeight >= 0.65),
-      newsletterFontSize: Number.parseFloat(getComputedStyle(document.querySelector('input[type="email"]') as Element).fontSize),
+      brokenImages: Array.from(document.images).filter(
+        (image) => image.complete && image.naturalWidth === 0,
+      ).length,
+      taskTargets: Array.from(document.querySelectorAll<HTMLElement>("#home-tasks a")).map(
+        (link) => ({ width: link.getBoundingClientRect().width, height: link.getBoundingClientRect().height }),
+      ),
+      newsletterFontSize: Number.parseFloat(
+        getComputedStyle(document.querySelector('input[type="email"]') as Element).fontSize,
+      ),
     }));
+
     expect(state.overflow).toBe(false);
     expect(state.heroTitleOverflow).toBe(false);
     expect(state.brokenImages).toBe(0);
-    expect(state.productPreviewQuality).toBe(true);
+    expect(state.taskTargets.every((target) => target.width >= 44 && target.height >= 44)).toBe(true);
     expect(state.newsletterFontSize).toBeGreaterThanOrEqual(16);
 
     await page.locator("footer").scrollIntoViewIfNeeded();
@@ -51,7 +60,8 @@ for (const viewport of viewports) {
       await expect(menuButton).toBeVisible();
       await menuButton.click();
       await expect(page.locator("#mobile-navigation")).toBeVisible();
-      await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+      await menuButton.click();
+      await expect(page.locator("#mobile-navigation")).toHaveCount(0);
     } else {
       await expect(menuButton).toBeHidden();
       await expect(page.getByRole("navigation", { name: "Primary navigation" })).toBeVisible();

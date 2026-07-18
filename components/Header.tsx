@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { TrackedLink } from "@/components/TrackedLink";
 import { navItems, siteConfig } from "@/lib/site";
 
 export function Header() {
@@ -75,7 +76,14 @@ export function Header() {
           })}
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="/#free-checklist" className="hidden min-h-11 items-center rounded-md bg-ember px-4 py-2 text-sm font-semibold text-white transition hover:bg-ember-hover xl:inline-flex">Get the Free Checklist</Link>
+          <TrackedLink
+            href="/#free-checklist"
+            eventName="checklist_opened"
+            eventParams={{ item_name: "Free China First Trip Checklist", section: "header" }}
+            className="hidden min-h-11 items-center rounded-md bg-ember px-4 py-2 text-sm font-semibold text-white transition hover:bg-ember-hover xl:inline-flex"
+          >
+            Get the Free Checklist
+          </TrackedLink>
           <button ref={menuButtonRef} type="button" className="grid h-11 w-11 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-ember/40 hover:text-ember focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 lg:hidden" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => open ? closeMenu() : setOpen(true)}>
             {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
@@ -90,7 +98,15 @@ export function Header() {
               const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
               return <Link key={item.href} href={item.href} onClick={() => closeMenu()} aria-current={active ? "page" : undefined} className={`rounded-md px-4 py-3 text-base font-semibold ${active ? "bg-mist text-jade" : "text-ink/72 hover:bg-sand hover:text-ink"}`}>{item.label}</Link>;
             })}
-            <Link href="/#free-checklist" onClick={() => closeMenu()} className="mt-3 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 font-semibold text-white hover:bg-ember-hover">Get the Free Checklist</Link>
+            <TrackedLink
+              href="/#free-checklist"
+              eventName="checklist_opened"
+              eventParams={{ item_name: "Free China First Trip Checklist", section: "mobile_header" }}
+              onClick={() => closeMenu(false)}
+              className="mt-3 inline-flex min-h-11 items-center justify-center rounded-md bg-ember px-4 py-2 font-semibold text-white hover:bg-ember-hover"
+            >
+              Get the Free Checklist
+            </TrackedLink>
           </div>
           </nav>
         </>

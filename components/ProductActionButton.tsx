@@ -1,7 +1,7 @@
 "use client";
 
 import { trackEvent } from "@/lib/analytics";
-import { buildUtmUrl } from "@/lib/utm";
+import { buildUtmUrl, getStoredUtmAttribution } from "@/lib/utm";
 import { cn } from "@/lib/utils";
 
 type ProductActionButtonProps = {
@@ -64,10 +64,12 @@ export function ProductActionButton({
         trackedEvents.forEach((trackedEvent) =>
           trackEvent(trackedEvent, {
             source_page: window.location.pathname,
+            destination_url: trackedHref,
             placement,
             product_id: productId,
             product,
             ...(productId === "china-payment-apps-setup-guide" ? { price: "7" } : {}),
+            ...getStoredUtmAttribution(),
             ...analyticsParams,
           }),
         );

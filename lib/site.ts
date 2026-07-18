@@ -19,7 +19,6 @@ export const navItems = [
   { href: "/city-kits", label: "Destinations" },
   { href: "/itinerary-kits", label: "Plan Your Trip" },
   { href: "/guides", label: "Guides" },
-  { href: "/tools", label: "Tools" },
   { href: "/store", label: "Store" },
 ];
 

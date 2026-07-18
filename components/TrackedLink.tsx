@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { getStoredUtmAttribution } from "@/lib/utm";
 import { cn } from "@/lib/utils";
 
 type TrackedLinkProps = {
@@ -11,6 +12,7 @@ type TrackedLinkProps = {
   eventName: string;
   eventParams?: Record<string, string | number | boolean | undefined>;
   href: string;
+  onClick?: () => void;
 };
 
 export function TrackedLink({
@@ -19,11 +21,19 @@ export function TrackedLink({
   eventName,
   eventParams,
   href,
+  onClick,
 }: TrackedLinkProps) {
   return (
     <Link
       href={href}
-      onClick={() => trackEvent(eventName, eventParams)}
+      onClick={() => {
+        trackEvent(eventName, {
+          destination_url: href,
+          ...getStoredUtmAttribution(),
+          ...eventParams,
+        });
+        onClick?.();
+      }}
       className={cn(className)}
     >
       {children}

@@ -95,10 +95,11 @@ test("Destination alt text identifies the city or a city-specific scene", () => 
   }
 });
 
-test("Homepage uses its own Hero and real target Card data without a fallback map", () => {
+test("Homepage uses its own Hero and real target image data without a fallback map", () => {
   const home = read("app/page.tsx");
   assert.match(home, /publicPageImages\.homeHero/);
-  assert.match(home, /const image = city\.cardImage/);
+  assert.match(home, /src=\{city\.heroImage\.src\}/);
+  assert.match(home, /src=\{item\.image\.src\}/);
   assert.match(home, /<GuideCard/);
   assert.doesNotMatch(home, /cityImages\s*[:=]|fallbackImage|fallback.*image/i);
   assert.notEqual(imagesModule.publicPageImages.homeHero.src, cities[0].heroImage.src);

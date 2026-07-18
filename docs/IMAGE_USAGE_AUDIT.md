@@ -1,10 +1,10 @@
 # Image Usage Audit
 
-Generated: 2026-07-13T17:37:39.612Z
+Generated: 2026-07-18T05:15:28.008Z
 
 ## Result
 
-**PASS** — 0 errors, 0 warnings.
+**PASS** — 0 errors, 2 warnings.
 
 ## Coverage
 
@@ -125,4 +125,5 @@ File and data checks are complemented by `tests/guides/content-visuals.spec.ts`.
 
 ## Warnings
 
-- None.
+- Unused image: /images/home/phase-d/first-trip-phone-metro-hero.webp
+- Unused image: /images/home/phase-d/first-trip-phone-metro-og.webp
