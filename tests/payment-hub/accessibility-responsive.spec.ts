@@ -8,7 +8,7 @@ const viewports = [
 ] as const;
 
 for (const viewport of viewports) {
-  test(`Payment Hub is readable and operable at ${viewport.width}px`, async ({ page }, testInfo) => {
+  test(`Payment Hub is readable and operable at ${viewport.width}px`, { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-desktop", "Viewport matrix runs in one browser engine");
     await page.setViewportSize(viewport);
     await page.goto("/payments-and-apps", { waitUntil: "domcontentloaded" });
@@ -44,7 +44,7 @@ for (const viewport of viewports) {
   });
 }
 
-test("Payment Hub headings, fields and disclosures have accessible semantics", async ({ page }, testInfo) => {
+test("Payment Hub headings, fields and disclosures have accessible semantics", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One semantic pass is sufficient");
   await page.goto("/payments-and-apps");
 

@@ -9,7 +9,7 @@ const productionRoutes = [
   "/start-here",
 ];
 
-test("Phase 2 production routes stay healthy, readable and free of technical states", async ({ page }, testInfo) => {
+test("Phase 2 production routes stay healthy, readable and free of technical states", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One production crawl is sufficient");
   const consoleErrors: string[] = [];
   page.on("console", (message) => {
@@ -36,7 +36,7 @@ test("Phase 2 production routes stay healthy, readable and free of technical sta
   expect(consoleErrors).toEqual([]);
 });
 
-test("Hub SEO, modules and every high-intent parent entry are connected", async ({ page }, testInfo) => {
+test("Hub SEO, modules and every high-intent parent entry are connected", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One wiring pass is sufficient");
   await page.goto("/payments-and-apps");
   await expect(page).toHaveURL(/\/payments-and-apps$/);
@@ -60,7 +60,7 @@ test("Hub SEO, modules and every high-intent parent entry are connected", async 
   }
 });
 
-test("payment Guide Related Guides use each target featured image", async ({ page }, testInfo) => {
+test("payment Guide Related Guides use each target featured image", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One image wiring pass is sufficient");
   await page.goto("/guides/how-to-pay-in-china-as-a-foreigner");
   await expect(page.locator('a[href="/guides/best-apps-for-traveling-in-china"] img')).toHaveAttribute(
@@ -73,7 +73,7 @@ test("payment Guide Related Guides use each target featured image", async ({ pag
   );
 });
 
-test("robots and sitemap expose the Hub without canonical collision", async ({ page }, testInfo) => {
+test("robots and sitemap expose the Hub without canonical collision", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One SEO endpoint pass is sufficient");
   const [sitemap, robots] = await Promise.all([
     page.request.get("/sitemap.xml"),

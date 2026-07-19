@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("Payment Hub has canonical metadata, structured data and sitemap coverage", async ({ page }, testInfo) => {
+test("Payment Hub has canonical metadata, structured data and sitemap coverage", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One SEO pass is sufficient");
   const response = await page.goto("/payments-and-apps");
   expect(response?.status()).toBe(200);
@@ -28,7 +28,7 @@ test("Payment Hub has canonical metadata, structured data and sitemap coverage",
   expect(await sitemap.text()).toContain("https://www.firstchinatripkit.com/payments-and-apps");
 });
 
-test("Payment cluster Guides link back to the Hub", async ({ page }, testInfo) => {
+test("Payment cluster Guides link back to the Hub", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One cluster crawl is sufficient");
   for (const route of [
     "/guides/how-to-pay-in-china-as-a-foreigner",

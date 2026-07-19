@@ -3,7 +3,7 @@ import { GoogleAnalyticsPageView } from "@/components/GoogleAnalyticsPageView";
 export function GoogleAnalytics() {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
-  if (!gaId) {
+  if (!gaId || process.env.VERCEL_ENV !== "production") {
     return null;
   }
 

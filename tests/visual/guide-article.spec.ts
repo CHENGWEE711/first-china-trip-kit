@@ -11,7 +11,7 @@ for (const item of [
   { name: "payment", path: "/guides/how-to-pay-in-china-as-a-foreigner" },
   { name: "apps", path: "/guides/best-apps-for-traveling-in-china" },
 ]) for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
-  test(`${item.name} Guide visual ${viewport.width}`, async ({ page }, testInfo) => {
+  test(`${item.name} Guide visual ${viewport.width}`, { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-desktop", "Explicit visual viewport");
     await page.setViewportSize(viewport);
     await page.goto(item.path);

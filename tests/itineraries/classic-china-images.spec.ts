@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const route = "/itinerary-kits/10-days-classic-china-itinerary";
 
-test("classic China itinerary renders a distinct contextual image for every day", async ({ page }, testInfo) => {
+test("classic China itinerary renders a distinct contextual image for every day", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One content-image audit is sufficient");
   await page.goto(route);
 

@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const externalBaseUrl = process.env.PLAYWRIGHT_BASE_URL;
+const storageState = process.env.PLAYWRIGHT_STORAGE_STATE;
 
 export default defineConfig({
   testDir: "./tests",
@@ -25,6 +26,7 @@ export default defineConfig({
     screenshot: "only-on-failure",
     trace: "retain-on-failure",
     video: "retain-on-failure",
+    storageState: storageState || undefined,
   },
   webServer: externalBaseUrl
     ? undefined
@@ -37,6 +39,7 @@ export default defineConfig({
   projects: [
     {
       name: "chromium-desktop",
+      grepInvert: /@chromium-mobile-only/,
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1440, height: 900 },
@@ -44,6 +47,7 @@ export default defineConfig({
     },
     {
       name: "chromium-mobile",
+      grepInvert: /@chromium-desktop-only/,
       use: {
         ...devices["iPhone 13"],
         browserName: "chromium",
@@ -51,6 +55,7 @@ export default defineConfig({
     },
     {
       name: "chromium-mobile-320",
+      grepInvert: /@chromium-(?:desktop|mobile)-only/,
       use: {
         ...devices["iPhone 13"],
         browserName: "chromium",
@@ -59,6 +64,7 @@ export default defineConfig({
     },
     {
       name: "webkit-desktop",
+      grepInvert: /@chromium-(?:desktop|mobile)-only/,
       use: {
         ...devices["Desktop Safari"],
         viewport: { width: 1440, height: 900 },
@@ -66,12 +72,14 @@ export default defineConfig({
     },
     {
       name: "webkit-mobile",
+      grepInvert: /@chromium-(?:desktop|mobile)-only/,
       use: {
         ...devices["iPhone 13"],
       },
     },
     {
       name: "firefox-desktop",
+      grepInvert: /@chromium-(?:desktop|mobile)-only/,
       use: {
         ...devices["Desktop Firefox"],
         viewport: { width: 1440, height: 900 },

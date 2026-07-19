@@ -23,7 +23,7 @@ const routes = [
   },
 ];
 
-test("priority itinerary list cards are visually distinct", async ({ page }, testInfo) => {
+test("priority itinerary list cards are visually distinct", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "Card identity only needs one viewport");
   await page.goto("/itinerary-kits");
   const sources = [];

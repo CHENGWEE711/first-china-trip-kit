@@ -106,7 +106,7 @@ test("representative routes stay usable without console errors, broken images, o
   await missingPage.close();
 });
 
-test("Itinerary Kits runtime ItemList matches all visible cards and canonical routes", async ({ page }, testInfo) => {
+test("Itinerary Kits runtime ItemList matches all visible cards and canonical routes", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "Structured data needs one runtime verification.");
   await page.goto("/itinerary-kits");
   const visibleCards = await page.locator("main article").count();
@@ -128,7 +128,7 @@ test("Itinerary Kits runtime ItemList matches all visible cards and canonical ro
   }
 });
 
-test("all 17 legacy URLs are single-hop 301 and every sitemap URL is canonical 200", async ({ request }, testInfo) => {
+test("all 17 legacy URLs are single-hop 301 and every sitemap URL is canonical 200", { tag: "@chromium-desktop-only" }, async ({ request }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "Network matrix needs one verification.");
   for (const [legacy, destination] of legacyRoutes) {
     const response = await request.get(legacy, { maxRedirects: 0 });
@@ -142,7 +142,14 @@ test("all 17 legacy URLs are single-hop 301 and every sitemap URL is canonical 2
   expect(sitemapResponse.status()).toBe(200);
   const sitemap = await sitemapResponse.text();
   const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-  expect(urls).toHaveLength(50);
+  expect(urls).toHaveLength(53);
+  expect(urls).toEqual(
+    expect.arrayContaining([
+      "https://www.firstchinatripkit.com/landing/pay-in-china",
+      "https://www.firstchinatripkit.com/landing/china-visa-free",
+      "https://www.firstchinatripkit.com/landing/china-checklist",
+    ]),
+  );
   for (const url of urls) {
     const path = new URL(url).pathname;
     expect(path).not.toMatch(/^\/(cities|itineraries)(?:\/|$)/);
@@ -160,7 +167,7 @@ test("all 17 legacy URLs are single-hop 301 and every sitemap URL is canonical 2
   }
 });
 
-test("representative OG images load and official links use safe HTTPS behavior", async ({ page, request }, testInfo) => {
+test("representative OG images load and official links use safe HTTPS behavior", { tag: "@chromium-desktop-only" }, async ({ page, request }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "Metadata and external-link audit needs one verification.");
   for (const route of [
     "/",
@@ -193,7 +200,7 @@ test("representative OG images load and official links use safe HTTPS behavior",
   }
 });
 
-test("configured form stubs expose loading, success, privacy-safe URLs, and single analytics events", async ({ page }, testInfo) => {
+test("configured form stubs expose loading, success, privacy-safe URLs, and single analytics events", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One deterministic form integration test is sufficient.");
   await page.route("**/api/contact", async (route) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
@@ -229,7 +236,7 @@ test("configured form stubs expose loading, success, privacy-safe URLs, and sing
   expect(events.filter((event) => event === "newsletter_subscribed")).toHaveLength(1);
 });
 
-test("Store exposes only working commercial actions and an honest paid-product state", async ({ page }, testInfo) => {
+test("Store exposes only working commercial actions and an honest paid-product state", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One commercial-state verification is sufficient.");
   await page.goto("/store");
 
@@ -266,7 +273,7 @@ test("Store exposes only working commercial actions and an honest paid-product s
   }
 });
 
-test("tracked interactions emit each required event once", async ({ page }, testInfo) => {
+test("tracked interactions emit each required event once", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One analytics verification is sufficient.");
   await page.goto("/store");
   await installAnalyticsRecorder(page);

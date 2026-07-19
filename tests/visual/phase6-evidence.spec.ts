@@ -11,7 +11,7 @@ async function loadImages(page: import("@playwright/test").Page) {
   await page.evaluate(() => window.scrollTo(0, 0));
 }
 
-test("capture Phase 6 Guide evidence", async ({ page }, testInfo) => {
+test("capture Phase 6 Guide evidence", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One evidence capture run");
   for (const item of [
     { name: "guides-list", route: "/guides" },

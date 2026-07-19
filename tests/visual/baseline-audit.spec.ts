@@ -91,7 +91,7 @@ test.describe("Phase 2 visual baseline audit", () => {
 
   for (const pageDefinition of pages) {
     for (const viewport of viewports) {
-      test(`${pageDefinition.name} at ${viewport.width}x${viewport.height}`, async ({ page }, testInfo) => {
+      test(`${pageDefinition.name} at ${viewport.width}x${viewport.height}`, { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
         test.skip(
           testInfo.project.name !== "chromium-desktop",
           "This audit sets all six viewport sizes itself and runs once in the desktop project.",

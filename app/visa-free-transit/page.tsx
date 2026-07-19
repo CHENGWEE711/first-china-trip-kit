@@ -22,6 +22,7 @@ import { TransitEligibilityChecker } from "@/components/visa/TransitEligibilityC
 import { TransitTimeCalculator } from "@/components/visa/TransitTimeCalculator";
 import { VisaActionLink } from "@/components/visa/VisaActionLink";
 import { VisaDocumentsChecklist } from "@/components/visa/VisaDocumentsChecklist";
+import { VisaHashFocus } from "@/components/visa/VisaHashFocus";
 import { VisaHubAnalytics } from "@/components/visa/VisaHubAnalytics";
 import { VisaPolicyChoiceLink } from "@/components/visa/VisaPolicyChoiceLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
@@ -379,10 +380,11 @@ export default function VisaFreeTransitHubPage() {
         </section>
 
         <section className="editorial-section scroll-mt-24 bg-paper" id="route-check">
+          <VisaHashFocus hash="#route-check" targetId="route-check-heading" />
           <Container>
             <div className="max-w-3xl">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ember">Local, private screening</p>
-              <h2 className="mt-3 text-4xl leading-tight text-ink sm:text-5xl">Check your immediate route</h2>
+              <h2 id="route-check-heading" tabIndex={-1} className="mt-3 text-4xl leading-tight text-ink sm:text-5xl">Check your immediate route</h2>
               <p className="mt-4 text-base leading-relaxed text-ink/64">Five short steps compare only the facts needed for a cautious result. Your answers stay in this browser session and are not sent to analytics.</p>
             </div>
             <div className="mt-9">

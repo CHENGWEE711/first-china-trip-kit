@@ -71,7 +71,7 @@ h1, h2, h3, .font-editorial {
 
 a { color: inherit; text-decoration: none; }
 a, button, input, textarea, select { outline-offset: 3px; }
-:focus-visible { outline: 3px solid rgb(var(--color-brand-red) / 0.45); }
+:focus-visible { outline: 3px solid rgb(var(--color-brand-red)); }
 ::selection { background: rgb(var(--color-brand-red) / 0.18); }
 
 .skip-link {

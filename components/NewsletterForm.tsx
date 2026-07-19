@@ -1,22 +1,39 @@
 "use client";
 
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useId, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import type { LandingName } from "@/data/landings";
 import { trackEvent } from "@/lib/analytics";
+import {
+  resolveLandingTrafficSource,
+  trackLandingEvent,
+} from "@/lib/landing/analytics";
 import { captureUtmAttribution } from "@/lib/utm";
 
 type NewsletterFormProps = {
   source?: string;
   compact?: boolean;
+  analyticsVariant?: "default" | "landing";
+  landingName?: LandingName;
+  submitLabel?: string;
 };
 
-export function NewsletterForm({ source = "site", compact = false }: NewsletterFormProps) {
+export function NewsletterForm({
+  source = "site",
+  compact = false,
+  analyticsVariant = "default",
+  landingName,
+  submitLabel = "Get the checklist",
+}: NewsletterFormProps) {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [isHydrated, setIsHydrated] = useState(false);
   const isSubmitting = status === "loading";
+  const emailId = useId();
+  const messageId = `${emailId}-message`;
+  const hasError = Boolean(message) && status !== "success";
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => setIsHydrated(true));
@@ -72,12 +89,21 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
       data.message ||
         "Thanks! You're subscribed. Your China First Trip Checklist is ready on the next page.",
     );
-    trackEvent("newsletter_subscribed", {
-      source_page: sourcePage,
-      placement: source,
-      lead_magnet: leadMagnet,
-      ...attribution,
-    });
+    if (analyticsVariant === "landing" && landingName) {
+      trackLandingEvent("landing_newsletter_signup", {
+        landing_name: landingName,
+        traffic_source: resolveLandingTrafficSource(window.location.search),
+        cta_name: "submit_checklist_signup",
+        interaction_type: "success",
+      });
+    } else {
+      trackEvent("newsletter_subscribed", {
+        source_page: sourcePage,
+        placement: source,
+        lead_magnet: leadMagnet,
+        ...attribution,
+      });
+    }
     form.reset();
     window.setTimeout(() => {
       router.push("/thank-you");
@@ -91,27 +117,33 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
       onSubmit={handleSubmit}
       className={compact ? "grid gap-3" : "grid gap-3 rounded-lg border border-white/15 bg-white/5 p-4 md:p-6"}
     >
-      <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
-        <label htmlFor={`newsletter-website-${source}`}>Website</label>
+      <div
+        aria-hidden="true"
+        inert
+        className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
+      >
+        <label htmlFor={`${emailId}-website`}>Website</label>
         <input
-          id={`newsletter-website-${source}`}
+          id={`${emailId}-website`}
           name="website"
           type="text"
           tabIndex={-1}
           autoComplete="off"
         />
       </div>
-      <label htmlFor={`newsletter-email-${source}`} className="text-sm font-semibold text-white/84">
+      <label htmlFor={emailId} className="text-sm font-semibold text-white/84">
         Email address
       </label>
       <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
         <input
-          id={`newsletter-email-${source}`}
+          id={emailId}
           name="email"
           type="email"
           required
           maxLength={254}
           aria-label="Email address"
+          aria-invalid={hasError || undefined}
+          aria-describedby={message ? messageId : undefined}
           className="min-h-12 rounded-md border border-white/20 bg-surface px-4 text-base text-ink outline-none focus:border-ember focus:ring-2 focus:ring-ember/25"
         />
         <button
@@ -125,7 +157,7 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
               ? "Success"
               : isSubmitting
                 ? "Saving..."
-                : "Get the checklist"}
+                : submitLabel}
         </button>
       </div>
       <p className="text-sm text-white/55">
@@ -141,6 +173,7 @@ export function NewsletterForm({ source = "site", compact = false }: NewsletterF
       </p>
       {message ? (
         <p
+          id={messageId}
           className="text-sm font-semibold text-white"
           role={status === "success" ? "status" : "alert"}
           aria-live="polite"
