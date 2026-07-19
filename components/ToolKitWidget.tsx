@@ -40,9 +40,9 @@ const visaChecks = [
   },
   {
     id: "area",
-    label: "My hotel cities stay inside the permitted travel area.",
+    label: "My hotel cities stay inside the published permitted travel areas.",
     description:
-      "Do not leave the allowed region for your entry port.",
+      "Do not leave the published permitted areas or the area authorized on your temporary entry permit.",
   },
   {
     id: "official",
@@ -461,12 +461,20 @@ function VisaTool() {
           ))}
         </div>
       </section>
-      <Link
-        href="/guides/china-240-hour-visa-free-transit-guide"
-        className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-center text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember sm:w-auto"
-      >
-        Read the full 240-hour transit guide
-      </Link>
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+        <Link
+          href="/visa-free-transit#route-check"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition hover:bg-ember-hover sm:w-auto"
+        >
+          Check your full route and entry port
+        </Link>
+        <Link
+          href="/guides/china-240-hour-visa-free-transit-guide"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-ink/12 bg-paper px-4 py-2 text-center text-base font-semibold text-ink transition hover:border-ember/35 hover:text-ember sm:w-auto"
+        >
+          Read the detailed 240-hour Guide
+        </Link>
+      </div>
     </div>
   );
 }

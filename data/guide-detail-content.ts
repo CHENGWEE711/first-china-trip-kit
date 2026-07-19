@@ -993,10 +993,10 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
   "can-americans-travel-to-china-in-2026": {
     importantNotice:
       "Visa and entry rules can change, and admission is decided by Chinese border inspection authorities. Verify the correct visa or visa-free route for your passport, purpose and itinerary before booking non-refundable travel.",
-    lastVerified: "2026-07-13",
+    lastVerified: "2026-07-19",
     verificationLabel: "Entry information last verified",
     quickAnswer:
-      "Yes, U.S. passport holders can plan China travel in 2026. As verified on July 13, 2026, U.S. passports are not included in the Chinese Embassy's current 50-country unilateral 30-day visa-free list, so an ordinary tourism trip generally requires the appropriate visa unless the exact route qualifies under a separate policy such as 240-hour visa-free transit. Verify your passport, purpose, route and official requirements before paying for non-refundable travel.",
+      "Yes, U.S. passport holders can plan China travel in 2026. As verified on July 19, 2026, U.S. passports are not included in the National Immigration Administration's current 50-country unilateral 30-day visa-free list, so an ordinary tourism trip generally requires the appropriate visa unless the exact route qualifies under a separate policy such as 240-hour visa-free transit. Verify your passport, purpose, route and official requirements before paying for non-refundable travel.",
     steps: [
       "Check your passport validity and make sure the passport name matches flights, hotels, trains, and any visa application.",
       "Confirm the correct entry path for your purpose of travel. Most ordinary sightseeing trips should start by checking tourist visa requirements through official consular sources.",
@@ -1070,9 +1070,9 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
   "china-240-hour-visa-free-transit-guide": {
     importantNotice:
       "This guide is for trip planning only and is not legal or immigration advice. Rules can change. Confirm your eligibility and entry port with China’s National Immigration Administration or your airline before travel.",
-    lastVerified: "2026-07-13",
+    lastVerified: "2026-07-19",
     quickAnswer:
-      "As last verified on July 13, 2026, China's National Immigration Administration lists 55 eligible nationalities and 65 entry ports across 24 provincial-level regions for the 240-hour visa-free transit policy. Eligible travelers must continue to a third country or region, use a covered port, and stay within the permitted area. Before relying on the policy, verify your passport nationality, routing, confirmed onward transport, entry and exit ports, and every city in your plan.",
+      "As last verified on July 19, 2026, China's National Immigration Administration lists 55 eligible nationalities and 65 entry ports across 24 provincial-level regions for the 240-hour visa-free transit policy. Eligible travelers must continue to a third country or region, use a covered port, and stay within the permitted area. Before relying on the policy, verify your passport nationality, routing, confirmed onward transport, entry and exit ports, and every city in your plan.",
     whoThisGuideIsFor: [
       "Travelers planning a short China stopover of up to 10 days under a transit policy.",
       "Visitors considering Shanghai, Beijing, Guangzhou, Shenzhen, Hangzhou, Suzhou, Chengdu, Xi'an, or another covered area as a short route.",
@@ -1093,7 +1093,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       {
         title: "Current policy snapshot",
         body:
-          "The official totals checked on July 13, 2026 are 55 eligible nationalities, 65 entry ports, and permitted areas in 24 provincial-level regions. NIA guidance generally calculates the 240-hour period from 00:00 on the day after entry, but the entry port determines the permitted travel area and the exact route still needs to qualify.",
+          "The official totals checked on July 19, 2026 are 55 eligible nationalities, 65 entry ports, and permitted areas in 24 provincial-level regions. NIA guidance generally calculates the 240-hour period from 00:00 on the day after entry, but the entry port determines the permitted travel area and the exact route still needs to qualify.",
         items: [
           "Confirm your passport nationality on the current NIA list.",
           "Confirm both the entry port and the area where you plan to stay.",
@@ -1115,7 +1115,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         title: "Route examples to verify",
         columns: ["Route idea", "Best use", "Verification focus"],
         rows: [
-          ["Shanghai + Suzhou + Hangzhou", "Short rail hops, practical hotels, and soft first-trip logistics.", "Confirm every city is inside the permitted area for your entry port."],
+          ["Shanghai + Suzhou + Hangzhou", "Short rail hops, practical hotels, and soft first-trip logistics.", "Confirm every city is inside the current published permitted areas and your authorized route."],
           ["Beijing + Tianjin", "History plus an easy northern high-speed rail add-on.", "Confirm Beijing-area permitted movement and exact port rules."],
           ["Guangzhou + Shenzhen", "Southern food, business, and Greater Bay Area connections.", "Confirm border-region routing, hotel cities, and onward destination logic."],
         ],
@@ -1147,7 +1147,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Start with official policy pages, not a sample itinerary. Confirm your passport nationality is currently eligible.",
       "Check that your arrival and departure ports are covered by the policy you plan to use.",
       "Confirm you have a ticket onward to a third country or region within the allowed time window.",
-      "Map every hotel city and day trip against the permitted stay area for your entry port.",
+      "Map every hotel city and day trip against the current published permitted areas and your authorized route.",
       "Carry printed and offline proof of onward travel, hotels, and route details.",
       "Use a flexible itinerary with buffer time because airline checks, immigration checks, and flight changes can affect the plan.",
       "Prepare both digital and printed copies of your passport, onward ticket, hotel booking, full itinerary, Chinese hotel address, and any proof needed for your next destination.",
@@ -1247,7 +1247,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       },
       {
         label: "National Immigration Administration: 240-hour transit notice (English)",
-        href: "https://en.nia.gov.cn/n147418/n147468/c187308/content.html",
+        href: "https://en.nia.gov.cn/n147413/c187308/content.html",
         note: "Official English notice published November 3, 2025 for the latest port expansion.",
       },
       {
@@ -1258,9 +1258,9 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
     ],
     ctaLinks: [
       {
-        label: "Use Visa-Free Checker",
-        href: "/tools/visa-free-eligibility-checker",
-        note: "Answer a few planning questions before you book your route.",
+        label: "Use the Visa-Free Transit Planner",
+        href: "/visa-free-transit#route-check",
+        note: "Screen the immediate route, current eligible ports, timing and permitted-area checks before booking.",
       },
       {
         label: "Get the Free China First Trip Checklist",

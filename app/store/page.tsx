@@ -240,12 +240,20 @@ export default function StorePage() {
                 </Link>
               )}
             </div>
-            <Link
-              href="/payments-and-apps"
-              className="mt-4 inline-flex min-h-11 items-center font-semibold text-ember underline decoration-ember/30 underline-offset-4 transition hover:decoration-ember"
-            >
-              Start with the free Payments & Apps Hub →
-            </Link>
+            <div className="mt-4 flex flex-col gap-1 sm:flex-row sm:gap-5">
+              <Link
+                href="/payments-and-apps"
+                className="inline-flex min-h-11 items-center font-semibold text-ember underline decoration-ember/30 underline-offset-4 transition hover:decoration-ember"
+              >
+                Start with the free Payments & Apps Hub →
+              </Link>
+              <Link
+                href="/visa-free-transit"
+                className="inline-flex min-h-11 items-center font-semibold text-jade underline decoration-jade/30 underline-offset-4 transition hover:text-ember"
+              >
+                Check a visa-free transit route →
+              </Link>
+            </div>
             <div className="mt-5 grid gap-2 text-sm text-ink/58 sm:grid-cols-2">
               <p className="rounded-md border border-ink/10 bg-paper px-3 py-2">
                 {checklistPayhipUrl

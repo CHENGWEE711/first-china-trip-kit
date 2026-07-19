@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "",
     "/start-here",
+    "/visa-free-transit",
     "/payments-and-apps",
     "/city-kits",
     "/itinerary-kits",
@@ -50,7 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const toolRoutes = toolKits.map((tool) => ({
+  const toolRoutes = toolKits.filter((tool) => tool.type !== "visa").map((tool) => ({
     url: absoluteUrl(`/tools/${tool.slug}`),
     lastModified: new Date(),
     changeFrequency: "monthly" as const,

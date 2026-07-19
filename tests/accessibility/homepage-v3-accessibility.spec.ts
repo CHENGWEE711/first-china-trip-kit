@@ -59,5 +59,5 @@ test("Homepage 3.0 task navigation and mobile menu work from the keyboard", asyn
   const firstTask = page.locator("#home-tasks a").first();
   await firstTask.focus();
   await expect(firstTask).toBeFocused();
-  await expect(firstTask).toHaveAttribute("href", "/tools/visa-free-eligibility-checker");
+  await expect(firstTask).toHaveAttribute("href", "/visa-free-transit");
 });

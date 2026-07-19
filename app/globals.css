@@ -47,6 +47,10 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
+/* The policy Hub moves focus between multi-step form panels. Instant scrolling keeps
+   controls stable on compact mobile viewports while preserving the global anchor behavior elsewhere. */
+html:has(#visa-free-transit-hub) { scroll-behavior: auto; }
+
 body {
   margin: 0;
   overflow-x: hidden;

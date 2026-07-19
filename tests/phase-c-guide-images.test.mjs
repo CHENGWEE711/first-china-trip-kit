@@ -123,11 +123,11 @@ test("Time-sensitive Guide content uses current sources and cautious claims", ()
   const transit = guideDetails["china-240-hour-visa-free-transit-guide"];
   const esim = guideDetails["china-esim-guide-for-tourists"];
 
-  assert.equal(americans.lastVerified, "2026-07-13");
+  assert.equal(americans.lastVerified, "2026-07-19");
   assert.match(americans.quickAnswer, /U\.S\. passports are not included.*50-country unilateral 30-day visa-free list/i);
   assert.ok(americans.officialSourceLinks.some((link) => link.href.includes("t20250920_11712385")));
   assert.ok(americans.officialSourceLinks.some((link) => link.href.includes("t20241224_11516392")));
-  assert.equal(transit.lastVerified, "2026-07-13");
+  assert.equal(transit.lastVerified, "2026-07-19");
   assert.match(transit.quickAnswer, /55 eligible nationalities.*65 entry ports.*24 provincial-level regions/i);
   assert.match(esim.importantNotice, /no provider, app or VPN is guaranteed/i);
   assert.doesNotMatch(detailsSource, /\b54 countries\b|\b60 (eligible )?ports\b/i);
@@ -167,4 +167,3 @@ test("Payment visuals are sourced photography and do not include simulated app i
     }
   }
 });
-

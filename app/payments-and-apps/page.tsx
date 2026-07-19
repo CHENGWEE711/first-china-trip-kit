@@ -10,6 +10,7 @@ import {
   CreditCard,
   LayoutGrid,
   Route,
+  ShieldCheck,
   Smartphone,
   WalletCards,
   Wifi,
@@ -673,6 +674,21 @@ export default function PaymentsAndAppsPage() {
             payment, login, or network route will work.
           </div>
         </div>
+
+        <section className="border-t border-ink/10 bg-sand px-4 py-12">
+          <div className="mx-auto grid max-w-5xl gap-5 border-l-2 border-ember bg-paper px-5 py-6 shadow-soft md:grid-cols-[auto_1fr_auto] md:items-center">
+            <ShieldCheck aria-hidden="true" size={30} className="text-ember" />
+            <div>
+              <h2 className="text-2xl text-ink">Check entry rules before you finish arrival setup</h2>
+              <p className="mt-2 text-sm leading-relaxed text-ink/62">
+                If your trip depends on China&apos;s visa-free transit policy, screen the immediate route, current ports, timing and permitted areas in the Visa-Free Transit Hub.
+              </p>
+            </div>
+            <Link href="/visa-free-transit" className={buttonClassName("secondary", "w-full md:w-auto")}>
+              Check your visa-free entry plan <ArrowRight aria-hidden="true" size={17} />
+            </Link>
+          </div>
+        </section>
 
         <section id="related-guides" className="scroll-mt-24 bg-paper px-4 py-16 md:py-24">
           <div className="mx-auto max-w-7xl">

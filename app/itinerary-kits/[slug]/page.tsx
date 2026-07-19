@@ -80,11 +80,13 @@ const usefulPhrases = [
   },
 ];
 
-const companionGuideByItinerary: Record<string, { href: string; label: string; note: string }> = {
+const companionGuideByItinerary: Record<string, { href: string; label: string; note: string; hubHref?: string; hubLabel?: string }> = {
   "240-hour-visa-free-china-itinerary": {
     href: "/guides/china-240-hour-visa-free-transit-guide",
-    label: "Check the 240-hour policy Guide first",
-    note: "This page is route planning, not an eligibility decision. Use the policy Guide to verify nationality, ports, onward routing and permitted areas before relying on this itinerary.",
+    label: "Read the detailed 240-hour policy Guide",
+    hubHref: "/visa-free-transit#route-check",
+    hubLabel: "Check whether your exact route and stay area match the current policy",
+    note: "This page is route planning, not an eligibility decision. Use it for inspiration only after the Hub screens nationality, ports, immediate onward routing, timing and permitted areas; use the Guide for the longer explanation.",
   },
   "3-days-in-shanghai": {
     href: "/guides/3-days-in-shanghai-for-first-time-visitors",
@@ -198,9 +200,16 @@ export default async function ItineraryKitDetailPage({ params }: PageProps) {
               {companionGuide ? (
                 <aside className="mt-5 border-l-2 border-jade bg-mist px-4 py-3" aria-label="Related planning guide">
                   <p>{companionGuide.note}</p>
-                  <Link href={companionGuide.href} className="mt-3 inline-flex min-h-11 items-center font-bold text-jade hover:text-ember">
-                    {companionGuide.label}
-                  </Link>
+                  <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:gap-5">
+                    {companionGuide.hubHref ? (
+                      <Link href={companionGuide.hubHref} className="inline-flex min-h-11 items-center font-bold text-ember hover:text-ember-hover">
+                        {companionGuide.hubLabel}
+                      </Link>
+                    ) : null}
+                    <Link href={companionGuide.href} className="inline-flex min-h-11 items-center font-bold text-jade hover:text-ember">
+                      {companionGuide.label}
+                    </Link>
+                  </div>
                 </aside>
               ) : null}
             </Section>
