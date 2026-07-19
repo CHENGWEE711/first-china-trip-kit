@@ -1,0 +1,13 @@
+HTTP/2 400
+cache-control: public, max-age=0, must-revalidate
+content-type: application/json
+date: Sun, 19 Jul 2026 10:49:17 GMT
+permissions-policy: camera=(), microphone=(), geolocation=()
+referrer-policy: strict-origin-when-cross-origin
+server: Vercel
+strict-transport-security: max-age=63072000
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-matched-path: /api/newsletter
+x-vercel-cache: MISS
+x-vercel-id: hnd1::iad1::dj5sb-1784458156460-df609da68b0d

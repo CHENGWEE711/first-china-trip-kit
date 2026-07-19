@@ -1,0 +1,21 @@
+HTTP/2 200
+access-control-allow-origin: *
+age: 28
+cache-control: public, max-age=0, must-revalidate
+content-disposition: inline
+content-encoding: gzip
+content-type: text/html; charset=utf-8
+date: Sun, 19 Jul 2026 10:42:25 GMT
+etag: W/"b03d6a6c7717715e1495e202b68cf7b1"
+permissions-policy: camera=(), microphone=(), geolocation=()
+referrer-policy: strict-origin-when-cross-origin
+server: Vercel
+strict-transport-security: max-age=63072000
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-matched-path: /landing/china-checklist
+x-nextjs-prerender: 1
+x-nextjs-stale-time: 300
+x-vercel-cache: HIT
+x-vercel-id: hnd1::r6bdd-1784457745378-fcde1086fda2

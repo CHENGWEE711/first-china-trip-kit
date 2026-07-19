@@ -1,0 +1,19 @@
+HTTP/2 200
+access-control-allow-origin: *
+age: 20
+cache-control: public, max-age=0, must-revalidate
+content-disposition: inline; filename="sitemap.xml"
+content-encoding: gzip
+content-type: application/xml
+date: Sun, 19 Jul 2026 10:42:26 GMT
+etag: W/"aa5c20bc102af79c86d4c228db3758aa"
+last-modified: Sun, 19 Jul 2026 10:42:06 GMT
+permissions-policy: camera=(), microphone=(), geolocation=()
+referrer-policy: strict-origin-when-cross-origin
+server: Vercel
+strict-transport-security: max-age=63072000
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-matched-path: /sitemap.xml
+x-vercel-cache: HIT
+x-vercel-id: hnd1::8bx4x-1784457746319-bfcd848dd125

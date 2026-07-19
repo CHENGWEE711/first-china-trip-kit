@@ -1,0 +1,92 @@
+{
+  "acceptedAt": "2026-07-19T19:05:10+08:00",
+  "deployment": {
+    "project": "china-travel-kit",
+    "id": "dpl_7VzuzmL9oGW6EmR6G6ny1J5ibnuJ",
+    "url": "https://china-travel-q5gre9chr-chengwee711-4164s-projects.vercel.app",
+    "target": "production",
+    "state": "READY",
+    "gitRef": "main",
+    "gitSha": "a74abdcc18eeaeb387901836f25eeade64f19cae"
+  },
+  "http": {
+    "/": 200,
+    "/landing/pay-in-china": 200,
+    "/landing/china-visa-free": 200,
+    "/landing/china-checklist": 200,
+    "/landing/not-approved": 404,
+    "/payments-and-apps": 200,
+    "/visa-free-transit": 200,
+    "/start-here": 200,
+    "/thank-you": 200,
+    "/sitemap.xml": 200,
+    "/robots.txt": 200,
+    "/china-first-time-visitor-checklist.pdf": 200,
+    "apexRedirect": {
+      "status": 301,
+      "location": "https://www.firstchinatripkit.com/"
+    }
+  },
+  "seo": {
+    "pay-in-china": {
+      "h1Count": 1,
+      "canonical": "https://www.firstchinatripkit.com/landing/pay-in-china",
+      "schemaTypes": ["WebPage", "BreadcrumbList", "FAQPage"],
+      "noindex": false
+    },
+    "china-visa-free": {
+      "h1Count": 1,
+      "canonical": "https://www.firstchinatripkit.com/landing/china-visa-free",
+      "schemaTypes": ["WebPage", "BreadcrumbList", "FAQPage"],
+      "noindex": false
+    },
+    "china-checklist": {
+      "h1Count": 1,
+      "canonical": "https://www.firstchinatripkit.com/landing/china-checklist",
+      "schemaTypes": ["WebPage", "BreadcrumbList", "FAQPage"],
+      "noindex": false
+    },
+    "sitemapLandingCounts": {
+      "pay-in-china": 1,
+      "china-visa-free": 1,
+      "china-checklist": 1
+    },
+    "robotsBlocksLanding": false
+  },
+  "analytics": {
+    "gaLoaderCount": 1,
+    "metricoolLoaderCount": 1,
+    "consoleErrors": 0,
+    "landingViewCount": 1,
+    "landingHubClickedCount": 1,
+    "normalizedTrafficSource": "tiktok",
+    "forbiddenCustomParametersFound": 0,
+    "internalUtmLinksFound": 0
+  },
+  "newsletter": {
+    "invalidRequestStatus": 400,
+    "honeypotRequestStatus": 400,
+    "failureAriaInvalid": true,
+    "failureHasAriaDescription": true,
+    "completionEventsOnFailure": 0,
+    "permanentSubscriberCreated": false
+  },
+  "tests": {
+    "unit": { "passed": 63, "failed": 0, "skipped": 0 },
+    "featureFullPlaywright": { "passed": 1032, "failed": 0, "skipped": 0 },
+    "mainFullPlaywright": { "passed": 1032, "failed": 0, "skipped": 0 },
+    "productionLandingPlaywright": { "passed": 90, "failed": 0, "skipped": 0 },
+    "imageAudit": { "images": 91, "errors": 0, "warnings": 2 }
+  },
+  "visualEvidence": {
+    "screenshots": 11,
+    "httpFailures": 0,
+    "horizontalOverflowFailures": 0,
+    "brokenImages": 0,
+    "pendingImages": 0,
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "checklistFocusId": "free-checklist",
+    "visaFocusId": "route-check-heading"
+  }
+}

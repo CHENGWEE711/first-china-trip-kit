@@ -1,0 +1,20 @@
+HTTP/2 200
+accept-ranges: bytes
+access-control-allow-origin: *
+age: 20
+cache-control: public, max-age=0, must-revalidate
+content-disposition: inline; filename="robots.txt"
+content-type: text/plain; charset=utf-8
+date: Sun, 19 Jul 2026 10:42:27 GMT
+etag: "cfeafca7945ee94b2637eff0bc9963b8"
+last-modified: Sun, 19 Jul 2026 10:42:07 GMT
+permissions-policy: camera=(), microphone=(), geolocation=()
+referrer-policy: strict-origin-when-cross-origin
+server: Vercel
+strict-transport-security: max-age=63072000
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-matched-path: /robots.txt
+x-vercel-cache: HIT
+x-vercel-id: hnd1::mw44f-1784457747131-45c97bb6de7a
+content-length: 119
