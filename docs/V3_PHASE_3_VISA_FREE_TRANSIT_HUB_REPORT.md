@@ -2,332 +2,363 @@
 
 Report date: 2026-07-19  
 Project: First China Trip Kit  
-Route: `/visa-free-transit`  
-Branch: `feat/v3-phase3-visa-free-transit-hub`  
+Core route: `/visa-free-transit`
+Feature branch: `feat/v3-phase3-visa-free-transit-hub`
 Starting Git SHA: `2ad8f7e845370f5c38382acb463353d25ba5ddad`  
-Final implementation Git SHA: `9eb028e94797ee7340ef612a0fb5796236cdcfb4`  
-Preview: <https://china-travel-10j9sjcu1-chengwee711-4164s-projects.vercel.app>  
-Preview access: Vercel SSO protected  
-Production deployment: **Not performed**
+Implementation Git SHA: `aba49dc0e95579ac521b62d9f84d01b60daa3f9b`
+Preview evidence Git SHA: `be3a77b5994c52a250d8b79def5b3b333d58881f`
+Preview URL: `https://china-travel-f1gmbc1r3-chengwee711-4164s-projects.vercel.app`
+Preview deployment ID: `dpl_5dFGSwqm1kLqVtUDFS64oz8kWL7r`
+Preview target/status: `preview` / `Ready`
+Production deployment: **Not performed; no Production alias was changed**
 
 ## Delivery status
 
-Phase 3 development, automated validation, browser QA, responsive screenshots and the protected Vercel Preview are complete. The implementation remains isolated from Production and does not start Phase 4.
+The Phase 3 implementation is aligned to the July 19 policy-data contract on the feature branch. The complete validation matrix passed, a fresh protected Preview reached `Ready`, and all seven required evidence captures were generated from that deployment and visually reviewed. No Production deployment or Production alias change is included in this phase.
 
-The Hub combines policy selection, a five-step route checker, time-window education, a searchable 65-port explorer, permitted-area guidance, document preparation, arrival steps, policy-safe starter routes, common mistakes, FAQs, official sources and an update log. The existing long-form Guide remains at `/guides/china-240-hour-visa-free-transit-guide` with its own URL and canonical.
+The Hub is a policy-led route-screening and action center, not a replacement for the existing detailed Guide. It combines policy selection, a five-step route screener, a searchable 65-port explorer, permitted-area checks, a transit-time education tool, document and arrival preparation, cautious route ideas, FAQs, official sources, and an update log.
 
-Policy snapshot used by the implementation:
+The completed acceptance state is:
+
+> V3 Phase 3 implementation is complete on the feature branch and ready for independent review. Production has not been deployed.
+
+## Policy snapshot and version contract
+
+The single version source is `data/visa-policy/version.ts`:
 
 | Field | Value |
 | --- | --- |
-| Policy version / effective baseline | `2025-11-05` |
-| Last verified | `2026-07-18` |
-| Next manual review due | `2026-08-18` |
+| Policy version ID | `2026-07-19-v1` |
+| Public verification date | `2026-07-19` |
+| Public verification copy | `Policy information verified: July 19, 2026` |
+| 55-country transit list effective from | `2025-06-12` |
+| 65-port list effective from | `2025-11-05` |
+| Unilateral visa-free list as of | `2026-02-17` |
 | Transit window | 240 hours |
-| Eligible nationalities | 55 |
-| Eligible ports | 65 |
+| Eligible transit nationalities | 55 |
+| Eligible transit ports | 65 |
 | Province-level regions represented | 24 |
-| Unilateral 30-day visa-free countries | 50 |
-| Minimum published passport/travel-document validity | 3 months |
-| Policy clock | From 00:00 on the day following entry |
+| Unilateral 30-day countries | 50 |
+| Published minimum document validity | 3 months |
+| Policy clock | From 00:00 on the day after entry |
 
-All checker results remain educational. Final handling is determined by immigration inspection officers at the port of entry.
+The three effective/as-of dates are intentionally separate. The July 19 verification date records the website's manual policy check and must not overwrite the legal effective date of the country list, the port-list effective date, or the unilateral-list publication date.
 
-## Page structure
+All screening output is educational. It does not say that a traveler is approved, guaranteed eligible, or guaranteed entry. Final handling remains with the operating airline and immigration inspection officers at the port of entry.
 
-The page is implemented as a product and action Hub rather than a long-form blog:
+## Page and interaction structure
 
-1. Hero with route-checker and eligible-port actions, current policy counts, last-check date, source access and non-legal-advice notice.
-2. “Which Policy Fits Your Trip?” comparison for 30-day visa-free entry, 240-hour visa-free transit, 24-hour direct transit and manual/visa review.
-3. Five-step interactive eligibility checker.
-4. A → Mainland China → B route explanation with valid and invalid basic examples.
-5. “How the 240 Hours Are Counted” education and China Standard Time calculator.
-6. Searchable and filterable 65 Eligible Ports Explorer.
-7. Permitted stay areas, with entry port, stay area and exit route kept distinct.
-8. Printable, copyable, locally saveable and downloadable documents checklist.
-9. Eight-step arrival process linked only to the official NIA Arrival Card channel.
-10. Three-, five- and up-to-ten-day starter ideas bound to permitted-area IDs.
-11. Common mistakes.
-12. Fifteen cautious, search-oriented FAQs.
-13. Official sources, policy update history, last-check date and change log.
+The Hub follows this product flow:
 
-## New and modified files
+1. Hero with the current verification date, policy counts, `Check My Route`, detailed-Guide access, official-source access, and a clear non-legal-advice notice.
+2. Three policy choices: 30-day unilateral visa-free entry, 240-hour visa-free transit, and 24-hour direct transit.
+3. Five-step route screener at the stable anchor `/visa-free-transit#route-check`.
+4. A → Mainland China → B explanation using the immediate inbound and outbound segments.
+5. Educational 240-hour time calculator using Asia/Shanghai and the next-day 00:00 rule.
+6. Searchable and filterable 65-port explorer.
+7. Entry-port, permitted-area, and exit-route explanation.
+8. Documents checklist and official Arrival Card link.
+9. Arrival process.
+10. Policy-area-bound 3-, 5-, and up-to-10-day starter ideas.
+11. Common mistakes, FAQs, official sources, and policy update history.
 
-### Core Hub and interactive components
+### Five-step route screener
 
-- `app/visa-free-transit/page.tsx`
-- `components/visa/TransitEligibilityChecker.tsx`
-- `components/visa/TransitTimeCalculator.tsx`
-- `components/visa/EligiblePortsExplorer.tsx`
-- `components/visa/VisaDocumentsChecklist.tsx`
-- `components/visa/VisaHubAnalytics.tsx`
-- `components/visa/VisaActionLink.tsx`
-- `components/visa/VisaPolicyChoiceLink.tsx`
-- `lib/visa/evaluate-transit-eligibility.ts`
-- `lib/visa/analytics.ts`
+The steps are deliberately ordered as follows:
 
-### Versioned policy data
+1. **Document** — nationality, document type, remaining validity, expected entry date, and purpose.
+2. **Route** — immediate origin and immediate onward country or region.
+3. **Entry port** — one of the verified 65 ports.
+4. **Permitted stay area** — an area linked to the selected port.
+5. **Onward travel** — confirmed ticket, timing, and journey-type details.
 
-- `data/visa/policy-meta.ts`
-- `data/visa/transit-eligible-countries.ts`
-- `data/visa/unilateral-visa-free-countries.ts`
-- `data/visa/transit-ports.ts`
-- `data/visa/permitted-stay-areas.ts`
-- `data/visa/official-sources.ts`
-- `data/visa/checker-rules.ts`
-- `data/visa/country-region-options.ts`
-- `data/visa/port-search-aliases.ts`
-- `data/visa/index.ts`
-- `content/visa-policy-changelog.ts`
+Origin and onward destinations use controlled country/region options rather than free text. Hong Kong, Macao, and Taiwan remain distinct controlled region values so the evaluator can compare immediate segments consistently.
 
-### Site integration and existing-content updates
+Document choices distinguish an ordinary passport, another valid international travel document, a temporary/emergency document, and an uncertain answer. A supported non-ordinary international travel document is not automatically rejected from 240-hour screening; temporary, emergency, special, or uncertain documents are routed to official manual verification when the published facts are insufficient.
 
-- `app/page.tsx`
-- `app/payments-and-apps/page.tsx`
-- `app/sitemap.ts`
-- `app/store/page.tsx`
-- `app/tools/page.tsx`
-- `app/tools/[slug]/page.tsx`
-- `app/travel-essentials/page.tsx`
-- `app/city-kits/[slug]/page.tsx`
-- `app/itinerary-kits/[slug]/page.tsx`
-- `components/Footer.tsx`
-- `components/StartHerePath.tsx`
-- `components/ToolKitWidget.tsx`
-- `data/guide-detail-content.ts`
-- `data/guides.ts`
-- `data/itinerary-guide-content.ts`
-- `data/kits.ts`
-- `lib/site.ts`
-- `app/globals.css`
+## Policy datasets
 
-These changes add discoverable Hub entry points from the homepage, Header navigation, Start Here, Footer, the Payments Hub, Store, tools, the detailed Visa Guide, relevant itinerary/city surfaces and the sitemap. They do not remove or rename the existing Guide or itinerary URLs.
+### Transit countries
 
-### Tests, design notes and evidence
+- The transit-country dataset contains 55 unique ISO 3166-1 alpha-2 values.
+- Indonesia has an explicit `effectiveFrom: "2025-06-12"` record.
+- The displayed number is derived from the dataset and guarded by validation rather than treated as a free-standing marketing constant.
 
-- `tests/phase3-visa-policy.test.mjs`
-- `tests/policy/visa-policy-regression.test.ts`
-- `tests/visa-hub/functional.spec.ts`
-- `tests/visa-hub/responsive-accessibility.spec.ts`
-- `tests/visa-hub/seo-policy.spec.ts`
-- Existing affected regression/visual expectations were updated for the added navigation item and internal links.
-- `docs/V3_PHASE_3_PRE_IMPLEMENTATION_AUDIT.md`
-- `docs/design/v3-phase3/VISUAL_SPEC.md`
-- `docs/screenshots/v3-phase3/`
+### Eligible ports and official appendix rows
 
-## Policy data and source validation
+- The port dataset contains 65 unique IDs and 65 unique official English names.
+- Every port stores `appendixRow`, covering the integer sequence 1 through 65 exactly once.
+- Explorer cards expose the official-data row so a reviewer can trace an entry back to the NIA appendix.
+- Every port references one or more known permitted-area group IDs.
+- Port eligibility is never inferred from the existence of international service.
+- The separate NIA list of ports that can issue travel documents for Taiwan residents is not used as a 240-hour transit-port source.
 
-Only National Immigration Administration of China and Ministry of Foreign Affairs sources are used for policy facts. The data registry contains 11 official endpoints; all 11 returned HTTP 200 during the independent reachability check. Nine curated source records are shown to visitors, while the additional endpoints support Chinese-language/current-announcement cross-checks.
+### Permitted areas
 
-The official endpoint set covers:
+- Permitted areas are stored separately from ports.
+- Selecting an eligible port does not imply nationwide travel.
+- The evaluator checks that the selected permitted-area group is linked to the selected port.
+- Missing, uncertain, or contradictory mappings return a cautious issue/manual-verification category instead of expanding the policy by inference.
 
-- the current 55-nationality, 65-port announcement and Chinese counterpart;
-- English and Chinese transit-policy interpretations;
-- the 2026-02-17 unilateral visa-free list;
-- the MFA unilateral visa-free FAQ and mutual-exemption list;
-- Indonesia’s inclusion notice;
-- the December 2024 base 240-hour announcement;
-- the official NIA Arrival Card channel; and
-- the NIA 12367 service reference.
+### Unilateral 30-day entry and future dates
 
-### Dataset checks
+The unilateral dataset contains 50 records and uses the expected entry date entered by the traveler:
 
-**Check A — automated dataset validation**
+- Brunei: `validUntil: null`.
+- Russia: `validUntil: "2027-12-31"`.
+- The other 48 records: `validUntil: "2026-12-31"`.
 
-- 55 eligible-country ISO codes, all unique.
-- 65 ports, with 65 unique IDs and unique official English names.
-- 65 official Chinese port names present.
-- Port modes: 47 airport, 13 seaport, 2 road, 2 rail and 1 ferry.
-- 47 IATA aliases are stored separately for search convenience and are not used as eligibility logic.
-- 24 permitted-area groups/province-level regions.
-- Zero orphan port-to-area references and zero unmapped ports.
-- 50 unilateral 30-day visa-free country records.
-- Every policy source record has a verified HTTPS URL and last-verified date.
-- Runtime/test assertions guard the 55-country and 65-port counts and uniqueness.
+The screener does not present a policy as current for an arrival date outside its published period. It first tests whether the unilateral record covers the expected entry date, then continues through the other relevant transit checks. When the entered date requires a refreshed official policy check, the result can use `policy_date_needs_verification`; it does not silently assume an extension.
 
-**Check B — independent source/manual audit**
+## Official policy sources
 
-The port names, counts, modes and permitted-area relationships were independently reviewed against the official NIA announcement/appendix and the official source registry. The 11 official endpoints were separately rechecked and returned 11/11 HTTP 200. There is intentionally no claim that the automated test alone proves the manual comparison: the repository does not contain a second, separate line-by-line official-appendix fixture. Future policy reviews should repeat both the source comparison and automated validation rather than changing only the headline counts.
+Policy facts are limited to National Immigration Administration of China and Ministry of Foreign Affairs sources. Visitor-facing source entries identify the authority, source title, publication/effective context, supported facts, and original URL.
 
-The implementation does not treat the separate NIA list of ports capable of issuing Mainland Travel Permits for Taiwan residents as 240-hour visa-free transit ports.
+The source set covers:
 
-## Eligibility checker
+- the current 55-nationality and 65-port announcement and official appendix;
+- the 240-hour and 24-hour transit interpretations;
+- Indonesia's June 12, 2025 inclusion;
+- the February 17, 2026 unilateral list;
+- the MFA expiry-period clarification;
+- the official Arrival Card channel; and
+- the NIA `12367` service reference.
 
-`lib/visa/evaluate-transit-eligibility.ts` is a pure, side-effect-free evaluator. It does not depend on component state, call an external API, use AI, persist inputs or output “approved.” The UI collects only the fields needed to screen the route and does not ask for a name, passport number, birth date, phone, email, ticket number or detailed hotel address.
+Official-source links and their visitor-facing interactions were covered by the final browser checks. External government-page availability remains outside the application's control; the local source registry is not treated as a substitute for periodic manual review of those pages.
 
-The outcome priority is:
+## Route evaluator
 
-1. possible 30-day unilateral visa-free entry;
-2. possible 240-hour visa-free transit;
-3. possible 24-hour direct transit;
-4. manual review; and
-5. not eligible from the supplied answers.
+`evaluateVisaRoute` in `lib/visa-transit/evaluate-route.ts` is the public, version-aware entry point. It passes the verified build-time dataset to the pure evaluator in `lib/visa/evaluate-transit-eligibility.ts` and rejects a mismatched policy version rather than silently screening against a different snapshot.
 
-The 240-hour branch checks nationality, ordinary/supported travel document, published validity threshold, immediate inbound and outbound country or region, confirmed onward travel, the 240-hour window, eligible entry port, permitted stay area and permitted purpose. It returns individual reasons, warnings, safe next actions, policy version and last-verified date.
+The evaluator is deterministic and side-effect free. It does not call an external API, use AI, depend on component state, store inputs, or return an approval.
 
-Unclear through flights, technical stops, complex segments, unknown answers, special documents and uncertain port/area mappings return manual review. Work, study and journalism do not receive a likely-eligible result. The 24-hour branch explains that remaining in the restricted port area is different from receiving temporary entry permission and never presents the policy as free city access.
+The logic covers:
 
-Positive results say that the route “appears to meet the main conditions.” They also state:
+- expected-entry-date screening for unilateral policies;
+- controlled normalization of country and region values;
+- the third-country/region route rule using immediate segments;
+- document validity and supported document types;
+- 55-country transit eligibility;
+- confirmed onward travel and the 240-hour window;
+- verified entry-port eligibility;
+- selected port-to-permitted-area compatibility;
+- purpose restrictions;
+- through flights, technical stops, and incomplete information; and
+- 24-hour direct-transit guidance as an informational alternative only, without issuing a final 24-hour approval result.
 
-> Final approval is made by immigration inspection officers at the port of entry.
+### Granular result categories
 
-Complex routes must be confirmed with the operating airline and immigration authorities, including China Immigration Service Hotline `+86 12367`.
+The UI receives a human-readable outcome plus a granular `resultCategory` for transparent explanations and privacy-safe analytics:
 
-## SEO and information architecture
+- `unilateral_30_day_may_apply`
+- `transit_240_conditions_appear_to_fit`
+- `policy_date_needs_verification`
+- `needs_more_information`
+- `nationality_not_in_transit_list`
+- `third_country_route_issue`
+- `document_validity_issue`
+- `entry_port_issue`
+- `permitted_area_issue`
+- `onward_travel_issue`
+- `manual_official_verification_required`
 
-- Independent canonical: `https://www.firstchinatripkit.com/visa-free-transit`.
-- One H1 and one main landmark in the rendered page.
-- Metadata title and description derive the year/counts from policy metadata rather than duplicated UI constants.
-- Open Graph and Twitter Card metadata are present.
-- JSON-LD includes `WebPage`, `BreadcrumbList`, `FAQPage` and an accurate educational `WebApplication`; it does not claim `GovernmentService` status, ratings or legal expertise.
-- `dateModified` comes from `lastVerifiedAt`; `isBasedOn` points to official policy sources.
-- `/visa-free-transit` is included in the sitemap and is not blocked by robots or marked `noindex`.
-- The existing 240-hour Guide retains its own route and canonical.
-- The old planning checker remains available but points to the new Hub for route screening and is excluded from competing search intent.
-- Current visitor-facing content does not present 72 hours, 144 hours, 54 countries or 60 ports as the active policy; dated changelog entries preserve necessary historical context.
+Each rendered result is structured around:
+
+- the screening category and cautious headline;
+- matched conditions and items requiring attention;
+- documents to prepare;
+- official verification guidance;
+- recommended next actions; and
+- a `Start Again` action.
+
+Positive transit wording is limited to conditions that “appear to fit.” Complex segments, uncertain details, unsupported activities, special documents, or ambiguous policy dates do not receive a definitive positive result. The 24-hour direct-transit card is an informational fallback and never produces an approval-style final result.
+
+## Old tool and site-wide entry points
+
+The legacy tool remains available at `/tools/visa-free-eligibility-checker` with its own page and self-referencing canonical. It is not deleted, renamed, redirected, or canonicalized to the Hub. Its escalation action is:
+
+> Check your full route and entry port
+
+and leads to `/visa-free-transit#route-check`.
+
+Site-wide Visa-Free Transit entry points are wired to the Hub from the homepage, Header/Plan navigation, Start Here, Footer, Payments & Essential Apps Hub, the detailed Visa Guide, relevant itinerary surfaces, and the sitemap. The long Guide retains its own route and canonical because it serves explanatory search intent rather than the Hub's screening intent.
+
+Automated and protected-Preview verification confirmed the principal entry points and the three distinct canonicals. The Hub, detailed Guide, and legacy tool remain discoverable without collapsing their separate search intent.
+
+## SEO and structured data
+
+The intended Hub contract is:
+
+- canonical: `https://www.firstchinatripkit.com/visa-free-transit`;
+- unique H1;
+- independent title and description;
+- Open Graph and Twitter metadata;
+- `WebPage`, `BreadcrumbList`, `FAQPage`, and an accurately described educational `WebApplication` schema;
+- `dateModified` derived from the verified policy metadata;
+- `isBasedOn` links to official sources;
+- sitemap inclusion and robots allowance; and
+- no shared canonical with the detailed Guide or legacy tool.
+
+The page does not claim `GovernmentService` status, ratings, legal expertise, approval authority, or guaranteed entry.
+
+Final protected-Preview inspection confirmed one H1, the self-referencing Hub canonical, Open Graph and Twitter metadata, two JSON-LD blocks, the July 19 verification date, the interactive screener, and the 65-port explorer. The sitemap includes the Hub and `robots.txt` permits it.
 
 ## Analytics and privacy
 
-The implementation uses the existing GA4 helper through a dedicated Phase 3 wrapper. Added events are:
+Phase 3 adds the following eight primary events through the existing analytics wrapper:
 
 - `visa_hub_view`
-- `visa_checker_started`
-- `visa_checker_step_completed`
-- `visa_checker_completed`
-- `visa_checker_result_viewed`
-- `visa_policy_source_clicked`
-- `visa_port_explorer_used`
-- `visa_port_selected`
-- `visa_time_calculator_used`
-- `visa_checklist_saved`
-- `visa_to_payment_hub_clicked`
-- `visa_guide_clicked`
-- `visa_official_arrival_card_clicked`
-- `visa_12367_clicked`
+- `visa_policy_option_selected`
+- `visa_route_screen_started`
+- `visa_route_screen_step_viewed`
+- `visa_route_screen_completed`
+- `visa_result_action_clicked`
+- `visa_port_search_used`
+- `visa_official_source_clicked`
 
-The sanitizer permits only `result_category`, `step_number`, `interaction_type` and `policy_version`. Nationality, exact origin/destination, passport details, dates, itinerary values and user-entered text are not sent to GA4. Checker inputs are not stored. Checklist persistence stores only non-sensitive checklist item IDs locally in the browser.
+The sanitizer permits only these four parameter names:
 
-## Accessibility and mobile behavior
+- `result_category`
+- `step_number`
+- `interaction_type`
+- `policy_version`
 
-- Every checker control has a visible or programmatically associated label.
-- Validation messages are associated with their inputs and announced.
-- Back, Next, restart, result actions, port search/filtering, accordions and the time calculator are keyboard operable.
-- Result rendering moves focus to the result heading.
-- Result meaning uses icon, heading and text, not color alone.
-- Accordions expose appropriate ARIA state.
-- Touch targets and native/select behavior remain usable on narrow mobile viewports.
-- Reduced-motion preferences are respected by the shared site styles.
-- Browser QA found no horizontal overflow at 390 px and no application console errors.
+It must not send nationality, document type, document validity, expected entry date, exact origin/onward destination, selected port or area, itinerary duration, free text, or any personally identifying value. The screener does not ask for or store a name, passport number, birth date, phone, email, booking reference, or hotel address.
 
-## Performance
+Legacy Phase 3 event names may remain for backward-compatible measurement where already used, but the eight events above are the acceptance contract for the revised route-screening flow. The final regression suite confirmed that sensitive screener fields are not emitted and that only the four allowlisted parameter names can pass through the sanitizer.
 
-- The policy evaluator is local and synchronous; there is no runtime policy API or AI request.
-- Policy datasets are static TypeScript data evaluated at build time.
-- The port explorer is loaded on demand rather than in the initial Hub bundle.
-- No map SDK, large country library, heavyweight state manager or new client data layer was introduced.
-- Real local photographs use Next Image with responsive sizing.
-- The page built as a static route and browser QA found no hydration or application console errors.
+## Accessibility, responsive behavior, and performance
 
-The architecture is designed to support the stated LCP, CLS and INP targets, but exact Core Web Vitals have **not** been claimed as achieved. They still require Preview field measurement or Production real-user monitoring under representative devices, networks and cache conditions.
+The implementation is designed so that:
 
-## Images and provenance
+- every form control has an associated label and linked error message;
+- all five steps, Back/Next actions, `Start Again`, search, filters, and accordions are keyboard operable;
+- the result heading receives focus after completion;
+- status is not communicated by color alone;
+- native selects remain usable on iOS Safari;
+- Escape and explicit controls can clear port search;
+- reduced-motion preferences are respected;
+- the 390 px viewport has no horizontal overflow;
+- the evaluator runs locally against static build-time data;
+- no map SDK, external policy API, heavyweight state manager, or AI runtime is loaded; and
+- the port explorer and responsive images avoid unnecessary initial-page work.
 
-The Hub reuses existing locally hosted, credited, licensed real travel photographs for airports, China arrival/transit and city contexts. Next Image serves the assets; no remote hotlink or fabricated government imagery was added.
+The final Playwright and protected-Preview checks covered keyboard operation, focus behavior, labelled controls, responsive layout, and horizontal overflow at 1440 px and 390 px. The screenshot run reported zero console errors and zero page errors. No client hydration error was observed. Exact field LCP, CLS, and INP values still require representative Production telemetry and are not claimed here.
 
-Image generation was attempted during visual development, but the ImageGen service failed upstream. No AI-generated travel photograph was introduced. Existing licensed real imagery was reused instead.
+## Build-gated policy validation
 
-The image audit passed with 91 unique images, 2 warnings and 0 errors. The two warnings concern existing unused homepage assets; they are not broken, duplicate or uncredited Phase 3 images.
+`scripts/validate-visa-policy-data.mjs` is the independent policy-data validator. The package `prebuild` hook runs the validator before the normal checklist-PDF generation, so a policy-data contract failure blocks the application build.
 
-## Verification results
+The validator is expected to fail on any of the following:
 
-| Validation | Result |
+- policy version/date mismatch;
+- country count or duplicate ISO code;
+- missing Indonesia effective date;
+- port count, duplicate ID/name, or invalid appendix-row sequence;
+- unknown port-to-area references;
+- incorrect province-level-region coverage;
+- missing official source URL or verification metadata;
+- incorrect unilateral record count or expiry contract; or
+- missing required Guangdong port effective dates.
+
+The validator passed both as a direct command and through the build-gated `prebuild` hook. Its final summary was 55 transit countries, 65 eligible ports, 24 province-level regions, and 50 unilateral visa-free records.
+
+## Test and verification matrix
+
+Dependency installation completed successfully with zero reported vulnerabilities. The required final commands were then run without suppressing failures:
+
+```text
+npm run lint
+npm run typecheck
+npm run test
+npm run build
+npx playwright test
+node scripts/validate-visa-policy-data.mjs
+node scripts/audit-image-usage.mjs
+```
+
+| Validation | Final result |
 | --- | --- |
-| `npm run lint` | Passed |
-| `npm run typecheck` | Passed |
-| `npm test` | 56/56 passed, 0 failures |
-| `npm run build` | Passed; Hub generated as a static route |
-| Full Playwright suite | 780 passed, 930 skipped, 0 failed in 7.6 minutes |
-| Phase 3 Playwright coverage | 186/186 passed |
-| Policy/data regression | Passed: 55 countries, 65 ports, 24 regions, 240-hour wording, three-month validity, next-day 00:00 rule and final-decision disclaimer |
-| Image audit | Passed: 91 unique images, 2 warnings, 0 errors |
+| `npm install` | **Passed** — dependencies installed; 0 vulnerabilities |
+| Lint | **Passed** |
+| TypeScript | **Passed** |
+| Unit tests | **Passed** — 56/56 |
+| Production build with validator prebuild gate | **Passed** — 59 pages built; policy validator ran during `prebuild` |
+| Full Playwright suite | **Passed** — 936 passed, 930 project-conditional skips, 0 failed in 8.6 minutes |
+| `tests/visa-policy-data.test.ts` | **Passed** as part of the full suite |
+| `tests/visa-route-evaluator.test.ts` | **Passed** as part of the full suite |
+| Policy validator direct run | **Passed** — 55 countries, 65 ports, 24 regions, 50 unilateral records |
+| Image usage audit | **Passed** — 91 unique images; 2 non-blocking unused legacy-image warnings |
+| Preview browser QA at 1440 px and 390 px | **Passed** — all required flows and evidence captures completed; 0 console/page errors |
 
-No `.skip` was added for Phase 3. The full-suite skipped cases are existing applicability skips across the project’s browser/configuration matrix; Phase 3’s required policy, functional, responsive, accessibility and SEO scenarios passed.
+Required route-evaluator coverage includes typical 240-hour routes, the A → Mainland China → A route issue, nationalities outside the transit list, document validity, ineligible ports, port/area mismatch, missing onward travel, unilateral priority, expired future-date handling, incomplete information, Hong Kong/Macao/Taiwan normalization, other valid international travel documents, 24-hour direct transit, and the absence of guaranteed/approved wording.
 
-Phase 3 Playwright coverage includes:
+The 930 Playwright skips are the suite's existing project-conditional selections. No new `.skip` was added, no test was deleted, no assertion was weakened, and no visual threshold was increased to obtain this result. Final interaction evidence was collected from the protected Preview rather than substituting localhost. Preview was not represented as Production.
 
-- policy/data tests: 114/114;
-- Hub functional flows: 36/36;
-- responsive/accessibility checks: 18/18; and
-- SEO/policy checks: 18/18.
+The image audit's two warnings concern unused legacy files only: the former `first-trip-phone-metro` Hero and Open Graph images. They are not used by the final Hub and did not fail the audit.
 
-## Protected Preview and browser QA
+## Preview deployment and browser QA
 
-Preview URL: <https://china-travel-10j9sjcu1-chengwee711-4164s-projects.vercel.app>
+Preview URL: `https://china-travel-f1gmbc1r3-chengwee711-4164s-projects.vercel.app`
+Deployment ID: `dpl_5dFGSwqm1kLqVtUDFS64oz8kWL7r`
+Target/status: `preview` / `Ready`
+Access state: protected Preview
+Production URL/alias changes: **None; no Production deployment was run**
 
-The deployment is a **Preview**, protected by Vercel SSO. An authenticated/bypass Preview request returned HTTP 200 for `/visa-free-transit`. Anonymous access may show Vercel authentication by design; Preview protection was not disabled.
+The fresh Preview was created from implementation commit `aba49dc0e95579ac521b62d9f84d01b60daa3f9b` after required validation passed. Nine key routes and public assets returned HTTP 200:
 
-Verified on the rendered Preview:
+- `/`
+- `/visa-free-transit`
+- `/tools/visa-free-eligibility-checker`
+- `/guides/china-240-hour-visa-free-transit-guide`
+- `/itinerary-kits/240-hour-visa-free-china-itinerary`
+- `/payments-and-apps`
+- `/start-here`
+- `/sitemap.xml`
+- `/robots.txt`
 
-- unique H1 and main landmark;
-- self-referencing canonical and expected JSON-LD;
-- no horizontal overflow at 1440 px or 390 px;
-- US ordinary-passport route Japan → Shanghai/PVG → Singapore, confirmed within 72 hours, Shanghai stay and tourism purpose returned `likely-240-hour-transit` with itemized reasons;
-- Japan → Shanghai → Japan returned `not-eligible-from-answers`;
-- a through-flight scenario returned `manual-review`;
-- result focus moved to the result heading;
-- the 30-day unilateral priority branch passed automated browser coverage;
-- the port explorer found and expanded Shanghai/PVG with the correct source and route-check action;
-- the time calculator converted an August 1 arrival and August 5 departure to a 96-hour planned stay, showed the August 2 00:00 policy start and retained the temporary-entry-permit disclaimer;
-- application-scoped console errors: 0.
+Protected-Preview QA exercised the five-step screener and captured unilateral, 240-hour, and third-country-route-issue results. It also verified the controlled route step, port search and appendix-row display, desktop and mobile layouts, and reported zero console errors and zero page errors. The Hub inspection confirmed one H1, a self-referencing canonical, Open Graph and Twitter metadata, two JSON-LD blocks, the July 19 verification date, the checker, and all 65 ports. The sitemap includes the Hub and `robots.txt` allows it.
 
-No Production deployment was run and no Production alias was changed.
+## Required screenshot evidence
 
-## Screenshots
+All seven files below were captured from the fresh protected Preview after final validation and visually reviewed:
 
-| Evidence | Viewport | File |
+| Evidence | Required file | Status |
 | --- | --- | --- |
-| Hub overview | 1440 × 900 | [`visa-hub-1440.png`](screenshots/v3-phase3/visa-hub-1440.png) |
-| Hub overview | 390 × 844 | [`visa-hub-390.png`](screenshots/v3-phase3/visa-hub-390.png) |
-| Checker start | 1440 × 900 | [`checker-start-1440.png`](screenshots/v3-phase3/checker-start-1440.png) |
-| Likely 240-hour result | 1440 × 900 | [`checker-result-eligible-1440.png`](screenshots/v3-phase3/checker-result-eligible-1440.png) |
-| Not-eligible result | 1440 × 900 | [`checker-result-ineligible-1440.png`](screenshots/v3-phase3/checker-result-ineligible-1440.png) |
-| Manual-review result | 390 × 844 | [`checker-result-review-390.png`](screenshots/v3-phase3/checker-result-review-390.png) |
-| Ports explorer | 1440 × 900 | [`ports-explorer-1440.png`](screenshots/v3-phase3/ports-explorer-1440.png) |
-| Time calculator | 390 × 844 | [`time-calculator-390.png`](screenshots/v3-phase3/time-calculator-390.png) |
+| Hub overview, desktop | [`visa-hub-1440.png`](screenshots/v3-phase3/visa-hub-1440.png) | **Captured and reviewed** |
+| Hub overview, mobile | [`visa-hub-390.png`](screenshots/v3-phase3/visa-hub-390.png) | **Captured and reviewed** |
+| Controlled route step | [`visa-screener-route-step.png`](screenshots/v3-phase3/visa-screener-route-step.png) | **Captured and reviewed** |
+| Unilateral result | [`visa-result-unilateral.png`](screenshots/v3-phase3/visa-result-unilateral.png) | **Captured and reviewed** |
+| 240-hour transit result | [`visa-result-transit-240.png`](screenshots/v3-phase3/visa-result-transit-240.png) | **Captured and reviewed** |
+| Third-country route issue | [`visa-result-route-issue.png`](screenshots/v3-phase3/visa-result-route-issue.png) | **Captured and reviewed** |
+| Expanded port explorer with appendix row | [`visa-port-explorer.png`](screenshots/v3-phase3/visa-port-explorer.png) | **Captured and reviewed** |
 
-The captures use the authenticated Preview deployment and contain no browser-extension overlays.
+The captures show the current July 19 copy and interactions, contain no browser-extension overlays, and were checked for cropping, horizontal overflow, unreadable labels, and misleading result emphasis.
 
-## Visual fidelity ledger
+## Known risks and acceptance gates
 
-| Area | Outcome |
-| --- | --- |
-| Hierarchy | Product-Hub flow is distinct from the long Guide: policy choice and checker lead, sources and update history close the page. |
-| Typography | Existing Source Serif 4 headings and Inter body typography are retained. |
-| Color | Existing warm red, cream and dark-gray brand system is retained; warning/result meaning is not color-only. |
-| Imagery | Real, locally credited arrival, airport and China travel imagery is used; no generic food image or AI photograph is used for policy content. |
-| Spacing/layout | Existing containers, spacing rhythm, rounded corners and open editorial sections continue Phase 1/2 conventions. |
-| Interaction | Checker, explorer, calculator, checklist and accordions remain keyboard/touch usable and responsive at 390 px. |
+1. **Policy data remains manually maintained.** The version file centralizes dates, and the validator catches internal inconsistency, but it cannot replace a new manual official-source review after policy changes.
+2. **Future-date screening is bounded by published periods.** A result that requires policy re-verification must remain cautious and cannot assume that a temporary unilateral arrangement will be extended.
+3. **Port-area mapping remains a policy boundary.** An eligible port does not imply nationwide travel; uncertain combinations must be referred to the airline, the entry port, or `+86 12367`.
+4. **Complex tickets remain manual-review candidates.** Through flights, technical stops, multiple Mainland entries, ambiguous operating segments, and uncertain ticket arrangements must not receive guaranteed conclusions.
+5. **The 24-hour route is informational only.** It is presented as an official-verification alternative and does not produce a final 24-hour approval result in the screener.
+6. **Core Web Vitals require field evidence.** Static architecture and responsive Preview checks support the performance targets, but exact LCP/CLS/INP values are not claimed without representative Production telemetry.
+7. **Preview access is protected.** Independent reviewers need authorized Preview access; protection was not disabled for this phase.
+8. **Production is untouched.** The completed work stops at the validated feature branch and protected Preview. No Production deployment or alias change occurred, and Phase 4 has not begun.
 
-## Known risks and operational follow-up
+## Items for independent review
 
-1. **Policy data is static and manually maintained.** The next review is due `2026-08-18`. The build emits a non-blocking overdue warning after the review threshold; it does not silently remove the page or auto-ingest unreviewed policy data.
-2. **Border handling is authoritative.** Checker output is not approval, legal advice or guaranteed entry. Final handling remains with immigration inspection officers.
-3. **Complex itineraries need manual review.** Through flights, technical stops, multiple mainland entries, unclear ticketing and uncertain port/area mappings intentionally avoid a positive result.
-4. **Check B is a human/source audit, not a second machine fixture.** A future reviewer must repeat the official appendix comparison; the current repository does not contain a separate line-by-line copy of the official image appendix.
-5. **Core Web Vitals need field evidence.** Static build and responsive browser checks passed, but exact LCP/CLS/INP require RUM or representative Preview measurement.
-6. **Preview access is protected.** Reviewers must use the authorized Vercel account; protection has not been weakened to make the Preview public.
-7. **Two image-audit warnings remain outside Phase 3.** They concern existing unused homepage assets and do not block this Hub.
-8. **Production is untouched.** The user must accept the protected Preview before any Production deployment is considered.
-
-## Items for user acceptance
-
-- Review the five checker outcomes and the cautious result wording.
-- Spot-check port and permitted-area presentation against the official NIA appendix.
-- Confirm that the mobile sequence is understandable without relying on a map.
-- Review the 3-, 5- and up-to-10-day starter ideas for appropriate, non-guaranteed wording.
-- Confirm the official sources/update-log presentation and the planned monthly policy-review workflow.
-- Approve the protected Preview before any Production action.
+- Confirm the three distinct policy dates and the public July 19 verification copy.
+- Compare all 65 port names, appendix rows, effective dates, and permitted-area relationships with the official NIA appendix.
+- Review the 50 unilateral records and date-expiry behavior, especially Brunei and Russia.
+- Complete one unilateral, one 240-hour, one third-country route issue, and one manual-verification path; also confirm that 24-hour direct transit remains an informational alternative rather than a final approval result.
+- Confirm that an “other valid international travel document” is not automatically denied and that temporary/emergency uncertainty is handled cautiously.
+- Verify the old tool's independent canonical and its Hub escalation action.
+- Inspect all site-wide entry points, SEO metadata, structured data, and sitemap inclusion.
+- Confirm that analytics emits only the eight contract events with the four allowed parameter names.
+- Review all seven fresh Preview screenshots at their intended viewports.
+- Confirm that no Production deployment or alias change occurred.
 
 ## Final status
 
-**V3阶段3开发与Preview验证已完成，等待正式验收。**
+**V3 Phase 3 implementation is complete on the feature branch and ready for independent review. Production has not been deployed.**
