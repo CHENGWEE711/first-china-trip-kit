@@ -1,4 +1,5 @@
 import {
+  PERMITTED_STAY_AREA_GROUP_IDS,
   TRANSIT_ELIGIBLE_COUNTRIES,
   TRANSIT_POLICY_CLOCK_RULE,
   TRANSIT_PORTS,
@@ -88,6 +89,8 @@ export type TransitCheckerResult = {
   lastVerifiedAt: string;
   disclaimer: string;
 };
+
+const permittedStayAreaIds = new Set(PERMITTED_STAY_AREA_GROUP_IDS);
 
 type UnilateralPurpose =
   | "business"
@@ -184,9 +187,9 @@ function resultCopy(category: VisaScreeningResultCategory): {
       };
     case "permitted_area_issue":
       return {
-        headline: "The stay plan does not match the selected port's permitted area.",
+        headline: "The stay plan leaves the current published permitted areas.",
         summary:
-          "An eligible port does not allow nationwide travel; every planned stop must remain inside its linked permitted area.",
+          "An eligible port does not allow nationwide travel; every planned stop must remain inside the published permitted parts of the current 24 regions and the area authorized on the temporary entry permit.",
       };
     case "onward_travel_issue":
       return {
@@ -597,12 +600,12 @@ function evaluateTransitOnly(
 
   if (
     !input.plannedStayAreaGroupId ||
-    !entryPort.permittedAreaGroupIds.includes(input.plannedStayAreaGroupId)
+    !permittedStayAreaIds.has(input.plannedStayAreaGroupId)
   ) {
     return result(
       "not-eligible-from-answers",
-      ["The selected stay area does not match the permitted area attached to the selected entry port."],
-      ["Use the official port-to-area mapping and confirm every planned stop before booking."],
+      ["The selected stay area does not appear in the current published permitted-area dataset."],
+      ["Confirm every planned stop against the official 24-region list before booking."],
       notEligibleActions,
       "permitted_area_issue",
     );
@@ -621,7 +624,7 @@ function evaluateTransitOnly(
   if (input.stayingWithinPermittedArea === false) {
     return result(
       "not-eligible-from-answers",
-      ["The planned trip leaves the permitted stay area linked to the entry route."],
+      ["The planned trip leaves the current published permitted stay areas."],
       ["An eligible port does not automatically permit nationwide travel."],
       notEligibleActions,
       "permitted_area_issue",
@@ -646,7 +649,7 @@ function evaluateTransitOnly(
       "Immediate origin and onward destination are different.",
       "Confirmed onward travel is within 240 hours.",
       "Selected entry port is on the current list.",
-      "Planned stay remains within the permitted area.",
+      "Planned stay remains within the current published permitted areas.",
       "The stated activity appears permitted.",
     ],
     [

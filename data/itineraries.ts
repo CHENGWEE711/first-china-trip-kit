@@ -532,7 +532,7 @@ const itineraryEntries: ItineraryWithoutVisuals[] = [
     tips: [
       "Check official visa-free transit rules before booking because policies and eligible ports can change.",
       "Carry printed or offline proof of onward travel to a third country or region.",
-      "Stay within the permitted administrative travel area for your entry port.",
+      "Stay within the published permitted parts of the 24 regions and the area authorized on your temporary entry permit.",
     ],
     dayByDayPlan: [
       {

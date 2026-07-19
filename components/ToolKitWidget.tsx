@@ -40,9 +40,9 @@ const visaChecks = [
   },
   {
     id: "area",
-    label: "My hotel cities stay inside the permitted travel area.",
+    label: "My hotel cities stay inside the published permitted travel areas.",
     description:
-      "Do not leave the allowed region for your entry port.",
+      "Do not leave the published permitted areas or the area authorized on your temporary entry permit.",
   },
   {
     id: "official",

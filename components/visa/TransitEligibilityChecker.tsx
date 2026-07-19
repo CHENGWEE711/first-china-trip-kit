@@ -19,6 +19,7 @@ import { Button } from "@/components/Button";
 import {
   COUNTRY_REGION_OPTIONS,
   PERMITTED_STAY_AREA_GROUPS,
+  TRANSIT_CROSS_REGION_NOTICE,
   TRANSIT_ELIGIBLE_COUNTRIES,
   TRANSIT_PORTS,
   TRANSIT_PORT_SEARCH_CODES,
@@ -279,7 +280,7 @@ function getStepErrors(step: number, draft: CheckerDraft): FieldErrors {
 
   if (step === 4) {
     if (!draft.plannedStayAreaGroupId) {
-      errors.plannedStayAreaGroupId = "Confirm the permitted area linked to the selected port.";
+      errors.plannedStayAreaGroupId = "Select the main planned stay area from the current published list.";
     }
     if (!draft.stayingWithinPermittedArea) {
       errors.stayingWithinPermittedArea = "Select whether the route remains in the permitted area.";
@@ -586,7 +587,7 @@ export function TransitEligibilityChecker() {
 
   const selectedPort = draft.entryPortId ? portsById.get(draft.entryPortId) : undefined;
   const selectedExitPort = draft.exitPortId ? portsById.get(draft.exitPortId) : undefined;
-  const selectedPermittedAreas = selectedPort
+  const selectedPortAppendixAreas = selectedPort
     ? PERMITTED_STAY_AREA_GROUPS.filter((area) =>
         selectedPort.permittedAreaGroupIds.includes(area.id),
       )
@@ -1190,7 +1191,7 @@ export function TransitEligibilityChecker() {
                     : ""}
                 </p>
                 <p className="mt-1">
-                  Official appendix row {selectedPort.appendixRow} of {TRANSIT_PORTS.length} · Permitted area: {selectedPermittedAreas.map((area) => area.displayName).join(", ")}
+                  Official appendix row {selectedPort.appendixRow} of {TRANSIT_PORTS.length} · Port&apos;s appendix region: {selectedPortAppendixAreas.map((area) => area.displayName).join(", ")}
                 </p>
               </div>
             ) : null}
@@ -1228,7 +1229,7 @@ export function TransitEligibilityChecker() {
         {step === 4 ? (
           <div data-testid="checker-step-4" className="grid gap-7">
             <label htmlFor="visa-planned-stay-area" className="grid gap-2 text-sm font-semibold text-ink">
-              Official permitted stay area for the selected port
+              Main planned stay area in the current 24-region list
               <select
                 id="visa-planned-stay-area"
                 value={draft.plannedStayAreaGroupId}
@@ -1242,14 +1243,15 @@ export function TransitEligibilityChecker() {
                 className={inputClassName}
               >
                 <option value="">Select the official area</option>
-                {selectedPermittedAreas.map((area) => (
+                {PERMITTED_STAY_AREA_GROUPS.map((area) => (
                   <option key={area.id} value={area.id}>
                     {area.displayName}
+                    {area.cities?.length ? ` — limited to ${area.cities.join(", ")}` : ""}
                   </option>
                 ))}
               </select>
               <span id="visa-planned-stay-area-help" className="font-normal text-ink/55">
-                Only areas linked to the selected official entry port are available. Choose “Not sure” below if the itinerary is unclear.
+                Select the main area you plan to visit. Cross-region travel can be possible only within the published parts of these 24 regions; confirm every stop below.
               </span>
               {errors.plannedStayAreaGroupId ? (
                 <span id="visa-planned-stay-area-error" role="alert" className="text-sm font-semibold text-ember">
@@ -1257,8 +1259,11 @@ export function TransitEligibilityChecker() {
                 </span>
               ) : null}
             </label>
+            <p className="border-l-2 border-jade bg-mist px-4 py-3 text-sm leading-relaxed text-ink/72">
+              {TRANSIT_CROSS_REGION_NOTICE}
+            </p>
             <RadioChoices
-              legend="Will the whole stay remain within the permitted area linked to this entry route?"
+              legend="Will the whole stay remain within the published permitted parts of the current 24 regions?"
               name="visa-permitted-area"
               value={draft.stayingWithinPermittedArea}
               error={errors.stayingWithinPermittedArea}

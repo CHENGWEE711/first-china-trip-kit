@@ -106,17 +106,34 @@ test("an unverified entry port returns an entry-port issue", () => {
   expect(result.resultCategory).toBe("entry_port_issue");
 });
 
-test("leaving or mismatching the official stay area returns a permitted-area issue", () => {
+test("leaving or selecting an area outside the official dataset returns a permitted-area issue", () => {
   const leavingArea = evaluateTransitEligibility(
     validInput({ stayingWithinPermittedArea: false }),
   );
-  const mismatchedArea = evaluateTransitEligibility(
-    validInput({ plannedStayAreaGroupId: "beijing-municipality" }),
+  const unknownArea = evaluateTransitEligibility(
+    validInput({ plannedStayAreaGroupId: "not-in-current-permitted-list" }),
   );
 
-  for (const result of [leavingArea, mismatchedArea]) {
+  for (const result of [leavingArea, unknownArea]) {
     expect(result.outcome).toBe("not-eligible-from-answers");
     expect(result.resultCategory).toBe("permitted_area_issue");
+  }
+});
+
+test("a Shanghai entry can continue into published Jiangsu and Zhejiang areas", () => {
+  for (const plannedStayAreaGroupId of [
+    "jiangsu-province",
+    "zhejiang-province",
+  ]) {
+    const result = evaluateTransitEligibility(
+      validInput({ plannedStayAreaGroupId }),
+    );
+
+    expect(result.outcome).toBe("likely-240-hour-transit");
+    expect(result.resultCategory).toBe(
+      "transit_240_conditions_appear_to_fit",
+    );
+    expect(result.reasons.join(" ")).toMatch(/published permitted areas/i);
   }
 });
 

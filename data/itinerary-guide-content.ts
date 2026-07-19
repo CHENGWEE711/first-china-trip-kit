@@ -276,7 +276,7 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
       "Carry printed and offline proof of onward travel to a third country or region.",
       "Check that your arrival port, departure port, and route match the permitted policy conditions.",
       "Book hotels that can register foreign passport holders.",
-      "Keep the route inside the allowed stay area for your entry port and policy category.",
+      "Keep every stop within the published permitted parts of the 24 regions and the area authorized on your temporary entry permit.",
     ],
     chineseAddresses: [
       {
@@ -319,7 +319,7 @@ export const itineraryGuideContent: Record<string, ItineraryGuideContent> = {
       {
         question: "Can I leave Shanghai during a visa-free transit stay?",
         answer:
-          "It depends on the current permitted travel area for your entry port and policy. Do not assume all China cities are allowed under transit entry.",
+          "It depends on the current published permitted areas and the route authorized on your temporary entry permit. Do not assume all China cities are allowed under transit entry.",
       },
     ],
     relatedProductIds: ["10-day-classic-china-itinerary", "china-payment-apps-setup-guide"],

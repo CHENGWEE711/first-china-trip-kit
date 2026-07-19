@@ -216,6 +216,19 @@ test("the five-step screener validates, supports Back and returns a cautious 240
   );
   await continueChecker(container);
 
+  await expect(
+    container.locator('#visa-planned-stay-area option[value="jiangsu-province"]'),
+  ).toContainText("Jiangsu Province");
+  await expect(
+    container.locator('#visa-planned-stay-area option[value="zhejiang-province"]'),
+  ).toContainText("Zhejiang Province");
+  await expect(
+    container.locator('#visa-planned-stay-area option[value="shanxi-taiyuan-datong"]'),
+  ).toContainText("limited to Taiyuan, Datong");
+  await expect(container.getByText(/permits cross-region travel/i)).toBeVisible();
+  await container
+    .locator("#visa-planned-stay-area")
+    .selectOption("jiangsu-province");
   await chooseRadio(container, "visa-permitted-area", "yes");
   await chooseRadio(container, "visa-individual-review", "no");
   await continueChecker(container);

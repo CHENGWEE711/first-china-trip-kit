@@ -1115,7 +1115,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
         title: "Route examples to verify",
         columns: ["Route idea", "Best use", "Verification focus"],
         rows: [
-          ["Shanghai + Suzhou + Hangzhou", "Short rail hops, practical hotels, and soft first-trip logistics.", "Confirm every city is inside the permitted area for your entry port."],
+          ["Shanghai + Suzhou + Hangzhou", "Short rail hops, practical hotels, and soft first-trip logistics.", "Confirm every city is inside the current published permitted areas and your authorized route."],
           ["Beijing + Tianjin", "History plus an easy northern high-speed rail add-on.", "Confirm Beijing-area permitted movement and exact port rules."],
           ["Guangzhou + Shenzhen", "Southern food, business, and Greater Bay Area connections.", "Confirm border-region routing, hotel cities, and onward destination logic."],
         ],
@@ -1147,7 +1147,7 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
       "Start with official policy pages, not a sample itinerary. Confirm your passport nationality is currently eligible.",
       "Check that your arrival and departure ports are covered by the policy you plan to use.",
       "Confirm you have a ticket onward to a third country or region within the allowed time window.",
-      "Map every hotel city and day trip against the permitted stay area for your entry port.",
+      "Map every hotel city and day trip against the current published permitted areas and your authorized route.",
       "Carry printed and offline proof of onward travel, hotels, and route details.",
       "Use a flexible itinerary with buffer time because airline checks, immigration checks, and flight changes can affect the plan.",
       "Prepare both digital and printed copies of your passport, onward ticket, hotel booking, full itinerary, Chinese hotel address, and any proof needed for your next destination.",
