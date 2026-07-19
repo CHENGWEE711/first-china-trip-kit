@@ -76,31 +76,21 @@ test("the checker can be completed with keyboard-focused controls and moves focu
   await passportValidity.focus();
   await passportValidity.press("Space");
   await expect(passportValidity).toBeChecked();
+  await checker.locator("#visa-expected-entry-date").focus();
+  await checker.locator("#visa-expected-entry-date").fill("2026-08-01");
+  await checker.locator("#visa-purpose").focus();
+  await checker.locator("#visa-purpose").selectOption("tourism");
   await checker.getByRole("button", { name: "Continue", exact: true }).focus();
   await checker.getByRole("button", { name: "Continue", exact: true }).press("Enter");
 
   await checker.locator("#visa-immediate-origin").focus();
-  await checker.locator("#visa-immediate-origin").pressSequentially("Japan");
+  await checker.locator("#visa-immediate-origin").selectOption("JP");
   await checker.locator("#visa-immediate-onward").focus();
-  await checker.locator("#visa-immediate-onward").pressSequentially("Singapore");
+  await checker.locator("#visa-immediate-onward").selectOption("SG");
   const multipleEntries = checker.locator('input[name="visa-multiple-mainland-entries"][value="no"]');
   await multipleEntries.focus();
   await multipleEntries.press("Space");
   await expect(multipleEntries).toBeChecked();
-  await checker.getByRole("button", { name: "Continue", exact: true }).press("Enter");
-
-  for (const [name, value] of [
-    ["visa-onward-ticket", "yes"],
-    ["visa-onward-window", "yes"],
-    ["visa-journey-type", "connecting"],
-  ] as const) {
-    const control = checker.locator(`input[name="${name}"][value="${value}"]`);
-    await control.focus();
-    await control.press("Space");
-    await expect(control).toBeChecked();
-  }
-  await checker.locator("#visa-planned-stay-hours").focus();
-  await checker.locator("#visa-planned-stay-hours").pressSequentially("72");
   await checker.getByRole("button", { name: "Continue", exact: true }).press("Enter");
 
   const portSearch = checker.locator("#visa-entry-port-search");
@@ -121,14 +111,26 @@ test("the checker can be completed with keyboard-focused controls and moves focu
   await individualReview.focus();
   await individualReview.press("Space");
   await expect(individualReview).toBeChecked();
-  await checker.locator("#visa-purpose").focus();
-  await checker.locator("#visa-purpose").selectOption("tourism");
+  await checker.getByRole("button", { name: "Continue", exact: true }).press("Enter");
+
+  for (const [name, value] of [
+    ["visa-onward-ticket", "yes"],
+    ["visa-onward-window", "yes"],
+    ["visa-journey-type", "connecting"],
+  ] as const) {
+    const control = checker.locator(`input[name="${name}"][value="${value}"]`);
+    await control.focus();
+    await control.press("Space");
+    await expect(control).toBeChecked();
+  }
+  await checker.locator("#visa-planned-stay-hours").focus();
+  await checker.locator("#visa-planned-stay-hours").fill("72");
   const submit = checker.getByRole("button", { name: "Check this route", exact: true });
   await submit.focus();
   await submit.press("Enter");
 
   const heading = checker.getByRole("heading", {
-    name: "Your route appears to meet the main 240-hour transit conditions",
+    name: "Your plan appears to match the published planning conditions for 240-hour visa-free transit.",
   });
   await expect(heading).toBeVisible();
   await expect(heading).toBeFocused();

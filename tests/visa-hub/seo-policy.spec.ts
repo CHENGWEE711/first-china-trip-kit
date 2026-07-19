@@ -4,11 +4,11 @@ test("Visa-Free Transit Hub has independent canonical metadata, schema, sitemap 
   const response = await page.goto("/visa-free-transit");
   expect(response?.status()).toBe(200);
   await expect(page.locator("h1")).toHaveCount(1);
-  await expect(page).toHaveTitle(/China 240-Hour Visa-Free Transit Checker & Guide \(2026\)/);
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /65 ports, permitted stay areas, documents and official sources/i);
+  await expect(page).toHaveTitle(/China Visa-Free Transit Planner: 240-Hour Route & Port Check/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /nationality, route, entry port and permitted stay area/i);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://www.firstchinatripkit.com/visa-free-transit");
-  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", /240-Hour Visa-Free Transit Checker/i);
-  await expect(page.locator('meta[property="og:description"]')).toHaveAttribute("content", /65 ports, permitted stay areas/i);
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", /240-Hour Route & Port Check/i);
+  await expect(page.locator('meta[property="og:description"]')).toHaveAttribute("content", /nationality, route, entry port and permitted stay area/i);
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /^https:\/\/www\.firstchinatripkit\.com\//);
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
 
@@ -22,10 +22,10 @@ test("Visa-Free Transit Hub has independent canonical metadata, schema, sitemap 
   expect(schemaTypes).toEqual(expect.arrayContaining(["WebPage", "WebApplication", "BreadcrumbList", "FAQPage"]));
   expect(schemaTypes).not.toContain("GovernmentService");
   const webpage = structuredData.find((entry) => entry?.["@type"] === "WebPage");
-  expect(webpage?.dateModified).toBe("2026-07-18");
+  expect(webpage?.dateModified).toBe("2026-07-19");
   expect(webpage?.isBasedOn).toEqual(expect.arrayContaining([expect.stringMatching(/^https:\/\/(?:en\.)?nia\.gov\.cn\//)]));
   const faq = structuredData.find((entry) => entry?.["@type"] === "FAQPage");
-  expect(faq?.mainEntity).toHaveLength(15);
+  expect(faq?.mainEntity).toHaveLength(20);
 
   const sitemap = await page.request.get("/sitemap.xml");
   expect(sitemap.status()).toBe(200);
@@ -39,7 +39,7 @@ test("Visa-Free Transit Hub has independent canonical metadata, schema, sitemap 
     "href",
     "https://www.firstchinatripkit.com/guides/china-240-hour-visa-free-transit-guide",
   );
-  await expect(page.locator('a[href="/visa-free-transit"]')).not.toHaveCount(0);
+  await expect(page.locator('a[href^="/visa-free-transit"]')).not.toHaveCount(0);
 });
 
 test("current-policy copy retains the verified safeguards and rejects stale active wording", async ({ page }) => {
@@ -48,7 +48,7 @@ test("current-policy copy retains the verified safeguards and rejects stale acti
   const currentPolicyCopy = await page.evaluate(() =>
     [
       "which-policy",
-      "route-checker",
+      "route-check",
       "route-shape",
       "time-calculator",
       "eligible-ports",
@@ -75,7 +75,7 @@ test("current-policy copy retains the verified safeguards and rejects stale acti
 
   const sections = [
     "which-policy",
-    "route-checker",
+    "route-check",
     "route-shape",
     "time-calculator",
     "eligible-ports",

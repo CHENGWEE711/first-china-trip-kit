@@ -13,6 +13,7 @@ export type TransitEligibleCountry = {
   iso2: string;
   name: string;
   region: TransitEligibleCountryRegion;
+  effectiveFrom?: string;
   officialSourceUrl: string;
   lastVerifiedAt: string;
 };
@@ -95,6 +96,7 @@ export const TRANSIT_ELIGIBLE_COUNTRY_RECORDS: TransitEligibleCountry[] =
   TRANSIT_ELIGIBLE_COUNTRIES.map((iso2) => ({
     iso2,
     ...TRANSIT_COUNTRY_NAMES[iso2],
+    ...(iso2 === "ID" ? { effectiveFrom: "2025-06-12" } : {}),
     officialSourceUrl: VISA_OFFICIAL_SOURCE_URLS.currentPolicyAnnouncement,
     lastVerifiedAt: VISA_POLICY_LAST_VERIFIED_AT,
   }));

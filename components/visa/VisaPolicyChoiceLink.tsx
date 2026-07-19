@@ -7,6 +7,8 @@ import {
   Route,
   ShieldCheck,
 } from "lucide-react";
+import { VISA_POLICY_META } from "@/data/visa";
+import { trackVisaEvent } from "@/lib/visa/analytics";
 
 export type VisaPolicyContext =
   | "unilateral-30-day"
@@ -36,15 +38,20 @@ export function VisaPolicyChoiceLink({
 
   return (
     <a
-      href="#route-checker"
+      href="#route-check"
       onClick={(event) => {
         event.preventDefault();
+        trackVisaEvent("visa_policy_option_selected", {
+          interaction_type: "select",
+          policy_version: VISA_POLICY_META.policyVersion,
+        });
         window.dispatchEvent(
           new CustomEvent("visa-policy-context-selected", {
             detail: { context },
           }),
         );
-        document.getElementById("route-checker")?.scrollIntoView({
+        window.history.pushState(null, "", "#route-check");
+        document.getElementById("route-check")?.scrollIntoView({
           behavior: "auto",
           block: "start",
         });

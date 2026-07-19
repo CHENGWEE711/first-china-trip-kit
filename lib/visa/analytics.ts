@@ -5,6 +5,13 @@ import type { CheckerOutcome } from "@/lib/visa/evaluate-transit-eligibility";
 
 export type VisaAnalyticsEventName =
   | "visa_hub_view"
+  | "visa_policy_option_selected"
+  | "visa_route_screen_started"
+  | "visa_route_screen_step_viewed"
+  | "visa_route_screen_completed"
+  | "visa_result_action_clicked"
+  | "visa_port_search_used"
+  | "visa_official_source_clicked"
   | "visa_checker_started"
   | "visa_checker_step_completed"
   | "visa_checker_completed"
@@ -24,7 +31,19 @@ export type VisaAnalyticsResultCategory =
   | "likely_240_hour_transit"
   | "likely_24_hour_direct_transit"
   | "manual_review"
-  | "not_eligible_from_answers";
+  | "not_eligible_from_answers"
+  | "unilateral_30_day_may_apply"
+  | "transit_240_conditions_appear_to_fit"
+  | "direct_transit_24_hour_may_apply"
+  | "policy_date_needs_verification"
+  | "needs_more_information"
+  | "nationality_not_in_transit_list"
+  | "third_country_route_issue"
+  | "document_validity_issue"
+  | "entry_port_issue"
+  | "permitted_area_issue"
+  | "onward_travel_issue"
+  | "manual_official_verification_required";
 
 export type VisaAnalyticsInteractionType =
   | "start"
@@ -56,6 +75,18 @@ const resultCategories = new Set<VisaAnalyticsResultCategory>([
   "likely_24_hour_direct_transit",
   "manual_review",
   "not_eligible_from_answers",
+  "unilateral_30_day_may_apply",
+  "transit_240_conditions_appear_to_fit",
+  "direct_transit_24_hour_may_apply",
+  "policy_date_needs_verification",
+  "needs_more_information",
+  "nationality_not_in_transit_list",
+  "third_country_route_issue",
+  "document_validity_issue",
+  "entry_port_issue",
+  "permitted_area_issue",
+  "onward_travel_issue",
+  "manual_official_verification_required",
 ]);
 
 const interactionTypes = new Set<VisaAnalyticsInteractionType>([
@@ -85,6 +116,7 @@ export function analyticsResultCategory(
     "likely-24-hour-direct-transit": "likely_24_hour_direct_transit",
     "manual-review": "manual_review",
     "not-eligible-from-answers": "not_eligible_from_answers",
+    "policy-date-needs-verification": "policy_date_needs_verification",
   };
 
   return categories[outcome];
@@ -123,7 +155,7 @@ export function sanitizeVisaAnalyticsParams(
 
   if (
     typeof candidate.policy_version === "string" &&
-    /^\d{4}-\d{2}-\d{2}$/.test(candidate.policy_version)
+    /^\d{4}-\d{2}-\d{2}(?:-v\d+)?$/.test(candidate.policy_version)
   ) {
     safe.policy_version = candidate.policy_version;
   }

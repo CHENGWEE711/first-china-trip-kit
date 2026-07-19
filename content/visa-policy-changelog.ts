@@ -40,7 +40,7 @@ export const VISA_POLICY_CHANGELOG: VisaPolicyChangelogEntry[] = [
     effectiveDate: "2024-12-17",
     title: "Transit stay duration expanded to 240 hours",
     whatChanged:
-      "The former 72-hour and 144-hour arrangements were expanded and unified at up to 240 hours, with 60 applicable ports and permitted areas in 24 province-level regions at launch.",
+      "The earlier shorter transit arrangements were expanded and unified at up to 240 hours. The original official appendix was later expanded to the current 65 ports.",
     officialSourceUrl:
       VISA_OFFICIAL_SOURCE_URLS.base240HourPolicyAnnouncement,
     lastVerifiedAt: VISA_POLICY_LAST_VERIFIED_AT,

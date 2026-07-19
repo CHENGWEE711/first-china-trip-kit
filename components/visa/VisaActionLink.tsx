@@ -11,6 +11,7 @@ type VisaActionLinkProps = {
   className?: string;
   eventName:
     | "visa_policy_source_clicked"
+    | "visa_official_source_clicked"
     | "visa_to_payment_hub_clicked"
     | "visa_guide_clicked"
     | "visa_official_arrival_card_clicked"

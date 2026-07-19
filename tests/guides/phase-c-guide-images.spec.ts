@@ -83,7 +83,7 @@ test("Guide Heroes, OG images, Twitter images, and Article JSON-LD stay aligned"
     expect(article?.dateModified).toBe(
       route.includes("can-americans-travel-to-china-in-2026") ||
         route.includes("china-240-hour-visa-free-transit-guide")
-        ? "2026-07-18"
+        ? "2026-07-19"
         : "2026-07-13",
     );
     heroSources.push(og || "");

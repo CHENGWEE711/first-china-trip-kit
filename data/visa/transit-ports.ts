@@ -1,3 +1,5 @@
+import { VISA_POLICY_VERSION } from "@/data/visa-policy/version";
+
 export type TransitPortMode =
   | "airport"
   | "seaport"
@@ -6,6 +8,7 @@ export type TransitPortMode =
   | "ferry";
 
 export type TransitPort = {
+  appendixRow: number;
   id: string;
   officialEnglishName: string;
   officialChineseName?: string;
@@ -24,17 +27,19 @@ export type TransitPort = {
 export const TRANSIT_PORTS_OFFICIAL_SOURCE_URL =
   "https://en.nia.gov.cn/n147413/c187308/content.html";
 
-export const TRANSIT_PORTS_LAST_VERIFIED_AT = "2026-07-18";
+export const TRANSIT_PORTS_LAST_VERIFIED_AT = VISA_POLICY_VERSION.verifiedAt;
 
 const CURRENT_240_HOUR_POLICY_EFFECTIVE_FROM = "2024-12-17";
 const GUANGDONG_PORT_EXPANSION_EFFECTIVE_FROM = "2025-11-05";
 
 type TransitPortRecord = Omit<
   TransitPort,
-  "officialSourceUrl" | "lastVerifiedAt"
+  "appendixRow" | "officialSourceUrl" | "lastVerifiedAt"
 >;
 
-function createTransitPort(record: TransitPortRecord): TransitPort {
+function createTransitPort(
+  record: TransitPortRecord,
+): Omit<TransitPort, "appendixRow"> {
   return {
     ...record,
     officialSourceUrl: TRANSIT_PORTS_OFFICIAL_SOURCE_URL,
@@ -45,7 +50,7 @@ function createTransitPort(record: TransitPortRecord): TransitPort {
 // The permitted-area group on each record mirrors the local table cell in
 // NIA Annex 2. The separate policy rule permitting travel between the allowed
 // parts of all 24 province-level regions belongs in permitted-stay-areas.ts.
-export const TRANSIT_PORTS: TransitPort[] = [
+const TRANSIT_PORTS_WITHOUT_APPENDIX_ROWS = [
   createTransitPort({
     id: "beijing-capital",
     officialEnglishName: "Beijing Capital International Airport",
@@ -827,7 +832,13 @@ export const TRANSIT_PORTS: TransitPort[] = [
     canEnter: true,
     canExit: true,
   }),
-];
+] satisfies Array<Omit<TransitPort, "appendixRow">>;
+
+export const TRANSIT_PORTS: TransitPort[] =
+  TRANSIT_PORTS_WITHOUT_APPENDIX_ROWS.map((port, index) => ({
+    ...port,
+    appendixRow: index + 1,
+  }));
 
 if (TRANSIT_PORTS.length !== 65) {
   throw new Error("Transit port dataset count mismatch");
@@ -835,4 +846,13 @@ if (TRANSIT_PORTS.length !== 65) {
 
 if (new Set(TRANSIT_PORTS.map((port) => port.id)).size !== 65) {
   throw new Error("Transit port dataset contains duplicate IDs");
+}
+
+if (
+  new Set(TRANSIT_PORTS.map((port) => port.appendixRow)).size !== 65 ||
+  TRANSIT_PORTS.some(
+    (port) => port.appendixRow < 1 || port.appendixRow > 65,
+  )
+) {
+  throw new Error("Transit port appendix row dataset mismatch");
 }

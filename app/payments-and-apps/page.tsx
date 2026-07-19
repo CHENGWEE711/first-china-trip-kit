@@ -685,7 +685,7 @@ export default function PaymentsAndAppsPage() {
               </p>
             </div>
             <Link href="/visa-free-transit" className={buttonClassName("secondary", "w-full md:w-auto")}>
-              Open the Visa-Free Hub <ArrowRight aria-hidden="true" size={17} />
+              Check your visa-free entry plan <ArrowRight aria-hidden="true" size={17} />
             </Link>
           </div>
         </section>

@@ -2,12 +2,16 @@ import {
   VISA_OFFICIAL_SOURCE_URLS,
   VISA_POLICY_LAST_VERIFIED_AT,
 } from "./official-sources";
+import { VISA_POLICY_VERSION } from "@/data/visa-policy/version";
 
 export type VisaPolicyMeta = {
   id: string;
   policyName: string;
   policyVersion: string;
   effectiveFrom: string;
+  transitCountriesEffectiveFrom: string;
+  transitPortsEffectiveFrom: string;
+  unilateralListAsOf: string;
   lastVerifiedAt: string;
   nextReviewDue: string;
   authority: string;
@@ -23,11 +27,14 @@ export type VisaPolicyMeta = {
 export const VISA_POLICY_META: VisaPolicyMeta = {
   id: "china-240-hour-visa-free-transit",
   policyName: "China 240-Hour Visa-Free Transit Policy",
-  // Internal dataset version keyed to the latest substantive port change.
-  policyVersion: "2025-11-05",
-  effectiveFrom: "2025-11-05",
+  policyVersion: VISA_POLICY_VERSION.id,
+  effectiveFrom: VISA_POLICY_VERSION.transitPortsEffectiveFrom,
+  transitCountriesEffectiveFrom:
+    VISA_POLICY_VERSION.transitCountriesEffectiveFrom,
+  transitPortsEffectiveFrom: VISA_POLICY_VERSION.transitPortsEffectiveFrom,
+  unilateralListAsOf: VISA_POLICY_VERSION.unilateralListAsOf,
   lastVerifiedAt: VISA_POLICY_LAST_VERIFIED_AT,
-  nextReviewDue: "2026-08-18",
+  nextReviewDue: "2026-08-19",
   authority: "National Immigration Administration of China",
   officialSourceUrls: [
     VISA_OFFICIAL_SOURCE_URLS.currentPolicyAnnouncement,

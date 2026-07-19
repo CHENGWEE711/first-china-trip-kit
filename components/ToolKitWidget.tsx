@@ -463,10 +463,10 @@ function VisaTool() {
       </section>
       <div className="mt-5 flex flex-col gap-3 sm:flex-row">
         <Link
-          href="/visa-free-transit"
+          href="/visa-free-transit#route-check"
           className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-4 py-2 text-center text-base font-semibold text-white transition hover:bg-ember-hover sm:w-auto"
         >
-          Use the full route checker
+          Check your full route and entry port
         </Link>
         <Link
           href="/guides/china-240-hour-visa-free-transit-guide"

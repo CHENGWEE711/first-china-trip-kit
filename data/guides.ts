@@ -396,7 +396,7 @@ const guideEntries: GuideWithoutVisuals[] = [
     summary:
       "A practical planning guide for U.S. passport holders considering China travel in 2026, including visa planning, passport checks, flights, hotels, and official verification.",
     publishedAt: "2026-07-08",
-    updatedAt: "2026-07-18",
+    updatedAt: "2026-07-19",
     seoTitle: "Can Americans Travel to China in 2026? | First China Trip Kit",
     seoDescription:
       "Can Americans travel to China in 2026? Learn the practical steps U.S. travelers should verify before booking, including visa requirements, passport validity, flights, hotels, and official sources.",
@@ -431,7 +431,7 @@ const guideEntries: GuideWithoutVisuals[] = [
     summary:
       "A cautious planning guide to China's 240-hour visa-free transit policy, including eligibility checks, onward tickets, permitted areas, ports, and common mistakes.",
     publishedAt: "2026-07-08",
-    updatedAt: "2026-07-18",
+    updatedAt: "2026-07-19",
     seoTitle: "China 240-Hour Visa-Free Transit Guide for First-Time Visitors",
     seoDescription:
       "A practical guide to China's 240-hour visa-free transit policy: who may be eligible, documents to prepare, third-country rule, ports, permitted areas, route examples, and official verification checklist.",

@@ -1,3 +1,5 @@
+import { VISA_POLICY_VERSION } from "@/data/visa-policy/version";
+
 export type VisaOfficialSource = {
   id: string;
   title: string;
@@ -12,7 +14,7 @@ export type VisaOfficialSource = {
   lastVerifiedAt: string;
 };
 
-export const VISA_POLICY_LAST_VERIFIED_AT = "2026-07-18";
+export const VISA_POLICY_LAST_VERIFIED_AT = VISA_POLICY_VERSION.verifiedAt;
 
 export const VISA_OFFICIAL_SOURCE_URLS = {
   currentPolicyAnnouncement:
@@ -126,7 +128,7 @@ export const VISA_OFFICIAL_SOURCES = [
     effectiveFrom: "2025-06-12",
     factsSupported: [
       "Indonesia added to the transit policy",
-      "eligible-nationality count increased from 54 to 55",
+      "current 55-country transit total",
     ],
     lastVerifiedAt: VISA_POLICY_LAST_VERIFIED_AT,
   },
@@ -140,7 +142,7 @@ export const VISA_OFFICIAL_SOURCES = [
     publishedAt: "2024-12-17",
     effectiveFrom: "2024-12-17",
     factsSupported: [
-      "extension from 72 and 144 hours to 240 hours",
+      "replacement of the earlier shorter transit periods with 240 hours",
       "permitted stay areas in 24 province-level regions",
       "cross-region travel within the published permitted areas",
     ],

@@ -23,18 +23,16 @@ import {
   TRANSIT_PORTS,
   TRANSIT_PORT_SEARCH_CODES,
   UNILATERAL_VISA_FREE_COUNTRIES,
+  VISA_OFFICIAL_SOURCE_URLS,
   VISA_POLICY_META,
 } from "@/data/visa";
+import { trackVisaEvent } from "@/lib/visa/analytics";
 import {
-  analyticsResultCategory,
-  trackVisaEvent,
-} from "@/lib/visa/analytics";
-import {
-  evaluateTransitEligibility,
   type CheckerOutcome,
   type TransitCheckerInput,
   type TransitCheckerResult,
 } from "@/lib/visa/evaluate-transit-eligibility";
+import { evaluateVisaRoute } from "@/lib/visa-transit/evaluate-route";
 import type { VisaPolicyContext } from "@/components/visa/VisaPolicyChoiceLink";
 
 type PassportType = TransitCheckerInput["passportType"];
@@ -47,6 +45,7 @@ type CheckerDraft = {
   nationalityIso2: string;
   passportType: PassportType | "";
   passportValidity: PassportValidity | "";
+  expectedEntryDate: string;
   immediateOriginRegionId: string;
   immediateOnwardRegionId: string;
   multipleMainlandEntries: ExplicitBooleanChoice | "";
@@ -68,6 +67,7 @@ const INITIAL_DRAFT: CheckerDraft = {
   nationalityIso2: "",
   passportType: "",
   passportValidity: "",
+  expectedEntryDate: "",
   immediateOriginRegionId: "",
   immediateOnwardRegionId: "",
   multipleMainlandEntries: "",
@@ -84,11 +84,11 @@ const INITIAL_DRAFT: CheckerDraft = {
 };
 
 const steps = [
-  { number: 1, shortLabel: "Passport", title: "Passport" },
+  { number: 1, shortLabel: "Document", title: "Travel document" },
   { number: 2, shortLabel: "Route", title: "Immediate route" },
-  { number: 3, shortLabel: "Ticket", title: "Onward ticket" },
-  { number: 4, shortLabel: "Port", title: "Entry port" },
-  { number: 5, shortLabel: "Stay", title: "Stay area and purpose" },
+  { number: 3, shortLabel: "Port", title: "Entry port" },
+  { number: 4, shortLabel: "Stay", title: "Permitted stay area" },
+  { number: 5, shortLabel: "Onward", title: "Onward travel" },
 ] as const;
 
 const inputClassName =
@@ -127,6 +127,14 @@ const outcomeContent: Record<
       "This does not mean free movement into the city. Leaving the port's restricted area can require a temporary entry permit.",
     icon: Clock3,
     accentClassName: "border-jade bg-mist text-jade",
+  },
+  "policy-date-needs-verification": {
+    eyebrow: "Policy date check required",
+    title: "The 30-day visa-free policy date needs verification",
+    summary:
+      "The entered arrival date is later than the currently published unilateral-policy period. Check the latest official rule before relying on it.",
+    icon: CircleHelp,
+    accentClassName: "border-amber-700/35 bg-amber-50 text-amber-800",
   },
   "manual-review": {
     eyebrow: "Confirmation needed",
@@ -177,7 +185,7 @@ const contextPrompts: Record<VisaPolicyContext, string> = {
   "transit-240-hour":
     "240-hour transit context selected. Complete every route, ticket, port, area and purpose check before relying on this route.",
   "direct-transit-24-hour":
-    "24-hour direct-transit context selected. A 24-hour stay estimate has been prefilled; leaving the restricted port area can still require temporary entry permission.",
+    "24-hour direct-transit context selected. This planner offers only an informational route cross-check and does not make a final 24-hour assessment; leaving the restricted port area can still require temporary entry permission.",
   "manual-review":
     "Manual-review context selected. Use this route when a connection, document, activity or permitted area is unclear, then confirm with the airline or +86-12367.",
 };
@@ -245,14 +253,18 @@ function getStepErrors(step: number, draft: CheckerDraft): FieldErrors {
     if (!draft.passportValidity) {
       errors.passportValidity = "Select the remaining passport validity.";
     }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(draft.expectedEntryDate)) {
+      errors.expectedEntryDate = "Select the expected entry date.";
+    }
+    if (!draft.purpose) errors.purpose = "Select the main purpose of this stay.";
   }
 
   if (step === 2) {
     if (!draft.immediateOriginRegionId.trim()) {
-      errors.immediateOriginRegionId = "Enter the country or region immediately before mainland China.";
+      errors.immediateOriginRegionId = "Select the country or region immediately before mainland China.";
     }
     if (!draft.immediateOnwardRegionId.trim()) {
-      errors.immediateOnwardRegionId = "Enter the country or region immediately after mainland China.";
+      errors.immediateOnwardRegionId = "Select the country or region immediately after mainland China.";
     }
     if (!draft.multipleMainlandEntries) {
       errors.multipleMainlandEntries = "Select whether the itinerary enters mainland China more than once.";
@@ -260,6 +272,24 @@ function getStepErrors(step: number, draft: CheckerDraft): FieldErrors {
   }
 
   if (step === 3) {
+    if (!draft.entryPortId) {
+      errors.entryPortId = "Select one entry port from the current official list.";
+    }
+  }
+
+  if (step === 4) {
+    if (!draft.plannedStayAreaGroupId) {
+      errors.plannedStayAreaGroupId = "Confirm the permitted area linked to the selected port.";
+    }
+    if (!draft.stayingWithinPermittedArea) {
+      errors.stayingWithinPermittedArea = "Select whether the route remains in the permitted area.";
+    }
+    if (!draft.manualReviewRequested) {
+      errors.manualReviewRequested = "Select whether an individual circumstance needs manual confirmation.";
+    }
+  }
+
+  if (step === 5) {
     if (!draft.onwardTicketConfirmed) {
       errors.onwardTicketConfirmed = "Select the current ticket status.";
     }
@@ -271,23 +301,6 @@ function getStepErrors(step: number, draft: CheckerDraft): FieldErrors {
     if (!draft.plannedStayHours || !Number.isFinite(hours) || hours <= 0) {
       errors.plannedStayHours = "Enter an estimated stay length greater than zero hours.";
     }
-  }
-
-  if (step === 4 && !draft.entryPortId) {
-    errors.entryPortId = "Select one entry port from the current official list.";
-  }
-
-  if (step === 5) {
-    if (!draft.plannedStayAreaGroupId) {
-      errors.plannedStayAreaGroupId = "Select the main planned stay area or choose the unsure option.";
-    }
-    if (!draft.stayingWithinPermittedArea) {
-      errors.stayingWithinPermittedArea = "Select whether the route remains in the permitted area.";
-    }
-    if (!draft.manualReviewRequested) {
-      errors.manualReviewRequested = "Select whether an individual circumstance needs manual confirmation.";
-    }
-    if (!draft.purpose) errors.purpose = "Select the main purpose of this stay.";
   }
 
   return errors;
@@ -347,12 +360,20 @@ export function TransitEligibilityChecker() {
           interaction_type: "start",
           policy_version: VISA_POLICY_META.policyVersion,
         });
+        trackVisaEvent("visa_route_screen_started", {
+          interaction_type: "start",
+          policy_version: VISA_POLICY_META.policyVersion,
+        });
       }
-      setDraft((current) => ({ ...current, entryPortId: port.id }));
+      setDraft((current) => ({
+        ...current,
+        entryPortId: port.id,
+        plannedStayAreaGroupId: port.permittedAreaGroupIds[0] || "",
+      }));
       setErrors((current) => ({ ...current, entryPortId: undefined }));
       setPortQuery(port.officialEnglishName);
       setResult(null);
-      setStep(4);
+      setStep(3);
       window.requestAnimationFrame(() => focusWithoutSmoothScroll(formTopRef.current));
     }
 
@@ -394,6 +415,10 @@ export function TransitEligibilityChecker() {
           interaction_type: "start",
           policy_version: VISA_POLICY_META.policyVersion,
         });
+        trackVisaEvent("visa_route_screen_started", {
+          interaction_type: "start",
+          policy_version: VISA_POLICY_META.policyVersion,
+        });
       }
     }
 
@@ -407,6 +432,15 @@ export function TransitEligibilityChecker() {
     startedRef.current = true;
     trackVisaEvent("visa_checker_started", {
       interaction_type: "start",
+      policy_version: VISA_POLICY_META.policyVersion,
+    });
+    trackVisaEvent("visa_route_screen_started", {
+      interaction_type: "start",
+      policy_version: VISA_POLICY_META.policyVersion,
+    });
+    trackVisaEvent("visa_route_screen_step_viewed", {
+      step_number: 1,
+      interaction_type: "open",
       policy_version: VISA_POLICY_META.policyVersion,
     });
   }
@@ -460,6 +494,11 @@ export function TransitEligibilityChecker() {
     if (step < 5) {
       setErrors({});
       setStep((current) => Math.min(5, current + 1));
+      trackVisaEvent("visa_route_screen_step_viewed", {
+        step_number: step + 1,
+        interaction_type: "next",
+        policy_version: VISA_POLICY_META.policyVersion,
+      });
       window.requestAnimationFrame(() => focusWithoutSmoothScroll(formTopRef.current));
       return;
     }
@@ -468,6 +507,7 @@ export function TransitEligibilityChecker() {
       nationalityIso2: draft.nationalityIso2,
       passportType: draft.passportType || "unknown",
       passportValidity: draft.passportValidity || "unknown",
+      expectedEntryDate: draft.expectedEntryDate,
       immediateOriginRegionId: draft.immediateOriginRegionId,
       immediateOnwardRegionId: draft.immediateOnwardRegionId,
       multipleMainlandEntries: explicitBoolean(draft.multipleMainlandEntries),
@@ -479,15 +519,21 @@ export function TransitEligibilityChecker() {
         draft.plannedStayAreaGroupId === "unclear-or-multiple"
           ? null
           : explicitBoolean(draft.stayingWithinPermittedArea),
+      plannedStayAreaGroupId: draft.plannedStayAreaGroupId || null,
       journeyType: draft.journeyType || "unknown",
       purpose: draft.purpose || "other",
       plannedStayHours: Number(draft.plannedStayHours),
       manualReviewRequested: explicitBoolean(draft.manualReviewRequested),
     };
-    const nextResult = evaluateTransitEligibility(input);
-    const resultCategory = analyticsResultCategory(nextResult.outcome);
+    const nextResult = evaluateVisaRoute(input);
+    const resultCategory = nextResult.resultCategory;
     setResult(nextResult);
     trackVisaEvent("visa_checker_completed", {
+      result_category: resultCategory,
+      interaction_type: "complete",
+      policy_version: VISA_POLICY_META.policyVersion,
+    });
+    trackVisaEvent("visa_route_screen_completed", {
       result_category: resultCategory,
       interaction_type: "complete",
       policy_version: VISA_POLICY_META.policyVersion,
@@ -504,6 +550,10 @@ export function TransitEligibilityChecker() {
       interaction_type: "restart",
       policy_version: VISA_POLICY_META.policyVersion,
     });
+    trackVisaEvent("visa_route_screen_started", {
+      interaction_type: "restart",
+      policy_version: VISA_POLICY_META.policyVersion,
+    });
     startedRef.current = true;
     setDraft(INITIAL_DRAFT);
     setErrors({});
@@ -517,8 +567,9 @@ export function TransitEligibilityChecker() {
     const baseParams = {
       interaction_type: "click" as const,
       policy_version: VISA_POLICY_META.policyVersion,
-      result_category: result ? analyticsResultCategory(result.outcome) : undefined,
+      result_category: result?.resultCategory,
     };
+    trackVisaEvent("visa_result_action_clicked", baseParams);
     if (href === "/payments-and-apps") {
       trackVisaEvent("visa_to_payment_hub_clicked", baseParams);
     } else if (href.includes("/guides/")) {
@@ -529,11 +580,17 @@ export function TransitEligibilityChecker() {
       trackVisaEvent("visa_checklist_saved", baseParams);
     } else if (href.startsWith("http")) {
       trackVisaEvent("visa_policy_source_clicked", baseParams);
+      trackVisaEvent("visa_official_source_clicked", baseParams);
     }
   }
 
   const selectedPort = draft.entryPortId ? portsById.get(draft.entryPortId) : undefined;
   const selectedExitPort = draft.exitPortId ? portsById.get(draft.exitPortId) : undefined;
+  const selectedPermittedAreas = selectedPort
+    ? PERMITTED_STAY_AREA_GROUPS.filter((area) =>
+        selectedPort.permittedAreaGroupIds.includes(area.id),
+      )
+    : [];
   const currentStep = steps[step - 1];
 
   if (result) {
@@ -542,13 +599,15 @@ export function TransitEligibilityChecker() {
     const ReasonIcon =
       result.outcome === "not-eligible-from-answers"
         ? CircleX
-        : result.outcome === "manual-review"
+        : result.outcome === "manual-review" ||
+            result.outcome === "policy-date-needs-verification"
           ? CircleHelp
           : Check;
     const reasonIconClassName =
       result.outcome === "not-eligible-from-answers"
         ? "text-ember"
-        : result.outcome === "manual-review"
+        : result.outcome === "manual-review" ||
+            result.outcome === "policy-date-needs-verification"
           ? "text-amber-800"
           : "text-jade";
 
@@ -556,24 +615,29 @@ export function TransitEligibilityChecker() {
       <div
         data-testid="transit-eligibility-checker"
         data-outcome={result.outcome}
+        data-result-category={result.resultCategory}
+        aria-live="polite"
         className="border-y border-ink/14 bg-paper py-7 sm:px-2 sm:py-10"
       >
         <div className={`border-l-4 px-5 py-6 sm:px-8 ${content.accentClassName}`}>
           <OutcomeIcon aria-hidden="true" size={34} strokeWidth={1.8} />
           <p className="mt-5 text-xs font-bold uppercase tracking-[0.14em]">{content.eyebrow}</p>
+          <p className="mt-2 text-xs font-semibold text-ink/58">
+            Screening category: {result.resultCategory.replaceAll("_", " ")}
+          </p>
           <h3
             ref={resultHeadingRef}
             tabIndex={-1}
             className="mt-2 max-w-3xl font-editorial text-3xl leading-tight text-ink outline-none sm:text-4xl"
           >
-            {content.title}
+            {result.headline}
           </h3>
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink/70">{content.summary}</p>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink/70">{result.summary}</p>
         </div>
 
         <div className="grid gap-8 px-5 pt-8 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.55fr)]">
           <div>
-            <h4 className="font-editorial text-2xl text-ink">Why this result appeared</h4>
+            <h4 className="font-editorial text-2xl text-ink">What matched</h4>
             <ul className="mt-4 grid gap-3">
               {result.reasons.map((reason) => (
                 <li key={reason} className="flex gap-3 text-sm leading-relaxed text-ink/76">
@@ -590,7 +654,7 @@ export function TransitEligibilityChecker() {
 
           <aside className="border-t border-ink/14 pt-6 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0">
             <h4 className="text-sm font-bold uppercase tracking-[0.12em] text-ink/55">
-              Important limits
+              What needs attention
             </h4>
             <ul className="mt-3 grid gap-3 text-sm leading-relaxed text-ink/68">
               {result.warnings.map((warning) => (
@@ -600,11 +664,34 @@ export function TransitEligibilityChecker() {
             <p className="mt-5 text-xs leading-relaxed text-ink/52">
               Policy version {result.policyVersion} · Last checked {formatPolicyDate(result.lastVerifiedAt)}
             </p>
+            <p className="mt-3 text-xs font-semibold leading-relaxed text-ink/62">
+              {result.disclaimer}
+            </p>
           </aside>
         </div>
 
+        <div className="mt-8 grid gap-8 border-t border-ink/14 px-5 pt-7 sm:px-8 lg:grid-cols-2">
+          <section>
+            <h4 className="font-editorial text-2xl text-ink">Documents to prepare</h4>
+            <ul className="mt-4 grid gap-2 text-sm leading-relaxed text-ink/70">
+              <li>Valid international travel document with the published validity.</li>
+              <li>Confirmed onward booking and proof of entry eligibility for the next destination.</li>
+              <li>Accommodation details and an offline copy of the itinerary.</li>
+              <li>The permitted-area plan for the selected entry port.</li>
+            </ul>
+          </section>
+          <section>
+            <h4 className="font-editorial text-2xl text-ink">Official verification</h4>
+            <div className="mt-4 flex flex-col gap-2 text-sm font-semibold">
+              <a href={VISA_OFFICIAL_SOURCE_URLS.currentPolicyAnnouncement} target="_blank" rel="noopener noreferrer" onClick={() => trackResultAction(VISA_OFFICIAL_SOURCE_URLS.currentPolicyAnnouncement)} className="text-ember hover:text-ember-hover">Check official policy <ExternalLink aria-hidden="true" className="inline" size={15} /></a>
+              <a href="tel:+8612367" onClick={() => trackResultAction("tel:+8612367")} className="text-ember hover:text-ember-hover">Contact +86 12367</a>
+              <a href={VISA_OFFICIAL_SOURCE_URLS.officialArrivalCard} target="_blank" rel="noopener noreferrer" onClick={() => trackResultAction(VISA_OFFICIAL_SOURCE_URLS.officialArrivalCard)} className="text-ember hover:text-ember-hover">Fill in the official Arrival Card <ExternalLink aria-hidden="true" className="inline" size={15} /></a>
+            </div>
+          </section>
+        </div>
+
         <div className="mt-8 border-t border-ink/14 px-5 pt-7 sm:px-8">
-          <h4 className="font-editorial text-2xl text-ink">Safe next actions</h4>
+          <h4 className="font-editorial text-2xl text-ink">Recommended next step</h4>
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             {result.nextActions.map((action, index) => {
               const external = action.href.startsWith("http") || action.href.startsWith("tel:");
@@ -644,7 +731,7 @@ export function TransitEligibilityChecker() {
           </div>
           <Button variant="secondary" onClick={restart} className="mt-6 w-full sm:w-auto">
             <RotateCcw aria-hidden="true" size={17} />
-            Check another route
+            Start Again
           </Button>
         </div>
       </div>
@@ -750,9 +837,16 @@ export function TransitEligibilityChecker() {
               onChange={(value) => updateDraft("passportType", value)}
               options={[
                 { value: "ordinary", label: "Ordinary passport" },
-                { value: "diplomatic", label: "Diplomatic passport" },
-                { value: "service", label: "Service passport" },
-                { value: "other", label: "Other travel document" },
+                {
+                  value: "other-valid",
+                  label: "Other valid international travel document",
+                  detail: "The 240-hour route may still apply, but the 30-day unilateral policy requires an ordinary passport.",
+                },
+                {
+                  value: "temporary-emergency",
+                  label: "Temporary or emergency document",
+                  detail: "This needs confirmation from the airline and immigration authority.",
+                },
                 { value: "unknown", label: "Not sure" },
               ]}
             />
@@ -770,6 +864,57 @@ export function TransitEligibilityChecker() {
                 { value: "unknown", label: "Not sure" },
               ]}
             />
+
+            <label htmlFor="visa-expected-entry-date" className="grid gap-2 text-sm font-semibold text-ink">
+              Expected entry date
+              <input
+                id="visa-expected-entry-date"
+                type="date"
+                value={draft.expectedEntryDate}
+                onChange={(event) => updateDraft("expectedEntryDate", event.target.value)}
+                aria-invalid={Boolean(errors.expectedEntryDate)}
+                aria-describedby={errors.expectedEntryDate ? "visa-expected-entry-date-error" : "visa-expected-entry-date-help"}
+                className={inputClassName}
+              />
+              <span id="visa-expected-entry-date-help" className="font-normal text-ink/55">
+                Used only in this browser session to compare the trip date with published policy end dates.
+              </span>
+              {errors.expectedEntryDate ? (
+                <span id="visa-expected-entry-date-error" role="alert" className="text-sm font-semibold text-ember">
+                  {errors.expectedEntryDate}
+                </span>
+              ) : null}
+            </label>
+
+            <label htmlFor="visa-purpose" className="grid gap-2 text-sm font-semibold text-ink">
+              Main purpose during the stay
+              <select
+                id="visa-purpose"
+                value={draft.purpose}
+                onChange={(event) => updateDraft("purpose", event.target.value as Purpose | "")}
+                aria-invalid={Boolean(errors.purpose)}
+                aria-describedby={errors.purpose ? "visa-purpose-error" : "visa-purpose-help"}
+                className={inputClassName}
+              >
+                <option value="">Select one purpose</option>
+                <option value="tourism">Tourism</option>
+                <option value="business">Business</option>
+                <option value="visit">Visit friends</option>
+                <option value="family">Visit family</option>
+                <option value="work">Work</option>
+                <option value="study">Study</option>
+                <option value="journalism">News reporting or journalism</option>
+                <option value="other">Other or not sure</option>
+              </select>
+              <span id="visa-purpose-help" className="font-normal text-ink/55">
+                Work, study, and news reporting require a different permission route.
+              </span>
+              {errors.purpose ? (
+                <span id="visa-purpose-error" role="alert" className="text-sm font-semibold text-ember">
+                  {errors.purpose}
+                </span>
+              ) : null}
+            </label>
           </div>
         ) : null}
 
@@ -780,17 +925,19 @@ export function TransitEligibilityChecker() {
             </div>
             <label htmlFor="visa-immediate-origin" className="grid gap-2 text-sm font-semibold text-ink">
               Where will you arrive from immediately before entering mainland China?
-              <input
+              <select
                 id="visa-immediate-origin"
-                list="visa-country-region-options"
                 value={draft.immediateOriginRegionId}
                 onChange={(event) => updateDraft("immediateOriginRegionId", event.target.value)}
-                placeholder="Country or region, for example Japan"
-                autoComplete="off"
                 aria-invalid={Boolean(errors.immediateOriginRegionId)}
                 aria-describedby={errors.immediateOriginRegionId ? "visa-immediate-origin-error" : undefined}
                 className={inputClassName}
-              />
+              >
+                <option value="">Select a country or region</option>
+                {COUNTRY_REGION_OPTIONS.map((region) => (
+                  <option key={region.code} value={region.code}>{region.name}</option>
+                ))}
+              </select>
               {errors.immediateOriginRegionId ? (
                 <span id="visa-immediate-origin-error" role="alert" className="text-sm font-semibold text-ember">
                   {errors.immediateOriginRegionId}
@@ -799,28 +946,25 @@ export function TransitEligibilityChecker() {
             </label>
             <label htmlFor="visa-immediate-onward" className="grid gap-2 text-sm font-semibold text-ink">
               Where will you travel immediately after leaving mainland China?
-              <input
+              <select
                 id="visa-immediate-onward"
-                list="visa-country-region-options"
                 value={draft.immediateOnwardRegionId}
                 onChange={(event) => updateDraft("immediateOnwardRegionId", event.target.value)}
-                placeholder="Country or region, for example Singapore"
-                autoComplete="off"
                 aria-invalid={Boolean(errors.immediateOnwardRegionId)}
                 aria-describedby={errors.immediateOnwardRegionId ? "visa-immediate-onward-error" : undefined}
                 className={inputClassName}
-              />
+              >
+                <option value="">Select a country or region</option>
+                {COUNTRY_REGION_OPTIONS.map((region) => (
+                  <option key={region.code} value={region.code}>{region.name}</option>
+                ))}
+              </select>
               {errors.immediateOnwardRegionId ? (
                 <span id="visa-immediate-onward-error" role="alert" className="text-sm font-semibold text-ember">
                   {errors.immediateOnwardRegionId}
                 </span>
               ) : null}
             </label>
-            <datalist id="visa-country-region-options">
-              {COUNTRY_REGION_OPTIONS.map((country) => (
-                <option key={country.code} value={country.name} />
-              ))}
-            </datalist>
             <RadioChoices
               legend="Will this itinerary enter mainland China more than once?"
               name="visa-multiple-mainland-entries"
@@ -836,8 +980,8 @@ export function TransitEligibilityChecker() {
           </div>
         ) : null}
 
-        {step === 3 ? (
-          <div data-testid="checker-step-3" className="grid gap-7">
+        {step === 5 ? (
+          <div data-testid="checker-step-5" className="grid gap-7">
             <RadioChoices
               legend="Do you hold onward travel with a confirmed date and seat or confirmed itinerary?"
               name="visa-onward-ticket"
@@ -914,8 +1058,8 @@ export function TransitEligibilityChecker() {
           </div>
         ) : null}
 
-        {step === 4 ? (
-          <div data-testid="checker-step-4" className="grid gap-6">
+        {step === 3 ? (
+          <div data-testid="checker-step-3" className="grid gap-6">
             <div className="border-l-2 border-jade bg-mist px-4 py-3 text-sm leading-relaxed text-ink/72">
               Only ports in the current {TRANSIT_PORTS.length}-port dataset are available. An international airport is not automatically an eligible port.
             </div>
@@ -930,15 +1074,40 @@ export function TransitEligibilityChecker() {
                   onChange={(event) => {
                     const query = event.target.value;
                     setPortQuery(query);
-                    if (draft.entryPortId) updateDraft("entryPortId", null);
+                    if (draft.entryPortId) {
+                      setDraft((current) => ({
+                        ...current,
+                        entryPortId: null,
+                        plannedStayAreaGroupId: "",
+                      }));
+                    }
                     else markStarted();
+                    trackVisaEvent("visa_port_search_used", {
+                      interaction_type: "search",
+                      policy_version: VISA_POLICY_META.policyVersion,
+                    });
                   }}
                   onKeyDown={(event) => {
+                    if (event.key === "Escape") {
+                      event.preventDefault();
+                      setPortQuery("");
+                      setDraft((current) => ({
+                        ...current,
+                        entryPortId: null,
+                        plannedStayAreaGroupId: "",
+                      }));
+                      return;
+                    }
                     if (event.key === "Enter") {
                       event.preventDefault();
                       if (filteredPorts.length === 1) {
                         const port = filteredPorts[0];
-                        updateDraft("entryPortId", port.id);
+                        setDraft((current) => ({
+                          ...current,
+                          entryPortId: port.id,
+                          plannedStayAreaGroupId:
+                            port.permittedAreaGroupIds[0] || "",
+                        }));
                         setPortQuery(port.officialEnglishName);
                       }
                     }
@@ -949,6 +1118,22 @@ export function TransitEligibilityChecker() {
                   className={`${inputClassName} pl-10`}
                 />
               </span>
+              {portQuery ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPortQuery("");
+                    setDraft((current) => ({
+                      ...current,
+                      entryPortId: null,
+                      plannedStayAreaGroupId: "",
+                    }));
+                  }}
+                  className="w-fit rounded-md px-2 py-1 text-sm font-semibold text-ember underline decoration-ember/30 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember"
+                >
+                  Clear port search
+                </button>
+              ) : null}
             </label>
             <label htmlFor="visa-entry-port" className="grid gap-2 text-sm font-semibold text-ink">
               Official entry port
@@ -958,7 +1143,14 @@ export function TransitEligibilityChecker() {
                 onChange={(event) => {
                   const value = event.target.value || null;
                   updateDraft("entryPortId", value);
-                  if (value) setPortQuery(portsById.get(value)?.officialEnglishName || "");
+                  const selected = value ? portsById.get(value) : undefined;
+                  setDraft((current) => ({
+                    ...current,
+                    entryPortId: value,
+                    plannedStayAreaGroupId:
+                      selected?.permittedAreaGroupIds[0] || "",
+                  }));
+                  if (selected) setPortQuery(selected.officialEnglishName);
                 }}
                 aria-invalid={Boolean(errors.entryPortId)}
                 aria-describedby={errors.entryPortId ? "visa-entry-port-error" : "visa-entry-port-help"}
@@ -997,6 +1189,9 @@ export function TransitEligibilityChecker() {
                     ? ` · ${selectedPort.iataCode || TRANSIT_PORT_SEARCH_CODES[selectedPort.id]}`
                     : ""}
                 </p>
+                <p className="mt-1">
+                  Official appendix row {selectedPort.appendixRow} of {TRANSIT_PORTS.length} · Permitted area: {selectedPermittedAreas.map((area) => area.displayName).join(", ")}
+                </p>
               </div>
             ) : null}
             <label htmlFor="visa-exit-port" className="grid gap-2 text-sm font-semibold text-ink">
@@ -1030,10 +1225,10 @@ export function TransitEligibilityChecker() {
           </div>
         ) : null}
 
-        {step === 5 ? (
-          <div data-testid="checker-step-5" className="grid gap-7">
+        {step === 4 ? (
+          <div data-testid="checker-step-4" className="grid gap-7">
             <label htmlFor="visa-planned-stay-area" className="grid gap-2 text-sm font-semibold text-ink">
-              Main planned stay area
+              Official permitted stay area for the selected port
               <select
                 id="visa-planned-stay-area"
                 value={draft.plannedStayAreaGroupId}
@@ -1046,16 +1241,15 @@ export function TransitEligibilityChecker() {
                 }
                 className={inputClassName}
               >
-                <option value="">Select the main area</option>
-                {PERMITTED_STAY_AREA_GROUPS.map((area) => (
+                <option value="">Select the official area</option>
+                {selectedPermittedAreas.map((area) => (
                   <option key={area.id} value={area.id}>
                     {area.displayName}
                   </option>
                 ))}
-                <option value="unclear-or-multiple">Multiple areas or not sure</option>
               </select>
               <span id="visa-planned-stay-area-help" className="font-normal text-ink/55">
-                Select the main published area, then confirm every stop against the area linked to the approved route.
+                Only areas linked to the selected official entry port are available. Choose “Not sure” below if the itinerary is unclear.
               </span>
               {errors.plannedStayAreaGroupId ? (
                 <span id="visa-planned-stay-area-error" role="alert" className="text-sm font-semibold text-ember">
@@ -1087,35 +1281,6 @@ export function TransitEligibilityChecker() {
                 { value: "unknown", label: "Not sure" },
               ]}
             />
-            <label htmlFor="visa-purpose" className="grid gap-2 text-sm font-semibold text-ink">
-              Main purpose during the stay
-              <select
-                id="visa-purpose"
-                value={draft.purpose}
-                onChange={(event) => updateDraft("purpose", event.target.value as Purpose | "")}
-                aria-invalid={Boolean(errors.purpose)}
-                aria-describedby={errors.purpose ? "visa-purpose-error" : "visa-purpose-help"}
-                className={inputClassName}
-              >
-                <option value="">Select one purpose</option>
-                <option value="tourism">Tourism</option>
-                <option value="business">Business</option>
-                <option value="visit">Visit</option>
-                <option value="family">Visit family</option>
-                <option value="work">Work</option>
-                <option value="study">Study</option>
-                <option value="journalism">News reporting or journalism</option>
-                <option value="other">Other or not sure</option>
-              </select>
-              <span id="visa-purpose-help" className="font-normal text-ink/55">
-                Work, study, and news reporting require a different permission route.
-              </span>
-              {errors.purpose ? (
-                <span id="visa-purpose-error" role="alert" className="text-sm font-semibold text-ember">
-                  {errors.purpose}
-                </span>
-              ) : null}
-            </label>
             <div className="border border-ink/14 bg-sand p-4 text-sm leading-relaxed text-ink/66">
               This checker offers cautious planning guidance from policy data version {VISA_POLICY_META.policyVersion}. The final decision is made by immigration inspection officers at the port of entry.
             </div>

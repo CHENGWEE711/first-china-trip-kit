@@ -58,6 +58,12 @@ export function EligiblePortsExplorer() {
       interaction_type: interactionType,
       policy_version: VISA_POLICY_META.policyVersion,
     });
+    if (interactionType === "search") {
+      trackVisaEvent("visa_port_search_used", {
+        interaction_type: "search",
+        policy_version: VISA_POLICY_META.policyVersion,
+      });
+    }
   }
 
   async function copyName(id: string, name: string) {
@@ -73,7 +79,7 @@ export function EligiblePortsExplorer() {
 
   function selectPort(id: string) {
     window.dispatchEvent(new CustomEvent("visa-port-selected", { detail: { id } }));
-    document.getElementById("route-checker")?.scrollIntoView({ behavior: "auto", block: "start" });
+    document.getElementById("route-check")?.scrollIntoView({ behavior: "auto", block: "start" });
     trackVisaEvent("visa_port_selected", {
       interaction_type: "select",
       policy_version: VISA_POLICY_META.policyVersion,
@@ -94,6 +100,13 @@ export function EligiblePortsExplorer() {
               setQuery(event.target.value);
               setVisibleCount(12);
               if (event.target.value.length === 1) recordExplorerUse("search");
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                event.preventDefault();
+                setQuery("");
+                setVisibleCount(12);
+              }
             }}
             placeholder="Search city, airport code or port name"
             className="min-h-12 rounded-md border border-ink/20 bg-paper py-2 pl-10 pr-3 text-base font-normal text-ink placeholder:text-ink/42 focus:border-ember focus:outline-none focus:ring-2 focus:ring-ember/25"
@@ -158,6 +171,7 @@ export function EligiblePortsExplorer() {
                   </p>
                 </div>
                 <dl className="grid content-start gap-3 text-sm">
+                  <div><dt className="font-semibold text-ink/55">Official-data row</dt><dd className="mt-1 text-ink">{port.appendixRow} of 65</dd></div>
                   <div><dt className="font-semibold text-ink/55">Policy effective</dt><dd className="mt-1 text-ink">{port.effectiveFrom}</dd></div>
                   {port.officialChineseName ? <div><dt className="font-semibold text-ink/55">Official Chinese name</dt><dd className="mt-1 text-ink">{port.officialChineseName}</dd></div> : null}
                 </dl>
@@ -169,7 +183,7 @@ export function EligiblePortsExplorer() {
                     {copiedId === port.id ? <Check aria-hidden="true" size={16} /> : <Clipboard aria-hidden="true" size={16} />}
                     {copiedId === port.id ? "Copied" : "Copy official name"}
                   </button>
-                  <a href={port.officialSourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackVisaEvent("visa_policy_source_clicked", { interaction_type: "open", policy_version: VISA_POLICY_META.policyVersion })} className="inline-flex min-h-11 items-center gap-2 rounded-md border border-ink/20 bg-paper px-4 py-2 text-sm font-semibold text-ink hover:border-ember hover:text-ember focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2">
+                  <a href={port.officialSourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => { trackVisaEvent("visa_policy_source_clicked", { interaction_type: "open", policy_version: VISA_POLICY_META.policyVersion }); trackVisaEvent("visa_official_source_clicked", { interaction_type: "open", policy_version: VISA_POLICY_META.policyVersion }); }} className="inline-flex min-h-11 items-center gap-2 rounded-md border border-ink/20 bg-paper px-4 py-2 text-sm font-semibold text-ink hover:border-ember hover:text-ember focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2">
                     Official source <ExternalLink aria-hidden="true" size={16} />
                   </a>
                 </div>
@@ -178,6 +192,21 @@ export function EligiblePortsExplorer() {
           );
         })}
       </div>
+
+      <a
+        href={TRANSIT_PORTS[0]?.officialSourceUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() =>
+          trackVisaEvent("visa_official_source_clicked", {
+            interaction_type: "open",
+            policy_version: VISA_POLICY_META.policyVersion,
+          })
+        }
+        className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-ember underline decoration-ember/30 underline-offset-4 hover:text-ember-hover"
+      >
+        View the original official appendix
+      </a>
 
       {filteredPorts.length === 0 ? (
         <p role="status" className="mt-6 border border-ink/12 bg-sand p-5 text-base text-ink">

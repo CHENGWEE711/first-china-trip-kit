@@ -17,6 +17,7 @@ export type UnilateralVisaFreeCountry = {
   maxStayDays: number;
   eligiblePurposes: UnilateralVisaFreePurpose[];
   effectiveFrom?: string;
+  validUntil: string | null;
   effectiveUntil?: string | null;
   officialSourceUrl: string;
   lastVerifiedAt: string;
@@ -109,6 +110,9 @@ export const UNILATERAL_VISA_FREE_COUNTRIES: UnilateralVisaFreeCountry[] =
     eligiblePurposes: [...UNILATERAL_VISA_FREE_PURPOSES],
     // The current NIA list does not publish a verified start date per country.
     // Keep the optional field absent instead of inferring one.
+    validUntil: getUnilateralPolicyEndDate(iso2),
+    // Compatibility alias for existing consumers. New policy logic uses
+    // `validUntil`, which mirrors the terminology in the July 19 dataset.
     effectiveUntil: getUnilateralPolicyEndDate(iso2),
     officialSourceUrl:
       VISA_OFFICIAL_SOURCE_URLS.unilateralVisaFreeCountries,

@@ -2,6 +2,7 @@ export type CheckerOutcome =
   | "likely-unilateral-visa-free"
   | "likely-240-hour-transit"
   | "likely-24-hour-direct-transit"
+  | "policy-date-needs-verification"
   | "manual-review"
   | "not-eligible-from-answers";
 
@@ -38,8 +39,11 @@ export const TRANSIT_TIME_CALCULATOR_DISCLAIMER =
 
 export const CHECKER_POLICY_PRIORITY = [
   "unilateral-30-day",
-  "direct-transit-24-hour",
   "transit-240-hour",
+] as const;
+
+export const CHECKER_INFORMATIONAL_ALTERNATIVES = [
+  "direct-transit-24-hour",
 ] as const;
 
 export const TRANSIT_PERMITTED_PURPOSES: TransitCheckerPurpose[] = [

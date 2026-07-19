@@ -21,7 +21,7 @@ const steps = [
     title: "Check entry rules",
     body: "Confirm your passport eligibility, exact ports, permitted travel area and onward route before paying for non-refundable travel.",
     href: "/visa-free-transit",
-    label: "Check the visa-free transit Hub",
+    label: "Check your visa-free route",
     icon: ShieldCheck,
   },
   {

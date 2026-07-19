@@ -31,7 +31,7 @@ import {
   VISA_OFFICIAL_SOURCES,
   VISA_POLICY_META,
 } from "@/data/visa";
-import { cityImages, itineraryVisuals } from "@/data/images";
+import { cityImages, guideVisuals } from "@/data/images";
 import { breadcrumbJsonLd, buildMetadata, faqJsonLd } from "@/lib/seo";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
@@ -56,16 +56,15 @@ const policyDateFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 });
 const policyVerifiedDate = new Date(`${VISA_POLICY_META.lastVerifiedAt}T00:00:00Z`);
-const policyYear = policyVerifiedDate.getUTCFullYear();
 const policyLastCheckedLabel = policyDateFormatter.format(policyVerifiedDate);
 const policyNextReviewLabel = policyDateFormatter.format(
   new Date(`${VISA_POLICY_META.nextReviewDue}T00:00:00Z`),
 );
-const transitVisuals = itineraryVisuals["240-hour-visa-free-china-itinerary"];
+const transitVisuals = guideVisuals["china-240-hour-visa-free-transit-guide"];
 
 export const metadata: Metadata = buildMetadata({
-  title: `China 240-Hour Visa-Free Transit Checker & Guide (${policyYear})`,
-  description: `Check whether your route may qualify for China's 240-hour visa-free transit policy. Review eligible nationalities, ${VISA_POLICY_META.eligiblePortCount} ports, permitted stay areas, documents and official sources.`,
+  title: "China Visa-Free Transit Planner: 240-Hour Route & Port Check",
+  description: "Check whether your China stopover appears to match the published 240-hour visa-free transit conditions, including nationality, route, entry port and permitted stay area.",
   path: HUB_PATH,
   image: transitVisuals.heroImage.src,
   imageAlt: transitVisuals.heroImage.alt,
@@ -86,13 +85,8 @@ const policyChoices = [
   },
   {
     title: "24-Hour Direct Transit",
-    body: "For onward transit within 24 hours, normally without leaving the restricted port area unless temporary entry is granted.",
+    body: "An informational alternative for onward transit within 24 hours, normally without leaving the restricted port area. This planner does not make a final 24-hour assessment.",
     context: "direct-transit-24-hour",
-  },
-  {
-    title: "Visa Required or Manual Check",
-    body: "For work, study, journalism, unclear connections, special documents or any route that needs airline or border-inspection confirmation.",
-    context: "manual-review",
   },
 ] as const;
 
@@ -167,6 +161,10 @@ const commonMistakes = [
 
 const faqs = [
   {
+    question: "What does ‘transit to a third country or region’ mean?",
+    answer: "For the basic 240-hour route, the country or region immediately before mainland China and the country or region immediately after mainland China must be different. Use the actual operating segments, not the first and last stops of a longer holiday.",
+  },
+  {
     question: "Is 240 hours the same as 10 calendar days?",
     answer: "Not exactly. The published 240-hour period is calculated from 00:00 on the day after entry, so the calendar span can look different from ten 24-hour blocks measured from your arrival time. Use the deadline shown on the temporary entry permit.",
   },
@@ -175,12 +173,28 @@ const faqs = [
     answer: "The current NIA notice states that the visa-free stay period is calculated from 00:00 on the day following the day of entry. Your authorized deadline is the one recorded by immigration inspection at the port.",
   },
   {
-    question: "Does A → Mainland China → A qualify?",
+    question: "Can I fly back to the same country I arrived from?",
     answer: "That basic round trip does not meet the third-country or region transit shape. Complex connections and technical stops can change the assessment, so use the immediate inbound and outbound segments and confirm unclear routes.",
   },
   {
     question: "Do Hong Kong and Macao count as onward regions?",
     answer: "They can be treated as separate onward regions in a qualifying transit itinerary, but the operating segments, ticket evidence and port assessment still matter. Confirm the exact route with the airline and immigration authority.",
+  },
+  {
+    question: "What happens if my nationality also has 30-day visa-free entry?",
+    answer: "The 30-day unilateral policy may be the simpler route for an ordinary-passport holder whose purpose, trip date and stay length fit the current rule. The planner checks that policy before the 240-hour transit route and still reminds you to verify current end dates.",
+  },
+  {
+    question: "Do I need a confirmed onward ticket?",
+    answer: "Yes for the published 240-hour route: the current NIA rules require onward travel to a third country or region with confirmed arrangements and a departure date within the policy window.",
+  },
+  {
+    question: "Is three months of passport validity required?",
+    answer: "The current 240-hour policy requires a valid international travel document with at least three months of validity. Airlines and onward destinations can impose additional document requirements.",
+  },
+  {
+    question: "Do I need to complete an Arrival Card?",
+    answer: "Complete the official Arrival Card when required by the current entry process. Use only the National Immigration Administration channel linked on this page; this website does not collect or submit passport information.",
   },
   {
     question: "Can I use separate tickets?",
@@ -250,7 +264,7 @@ const visaJsonLd = [
     name: "China Visa-Free Transit Route Checker",
     applicationCategory: "TravelApplication",
     operatingSystem: "Web",
-    url: absoluteUrl(`${HUB_PATH}#route-checker`),
+    url: absoluteUrl(`${HUB_PATH}#route-check`),
     description: "An educational local route-screening tool using the currently verified China visa-free transit policy data.",
     isBasedOn: VISA_POLICY_META.officialSourceUrls,
   },
@@ -279,23 +293,23 @@ export default function VisaFreeTransitHubPage() {
           <Container size="wide" className="grid lg:min-h-[680px] lg:grid-cols-[minmax(0,0.98fr)_minmax(500px,1.02fr)]">
             <div className="order-2 flex flex-col justify-center py-11 sm:py-14 lg:order-1 lg:py-20 lg:pr-14 xl:pr-20">
               <h1 className="max-w-3xl text-[43px] leading-[1.03] text-ink sm:text-5xl md:text-6xl lg:text-[66px]">
-                Can You Visit China Visa-Free During a Transit?
+                Can You Use China’s 240-Hour Visa-Free Transit?
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/68">
-                Check your route, passport, entry port and onward ticket against China&apos;s current 240-hour visa-free transit rules.
+                Check your travel document, route, entry port and permitted stay area before booking your China stopover.
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <Link href="#route-checker" className={buttonClassName("primary", "sm:min-w-40")}>
-                  Check my route <ArrowDown aria-hidden="true" size={18} />
+                <Link href="#route-check" className={buttonClassName("primary", "sm:min-w-40")}>
+                  Check My Route <ArrowDown aria-hidden="true" size={18} />
                 </Link>
-                <Link href="#eligible-ports" className={buttonClassName("secondary", "sm:min-w-48")}>
-                  See the {VISA_POLICY_META.eligiblePortCount} eligible ports <ArrowDown aria-hidden="true" size={18} />
+                <Link href="/guides/china-240-hour-visa-free-transit-guide" className={buttonClassName("secondary", "sm:min-w-48")}>
+                  Read the Detailed Guide <ArrowRight aria-hidden="true" size={18} />
                 </Link>
               </div>
               <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink/62">
                 <span className="inline-flex items-center gap-2 font-semibold text-ink">
                   <CheckCircle2 aria-hidden="true" className="text-jade" size={17} />
-                  Last policy check: {policyLastCheckedLabel}
+                  Policy information verified: {policyLastCheckedLabel}
                 </span>
                 <span>Source: {VISA_POLICY_META.authority}</span>
                 <VisaActionLink href="#official-sources" eventName="visa_policy_source_clicked" interactionType="click" className="font-semibold text-ember underline decoration-ember/30 underline-offset-4 hover:text-ember-hover">
@@ -303,7 +317,7 @@ export default function VisaFreeTransitHubPage() {
                 </VisaActionLink>
               </div>
               <p className="mt-5 max-w-2xl border-l-2 border-ink/20 pl-4 text-sm leading-relaxed text-ink/58">
-                This is an educational screening tool, not legal advice or an official immigration decision. Final handling is determined by immigration inspection authorities at the port of entry.
+                Immigration policies can change. This tool is for trip planning and does not guarantee admission. Final decisions are made by immigration inspection authorities at the port of entry.
               </p>
             </div>
             <figure className="relative order-1 min-h-[340px] overflow-hidden lg:order-2 lg:min-h-full">
@@ -323,10 +337,10 @@ export default function VisaFreeTransitHubPage() {
           </Container>
           <Container className="grid border-t border-ink/12 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              [`Up to ${VISA_POLICY_META.transitDurationHours} hours`, "Published maximum"],
               [`${VISA_POLICY_META.eligibleCountryCount} eligible nationalities`, "Current 240-hour list"],
-              [`${VISA_POLICY_META.eligiblePortCount} eligible ports`, "Air, sea, rail, road and ferry"],
+              [`${VISA_POLICY_META.eligiblePortCount} entry ports`, "Air, sea, rail, road and ferry"],
               [`${VISA_POLICY_META.provinceLevelRegionCount} province-level regions`, "Only the listed permitted areas"],
+              [`Verified ${policyLastCheckedLabel}`, "Current human-reviewed dataset"],
             ].map(([value, label]) => (
               <div key={value} className="border-b border-ink/12 py-5 sm:px-5 lg:border-b-0 lg:border-r last:lg:border-r-0">
                 <p className="font-editorial text-2xl text-ink">{value}</p>
@@ -344,9 +358,11 @@ export default function VisaFreeTransitHubPage() {
             <div className="max-w-3xl">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ember">Start with the right policy</p>
               <h2 className="mt-3 text-4xl leading-tight text-ink sm:text-5xl">Which policy fits your trip?</h2>
-              <p className="mt-4 text-base leading-relaxed text-ink/64">The 30-day entry policy, 240-hour transit and 24-hour direct transit are different routes. The checker screens them in that order.</p>
+              <p className="mt-4 text-base leading-relaxed text-ink/64">
+                The 30-day entry policy, 240-hour transit and 24-hour direct transit are different routes. The planner screens the 30-day and 240-hour routes in that order, while the 24-hour direct-transit card remains an informational alternative.
+              </p>
             </div>
-            <div className="mt-9 grid border-y border-ink/12 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-9 grid border-y border-ink/12 md:grid-cols-3">
               {policyChoices.map((item, index) => {
                 return (
                   <VisaPolicyChoiceLink
@@ -362,7 +378,7 @@ export default function VisaFreeTransitHubPage() {
           </Container>
         </section>
 
-        <section className="editorial-section scroll-mt-24 bg-paper" id="route-checker">
+        <section className="editorial-section scroll-mt-24 bg-paper" id="route-check">
           <Container>
             <div className="max-w-3xl">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ember">Local, private screening</p>
@@ -526,7 +542,7 @@ export default function VisaFreeTransitHubPage() {
                     <div><dt className="font-semibold text-ink/52">Suggested exit</dt><dd className="mt-1 text-ink">{route.exit}</dd></div>
                     <div><dt className="font-semibold text-ink/52">Allowed area</dt><dd className="mt-1 text-ink">{route.area}</dd></div>
                     <div><dt className="font-semibold text-ink/52">Transport note</dt><dd className="mt-1 text-ink">{route.transport}</dd></div>
-                    <Link href="#route-checker" className="mt-1 inline-flex items-center gap-2 font-semibold text-ember hover:text-ember-hover">Verify your exact route <ArrowRight aria-hidden="true" size={15} /></Link>
+                    <Link href="#route-check" className="mt-1 inline-flex items-center gap-2 font-semibold text-ember hover:text-ember-hover">Verify your exact route <ArrowRight aria-hidden="true" size={15} /></Link>
                   </dl>
                 </article>
               ))}
@@ -588,8 +604,16 @@ export default function VisaFreeTransitHubPage() {
               <div>
                 <div className="divide-y divide-ink/12 border-y border-ink/12">
                   {VISA_OFFICIAL_SOURCES.map((source) => (
-                    <VisaActionLink key={source.id} href={source.url} target="_blank" eventName="visa_policy_source_clicked" interactionType="open" className="flex min-h-14 items-center justify-between gap-4 py-3 text-sm font-semibold text-ink hover:text-ember">
-                      {source.title}<ExternalLink aria-hidden="true" className="shrink-0" size={16} />
+                    <VisaActionLink key={source.id} href={source.url} target="_blank" eventName="visa_official_source_clicked" interactionType="open" className="grid gap-3 py-5 text-ink hover:text-ember sm:grid-cols-[1fr_auto]">
+                      <span>
+                        <span className="block text-xs font-semibold uppercase tracking-[0.1em] text-ember">{source.authority}</span>
+                        <span className="mt-2 block text-base font-semibold">{source.title}</span>
+                        <span className="mt-2 block text-sm font-normal leading-relaxed text-ink/62">
+                          {source.publishedAt ? `Published ${source.publishedAt}. ` : ""}
+                          Verified {source.lastVerifiedAt}. Verifies: {source.factsSupported.join(", ")}.
+                        </span>
+                      </span>
+                      <span className="inline-flex items-center gap-2 text-sm font-semibold">Open official source <ExternalLink aria-hidden="true" className="shrink-0" size={16} /></span>
                     </VisaActionLink>
                   ))}
                 </div>

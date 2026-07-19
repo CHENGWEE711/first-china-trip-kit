@@ -6,22 +6,46 @@ import {
   VISA_OFFICIAL_SOURCE_URLS,
   VISA_POLICY_META,
 } from "@/data/visa";
+import { normalizeVisaRegion } from "@/lib/visa-transit/normalize-region";
 
 export type CheckerOutcome =
   | "likely-unilateral-visa-free"
   | "likely-240-hour-transit"
   | "likely-24-hour-direct-transit"
+  | "policy-date-needs-verification"
   | "manual-review"
   | "not-eligible-from-answers";
 
+export type VisaScreeningResultCategory =
+  | "unilateral_30_day_may_apply"
+  | "transit_240_conditions_appear_to_fit"
+  | "direct_transit_24_hour_may_apply"
+  | "policy_date_needs_verification"
+  | "needs_more_information"
+  | "nationality_not_in_transit_list"
+  | "third_country_route_issue"
+  | "document_validity_issue"
+  | "entry_port_issue"
+  | "permitted_area_issue"
+  | "onward_travel_issue"
+  | "manual_official_verification_required";
+
 export type TransitCheckerInput = {
   nationalityIso2: string;
-  passportType: "ordinary" | "diplomatic" | "service" | "other" | "unknown";
+  passportType:
+    | "ordinary"
+    | "other-valid"
+    | "temporary-emergency"
+    | "diplomatic"
+    | "service"
+    | "other"
+    | "unknown";
   passportValidity:
     | "under-3-months"
     | "3-to-6-months"
     | "over-6-months"
     | "unknown";
+  expectedEntryDate?: string;
   immediateOriginRegionId: string;
   immediateOnwardRegionId: string;
   entryPortId: string | null;
@@ -29,6 +53,7 @@ export type TransitCheckerInput = {
   onwardTicketConfirmed: boolean | null;
   onwardWithin240Hours: boolean | null;
   stayingWithinPermittedArea: boolean | null;
+  plannedStayAreaGroupId?: string | null;
   journeyType:
     | "connecting"
     | "through-flight"
@@ -50,6 +75,9 @@ export type TransitCheckerInput = {
 
 export type TransitCheckerResult = {
   outcome: CheckerOutcome;
+  resultCategory: VisaScreeningResultCategory;
+  headline: string;
+  summary: string;
   reasons: string[];
   warnings: string[];
   nextActions: Array<{
@@ -58,6 +86,7 @@ export type TransitCheckerResult = {
   }>;
   policyVersion: string;
   lastVerifiedAt: string;
+  disclaimer: string;
 };
 
 type UnilateralPurpose =
@@ -102,24 +131,120 @@ const notEligibleActions = [
   },
 ];
 
+const FINAL_DECISION_DISCLAIMER =
+  "This is not an approval or guarantee of entry. Immigration inspection authorities make the final decision at the port.";
+
+function resultCopy(category: VisaScreeningResultCategory): {
+  headline: string;
+  summary: string;
+} {
+  switch (category) {
+    case "unilateral_30_day_may_apply":
+      return {
+        headline: "A simpler 30-day visa-free option may apply to your trip.",
+        summary:
+          "The current unilateral policy may be more relevant than the 240-hour transit policy for the details entered.",
+      };
+    case "transit_240_conditions_appear_to_fit":
+      return {
+        headline:
+          "Your plan appears to match the published planning conditions for 240-hour visa-free transit.",
+        summary:
+          "Review every matched condition and keep the supporting itinerary ready for the airline and immigration inspection.",
+      };
+    case "policy_date_needs_verification":
+      return {
+        headline: "The policy date needs verification for your expected entry date.",
+        summary:
+          "The entered date is later than the currently published unilateral-policy period, so the latest official notice must be checked.",
+      };
+    case "nationality_not_in_transit_list":
+      return {
+        headline: "This nationality is not in the current 240-hour transit dataset.",
+        summary:
+          "Another visa-free arrangement, a mutual agreement, or regular visa requirements may still be relevant.",
+      };
+    case "third_country_route_issue":
+      return {
+        headline: "The route does not currently show a third country or region.",
+        summary:
+          "The immediate country or region before and after mainland China must be different for the basic 240-hour transit pattern.",
+      };
+    case "document_validity_issue":
+      return {
+        headline: "The travel document validity does not meet the published minimum.",
+        summary:
+          "The current 240-hour dataset requires at least three months of remaining validity on the international travel document.",
+      };
+    case "entry_port_issue":
+      return {
+        headline: "The selected port is not confirmed for this route.",
+        summary:
+          "Only the ports in the current official 65-row appendix can be screened as a matching 240-hour entry route.",
+      };
+    case "permitted_area_issue":
+      return {
+        headline: "The stay plan does not match the selected port's permitted area.",
+        summary:
+          "An eligible port does not allow nationwide travel; every planned stop must remain inside its linked permitted area.",
+      };
+    case "onward_travel_issue":
+      return {
+        headline: "The onward travel condition is not currently met.",
+        summary:
+          "The 240-hour route requires confirmed onward travel to a different country or region within the published window.",
+      };
+    case "manual_official_verification_required":
+      return {
+        headline: "This itinerary needs official confirmation.",
+        summary:
+          "Confirm the exact document, operating segments, and immigration circumstances with the airline or immigration authority.",
+      };
+    case "direct_transit_24_hour_may_apply":
+      return {
+        headline: "The 24-hour direct-transit policy needs an official route check.",
+        summary:
+          "This planning screener does not make a final 24-hour direct-transit assessment or imply permission to enter the city.",
+      };
+    case "needs_more_information":
+      return {
+        headline: "More route information is needed.",
+        summary:
+          "Complete or confirm the missing details before relying on any visa-free transit policy.",
+      };
+  }
+}
+
 function result(
   outcome: CheckerOutcome,
   reasons: string[],
   warnings: string[],
   nextActions: TransitCheckerResult["nextActions"],
+  resultCategory: VisaScreeningResultCategory =
+    outcome === "likely-unilateral-visa-free"
+      ? "unilateral_30_day_may_apply"
+      : outcome === "likely-240-hour-transit"
+        ? "transit_240_conditions_appear_to_fit"
+        : outcome === "likely-24-hour-direct-transit"
+          ? "direct_transit_24_hour_may_apply"
+          : outcome === "policy-date-needs-verification"
+            ? "policy_date_needs_verification"
+            : outcome === "manual-review"
+              ? "manual_official_verification_required"
+              : "needs_more_information",
 ): TransitCheckerResult {
+  const copy = resultCopy(resultCategory);
   return {
     outcome,
+    resultCategory,
+    ...copy,
     reasons,
     warnings,
     nextActions,
     policyVersion: VISA_POLICY_META.policyVersion,
     lastVerifiedAt: VISA_POLICY_META.lastVerifiedAt,
+    disclaimer: FINAL_DECISION_DISCLAIMER,
   };
-}
-
-function normalizeRegionId(value: string) {
-  return value.trim().toUpperCase();
 }
 
 function purposeForUnilateralPolicy(
@@ -130,32 +255,57 @@ function purposeForUnilateralPolicy(
   return null;
 }
 
-function unilateralRecordIsCurrent(
+function unilateralRecordCoversEntryDate(
   country: (typeof UNILATERAL_VISA_FREE_COUNTRIES)[number],
+  expectedEntryDate: string,
 ) {
-  const referenceDate = VISA_POLICY_META.lastVerifiedAt;
-  if (country.effectiveFrom && country.effectiveFrom > referenceDate) return false;
-  if (country.effectiveUntil && country.effectiveUntil < referenceDate) return false;
+  if (country.effectiveFrom && country.effectiveFrom > expectedEntryDate) return false;
+  if (country.validUntil && country.validUntil < expectedEntryDate) return false;
   return true;
 }
 
 function evaluateUnilateralVisaFree(
   input: TransitCheckerInput,
-): TransitCheckerResult | null {
-  if (input.passportType !== "ordinary") return null;
+): {
+  result: TransitCheckerResult | null;
+  policyDateNeedsVerification: boolean;
+  countryName?: string;
+  validUntil?: string | null;
+} {
+  if (input.passportType !== "ordinary") {
+    return { result: null, policyDateNeedsVerification: false };
+  }
 
   const country = UNILATERAL_VISA_FREE_COUNTRIES.find(
-    (candidate) => candidate.iso2 === normalizeRegionId(input.nationalityIso2),
+    (candidate) => candidate.iso2 === normalizeVisaRegion(input.nationalityIso2),
   );
   const purpose = purposeForUnilateralPolicy(input.purpose);
 
-  if (
-    !country ||
-    !unilateralRecordIsCurrent(country) ||
-    !purpose ||
-    !country.eligiblePurposes.includes(purpose)
-  ) {
-    return null;
+  if (!country || !purpose || !country.eligiblePurposes.includes(purpose)) {
+    return { result: null, policyDateNeedsVerification: false };
+  }
+
+  const expectedEntryDate = input.expectedEntryDate?.trim() || "";
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(expectedEntryDate)) {
+    return {
+      result: result(
+        "manual-review",
+        ["The expected entry date is not confirmed."],
+        ["Enter a planned arrival date so the current unilateral-policy end date can be checked."],
+        manualReviewActions,
+        "needs_more_information",
+      ),
+      policyDateNeedsVerification: false,
+    };
+  }
+
+  if (!unilateralRecordCoversEntryDate(country, expectedEntryDate)) {
+    return {
+      result: null,
+      policyDateNeedsVerification: true,
+      countryName: country.name,
+      validUntil: country.validUntil,
+    };
   }
 
   if (
@@ -164,30 +314,36 @@ function evaluateUnilateralVisaFree(
     input.manualReviewRequested === true ||
     input.manualReviewRequested === null
   ) {
-    return result(
+    return { result: result(
       "manual-review",
       ["An individual route or immigration circumstance needs confirmation before using the 30-day entry policy."],
       ["Do not enter personal details here. Confirm the exact circumstances privately with the airline or immigration authority."],
       manualReviewActions,
-    );
+      "manual_official_verification_required",
+    ), policyDateNeedsVerification: false };
   }
 
   if (input.passportValidity === "unknown") {
-    return result(
+    return { result: result(
       "manual-review",
       ["Your passport validity is not confirmed."],
       ["Confirm that the ordinary passport remains valid for the complete intended stay."],
       manualReviewActions,
-    );
+      "needs_more_information",
+    ), policyDateNeedsVerification: false };
   }
 
   if (input.passportValidity === "under-3-months") {
-    return result(
-      "manual-review",
-      ["Your passport has less than three months of validity remaining."],
-      ["The unilateral policy requires a valid ordinary passport; confirm validity for the complete stay and airline requirements before travel."],
-      manualReviewActions,
-    );
+    return {
+      result: result(
+        "manual-review",
+        ["Your passport has less than three months of validity remaining."],
+        ["The unilateral policy requires a valid ordinary passport; confirm validity for the complete stay and airline requirements before travel."],
+        manualReviewActions,
+        "document_validity_issue",
+      ),
+      policyDateNeedsVerification: false,
+    };
   }
 
   if (
@@ -195,21 +351,27 @@ function evaluateUnilateralVisaFree(
     !Number.isFinite(input.plannedStayHours) ||
     input.plannedStayHours <= 0
   ) {
-    return result(
-      "manual-review",
-      [
-        "Your nationality and stated purpose appear on the current unilateral visa-free list, but the planned stay length is not confirmed.",
-      ],
-      [
-        `Confirm that the complete stay is no longer than ${country.maxStayDays} days and review the current official purpose rules.`,
-      ],
-      manualReviewActions,
-    );
+    return {
+      result: result(
+        "manual-review",
+        [
+          "Your nationality and stated purpose appear on the current unilateral visa-free list, but the planned stay length is not confirmed.",
+        ],
+        [
+          `Confirm that the complete stay is no longer than ${country.maxStayDays} days and review the current official purpose rules.`,
+        ],
+        manualReviewActions,
+        "needs_more_information",
+      ),
+      policyDateNeedsVerification: false,
+    };
   }
 
-  if (input.plannedStayHours > country.maxStayDays * 24) return null;
+  if (input.plannedStayHours > country.maxStayDays * 24) {
+    return { result: null, policyDateNeedsVerification: false };
+  }
 
-  return result(
+  return { result: result(
     "likely-unilateral-visa-free",
     [
       "Your nationality appears on the current unilateral visa-free list.",
@@ -235,13 +397,16 @@ function evaluateUnilateralVisaFree(
         href: "/payments-and-apps",
       },
     ],
-  );
+  ), policyDateNeedsVerification: false };
 }
 
 function findIncompleteOrAmbiguousInput(input: TransitCheckerInput): string[] {
   const reasons: string[] = [];
 
   if (!input.nationalityIso2.trim()) reasons.push("Nationality is not confirmed.");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(input.expectedEntryDate?.trim() || "")) {
+    reasons.push("The expected entry date is not confirmed.");
+  }
   if (input.passportType === "unknown") reasons.push("Passport type is not confirmed.");
   if (input.passportValidity === "unknown") {
     reasons.push("Remaining passport validity is not confirmed.");
@@ -280,12 +445,9 @@ function findIncompleteOrAmbiguousInput(input: TransitCheckerInput): string[] {
   return reasons;
 }
 
-export function evaluateTransitEligibility(
+function evaluateTransitOnly(
   input: TransitCheckerInput,
 ): TransitCheckerResult {
-  const unilateralResult = evaluateUnilateralVisaFree(input);
-  if (unilateralResult) return unilateralResult;
-
   const incompleteReasons = findIncompleteOrAmbiguousInput(input);
   if (incompleteReasons.length > 0) {
     return result(
@@ -295,14 +457,18 @@ export function evaluateTransitEligibility(
         "This itinerary needs confirmation from the operating airline or immigration authorities before booking.",
       ],
       manualReviewActions,
+      "needs_more_information",
     );
   }
 
-  if (input.passportType !== "ordinary") {
+  if (
+    input.passportType !== "ordinary" &&
+    input.passportType !== "other-valid"
+  ) {
     return result(
       "manual-review",
-      ["Special, service, diplomatic, or other travel documents need an individual policy check."],
-      ["Do not apply ordinary-passport rules to a different travel document."],
+      ["A temporary, emergency, diplomatic, service, or unconfirmed travel document needs an individual policy check."],
+      ["The 240-hour policy refers to a valid international travel document, but the exact document must be confirmed by the airline and immigration authority."],
       manualReviewActions,
     );
   }
@@ -343,66 +509,15 @@ export function evaluateTransitEligibility(
     );
   }
 
-  const immediateOrigin = normalizeRegionId(input.immediateOriginRegionId);
-  const immediateOnward = normalizeRegionId(input.immediateOnwardRegionId);
+  const immediateOrigin = normalizeVisaRegion(input.immediateOriginRegionId);
+  const immediateOnward = normalizeVisaRegion(input.immediateOnwardRegionId);
 
   const entryPort = TRANSIT_PORTS.find((port) => port.id === input.entryPortId);
   const exitPort = input.exitPortId
     ? TRANSIT_PORTS.find((port) => port.id === input.exitPortId)
     : undefined;
 
-  if (
-    input.plannedStayHours !== undefined &&
-    input.plannedStayHours <= 24 &&
-    immediateOrigin !== immediateOnward &&
-    input.onwardTicketConfirmed === true &&
-    input.onwardWithin240Hours === true &&
-    input.stayingWithinPermittedArea === true &&
-    !["work", "study", "journalism"].includes(input.purpose)
-  ) {
-    if (!entryPort || !entryPort.canEnter) {
-      return result(
-        "manual-review",
-        [`The selected port is not confirmed in this Hub's verified ${VISA_POLICY_META.eligiblePortCount}-port dataset.`],
-        ["The separate 24-hour direct-transit policy can depend on the exact open port and inspection arrangement. Confirm it with the airline or immigration authority."],
-        manualReviewActions,
-      );
-    }
-    if (!exitPort || !exitPort.canExit) {
-      if (input.exitPortId) {
-        return result(
-          "manual-review",
-          ["The expected exit port is not confirmed in this Hub's verified dataset."],
-          ["Confirm the exact 24-hour operating route and inspection arrangement before travel."],
-          manualReviewActions,
-        );
-      }
-    }
-    return result(
-      "likely-24-hour-direct-transit",
-      [
-        "Your immediate inbound and outbound countries or regions are different.",
-        "You indicated confirmed onward travel within 24 hours.",
-        "You indicated that you will remain within the restricted transit or permitted area.",
-      ],
-      [
-        "This result does not mean you may freely enter the city. Leaving a port's restricted area can require a temporary entry permit.",
-        "Some ports apply different inspection arrangements; confirm the exact connection with the airline and immigration authority.",
-      ],
-      [
-        {
-          label: "Review official direct-transit guidance",
-          href: NIA_TRANSIT_POLICY_URL,
-        },
-        {
-          label: "Confirm with the airline or +86 12367",
-          href: "tel:+8612367",
-        },
-      ],
-    );
-  }
-
-  const nationality = normalizeRegionId(input.nationalityIso2);
+  const nationality = normalizeVisaRegion(input.nationalityIso2);
   if (!transitEligibleCountryCodes.has(nationality)) {
     return result(
       "not-eligible-from-answers",
@@ -418,6 +533,7 @@ export function evaluateTransitEligibility(
           href: MFA_MUTUAL_VISA_EXEMPTION_URL,
         },
       ],
+      "nationality_not_in_transit_list",
     );
   }
 
@@ -427,6 +543,7 @@ export function evaluateTransitEligibility(
       ["The remaining passport validity is below the published three-month minimum."],
       ["Confirm passport renewal and visa options before booking."],
       notEligibleActions,
+      "document_validity_issue",
     );
   }
 
@@ -439,6 +556,7 @@ export function evaluateTransitEligibility(
         "Complex connections and technical stops still require manual confirmation.",
       ],
       notEligibleActions,
+      "third_country_route_issue",
     );
   }
 
@@ -448,6 +566,7 @@ export function evaluateTransitEligibility(
       ["A confirmed onward ticket is not currently held."],
       ["Do not rely on the 240-hour policy without confirmed onward travel."],
       notEligibleActions,
+      "onward_travel_issue",
     );
   }
 
@@ -462,6 +581,7 @@ export function evaluateTransitEligibility(
         `${TRANSIT_POLICY_CLOCK_RULE} The temporary entry permit shows the deadline that applies to the traveler.`,
       ],
       notEligibleActions,
+      "onward_travel_issue",
     );
   }
 
@@ -471,6 +591,20 @@ export function evaluateTransitEligibility(
       [`The selected entry port is not confirmed for entry under the current ${VISA_POLICY_META.eligiblePortCount}-port dataset.`],
       ["Do not infer eligibility from international flight availability alone."],
       notEligibleActions,
+      "entry_port_issue",
+    );
+  }
+
+  if (
+    !input.plannedStayAreaGroupId ||
+    !entryPort.permittedAreaGroupIds.includes(input.plannedStayAreaGroupId)
+  ) {
+    return result(
+      "not-eligible-from-answers",
+      ["The selected stay area does not match the permitted area attached to the selected entry port."],
+      ["Use the official port-to-area mapping and confirm every planned stop before booking."],
+      notEligibleActions,
+      "permitted_area_issue",
     );
   }
 
@@ -480,6 +614,7 @@ export function evaluateTransitEligibility(
       ["The selected exit port is not confirmed for exit in the current dataset."],
       ["Confirm an eligible exit route before booking."],
       notEligibleActions,
+      "entry_port_issue",
     );
   }
 
@@ -489,6 +624,7 @@ export function evaluateTransitEligibility(
       ["The planned trip leaves the permitted stay area linked to the entry route."],
       ["An eligible port does not automatically permit nationwide travel."],
       notEligibleActions,
+      "permitted_area_issue",
     );
   }
 
@@ -498,6 +634,7 @@ export function evaluateTransitEligibility(
       [`The stated ${input.purpose} purpose is not suitable for this transit result.`],
       ["Check the correct visa category before travel."],
       notEligibleActions,
+      "manual_official_verification_required",
     );
   }
 
@@ -535,5 +672,45 @@ export function evaluateTransitEligibility(
         href: "/itinerary-kits/240-hour-visa-free-china-itinerary",
       },
     ],
+  );
+}
+
+export function evaluateTransitEligibility(
+  input: TransitCheckerInput,
+): TransitCheckerResult {
+  const unilateralEvaluation = evaluateUnilateralVisaFree(input);
+  if (unilateralEvaluation.result) return unilateralEvaluation.result;
+
+  const transitResult = evaluateTransitOnly(input);
+  if (!unilateralEvaluation.policyDateNeedsVerification) return transitResult;
+
+  const dateWarning = unilateralEvaluation.validUntil
+    ? `The current unilateral visa-free period for ${unilateralEvaluation.countryName} is published through ${unilateralEvaluation.validUntil}; the entered arrival date is later.`
+    : `The unilateral visa-free policy date for ${unilateralEvaluation.countryName} needs a current official check.`;
+
+  if (transitResult.outcome === "likely-240-hour-transit") {
+    return {
+      ...transitResult,
+      warnings: [dateWarning, ...transitResult.warnings],
+    };
+  }
+
+  if (transitResult.outcome === "manual-review") return transitResult;
+
+  return result(
+    "policy-date-needs-verification",
+    [dateWarning],
+    [
+      "The 30-day policy may have expired by the entered arrival date, and the 240-hour route did not produce a positive screening result from the current answers.",
+      ...transitResult.reasons,
+    ],
+    [
+      {
+        label: "Check the current official visa-free policy",
+        href: VISA_OFFICIAL_SOURCE_URLS.unilateralVisaFreeCountries,
+      },
+      ...manualReviewActions,
+    ],
+    "policy_date_needs_verification",
   );
 }

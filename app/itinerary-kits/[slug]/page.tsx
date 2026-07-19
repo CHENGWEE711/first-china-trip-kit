@@ -84,8 +84,8 @@ const companionGuideByItinerary: Record<string, { href: string; label: string; n
   "240-hour-visa-free-china-itinerary": {
     href: "/guides/china-240-hour-visa-free-transit-guide",
     label: "Read the detailed 240-hour policy Guide",
-    hubHref: "/visa-free-transit",
-    hubLabel: "Check the Visa-Free Transit Hub first",
+    hubHref: "/visa-free-transit#route-check",
+    hubLabel: "Check whether your exact route and stay area match the current policy",
     note: "This page is route planning, not an eligibility decision. Use it for inspiration only after the Hub screens nationality, ports, immediate onward routing, timing and permitted areas; use the Guide for the longer explanation.",
   },
   "3-days-in-shanghai": {

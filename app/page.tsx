@@ -180,7 +180,7 @@ const experienceLinks = [
   {
     title: "Visa-Free Stopover",
     body: "Shape an eligible transit stay around a valid route.",
-    href: "/itinerary-kits/240-hour-visa-free-china-itinerary",
+    href: "/visa-free-transit",
     icon: PlaneTakeoff,
   },
 ] as const;

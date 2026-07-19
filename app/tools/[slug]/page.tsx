@@ -6,7 +6,6 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ToolKitWidget } from "@/components/ToolKitWidget";
 import { getToolBySlug, toolKits } from "@/data/kits";
 import { buildMetadata } from "@/lib/seo";
-import { absoluteUrl } from "@/lib/site";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -22,18 +21,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!tool) {
     return {};
-  }
-
-  if (tool.type === "visa") {
-    return {
-      ...buildMetadata({
-        title: `${tool.title} | First China Trip Kit`,
-        description: tool.summary,
-        path: "/visa-free-transit",
-      }),
-      alternates: { canonical: absoluteUrl("/visa-free-transit") },
-      robots: { index: false, follow: true },
-    };
   }
 
   return buildMetadata({

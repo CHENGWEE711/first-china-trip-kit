@@ -81,12 +81,14 @@ function validInput(overrides = {}) {
     nationalityIso2: "US",
     passportType: "ordinary",
     passportValidity: "over-6-months",
+    expectedEntryDate: "2026-08-01",
     immediateOriginRegionId: "JP",
     immediateOnwardRegionId: "SG",
     entryPortId: entryPort.id,
     onwardTicketConfirmed: true,
     onwardWithin240Hours: true,
     stayingWithinPermittedArea: true,
+    plannedStayAreaGroupId: entryPort.permittedAreaGroupIds[0],
     journeyType: "connecting",
     purpose: "tourism",
     plannedStayHours: 72,
@@ -99,17 +101,24 @@ test("Phase 3 policy data and evaluator run in the npm unit-test gate", () => {
   assert.equal(new Set(data.TRANSIT_ELIGIBLE_COUNTRIES).size, 55);
   assert.equal(data.TRANSIT_PORTS.length, 65);
   assert.equal(new Set(data.TRANSIT_PORTS.map((port) => port.id)).size, 65);
+  assert.deepEqual(
+    data.TRANSIT_PORTS.map((port) => port.appendixRow).sort((a, b) => a - b),
+    Array.from({ length: 65 }, (_, index) => index + 1),
+  );
   assert.equal(data.VISA_POLICY_META.provinceLevelRegionCount, 24);
-  assert.equal(data.VISA_POLICY_META.lastVerifiedAt, "2026-07-18");
+  assert.equal(data.VISA_POLICY_META.policyVersion, "2026-07-19-v1");
+  assert.equal(data.VISA_POLICY_META.lastVerifiedAt, "2026-07-19");
 
   const likely = evaluator.evaluateTransitEligibility(validInput());
   assert.equal(likely.outcome, "likely-240-hour-transit");
+  assert.equal(likely.resultCategory, "transit_240_conditions_appear_to_fit");
   assert.match(likely.warnings.join(" "), /final decision.*immigration inspection officers/i);
 
   const roundTrip = evaluator.evaluateTransitEligibility(
     validInput({ immediateOnwardRegionId: "JP" }),
   );
   assert.equal(roundTrip.outcome, "not-eligible-from-answers");
+  assert.equal(roundTrip.resultCategory, "third_country_route_issue");
 
   const throughFlight = evaluator.evaluateTransitEligibility(
     validInput({ journeyType: "through-flight" }),
@@ -124,7 +133,8 @@ test("Phase 3 policy data and evaluator run in the npm unit-test gate", () => {
   const invalidDirectTransitPort = evaluator.evaluateTransitEligibility(
     validInput({ plannedStayHours: 20, entryPortId: "unverified-port" }),
   );
-  assert.equal(invalidDirectTransitPort.outcome, "manual-review");
+  assert.equal(invalidDirectTransitPort.outcome, "not-eligible-from-answers");
+  assert.equal(invalidDirectTransitPort.resultCategory, "entry_port_issue");
 
   const invalidZeroHourStay = evaluator.evaluateTransitEligibility(
     validInput({ plannedStayHours: 0 }),
@@ -142,7 +152,7 @@ test("Phase 3 npm gate strips sensitive analytics fields at runtime", () => {
     result_category: "likely_240_hour_transit",
     step_number: 5,
     interaction_type: "complete",
-    policy_version: "2025-11-05",
+    policy_version: "2026-07-19-v1",
     nationalityIso2: "US",
     passport_number: "private",
     immediate_origin: "JP",
@@ -155,6 +165,6 @@ test("Phase 3 npm gate strips sensitive analytics fields at runtime", () => {
     result_category: "likely_240_hour_transit",
     step_number: 5,
     interaction_type: "complete",
-    policy_version: "2025-11-05",
+    policy_version: "2026-07-19-v1",
   });
 });
