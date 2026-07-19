@@ -1,0 +1,53 @@
+First China Trip Kit — V3 Phase 4A Changed Files
+Baseline: a10fbd3a71eb3a87e48bf092c0026b49f1f6cdcb
+Implementation commit: a686275
+
+Status legend: A = added, M = modified
+
+M  app/globals.css
+A  app/landing/[slug]/page.tsx
+M  app/sitemap.ts
+M  app/visa-free-transit/page.tsx
+M  components/GoogleAnalytics.tsx
+M  components/NewsletterForm.tsx
+A  components/landing/LandingAnalytics.tsx
+A  components/landing/LandingBenefitGrid.tsx
+A  components/landing/LandingBreadcrumb.tsx
+A  components/landing/LandingFAQ.tsx
+A  components/landing/LandingFooterCTA.tsx
+A  components/landing/LandingHero.tsx
+A  components/landing/LandingHubPreview.tsx
+A  components/landing/LandingNewsletter.tsx
+A  components/landing/LandingPage.tsx
+A  components/landing/LandingPrimaryCTA.tsx
+A  components/landing/LandingQuickAnswer.tsx
+A  components/landing/LandingRelatedContent.tsx
+A  components/landing/LandingTrackedLink.tsx
+A  components/landing/LandingTrustSection.tsx
+A  components/visa/VisaHashFocus.tsx
+A  data/landings.ts
+M  docs/IMAGE_USAGE_AUDIT.md
+A  docs/screenshots/v3-phase4a/concepts/landing-template-desktop.png
+A  docs/screenshots/v3-phase4a/concepts/landing-template-mobile.png
+A  docs/screenshots/v3-phase4a/preview/china-checklist-1440.png
+A  docs/screenshots/v3-phase4a/preview/china-checklist-390.png
+A  docs/screenshots/v3-phase4a/preview/china-visa-free-1440.png
+A  docs/screenshots/v3-phase4a/preview/china-visa-free-390.png
+A  docs/screenshots/v3-phase4a/preview/pay-in-china-1440.png
+A  docs/screenshots/v3-phase4a/preview/pay-in-china-390.png
+A  lib/landing/analytics.ts
+A  lib/landing/seo.ts
+M  playwright.config.ts
+A  tests/landing/analytics.spec.ts
+A  tests/landing/functional.spec.ts
+A  tests/landing/helpers.ts
+A  tests/landing/responsive-accessibility.spec.ts
+A  tests/landing/seo.spec.ts
+M  tests/metricool.test.mjs
+M  tests/phase-e/final-regression.spec.ts
+A  tests/v3-phase4a-landing-system.test.mjs
+M  tests/visa-hub/site-integration.spec.ts
+
+Evidence files added after the implementation commit:
+A  docs/V3_PHASE_4A_CHANGED_FILES.txt
+A  docs/V3_PHASE_4A_SOCIAL_LANDING_FOUNDATION_REPORT.md
