@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const externalBaseUrl = process.env.PLAYWRIGHT_BASE_URL;
+const storageState = process.env.PLAYWRIGHT_STORAGE_STATE;
 
 export default defineConfig({
   testDir: "./tests",
@@ -25,6 +26,7 @@ export default defineConfig({
     screenshot: "only-on-failure",
     trace: "retain-on-failure",
     video: "retain-on-failure",
+    storageState: storageState || undefined,
   },
   webServer: externalBaseUrl
     ? undefined

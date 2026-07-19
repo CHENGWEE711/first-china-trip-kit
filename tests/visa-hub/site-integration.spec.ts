@@ -21,7 +21,7 @@ test("Phase 3 routes load without console errors or horizontal overflow", async 
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
   for (const route of INTEGRATION_ROUTES) {
-    const response = await page.goto(route, { waitUntil: "load" });
+    const response = await page.goto(route, { waitUntil: "networkidle" });
     expect(response?.status(), `${route} should return HTTP 200`).toBe(200);
     await expect(page.locator("main"), `${route} should have one main landmark`).toHaveCount(1);
     await expect(page.locator("h1"), `${route} should have one H1`).toHaveCount(1);

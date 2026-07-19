@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { guides } from "@/data/guides";
 import { cityKitSlugs, itineraryKitSlugs, toolKits } from "@/data/kits";
+import { landingPages } from "@/data/landings";
 import { absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -58,8 +59,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.65,
   }));
 
+  const landingRoutes = landingPages.map((landing) => ({
+    url: absoluteUrl(landing.path),
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     ...staticRoutes,
+    ...landingRoutes,
     ...cityKitRoutes,
     ...itineraryKitRoutes,
     ...guideRoutes,
