@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://www.firstchinatripkit.com
+Sitemap: https://www.firstchinatripkit.com/sitemap.xml

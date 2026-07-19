@@ -464,13 +464,49 @@ test("visa analytics events use only approved non-sensitive parameters", async (
 }) => {
   await page.addInitScript(() => {
     sessionStorage.setItem("__visaEvents", "[]");
-    window.gtag = (_command, eventName, params) => {
-      const events = JSON.parse(
-        sessionStorage.getItem("__visaEvents") || "[]",
-      ) as Array<{ eventName: string; params?: Record<string, unknown> }>;
-      events.push({ eventName, params });
-      sessionStorage.setItem("__visaEvents", JSON.stringify(events));
+    const dataLayer = window.dataLayer ?? [];
+    const nativePush = Array.prototype.push;
+    dataLayer.push = function captureVisaEvent(...items) {
+      for (const item of items) {
+        const candidate = item as unknown;
+        const record =
+          candidate && typeof candidate === "object"
+            ? (candidate as Record<string, unknown>)
+            : null;
+        const tuple =
+          record && typeof record.length === "number"
+            ? Array.from(record as unknown as ArrayLike<unknown>)
+            : [];
+        const objectEvent =
+          record && typeof record.event === "string"
+            ? record.event
+            : null;
+        const eventName =
+          tuple[0] === "event" && typeof tuple[1] === "string"
+            ? tuple[1]
+            : objectEvent;
+        const params =
+          tuple[0] === "event" &&
+          tuple[2] &&
+          typeof tuple[2] === "object"
+            ? (tuple[2] as Record<string, unknown>)
+            : objectEvent && record
+              ? Object.fromEntries(
+                  Object.entries(record).filter(([key]) => key !== "event"),
+                )
+              : undefined;
+
+        if (eventName?.startsWith("visa_")) {
+          const events = JSON.parse(
+            sessionStorage.getItem("__visaEvents") || "[]",
+          ) as Array<{ eventName: string; params?: Record<string, unknown> }>;
+          events.push({ eventName, params });
+          sessionStorage.setItem("__visaEvents", JSON.stringify(events));
+        }
+      }
+      return nativePush.apply(this, items);
     };
+    window.dataLayer = dataLayer;
   });
   await page.reload({ waitUntil: "domcontentloaded" });
 
