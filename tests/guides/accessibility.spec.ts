@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("Guide template retains basic semantic and keyboard accessibility", async ({ page }, testInfo) => {
+test("Guide template retains basic semantic and keyboard accessibility", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "Shared Guide template semantics");
   await page.goto("/guides/how-to-pay-in-china-as-a-foreigner");
 

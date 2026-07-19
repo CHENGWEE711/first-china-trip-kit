@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { guideRoutes } from "./guide-routes";
 
-test("every Guide has valid, unique related Guide links", async ({ page }, testInfo) => {
+test("every Guide has valid, unique related Guide links", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "Shared Guide relationship audit");
   for (const route of guideRoutes) {
     await page.goto(route);

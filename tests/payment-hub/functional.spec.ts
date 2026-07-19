@@ -12,7 +12,7 @@ const eventRecorder = () => {
   };
 };
 
-test("Payment Hub exposes the complete scoped information architecture", async ({ page }, testInfo) => {
+test("Payment Hub exposes the complete scoped information architecture", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One complete structural pass is sufficient");
   const response = await page.goto("/payments-and-apps");
   expect(response?.status()).toBe(200);
@@ -56,7 +56,7 @@ test("Payment Hub exposes the complete scoped information architecture", async (
   expect(claims).not.toMatch(/guaranteed (?:visa|entry|payment|access)/i);
 });
 
-test("Payment readiness, internet, backup and checklist tools work and persist", async ({ page }, testInfo) => {
+test("Payment readiness, internet, backup and checklist tools work and persist", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One complete interaction pass is sufficient");
   await page.goto("/payments-and-apps");
 
@@ -94,7 +94,7 @@ test("Payment readiness, internet, backup and checklist tools work and persist",
   await expect(page.locator('[data-testid="interactive-payment-checklist"]').getByText("100%", { exact: true })).toBeVisible();
 });
 
-test("Payment Hub sends the required GA4 event names", async ({ page }, testInfo) => {
+test("Payment Hub sends the required GA4 event names", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "One analytics pass is sufficient");
   await page.addInitScript(eventRecorder);
   await page.goto("/payments-and-apps");

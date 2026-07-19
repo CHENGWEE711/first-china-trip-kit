@@ -163,7 +163,7 @@ test.describe("Phase D public-page regression", () => {
     ).toBeGreaterThan(0);
   });
 
-  test("unconfigured Contact and Newsletter backends show honest errors", async ({ page }, testInfo) => {
+  test("unconfigured Contact and Newsletter backends show honest errors", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-desktop", "One local mutation-state test is sufficient.");
     await page.goto("/contact", { waitUntil: "domcontentloaded" });
     await expect(page.getByRole("button", { name: "Send question", exact: true })).toBeEnabled();
@@ -213,7 +213,7 @@ test.describe("Phase D public-page regression", () => {
   });
 });
 
-test("capture Phase D visual evidence", async ({ page }, testInfo) => {
+test("capture Phase D visual evidence", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "Evidence sizes are set explicitly in this test.");
   test.setTimeout(180_000);
   const output = path.resolve("docs/screenshots/phase-d");

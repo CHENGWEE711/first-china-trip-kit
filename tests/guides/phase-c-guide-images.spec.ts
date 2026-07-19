@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { guideRoutes } from "./guide-routes";
 
-test("Guide listing renders 14 distinct, loaded Card images", async ({ page }, testInfo) => {
+test("Guide listing renders 14 distinct, loaded Card images", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "Shared Card data is audited once");
   await page.goto("/guides");
   const cardImages = page.locator('a[href^="/guides/"] img');
@@ -58,7 +58,7 @@ for (const route of guideRoutes) {
   });
 }
 
-test("Guide Heroes, OG images, Twitter images, and Article JSON-LD stay aligned", async ({ page }, testInfo) => {
+test("Guide Heroes, OG images, Twitter images, and Article JSON-LD stay aligned", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "Shared metadata is crawled once");
   const heroSources: string[] = [];
   for (const route of guideRoutes) {
@@ -91,7 +91,7 @@ test("Guide Heroes, OG images, Twitter images, and Article JSON-LD stay aligned"
   expect(new Set(heroSources).size).toBe(guideRoutes.length);
 });
 
-test("priority Guide pages keep CLS below 0.1", async ({ page }, testInfo) => {
+test("priority Guide pages keep CLS below 0.1", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium-desktop", "CLS sampling uses one browser profile");
   for (const route of [
     "/guides/how-to-pay-in-china-as-a-foreigner",

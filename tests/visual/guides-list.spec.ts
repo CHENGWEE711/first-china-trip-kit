@@ -8,7 +8,7 @@ async function loadImages(page: import("@playwright/test").Page) {
 }
 
 for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
-  test(`Guides list visual ${viewport.width}`, async ({ page }, testInfo) => {
+  test(`Guides list visual ${viewport.width}`, { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-desktop", "Explicit visual viewport");
     await page.setViewportSize(viewport);
     await page.goto("/guides");

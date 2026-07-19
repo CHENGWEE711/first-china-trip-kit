@@ -6,7 +6,7 @@ const viewports = [
 ];
 
 for (const viewport of viewports) {
-  test(`Guides remain usable at ${viewport.width}x${viewport.height}`, async ({ page }, testInfo) => {
+  test(`Guides remain usable at ${viewport.width}x${viewport.height}`, { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-desktop", "Explicit viewport matrix runs once");
     await page.setViewportSize(viewport);
     for (const route of ["/guides", "/guides/how-to-pay-in-china-as-a-foreigner"]) {

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { guideRoutes } from "./guide-routes";
 
 for (const route of guideRoutes) {
-  test(`${route} renders one hero and only intentional inline visuals`, async ({ page }, testInfo) => {
+  test(`${route} renders one hero and only intentional inline visuals`, { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-desktop", "Shared visual data is audited once per Guide");
     await page.goto(route);
     const inlineImages = page.locator('article figure[data-guide-visual="inline"] img');

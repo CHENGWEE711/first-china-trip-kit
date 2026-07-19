@@ -4,7 +4,7 @@ import { guideRoutes } from "./guide-routes";
 
 const guidePath = guideRoutes[0];
 
-test.describe("Guide table of contents", () => {
+test.describe("Guide table of contents", { tag: "@chromium-desktop-only" }, () => {
   test.beforeEach(async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-desktop", "Desktop sticky table of contents only");
     await page.goto(guidePath);
@@ -73,7 +73,7 @@ test.describe("Guide table of contents", () => {
   });
 });
 
-test.describe("Mobile guide table of contents", () => {
+test.describe("Mobile guide table of contents", { tag: "@chromium-mobile-only" }, () => {
   test.beforeEach(async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-mobile", "Mobile accordion behavior");
     await page.setViewportSize({ width: 390, height: 844 });

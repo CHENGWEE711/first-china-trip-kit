@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { guideRoutes } from "./guide-routes";
 
 for (const route of guideRoutes) {
-  test(`${route} retains Guide SEO signals`, async ({ page }, testInfo) => {
+  test(`${route} retains Guide SEO signals`, { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-desktop", "One SEO crawl per Guide is sufficient");
     const response = await page.goto(route);
     expect(response?.status()).toBeLessThan(400);
