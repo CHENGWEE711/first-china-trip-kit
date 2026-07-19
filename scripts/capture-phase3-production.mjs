@@ -22,6 +22,7 @@ const baseUrl = productionUrl.origin;
 const outputDirectory = path.resolve(
   "docs/screenshots/v3-phase3-production",
 );
+const captureGa4Only = process.env.CAPTURE_GA4_ONLY === "true";
 const expectedEntryDate = process.env.CAPTURE_ENTRY_DATE ?? "2026-08-01";
 const approvedVisaAnalyticsParameters = new Set([
   "result_category",
@@ -67,8 +68,10 @@ const ga4Summaries = new Map();
 const ga4ListenerErrors = [];
 
 fs.mkdirSync(outputDirectory, { recursive: true });
-for (const fileName of expectedScreenshotFiles) {
-  fs.rmSync(path.join(outputDirectory, fileName), { force: true });
+if (!captureGa4Only) {
+  for (const fileName of expectedScreenshotFiles) {
+    fs.rmSync(path.join(outputDirectory, fileName), { force: true });
+  }
 }
 
 function sanitizeRuntimeMessage(message) {
@@ -629,7 +632,7 @@ async function runGa4AcceptanceFlow() {
   await run.context.close();
 }
 
-if (process.env.CAPTURE_GA4_ONLY === "true") {
+if (captureGa4Only) {
   try {
     await runGa4AcceptanceFlow();
     console.log(
