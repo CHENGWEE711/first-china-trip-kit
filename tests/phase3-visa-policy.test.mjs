@@ -168,3 +168,19 @@ test("Phase 3 npm gate strips sensitive analytics fields at runtime", () => {
     policy_version: "2026-07-19-v1",
   });
 });
+
+test("Phase 3 checklist downloads bypass Next route prefetching", () => {
+  const checklistComponent = fs.readFileSync(
+    path.join(root, "components/visa/VisaDocumentsChecklist.tsx"),
+    "utf8",
+  );
+
+  assert.match(
+    checklistComponent,
+    /<a href="\/china-first-time-visitor-checklist\.pdf" download/,
+  );
+  assert.doesNotMatch(
+    checklistComponent,
+    /<Link href="\/china-first-time-visitor-checklist\.pdf"/,
+  );
+});

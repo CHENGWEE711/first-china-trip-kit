@@ -1,7 +1,6 @@
 "use client";
 
 import { Check, Clipboard, Download, Printer, Save } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { VISA_POLICY_META } from "@/data/visa";
 import { trackVisaEvent } from "@/lib/visa/analytics";
@@ -144,9 +143,9 @@ export function VisaDocumentsChecklist() {
         <button type="button" onClick={printChecklist} className="inline-flex min-h-11 items-center gap-2 rounded-md border border-ink/20 px-4 py-2 text-sm font-semibold text-ink hover:border-ember hover:text-ember focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2">
           <Printer aria-hidden="true" size={17} /> Print
         </button>
-        <Link href="/china-first-time-visitor-checklist.pdf" download className="inline-flex min-h-11 items-center gap-2 rounded-md border border-ink/20 px-4 py-2 text-sm font-semibold text-ink hover:border-ember hover:text-ember focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2" onClick={() => trackVisaEvent("visa_checklist_saved", { interaction_type: "download", policy_version: VISA_POLICY_META.policyVersion })}>
+        <a href="/china-first-time-visitor-checklist.pdf" download className="inline-flex min-h-11 items-center gap-2 rounded-md border border-ink/20 px-4 py-2 text-sm font-semibold text-ink hover:border-ember hover:text-ember focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2" onClick={() => trackVisaEvent("visa_checklist_saved", { interaction_type: "download", policy_version: VISA_POLICY_META.policyVersion })}>
           <Download aria-hidden="true" size={17} /> Download the free checklist
-        </Link>
+        </a>
       </div>
 
       <p role="status" aria-live="polite" className="mt-4 min-h-6 text-sm font-semibold text-jade">
