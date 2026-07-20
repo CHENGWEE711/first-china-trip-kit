@@ -227,6 +227,7 @@ values. The displayed reporting group is the result below:
 | `paid_social` | `instagram`, `threads`, `bluesky`, `pinterest`, `reddit`, `quora` or `facebook` + `paid_social` |
 | `organic_video` | `tiktok`, `youtube` or `twitch` + `organic` |
 | `organic_social` | `instagram`, `threads`, `bluesky`, `pinterest`, `reddit`, `quora` or `facebook` + `organic` |
+| `affiliate` | Approved provider-owned outbound or affiliate aggregate; never inferred from a public inbound campaign URL |
 | `referral` | System-classified approved external referral + `referral` |
 | `direct` | No qualifying campaign/referrer + `direct` |
 | `other` | Unknown source or any incompatible source/medium pair |
