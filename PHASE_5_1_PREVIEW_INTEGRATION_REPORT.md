@@ -162,7 +162,7 @@ Browser 连接可正常完成页面载入、答题、CTA 与事件验证，但�
 
 ### P0 — 阻止上线
 
-1. **Custom Itinerary Review 的 Supabase 写入失败。** 真实 Preview API 安全失败，阻止行程表单持久化及其可选 Brevo 订阅。
+1. **Custom Itinerary Review 的 Supabase 写入失败。** 真实 Preview API 安全失败，阻止行程表单持久化及其可选 Brevo 订阅。Supabase Dashboard 当前还要求登录，因此尚不能只读核对 Preview 表、RLS 或服务角色连接配置。
 2. **Brevo 五封自动化未完成。** Preview 工作流编辑器发生平台错误；没有五封真实邮件、移动端、退订、回复地址与 UTM 送达证据。
 3. **GA4 DebugView 未接收到 Preview 调试设备。** 13 个事件的 DebugView、参数、去重和移动端证据均不完整。
 4. **真实 $19 支付处理测试未执行。** 只能在账户持有人明确确认该次真实扣款后执行；零金额订单不能替代它。
