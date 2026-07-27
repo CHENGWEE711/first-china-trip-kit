@@ -1,7 +1,7 @@
-# Phase 5.1B — Full External Integration Automation
+# Phase 5.1C — Final P0 Gate Closure（进行中）
 
 **项目：** First China Trip Kit<br>
-**验收日期：** 2026-07-27<br>
+**验收日期：** 2026-07-28<br>
 **结论：** **不得合并 `main`，不得部署 Production。**
 
 本报告只记录已实际观察到的结果。它不包含环境变量值、密钥、Token、测试邮箱、订单号、优惠码或任何自由文本表单内容。
@@ -11,7 +11,8 @@
 | 项目 | 证据 |
 | --- | --- |
 | 功能分支 | `feat/v3-phase4b-growth-platform-architecture` |
-| 最终 Commit | `89853128e471181fc8fd3aa38647e88028f54d96` — `fix: fall back to Brevo when subscriber store is unavailable` |
+| Preview 运行代码 Commit | `89853128e471181fc8fd3aa38647e88028f54d96` — `fix: fall back to Brevo when subscriber store is unavailable` |
+| Phase 5.1C 审计起点 | `7968df7533a25811f71c33c5648869e4d2fa186b` — `docs: note Supabase access blocker` |
 | 推送状态 | 已推送到同名远程功能分支；工作树在提交后保持干净。 |
 | Vercel 项目 | 既有项目 `chengwee711-4164s-projects/china-travel-kit`；未创建新项目。 |
 | Preview URL | `https://china-travel-5co6kcyhi-chengwee711-4164s-projects.vercel.app` |
@@ -20,6 +21,10 @@
 | Build 结果 | Ready；Vercel inspection 显示 603 个构建输出项。 |
 
 此部署通过 `vercel deploy --force --yes` 创建，未使用 `--prod`、promote、alias、DNS 或正式域名变更命令。
+
+### Phase 5.1C Preview 一致性复核
+
+`git diff --name-status 8985312..7968df7` 和对应统计只显示本验收报告的 Markdown 变化，没有 `app`、`components`、`lib`、`public`、依赖、Next 配置或环境变量读取逻辑的变化。因此现有 Preview 仍对应正确的运行代码，未重新部署；本阶段也没有使用 Production 部署命令。
 
 ### 本次最小可靠性修复
 
@@ -47,6 +52,7 @@ NEXT_PUBLIC_WHATSAPP_URL
 ```
 
 - 三个 Payhip URL、Preview GA 调试开关和 Preview 专用 Brevo list 配置均在功能分支的 Preview 作用域中使用；未修改 Production 环境变量。
+- Vercel Preview 变量清单已再次复核：`NEXT_PUBLIC_SUPABASE_URL` 与 `SUPABASE_SERVICE_ROLE_KEY` 存在，`SUPABASE_CONTACT_TABLE` 未显式配置；代码安全地默认使用 `contact_messages`。目标表、字段、RLS、触发器及服务角色 INSERT 权限仍需在已登录的 Supabase Dashboard 中核实，不能凭变量存在推断为可写。
 - `BREVO_API_KEY` 仅由 API 路由的服务端代码读取；没有 `NEXT_PUBLIC_BREVO_*` 变量，也没有将该 Key 打包到客户端。
 - `.gitignore` 覆盖 `.env*`（保留 `.env.example`）、`.vercel`、构建目录和临时报告目录；本次 diff 与已跟踪文件检查未发现密钥、Token 或本地环境文件。
 - 已在全部 Payhip、GA、Brevo 与 Supabase 关键变量置空的本地构建中确认安全失败构建通过。
@@ -108,7 +114,7 @@ Bundle 已完成一次 100% 折扣的零金额测试订单。已验证：从 Pre
 
 已创建 Preview 专用自动化草稿并配置为由 Preview QA 名单加入触发。应用内邮件文案、退订入口、回复地址和统一 UTM 规范保留在 [`docs/brevo-welcome-funnel.md`](docs/brevo-welcome-funnel.md)。
 
-但 Brevo Workflow 编辑器在保存首封邮件设计时出现平台运行时错误，刷新后工作流编辑页保持空白。该错误在 Brevo 自身工作流资源中复现，联系人列表页面仍可正常使用。为避免误发、重复发送或污染生产名单，未启用该草稿，也没有伪造五封送达证据。
+Brevo Workflow 编辑器仍报告其第一方运行时错误 `TypeError: f?.map is not a function`。同一草稿在刷新后可间歇性载入、显示触发器和首封邮件，但无法被视为可可靠编辑、保存或验证五封序列。已在 2026-07-27T22:28:44Z 通过 Brevo Help Center 提交去敏支持请求；提交页未返回可记录的支持单号。为避免误发、重复发送或污染生产名单，草稿保持未启用，也没有伪造五封送达证据。
 
 | 邮件 | 发送、移动端、UTM、退订与回复地址验收 |
 | --- | --- |
@@ -134,7 +140,7 @@ Preview 页面加载了 GA 脚本并启用了 Preview 调试配置；应用的 P
 
 Bundle、Guide 和 Checklist 的单次 CTA 重新验证均未发现应用侧重复触发。工具答案与表单邮箱没有被传入事件参数；现有允许参数白名单与 PII 排除回归测试仍通过。
 
-已在登录的正确 GA4 媒体资源中打开 DebugView。实际结果是 **0 个调试设备**，因此尚无任何事件的 DebugView 收件证据，且以下项目未完成：
+受控 Preview UI 已额外完成一次 Readiness 结果邮箱提交并显示成功状态，应用侧未发生重复事件。无扩展本地验证也确认 Google Tag 脚本、调试配置和不含 PII 的 collect 请求可实际工作；这不替代 Preview 外部收件证据。已在登录的正确 GA4 媒体资源中打开 DebugView，实际结果仍是 **0 个调试设备**。受保护 Preview 的干净无扩展浏览器会话停在 Vercel 登录页，尚不能用于最终网络与 DebugView 复验。因此以下项目未完成：
 
 - `readiness_result_email_submitted` 与 `newsletter_subscribed` 的真实 UI 成功触发；
 - `affiliate_link_clicked`、`whatsapp_contact_clicked`、`itinerary_review_started`、`itinerary_review_submitted` 的 Preview DebugView 证据；
@@ -162,10 +168,10 @@ Browser 连接可正常完成页面载入、答题、CTA 与事件验证，但�
 
 ### P0 — 阻止上线
 
-1. **Custom Itinerary Review 的 Supabase 写入失败。** 真实 Preview API 安全失败，阻止行程表单持久化及其可选 Brevo 订阅。Supabase Dashboard 当前还要求登录，因此尚不能只读核对 Preview 表、RLS 或服务角色连接配置。
-2. **Brevo 五封自动化未完成。** Preview 工作流编辑器发生平台错误；没有五封真实邮件、移动端、退订、回复地址与 UTM 送达证据。
+1. **Custom Itinerary Review 的 Supabase 写入失败。** 真实 Preview API 安全失败，阻止行程表单持久化及其可选 Brevo 订阅。Preview 服务角色和 URL 变量存在、表名回退为 `contact_messages`，但 Supabase Dashboard 当前要求登录，因此尚不能只读核对目标表、RLS、触发器或服务角色连接配置。
+2. **Brevo 五封自动化未完成。** Preview 工作流编辑器发生持续的第一方平台错误；已提交去敏支持请求，但尚无五封真实邮件、移动端、退订、回复地址与 UTM 送达证据。
 3. **GA4 DebugView 未接收到 Preview 调试设备。** 13 个事件的 DebugView、参数、去重和移动端证据均不完整。
-4. **真实 $19 支付处理测试未执行。** 只能在账户持有人明确确认该次真实扣款后执行；零金额订单不能替代它。
+4. **真实 $19 支付处理测试未执行。** 已到达正确的 $19 Bundle Payhip 结账路径；Chrome 中的 PayPal 页面被客户端扩展阻止，干净无扩展路径需先登录受保护 Preview。无论路径如何，最终扣款按钮前仍只能在账户持有人明确确认该次真实扣款后执行；零金额订单不能替代它。
 
 ### P1 — 生产授权前应补齐
 
@@ -176,7 +182,7 @@ Browser 连接可正常完成页面载入、答题、CTA 与事件验证，但�
 
 ### P2 — 后续优化
 
-1. 记录并向 Brevo 支持反馈其 Workflow 编辑器运行时错误，附去敏后的时间、浏览器和 workflow 草稿信息。
+1. 等待 Brevo 对已提交的 Workflow 编辑器运行时错误支持请求作出回复；在平台恢复前不启用或伪造该自动化。
 2. 当外部脚本与 Preview 配置稳定后，比较 Preview 与本地 Lighthouse 差异。
 
 ## 10. 回滚方案
@@ -190,6 +196,6 @@ Browser 连接可正常完成页面载入、答题、CTA 与事件验证，但�
 
 **不建议进入生产部署。**
 
-已经完成 Preview 创建、noindex 防护、三商品入口、Bundle 零金额交付、Readiness/Checklist 的真实 Brevo 写入、代码质量门禁与核心浏览器回归；但 P0 的 Supabase、Brevo 自动化、GA4 DebugView 与真实支付测试仍未关闭。
+已经完成 Preview 创建、noindex 防护、三商品入口、Bundle 零金额交付、Readiness/Checklist 的真实 Brevo 写入、代码质量门禁与核心浏览器回归；但 P0 的 Supabase、Brevo 自动化、GA4 DebugView 与真实支付测试仍未关闭。下一步只需要账户持有人完成 Supabase 登录、干净 Preview 会话的 Vercel 登录，以及在到达最终付款提交前的一次明确付款确认；不会要求其自行排查或执行购买。
 
 本阶段在此停止，等待人工审查、外部平台问题修复，以及（仅在需要真实支付测试时）账户持有人的逐次付款确认。不得自动合并 `main`、部署 Production、修改正式域名或开始 Phase 6。
