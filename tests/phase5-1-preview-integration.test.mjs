@@ -126,6 +126,49 @@ test("Brevo updates an existing contact idempotently and provider failures have 
   }
 });
 
+test("Brevo remains available when the optional Supabase subscriber store is unavailable", async () => {
+  const originalFetch = globalThis.fetch;
+  const requests = [];
+  globalThis.fetch = async (input, init = {}) => {
+    requests.push({ url: String(input), method: init.method || "GET", body: init.body ? JSON.parse(String(init.body)) : null });
+    if (requests.length === 1) return new Response("subscriber store unavailable", { status: 503 });
+    if (requests.length === 2) return new Response("Not found", { status: 404 });
+    return new Response("", { status: 201 });
+  };
+
+  try {
+    await withEnvironment(
+      {
+        NEXT_PUBLIC_SUPABASE_URL: "https://preview.example.supabase.co",
+        SUPABASE_SERVICE_ROLE_KEY: "preview-service-key",
+        BREVO_API_KEY: "preview-test-key",
+        BREVO_LIST_ID: "42",
+      },
+      async () => {
+        const result = await subscribeToNewsletter({
+          email: "fallback@example.com",
+          leadSource: "readiness_checker",
+          readinessScore: 91,
+          readinessRiskLevel: "ready",
+        });
+
+        assert.equal(result.ok, true);
+        assert.equal(result.provider, "brevo");
+        assert.equal(result.deliveryStatus, "active");
+      },
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+
+  assert.equal(requests.length, 3);
+  assert.equal(requests[0].method, "POST");
+  assert.equal(requests[1].method, "GET");
+  assert.equal(requests[2].method, "POST");
+  assert.equal(requests[2].body.email, "fallback@example.com");
+  assert.deepEqual(requests[2].body.listIds, [42]);
+});
+
 test("Preview integration keeps indexing, analytics debug, Payhip variables and input filtering behind safe contracts", async () => {
   const [layout, robots, nextConfig, analytics, payhip, newsletterRoute, contactRoute] = await Promise.all([
     readFile(new URL("app/layout.tsx", root), "utf8"),

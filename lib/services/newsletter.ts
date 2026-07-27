@@ -74,6 +74,18 @@ export async function subscribeToNewsletter({
     const stored = await subscribeWithSupabase(subscription);
 
     if (!stored.ok && stored.status !== 409) {
+      // Preview and production can keep delivering consented newsletter requests
+      // through Brevo when the optional first-party subscriber store is unavailable.
+      // The delivery call remains server-side and retains Brevo's idempotent update
+      // behavior, so this does not expose credentials or create duplicate contacts.
+      if (brevoReady) {
+        const delivered = await subscribeWithBrevo(subscription);
+
+        if (delivered.ok) {
+          return delivered;
+        }
+      }
+
       return stored;
     }
 
