@@ -1,49 +1,33 @@
-# Phase 5.1 Preview Integration & Pre-Deployment Gate
+# Phase 5.1B — Full External Integration Automation
 
-**Project:** First China Trip Kit<br>
-**Report date:** 2026-07-27<br>
-**Decision:** **Do not deploy to production. Do not merge to `main`.**
+**项目：** First China Trip Kit<br>
+**验收日期：** 2026-07-27<br>
+**结论：** **不得合并 `main`，不得部署 Production。**
 
-This report records only observed evidence. No Preview URL, payment, email,
-Brevo contact, or GA4 DebugView evidence has been invented.
+本报告只记录已实际观察到的结果。它不包含环境变量值、密钥、Token、测试邮箱、订单号、优惠码或任何自由文本表单内容。
 
-## 1. Revision and deployment identity
+## 1. 版本与 Preview 部署
 
-| Item | Evidence |
+| 项目 | 证据 |
 | --- | --- |
-| Branch | `feat/v3-phase4b-growth-platform-architecture` |
-| Phase 5 / 5.1 implementation commit | `2ddc15431be1d683e717ce7e5e47c41c79c54f2a` (`feat: complete phase 5 preview integration gate`), pushed to the tracked remote branch. |
-| Working tree | Clean immediately after the implementation commit was pushed. |
-| Vercel project | Existing project `chengwee711-4164s-projects/china-travel-kit` linked locally; no new Vercel project was created. |
-| Preview Deployment | **Not created.** |
-| Preview URL | Not available. |
-| Deployment ID | Not available. |
-| Vercel build log | Not available because no deployment was created. |
+| 功能分支 | `feat/v3-phase4b-growth-platform-architecture` |
+| 最终 Commit | `89853128e471181fc8fd3aa38647e88028f54d96` — `fix: fall back to Brevo when subscriber store is unavailable` |
+| 推送状态 | 已推送到同名远程功能分支；工作树在提交后保持干净。 |
+| Vercel 项目 | 既有项目 `chengwee711-4164s-projects/china-travel-kit`；未创建新项目。 |
+| Preview URL | `https://china-travel-5co6kcyhi-chengwee711-4164s-projects.vercel.app` |
+| Deployment ID | `dpl_FxtmvEYAqog1qDatNB8QqrtS5KdC` |
+| 部署目标与状态 | `preview`，Vercel `Ready`；创建时间 2026-07-27 23:13:38（Asia/Shanghai）。 |
+| Build 结果 | Ready；Vercel inspection 显示 603 个构建输出项。 |
 
-### Deployment blocker
+此部署通过 `vercel deploy --force --yes` 创建，未使用 `--prod`、promote、alias、DNS 或正式域名变更命令。
 
-Vercel CLI authentication is now valid and `vercel project ls` verified the
-existing project. The branch-specific Preview configuration was pulled without
-printing any values. The verified Free Checklist and $7 Payment & Apps Guide
-variables, plus the Preview analytics debug switch, are now configured only for
-this feature branch. Deployment remains intentionally paused because there is
-no published or verified $19 Arrival Setup Bundle Payhip product to configure;
-the dependent Bundle checkout and full end-to-end acceptance checks would
-otherwise be invalid.
+### 本次最小可靠性修复
 
-## 2. Preview safeguards and environment-variable inventory
+Preview 的实际 Readiness 提交曾暴露一个可靠性缺口：当可选的 Supabase 订阅存储不可用时，服务会在调用已配置的 Brevo 前提前返回。现已在 [`lib/services/newsletter.ts`](lib/services/newsletter.ts) 增加服务端 Brevo 回退，并在 [`tests/phase5-1-preview-integration.test.mjs`](tests/phase5-1-preview-integration.test.mjs) 增加回归测试。它不暴露凭据、不改变前端 API，也沿用 Brevo 的幂等更新逻辑。
 
-The implementation adds Preview-only indexing and analytics controls:
+## 2. Preview 环境变量与安全边界
 
-- `VERCEL_ENV=preview` makes page metadata `noindex, nofollow`.
-- Preview `robots.txt` returns `User-Agent: *` and `Disallow: /`.
-- Preview responses add `X-Robots-Tag: noindex, nofollow, noarchive`.
-- GA loads in Preview only when `NEXT_PUBLIC_ANALYTICS_DEBUG=true`; the GA
-  config includes `debug_mode: true` in that state.
-- Canonical URLs remain the approved production canonical URLs. They were not
-  changed to a Preview hostname.
-
-Required or supported Preview variable names (values intentionally omitted):
+以下为已配置或代码支持的 Preview 环境变量**名称**；本报告不记录任何值。
 
 ```text
 VERCEL_ENV
@@ -62,228 +46,150 @@ SUPABASE_CONTACT_TABLE
 NEXT_PUBLIC_WHATSAPP_URL
 ```
 
-Vercel Preview name audit on 2026-07-27:
+- 三个 Payhip URL、Preview GA 调试开关和 Preview 专用 Brevo list 配置均在功能分支的 Preview 作用域中使用；未修改 Production 环境变量。
+- `BREVO_API_KEY` 仅由 API 路由的服务端代码读取；没有 `NEXT_PUBLIC_BREVO_*` 变量，也没有将该 Key 打包到客户端。
+- `.gitignore` 覆盖 `.env*`（保留 `.env.example`）、`.vercel`、构建目录和临时报告目录；本次 diff 与已跟踪文件检查未发现密钥、Token 或本地环境文件。
+- 已在全部 Payhip、GA、Brevo 与 Supabase 关键变量置空的本地构建中确认安全失败构建通过。
 
-| Category | Result |
-| --- | --- |
-| Present names | `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_ANALYTICS_DEBUG`, `NEXT_PUBLIC_PAYHIP_FREE_CHECKLIST_URL`, `NEXT_PUBLIC_PAYHIP_PAYMENT_GUIDE_URL`, `BREVO_API_KEY`, `BREVO_LIST_ID`, Supabase variables, affiliate variables and WhatsApp URL. |
-| Preview-only branch overrides added | The Free Checklist URL, $7 Payment & Apps Guide URL and analytics debug switch were added only for `feat/v3-phase4b-growth-platform-architecture`. |
-| Missing mandatory name | `NEXT_PUBLIC_PAYHIP_ARRIVAL_BUNDLE_URL`. |
-| Payhip catalog check | The public First China Trip Kit shop exposes only the verified Free Checklist and $7 Payment & Apps Guide. No public $19 Arrival Setup Bundle product exists to configure. |
-| Safe behavior | The local missing-variable build passed; the application safely prevents unconfigured commercial CTA and analytics behavior. |
+## 3. Preview 索引与 SEO 门禁
 
-No Preview values or credentials are recorded in this report.
-
-The tested local Preview build used only a non-secret GA test identifier. A
-second build with GA and all three Payhip variables absent also completed,
-confirming safe missing-variable fallback.
-
-## 3. Local Preview evidence
-
-| Check | Result |
-| --- | --- |
-| `VERCEL_ENV=preview` production build | Passed; 74 application routes generated. |
-| Tool-page response header | `X-Robots-Tag: noindex, nofollow, noarchive` observed. |
-| `/robots.txt` | `Disallow: /` observed. |
-| Readiness-page robots meta | `noindex, nofollow` observed. |
-| Canonical | `https://www.firstchinatripkit.com/tools/china-arrival-readiness-checker` observed; production canonical unchanged. |
-| Sitemap | Contains the tool and Bundle routes; does not contain `/growth-dashboard`. |
-| Browser smoke at 390px | No horizontal overflow, 24 readiness action buttons, no action below 44px, no console warning/error. |
-
-This is local Preview-mode evidence only. It is not evidence of an externally
-reachable Vercel Preview deployment.
-
-## 4. Payhip end-to-end gate
-
-The three requested public configuration names are implemented, with legacy
-fallbacks retained for compatibility:
-
-| Product | Configuration | Code / local contract result | Live Payhip result |
-| --- | --- | --- | --- |
-| Free checklist | `NEXT_PUBLIC_PAYHIP_FREE_CHECKLIST_URL` | CTA and canonical `checklist_download_clicked` event are wired. | Blocked: no verified Preview URL. |
-| $7 payment guide | `NEXT_PUBLIC_PAYHIP_PAYMENT_GUIDE_URL` | CTA and `payment_guide_buy_clicked` are wired. | Blocked: no verified Preview URL. |
-| $19 Arrival Setup Bundle | `NEXT_PUBLIC_PAYHIP_ARRIVAL_BUNDLE_URL` | Bundle CTA and `arrival_bundle_buy_clicked` are wired; local real PDF preview exists. | Blocked: no verified Preview URL. |
-
-The following required Payhip evidence is **not available**: CTA destination,
-product name, price, description, cover, product separation, checkout,
-successful test order, success page, delivery email, PDF download through
-Payhip, and inventory state. No payment was attempted. A real paid checkout
-requires explicit action-time authorization before it can be placed.
-
-## 5. Brevo implementation and live gate
-
-### Implemented server-side contract
-
-- `BREVO_API_KEY` is server-only; it is not exposed to the browser.
-- The newsletter route passes source, UTM, consent, readiness aggregate, and
-  landing-page data to the server service.
-- Existing Brevo contacts are looked up and updated with list membership and
-  attributes instead of being blindly duplicated.
-- Provider calls time out after 8 seconds and return safe failure messages.
-- The readiness, free-checklist, and optional itinerary-review opt-in map to
-  `readiness_checker`, `free_checklist`, and `itinerary_review` respectively.
-- No passport, bank-card, WhatsApp message, free-text question, or full email
-  is sent to GA4. Server code does not log form bodies or full emails.
-
-| Brevo field | Implementation status |
-| --- | --- |
-| `EMAIL` | Brevo standard contact email field |
-| `FIRSTNAME` | Supported |
-| `LEAD_SOURCE` | Supported |
-| `LEAD_MAGNET` | Supported |
-| `READINESS_SCORE` | Supported as integer 0–100 |
-| `READINESS_RISK_LEVEL` | Supported as approved aggregate status |
-| `UTM_SOURCE`, `UTM_MEDIUM`, `UTM_CAMPAIGN` | Supported |
-| `LANDING_PAGE` | Supported |
-| `CONSENT_TIMESTAMP` | Supported |
-
-Local mock HTTP tests passed for new-contact create, existing-contact update,
-provider failure, approved attributes, and PII exclusion. No actual Brevo
-contact was created because no deployable Preview exists; the registered
-Preview variable names alone are not live-integration evidence.
-
-Brevo automation still needs an actual Preview list, the matching custom
-attributes, a verified sender, a reply-to mailbox that receives mail, and the
-standard unsubscribe block. The configuration runbook is in
-[`docs/brevo-welcome-funnel.md`](docs/brevo-welcome-funnel.md).
-
-## 6. Five-email automation gate
-
-The documented production schedule remains:
-
-1. Immediate — checklist or readiness-result delivery.
-2. Day 2 — payment setup.
-3. Day 4 — essential apps and internet.
-4. Day 7 — itinerary and transport.
-5. Day 10 — $19 Arrival Setup Bundle.
-
-Every documented link uses `utm_source=brevo`, `utm_medium=email`,
-`utm_campaign=arrival_series_v2`, and a message-specific `utm_content`.
-
-**Live result: blocked.** No Preview automation exists, no controlled inbox was
-sent the sequence, and no delivery, unsubscribe, reply-to, or UTM-click
-evidence exists. If shortened waits are used in Preview, the production waits
-above must be restored before a production authorization.
-
-## 7. GA4 instrumentation and DebugView gate
-
-The full trigger and allowed-parameter dictionary is maintained in
-[`docs/PHASE_5_EVENT_DICTIONARY.md`](docs/PHASE_5_EVENT_DICTIONARY.md). All
-events use only aggregate or acquisition parameters and exclude the prohibited
-PII fields.
-
-| Event(s) | Local equivalent evidence | Actual Preview DebugView |
+| 检查项 | 真实 Preview 证据 | 结果 |
 | --- | --- | --- |
-| `readiness_checker_started`, `readiness_checker_completed`, `readiness_result_email_submitted` | Browser test completed all 12 answers and captured each once through `window.dataLayer`; completion parameters were `score: 100`, `result_status: ready`, `unresolved_count: 0`. | Blocked: no Preview. |
-| `newsletter_subscribed`, `checklist_download_clicked` | Existing form/download wiring and event dictionary contract pass. | Blocked: no Preview. |
-| `payment_guide_viewed`, `payment_guide_buy_clicked` | Product view/CTA contract pass. | Blocked: no Preview and no verified Payhip URL. |
-| `arrival_bundle_viewed`, `arrival_bundle_buy_clicked` | Bundle view captured in browser test; buy CTA contract pass. | Blocked: no Preview and no verified Payhip URL. |
-| `affiliate_link_clicked`, `whatsapp_contact_clicked` | Existing component/unit contracts verify approved privacy-safe parameter sets. | Blocked: no Preview configuration. |
-| `itinerary_review_started`, `itinerary_review_submitted` | Browser test captures one start and one successful stubbed submit without form PII. | Blocked: no Preview. |
+| 全站 Preview noindex | 工具页 DOM `robots` meta 为 `noindex, nofollow`。 | 通过 |
+| 响应头 | 工具页返回 `X-Robots-Tag: noindex, nofollow, noarchive`。 | 通过 |
+| `/robots.txt` | 返回 `User-Agent: *` 与 `Disallow: /`。 | 通过 |
+| Canonical | Readiness 工具 canonical 为正式规范 URL，未改为 Preview hostname。 | 通过 |
+| Sitemap | 包含 Readiness 工具和 Bundle；`growth-dashboard` 不在 sitemap。 | 通过 |
+| 页面元数据 | 工具、Bundle 和九篇指南的唯一 metadata、OG、结构化数据、面包屑和内部链接由现有回归测试覆盖。 | 通过（代码与浏览器回归） |
 
-The local data-layer capture is equivalent dispatch evidence, not GA4
-DebugView proof. There are no DebugView screenshots, no measured duplicate
-event result, and no desktop/mobile DebugView result because a deployable
-Preview has not been created.
+## 4. Payhip 端到端验收
 
-## 8. Form security and reliability evidence
+| 产品 | Preview CTA 与事件 | Payhip 端验证 | 结论 |
+| --- | --- | --- | --- |
+| Free Checklist | Store CTA 触发一次 `checklist_download_clicked`，并打开对应 Payhip 产品。 | 产品目标与其它两个产品分离。 | 入口通过 |
+| Payment & Apps Guide — $7 | Store 页面触发 `payment_guide_viewed`；一次 CTA 点击触发一次 `payment_guide_buy_clicked`，并打开正确 $7 产品。 | 名称与价格同页面展示一致。 | 入口通过 |
+| China Arrival Setup Bundle — $19 | Bundle 页面载入触发一次 `arrival_bundle_viewed`；一次 CTA 点击触发一次 `arrival_bundle_buy_clicked`，并打开正确 Bundle 产品。 | 公共产品页验证名称、$19 价格、封面、PDF Preview、购买控件和无库存异常提示。 | 入口通过 |
 
-| Requirement | Local evidence |
+Bundle 已完成一次 100% 折扣的零金额测试订单。已验证：从 Preview CTA 到结账、完成页、Payhip 客户订单记录、交付通知，以及下载链接返回 `200`、`application/pdf`、正确文件名和有效 PDF 签名。PDF 内容对应当前 Bundle 文件。测试订单没有使用真实付款方式。
+
+**真实支付处理测试尚未执行。** 依据本阶段约束，提交真实 $19 付款前仍需要账户持有人在该操作当下给予明确确认；本报告不把零金额测试替代为真实支付证据。
+
+## 5. Brevo 联系人与表单验收
+
+### 已完成的真实写入
+
+- 创建了独立的 `China First Trip Kit - Preview QA` 测试名单，未将测试数据写入既有生产名单。
+- 已配置/核对所需联系人字段：`EMAIL`、`FIRSTNAME`、`LEAD_SOURCE`、`LEAD_MAGNET`、`READINESS_SCORE`、`READINESS_RISK_LEVEL`、`UTM_SOURCE`、`UTM_MEDIUM`、`UTM_CAMPAIGN`、`LANDING_PAGE`、`CONSENT_TIMESTAMP`。
+- 通过受保护 Preview 的真实 `/api/newsletter` 调用，Readiness Checker 与 Free Checklist 两个独立的非个人测试地址均返回 `ok: true`、`provider: brevo`、`delivery_status: active`。
+- Readiness 地址第二次提交返回同样的 active 结果；Brevo 联系人档案显示为 Preview QA 名单中的单一联系人，符合更新而非重复创建的预期。
+- Brevo 联系人档案已实际显示 lead magnet、UTM、signup page、consent timestamp 和名单归属。Readiness score/risk/source/landing page 的独立 UI 可见性尚未完成复核，见 P1。
+- Vercel 运行日志仅显示请求方法与路径；应用代码没有记录完整邮箱、自由文本或其他敏感表单内容。
+
+### 未通过：Custom Itinerary Review
+
+对 Preview `/api/contact` 发出的有效、非个人、无敏感内容的测试请求返回安全的不可用提示，而不是成功。原因是 `saveContactMessage` 的 Supabase 写入失败，导致路由在启动 Newsletter/Brevo 订阅前安全退出。
+
+这证明错误提示和“不误报成功”行为正确，但**不能**作为 Itinerary Review 已保存或 Brevo `itinerary_review` 已写入的证据。它是 P0。
+
+### 表单安全与可靠性
+
+| 要求 | 证据 | 结果 |
+| --- | --- | --- |
+| 客户端与服务端校验 | API 字段长度、格式、枚举和必填项均有服务端限制；组件有对应客户端限制。 | 通过（代码/测试） |
+| 恶意 HTML 过滤 | `sanitizePlainText` 移除标签与控制字符；回归测试通过。 | 通过 |
+| 蜜罐与限长 | Newsletter/Contact 均有 `website` 蜜罐与请求/字段上限。 | 通过 |
+| 重复提交控制 | UI pending 状态禁用按钮；Brevo 实际第二次提交更新同一联系人。 | 通过（Newsletter） |
+| 超时与安全失败 | 客户端请求 10 秒，供应商调用 8 秒；失败显示可重试的安全消息。 | 通过 |
+| 刷新安全 | 没有邮箱进入成功 URL，也没有刷新后自动重提。 | 通过（代码/回归） |
+| API 失败不误报 | Itinerary Preview 真实失败响应未返回成功。 | 通过 |
+| Itinerary 数据持久化 | Supabase 真实写入未成功。 | **失败 / P0** |
+
+## 6. Brevo 五封自动化
+
+已创建 Preview 专用自动化草稿并配置为由 Preview QA 名单加入触发。应用内邮件文案、退订入口、回复地址和统一 UTM 规范保留在 [`docs/brevo-welcome-funnel.md`](docs/brevo-welcome-funnel.md)。
+
+但 Brevo Workflow 编辑器在保存首封邮件设计时出现平台运行时错误，刷新后工作流编辑页保持空白。该错误在 Brevo 自身工作流资源中复现，联系人列表页面仍可正常使用。为避免误发、重复发送或污染生产名单，未启用该草稿，也没有伪造五封送达证据。
+
+| 邮件 | 发送、移动端、UTM、退订与回复地址验收 |
 | --- | --- |
-| Client and server validation | Client validation plus server routes tested; malformed/unconfigured requests return safe messages. |
-| Input limits | Browser limits and server-side per-field checks enforced; a 5,001-character contact question returned `413`. |
-| Malicious HTML | Plain-text sanitizer removes tags and control characters; dedicated unit test passed. |
-| Anti-spam | Honeypots on newsletter/contact forms; filled newsletter honeypot returned `400`. |
-| Duplicate control | Submit buttons disable while requests are pending; Brevo existing-contact mock test updates instead of creating a duplicate. |
-| Timeout | Browser requests use 10 seconds; provider requests use 8 seconds. |
-| API failure | Unconfigured newsletter and contact API requests returned safe `503` responses. |
-| Network interruption | Client catch paths reset the form to a retryable error state; provider mock failure is covered. |
-| Refresh safety | Submission state is component-local; no success URL includes email and no automatic resubmit is implemented. |
-| Sensitive logs | No `console.log/info/warn/error` in either API route; no full email or form body logging added. |
+| 立即交付 | 未完成 |
+| 测试延时 1：支付设置 | 未完成 |
+| 测试延时 2：APP 与网络 | 未完成 |
+| 测试延时 3：行程与交通 | 未完成 |
+| 测试延时 4：$19 Bundle | 未完成 |
 
-## 9. SEO, sitemap, and link evidence
+**结果：P0。** 需要在 Brevo 编辑器恢复后，使用受控可接收邮箱完成短延时测试；之后再恢复第 0、2、4、7、10 天节奏。
 
-- The tool, Bundle, and nine Phase 5 guides use their own metadata, canonical,
-  Open Graph data, structured data, breadcrumbs, and internal links.
-- The readiness browser suite confirms canonical, JSON-LD, no sensitive input
-  names, and sitemap inclusion for the tool and Bundle.
-- The growth dashboard remains `noindex, nofollow` and is absent from the
-  sitemap.
-- Critical browser regression verified 17 legacy redirects and every sitemap
-  URL as canonical HTTP 200; no internal link failure was found.
-- Preview-mode indexing protection is covered in Section 3.
+## 7. GA4 DebugView 与事件验收
 
-## 10. Test and quality results
+Preview 页面加载了 GA 脚本并启用了 Preview 调试配置；应用的 Preview analytics console 记录显示以下事件在桌面 Preview UI 中各一次：
 
-| Gate | Result |
+- `readiness_checker_started`
+- `readiness_checker_completed`（100 分、`ready`、未解决项为 0）
+- `payment_guide_viewed`
+- `payment_guide_buy_clicked`
+- `arrival_bundle_viewed`
+- `arrival_bundle_buy_clicked`
+- `checklist_download_clicked`
+
+Bundle、Guide 和 Checklist 的单次 CTA 重新验证均未发现应用侧重复触发。工具答案与表单邮箱没有被传入事件参数；现有允许参数白名单与 PII 排除回归测试仍通过。
+
+已在登录的正确 GA4 媒体资源中打开 DebugView。实际结果是 **0 个调试设备**，因此尚无任何事件的 DebugView 收件证据，且以下项目未完成：
+
+- `readiness_result_email_submitted` 与 `newsletter_subscribed` 的真实 UI 成功触发；
+- `affiliate_link_clicked`、`whatsapp_contact_clicked`、`itinerary_review_started`、`itinerary_review_submitted` 的 Preview DebugView 证据；
+- 全部 13 个事件的实际参数、次数、桌面/移动端 DebugView 复核。
+
+**结果：P0。** Preview console/数据层等价证据不替代 GA4 DebugView。DebugView 未识别该 Preview 调试会话前，不得声称 GA4 外部集成验收通过。
+
+## 8. 回归、构建与视口
+
+| 门禁 | 最新结果 |
 | --- | --- |
-| `npm test` | Passed: 70/70. |
-| `npm run typecheck` | Passed. |
-| `npm run lint` | Passed. |
-| Preview-mode production build | Passed. |
-| Missing Payhip/GA environment build | Passed. |
-| Readiness browser suite | Passed: 7/7, including 390px, 768px, 1440px, 1920px. |
-| Existing critical browser regression | Passed: 7/7. |
-| API black-box safety checks | Passed: unconfigured `503`, honeypot `400`, overlength `413`. |
-| `git diff --check` | Passed. |
+| `npm test` | 通过，71/71。 |
+| `npm run lint` | 通过。 |
+| `npm run typecheck` | 通过。 |
+| 标准 production build | 通过，74 条应用路由。 |
+| 缺失关键环境变量 build | 通过；不配置 Payhip、GA、Brevo、Supabase 时安全构建。 |
+| 新工具浏览器回归 | `tests/phase5/arrival-readiness.spec.ts` Chromium Desktop 已执行；覆盖完整 lead-flow mock、SEO/PII 与 390/768/1440/1920px。 |
+| 既有关键回归 | `tests/live/phase5-regression.spec.ts` Chromium Desktop 已执行。 |
+| Preview 页面健康 | Readiness、Store、Bundle 均渲染为非空内容；未见应用自身 console error。浏览器扩展日志不计为应用错误。 |
+| Lighthouse | 尚未对新的受保护 Vercel Preview 重跑；见 P1。 |
 
-### Lighthouse (local Preview-mode build)
+Browser 连接可正常完成页面载入、答题、CTA 与事件验证，但在受控邮箱输入表单上未发出原生 API 请求。项目 Playwright 回归以原生浏览器提交同一表单并通过；服务端真实 API 已通过 Vercel 受保护 Preview 通道完成 Brevo 验证。因此该浏览器自动化差异不被归因为产品成功或失败，也不替代邮件/UI 成功状态证据。
 
-| Route | Performance | Accessibility | Best Practices | SEO | Notes |
-| --- | ---: | ---: | ---: | ---: | --- |
-| Readiness Checker | 96 | 100 | 96 | 66 | Preview `noindex` intentionally lowers the SEO category. LCP 2.8s, CLS 0, TBT 40ms. |
-| Arrival Setup Bundle | 81 | 100 | 96 | 69 | Preview `noindex` intentionally lowers the SEO category. LCP 5.0s, CLS 0, TBT 40ms. |
+## 9. P0 / P1 / P2 与已知问题
 
-These are local lab measurements, not Vercel Preview measurements. The lower
-Preview SEO score is expected because the deployment is deliberately blocked
-from indexing.
+### P0 — 阻止上线
 
-## 11. Known issues and release risks
+1. **Custom Itinerary Review 的 Supabase 写入失败。** 真实 Preview API 安全失败，阻止行程表单持久化及其可选 Brevo 订阅。
+2. **Brevo 五封自动化未完成。** Preview 工作流编辑器发生平台错误；没有五封真实邮件、移动端、退订、回复地址与 UTM 送达证据。
+3. **GA4 DebugView 未接收到 Preview 调试设备。** 13 个事件的 DebugView、参数、去重和移动端证据均不完整。
+4. **真实 $19 支付处理测试未执行。** 只能在账户持有人明确确认该次真实扣款后执行；零金额订单不能替代它。
 
-### P0 — release blockers
+### P1 — 生产授权前应补齐
 
-1. No Vercel Preview deployment exists. Vercel access, the existing project
-   link, the verified Free Checklist/$7 Guide Preview URLs and the Preview
-   analytics debug switch are valid. Deployment is paused because the $19
-   Arrival Setup Bundle is not a published Payhip product and has no verified
-   `NEXT_PUBLIC_PAYHIP_ARRIVAL_BUNDLE_URL`. Therefore no Preview URL,
-   deployment ID, or Vercel build evidence exists.
-2. The real Bundle Payhip checkout, PDF delivery, test order, GA4 DebugView,
-   Brevo contacts and automation remain unverified until a deployable Preview
-   exists.
+1. 在 Brevo 联系人 UI 中逐项复核 `LEAD_SOURCE`、`READINESS_SCORE`、`READINESS_RISK_LEVEL` 与 `LANDING_PAGE` 的实际持久化值。
+2. 对 Vercel Preview 重跑 Lighthouse（性能、无障碍、最佳实践、SEO），并记录路由与分数。
+3. 用受控可接收邮箱完成 Free Checklist、Readiness、Itinerary 三来源的最终 UI 成功态与邮件证据；现有真实 Brevo 写入使用了非个人专用 QA 地址，不能作为收件箱交付验收。
+4. 在 Preview 全页面执行最终内部链接/404 检查，并记录结果。
 
-### P1 — must be closed in the created Preview
+### P2 — 后续优化
 
-1. Payhip product identity, checkout, test order, delivery email, Payhip PDF
-   download, and inventory validation.
-2. Brevo contact write, duplicate behavior, five live email deliveries,
-   unsubscribe, reply-to, and UTM validation with a controlled inbox.
-3. GA4 DebugView screenshots and duplicate-event checks for all required
-   events on desktop and mobile.
+1. 记录并向 Brevo 支持反馈其 Workflow 编辑器运行时错误，附去敏后的时间、浏览器和 workflow 草稿信息。
+2. 当外部脚本与 Preview 配置稳定后，比较 Preview 与本地 Lighthouse 差异。
 
-### P2 — follow-up measurement
+## 10. 回滚方案
 
-1. Re-run Lighthouse against the actual Preview after external scripts and
-   hosted assets are present; the local Bundle performance score was 81 with a
-   5.0s LCP.
+1. 继续保持该分支未合并；不得以 promote 或 production deploy 方式处理当前 Preview。
+2. 如需撤回本次可靠性修复，回滚目标为前一功能分支提交 `94bedc54e89acd6f56dfbea7c21800e8291ac27a`，然后仅创建新的 Preview 验证，不重写历史。
+3. 如需撤销 Preview，仅删除该 Preview deployment 与其 Preview 专用变量绑定；不变更 Production 域名、DNS、别名或 Production 变量。
+4. 任何真实付款测试产生的订单，应在 Payhip 后台按卖方退款政策处理；不得把订单号或买方数据写入本报告。
 
-## 12. Rollback plan
+## 11. 最终生产建议
 
-1. Keep this branch unmerged and do not deploy production.
-2. If a future Preview must be withdrawn, remove that Preview deployment in
-   Vercel and remove its Preview-only environment assignments; no production
-   domain or alias should be changed.
-3. If reverting the implementation is necessary, revert
-   `2ddc15431be1d683e717ce7e5e47c41c79c54f2a`; do not reset or overwrite
-   unrelated working-tree changes.
-4. Keep production environment variables unchanged until a separate production
-   authorization is given.
+**不建议进入生产部署。**
 
-## 13. Production recommendation
+已经完成 Preview 创建、noindex 防护、三商品入口、Bundle 零金额交付、Readiness/Checklist 的真实 Brevo 写入、代码质量门禁与核心浏览器回归；但 P0 的 Supabase、Brevo 自动化、GA4 DebugView 与真实支付测试仍未关闭。
 
-**Not recommended for production deployment.**
-
-The local implementation and regression gates are green, but the mandatory
-external Preview, Payhip, Brevo, and GA4 DebugView gates are not evidenced.
-This phase stops here pending human review, valid Preview access, external
-configuration, and an explicit production-deployment authorization.
+本阶段在此停止，等待人工审查、外部平台问题修复，以及（仅在需要真实支付测试时）账户持有人的逐次付款确认。不得自动合并 `main`、部署 Production、修改正式域名或开始 Phase 6。
