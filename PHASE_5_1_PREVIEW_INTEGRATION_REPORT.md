@@ -12,9 +12,9 @@ Brevo contact, or GA4 DebugView evidence has been invented.
 | Item | Evidence |
 | --- | --- |
 | Branch | `feat/v3-phase4b-growth-platform-architecture` |
-| Current `HEAD` SHA | `82ea316ef88371a7a68c4cc7e52a96f14b51f891` |
-| Phase 5 / 5.1 state | Local working-tree changes are intentionally uncommitted. The `HEAD` SHA above is **not** a deployable Phase 5.1 commit. No user-owned changes were committed. |
-| Vercel project | Linked locally as `china-travel-kit` (project metadata only). |
+| Phase 5 / 5.1 implementation commit | `2ddc15431be1d683e717ce7e5e47c41c79c54f2a` (`feat: complete phase 5 preview integration gate`), pushed to the tracked remote branch. |
+| Working tree | Clean immediately after the implementation commit was pushed. |
+| Vercel project | Existing project `chengwee711-4164s-projects/china-travel-kit` linked locally; no new Vercel project was created. |
 | Preview Deployment | **Not created.** |
 | Preview URL | Not available. |
 | Deployment ID | Not available. |
@@ -22,10 +22,12 @@ Brevo contact, or GA4 DebugView evidence has been invented.
 
 ### Deployment blocker
 
-The locally available Vercel credential was rejected by the Vercel CLI as an
-invalid CLI token. No Vercel, Payhip, Brevo, or GA4 connector is available in
-this workspace. Creating an attributable Preview deployment therefore cannot
-be completed safely from this environment.
+Vercel CLI authentication is now valid and `vercel project ls` verified the
+existing project. The branch-specific Preview configuration was pulled without
+printing any values. Deployment is intentionally paused because the required
+Preview Payhip variables and Preview analytics debug switch are not configured;
+the dependent Payhip, GA4 DebugView, and end-to-end acceptance checks would
+otherwise be invalid.
 
 ## 2. Preview safeguards and environment-variable inventory
 
@@ -57,6 +59,16 @@ SUPABASE_NEWSLETTER_TABLE
 SUPABASE_CONTACT_TABLE
 NEXT_PUBLIC_WHATSAPP_URL
 ```
+
+Vercel Preview name audit on 2026-07-27:
+
+| Category | Result |
+| --- | --- |
+| Present names | `NEXT_PUBLIC_GA_ID`, `BREVO_API_KEY`, `BREVO_LIST_ID`, Supabase variables, affiliate variables and WhatsApp URL. |
+| Missing mandatory names | `NEXT_PUBLIC_PAYHIP_FREE_CHECKLIST_URL`, `NEXT_PUBLIC_PAYHIP_PAYMENT_GUIDE_URL`, `NEXT_PUBLIC_PAYHIP_ARRIVAL_BUNDLE_URL`, `NEXT_PUBLIC_ANALYTICS_DEBUG`. |
+| Safe behavior | The local missing-variable build passed; the application safely prevents unconfigured commercial CTA and analytics behavior. |
+
+No Preview values or credentials are recorded in this report.
 
 The tested local Preview build used only a non-secret GA test identifier. A
 second build with GA and all three Payhip variables absent also completed,
@@ -123,8 +135,8 @@ requires explicit action-time authorization before it can be placed.
 
 Local mock HTTP tests passed for new-contact create, existing-contact update,
 provider failure, approved attributes, and PII exclusion. No actual Brevo
-contact was created because the Preview key, list, and Vercel deployment are
-not available.
+contact was created because no deployable Preview exists; the registered
+Preview variable names alone are not live-integration evidence.
 
 Brevo automation still needs an actual Preview list, the matching custom
 attributes, a verified sender, a reply-to mailbox that receives mail, and the
@@ -226,12 +238,14 @@ from indexing.
 
 ### P0 — release blockers
 
-1. No Vercel Preview deployment exists because local deployment authentication
-   is not valid for the Vercel CLI. Therefore no Preview URL, deployment ID, or
+1. No Vercel Preview deployment exists. Vercel access and the existing project
+   link are valid, but deployment is paused until the four missing Preview
+   variable names are configured. Therefore no Preview URL, deployment ID, or
    Vercel build evidence exists.
-2. Preview-specific Payhip URLs, Brevo credentials/list/automation, and GA4
-   Preview configuration are unavailable. The real integration gates cannot be
-   executed.
+2. The three required Preview Payhip URLs and
+   `NEXT_PUBLIC_ANALYTICS_DEBUG` are absent. The real Payhip and GA4 DebugView
+   gates cannot be executed. Brevo contacts and automation remain unverified
+   until a deployable Preview exists.
 
 ### P1 — must be closed in the created Preview
 
@@ -254,8 +268,9 @@ from indexing.
 2. If a future Preview must be withdrawn, remove that Preview deployment in
    Vercel and remove its Preview-only environment assignments; no production
    domain or alias should be changed.
-3. Revert only the reviewed Phase 5.1 commit once one exists; do not reset or
-   overwrite unrelated working-tree changes.
+3. If reverting the implementation is necessary, revert
+   `2ddc15431be1d683e717ce7e5e47c41c79c54f2a`; do not reset or overwrite
+   unrelated working-tree changes.
 4. Keep production environment variables unchanged until a separate production
    authorization is given.
 
