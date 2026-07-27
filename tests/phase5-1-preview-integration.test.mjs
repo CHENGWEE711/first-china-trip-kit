@@ -194,3 +194,29 @@ test("Preview integration keeps indexing, analytics debug, Payhip variables and 
   assert.doesNotMatch(`${newsletterRoute}\n${contactRoute}`, /console\.(log|info|warn|error)/);
   assert.equal(sanitizePlainText('<img src=x onerror="alert(1)"> First\u0000 traveler ', 120), "First traveler");
 });
+
+test("Itinerary Review has an auditable, browser-inaccessible contact-message migration", async () => {
+  const migration = await readFile(
+    new URL("supabase/migrations/20260728070000_create_contact_messages.sql", root),
+    "utf8",
+  );
+
+  assert.match(migration, /create table if not exists public\.contact_messages/i);
+  for (const column of [
+    "country_or_passport",
+    "travel_month",
+    "cities_considered",
+    "trip_length",
+    "main_question",
+    "interested_in_custom_itinerary",
+    "preferred_reply_method",
+    "source",
+    "status",
+    "created_at",
+  ]) {
+    assert.match(migration, new RegExp(`\\b${column}\\b`));
+  }
+  assert.match(migration, /enable row level security/i);
+  assert.match(migration, /SUPABASE_SERVICE_ROLE_KEY server-side/i);
+  assert.doesNotMatch(migration, /grant\s+all\s+on\s+.*to\s+(anon|authenticated)/i);
+});
