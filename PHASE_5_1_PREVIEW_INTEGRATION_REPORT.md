@@ -24,9 +24,11 @@ Brevo contact, or GA4 DebugView evidence has been invented.
 
 Vercel CLI authentication is now valid and `vercel project ls` verified the
 existing project. The branch-specific Preview configuration was pulled without
-printing any values. Deployment is intentionally paused because the required
-Preview Payhip variables and Preview analytics debug switch are not configured;
-the dependent Payhip, GA4 DebugView, and end-to-end acceptance checks would
+printing any values. The verified Free Checklist and $7 Payment & Apps Guide
+variables, plus the Preview analytics debug switch, are now configured only for
+this feature branch. Deployment remains intentionally paused because there is
+no published or verified $19 Arrival Setup Bundle Payhip product to configure;
+the dependent Bundle checkout and full end-to-end acceptance checks would
 otherwise be invalid.
 
 ## 2. Preview safeguards and environment-variable inventory
@@ -64,8 +66,10 @@ Vercel Preview name audit on 2026-07-27:
 
 | Category | Result |
 | --- | --- |
-| Present names | `NEXT_PUBLIC_GA_ID`, `BREVO_API_KEY`, `BREVO_LIST_ID`, Supabase variables, affiliate variables and WhatsApp URL. |
-| Missing mandatory names | `NEXT_PUBLIC_PAYHIP_FREE_CHECKLIST_URL`, `NEXT_PUBLIC_PAYHIP_PAYMENT_GUIDE_URL`, `NEXT_PUBLIC_PAYHIP_ARRIVAL_BUNDLE_URL`, `NEXT_PUBLIC_ANALYTICS_DEBUG`. |
+| Present names | `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_ANALYTICS_DEBUG`, `NEXT_PUBLIC_PAYHIP_FREE_CHECKLIST_URL`, `NEXT_PUBLIC_PAYHIP_PAYMENT_GUIDE_URL`, `BREVO_API_KEY`, `BREVO_LIST_ID`, Supabase variables, affiliate variables and WhatsApp URL. |
+| Preview-only branch overrides added | The Free Checklist URL, $7 Payment & Apps Guide URL and analytics debug switch were added only for `feat/v3-phase4b-growth-platform-architecture`. |
+| Missing mandatory name | `NEXT_PUBLIC_PAYHIP_ARRIVAL_BUNDLE_URL`. |
+| Payhip catalog check | The public First China Trip Kit shop exposes only the verified Free Checklist and $7 Payment & Apps Guide. No public $19 Arrival Setup Bundle product exists to configure. |
 | Safe behavior | The local missing-variable build passed; the application safely prevents unconfigured commercial CTA and analytics behavior. |
 
 No Preview values or credentials are recorded in this report.
@@ -238,14 +242,15 @@ from indexing.
 
 ### P0 — release blockers
 
-1. No Vercel Preview deployment exists. Vercel access and the existing project
-   link are valid, but deployment is paused until the four missing Preview
-   variable names are configured. Therefore no Preview URL, deployment ID, or
-   Vercel build evidence exists.
-2. The three required Preview Payhip URLs and
-   `NEXT_PUBLIC_ANALYTICS_DEBUG` are absent. The real Payhip and GA4 DebugView
-   gates cannot be executed. Brevo contacts and automation remain unverified
-   until a deployable Preview exists.
+1. No Vercel Preview deployment exists. Vercel access, the existing project
+   link, the verified Free Checklist/$7 Guide Preview URLs and the Preview
+   analytics debug switch are valid. Deployment is paused because the $19
+   Arrival Setup Bundle is not a published Payhip product and has no verified
+   `NEXT_PUBLIC_PAYHIP_ARRIVAL_BUNDLE_URL`. Therefore no Preview URL,
+   deployment ID, or Vercel build evidence exists.
+2. The real Bundle Payhip checkout, PDF delivery, test order, GA4 DebugView,
+   Brevo contacts and automation remain unverified until a deployable Preview
+   exists.
 
 ### P1 — must be closed in the created Preview
 
