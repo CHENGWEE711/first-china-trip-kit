@@ -15,6 +15,7 @@ export function ProductCard({ product }: ProductCardProps) {
     product.payhipUrl;
   const isChecklist = product.id === "china-first-trip-checklist";
   const isPaymentAppsGuide = product.id === "china-payment-apps-setup-guide";
+  const isArrivalBundle = product.id === "china-arrival-setup-bundle";
   const localDownloadUrl = isChecklist ? product.localDownloadUrl : undefined;
   const hasExternalPurchaseUrl = Boolean(purchaseUrl);
   const canBuy = isChecklist
@@ -23,7 +24,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const checkoutUnavailable =
     isPaymentAppsGuide && product.status === "available" && !hasExternalPurchaseUrl;
 
-  if (!canBuy && !checkoutUnavailable) {
+  const hasProductPage = isArrivalBundle;
+  if (!canBuy && !checkoutUnavailable && !hasProductPage) {
     return null;
   }
   const purchaseIsExternal = Boolean(purchaseUrl && /^https?:\/\//.test(purchaseUrl));
@@ -44,14 +46,18 @@ export function ProductCard({ product }: ProductCardProps) {
     ? purchaseUrl
       ? "Download / Support on Payhip"
       : "Download Free Checklist"
+    : isArrivalBundle && !purchaseUrl
+      ? "View bundle details"
     : isPaymentAppsGuide && purchaseUrl
       ? "Buy on Payhip — $7"
       : `Buy now — ${product.price}`;
-  const actionEventName = isChecklist
+  const actionEventNames = isChecklist
     ? purchaseUrl
-      ? "payhip_checklist_clicked"
-      : "checklist_download_clicked"
-    : undefined;
+      ? ["checklist_download_clicked", "payhip_checklist_clicked"]
+      : ["checklist_download_clicked"]
+    : isPaymentAppsGuide
+      ? ["payment_apps_guide_buy_clicked", "payment_guide_buy_clicked"]
+      : undefined;
 
   return (
     <article className="flex h-full min-w-0 flex-col rounded-lg border border-ink/10 bg-paper p-5 shadow-soft">
@@ -128,13 +134,18 @@ export function ProductCard({ product }: ProductCardProps) {
             href={actionHref}
             className="mt-5"
             download={isChecklist && !purchaseUrl}
-            eventName={actionEventName}
+            eventNames={actionEventNames}
             isExternal={purchaseIsExternal}
             canBuy
             label={actionLabel}
             placement="store_product_card"
             productId={product.id}
+            price={product.price.replace("$", "")}
           />
+        ) : hasProductPage ? (
+          <a href="/products/china-arrival-setup-bundle" className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-5 py-3 text-center text-[15px] font-semibold text-white shadow-soft transition hover:bg-ember-hover sm:w-fit">
+            {actionLabel}
+          </a>
         ) : (
           <div className="mt-5 rounded-md border border-ember/25 bg-sand p-4" role="status">
             <p className="font-bold text-ink">Secure checkout is temporarily unavailable.</p>

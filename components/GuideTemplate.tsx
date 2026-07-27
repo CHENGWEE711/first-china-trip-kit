@@ -18,6 +18,7 @@ import type { Guide } from "@/data/guides";
 import type { GuideDetailContent } from "@/data/guide-detail-content";
 import type { Product } from "@/data/products";
 import { createSectionId } from "@/lib/section-id";
+import { payhipUrls } from "@/lib/payhip";
 
 type GuideTemplateProps = {
   guide: Guide;
@@ -319,7 +320,7 @@ function PaymentClusterRail({ currentSlug }: { currentSlug: string }) {
 }
 
 function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
-  const paymentAppsGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
+  const paymentAppsGuideBuyUrl = payhipUrls.paymentGuide;
   const isAvailable = Boolean(paymentAppsGuideBuyUrl);
 
   if (!isAvailable) {
@@ -358,7 +359,7 @@ function PaymentAppsGuideCta({ guideSlug }: { guideSlug: string }) {
             canBuy={isAvailable}
             eventNames={
               isAvailable
-                ? ["guide_paid_cta_clicked", "payment_apps_guide_buy_clicked"]
+                ? ["guide_paid_cta_clicked", "payment_apps_guide_buy_clicked", "payment_guide_buy_clicked"]
                 : ["store_waitlist_clicked"]
             }
             label="Buy the $7 Guide"

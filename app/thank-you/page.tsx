@@ -9,6 +9,7 @@ import { PayhipChecklistLink } from "@/components/PayhipChecklistLink";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { buildMetadata } from "@/lib/seo";
 import { hasWhatsAppContact } from "@/lib/whatsapp";
+import { payhipUrls } from "@/lib/payhip";
 
 export const metadata: Metadata = {
   ...buildMetadata({
@@ -55,7 +56,7 @@ const nextSteps = [
 
 export default function ThankYouPage() {
   const coffeeTipEnabled = Boolean(process.env.NEXT_PUBLIC_COFFEE_TIP_URL);
-  const payhipChecklistEnabled = Boolean(process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL);
+  const payhipChecklistEnabled = Boolean(payhipUrls.freeChecklist);
   const whatsappEnabled = hasWhatsAppContact();
 
   return (

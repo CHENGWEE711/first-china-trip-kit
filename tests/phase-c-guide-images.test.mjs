@@ -41,6 +41,9 @@ const guideDetails = Function(
 const credits = JSON.parse(read("data/image-credits.json"));
 const creditById = new Map(credits.map((credit) => [credit.creditId, credit]));
 const slugs = guideEntries.map((guide) => guide.slug);
+const phaseCGuideVisuals = Object.fromEntries(
+  Object.entries(guideVisuals).filter(([slug]) => slugs.includes(slug)),
+);
 
 const heroKeywords = {
   "how-to-pay-in-china-as-a-foreigner": /QR|checkout|payment/i,
@@ -61,7 +64,7 @@ const heroKeywords = {
 
 test("Phase C gives every public Guide a distinct semantic Hero and Card", () => {
   assert.equal(slugs.length, 14);
-  assert.deepEqual(Object.keys(guideVisuals).sort(), [...slugs].sort());
+  assert.deepEqual(Object.keys(phaseCGuideVisuals).sort(), [...slugs].sort());
   const heroes = slugs.map((slug) => guideVisuals[slug].heroImage.src);
   const cards = slugs.map((slug) => guideVisuals[slug].featuredImage.src);
   assert.equal(new Set(heroes).size, slugs.length);

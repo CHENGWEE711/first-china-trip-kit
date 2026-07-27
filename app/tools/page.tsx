@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CalendarDays, Map, Plane, Smartphone } from "lucide-react";
+import { CalendarDays, ClipboardCheck, Map, Plane, Smartphone } from "lucide-react";
 import { PageIntro } from "@/components/PageIntro";
 import { toolKits } from "@/data/kits";
 import { buildMetadata } from "@/lib/seo";
@@ -13,6 +13,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const toolIcons = {
+  readiness: ClipboardCheck,
   visa: Plane,
   duration: CalendarDays,
   apps: Smartphone,
@@ -20,6 +21,7 @@ const toolIcons = {
 };
 
 const previews: Record<string, { inputs: string[]; result: string }> = {
+  "china-arrival-readiness-checker": { inputs: ["Entry path", "Payment backup", "Mobile data", "Hotel address"], result: "Your 0-100 arrival readiness score" },
   "visa-free-eligibility-checker": { inputs: ["Passport country", "Arrival city", "Onward destination", "Stay length"], result: "Verify permitted port, onward ticket and travel area" },
   "china-trip-duration-planner": { inputs: ["Shanghai · 3 days", "Beijing · 4 days", "+ travel buffers"], result: "Suggested trip: 9–10 days" },
   "essential-apps-checklist": { inputs: ["✓ Payment", "✓ Maps", "□ Offline translation", "□ Ticket screenshots"], result: "2 arrival-day backups still needed" },

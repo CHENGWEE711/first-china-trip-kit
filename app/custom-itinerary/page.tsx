@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ContactForm } from "@/components/ContactForm";
 import { PageIntro } from "@/components/PageIntro";
 import { buildMetadata } from "@/lib/seo";
 
@@ -45,12 +46,22 @@ export default function CustomItineraryPage() {
               and any food, hotel, or mobility needs.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/contact">Contact the team</ButtonLink>
+              <ButtonLink href="#itinerary-request">Share your route details</ButtonLink>
               <ButtonLink href="/itinerary-kits" variant="secondary">
                 Browse routes
               </ButtonLink>
             </div>
           </section>
+        </div>
+      </section>
+      <section id="itinerary-request" className="bg-sand px-4 py-12">
+        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-wide text-ember">Route review request</p>
+            <h2 className="mt-2 text-3xl font-bold leading-tight text-ink">Give us the details that shape a useful route.</h2>
+            <p className="mt-4 text-base leading-relaxed text-ink/68">Share only the planning context you are comfortable providing. We do not need passport or payment numbers, and this form cannot confirm visa eligibility or guarantee bookings.</p>
+          </div>
+          <ContactForm source="custom-itinerary" />
         </div>
       </section>
     </>

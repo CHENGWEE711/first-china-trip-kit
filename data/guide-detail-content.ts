@@ -1,6 +1,7 @@
 import type { FAQ, LinkItem } from "@/data/faqs";
 import type { AppRecommendationGroup } from "@/data/app-recommendations";
 import { chinaTravelAppGroups } from "@/data/app-recommendations";
+import { phase5GuideDetails } from "@/data/phase5-guide-details";
 
 export type GuideDetailContent = {
   importantNotice?: string;
@@ -1711,5 +1712,5 @@ export const guideDetailContent: Record<string, GuideDetailContent> = {
 };
 
 export function getGuideDetailContent(slug: string): GuideDetailContent | undefined {
-  return guideDetailContent[slug];
+  return guideDetailContent[slug] || phase5GuideDetails[slug];
 }

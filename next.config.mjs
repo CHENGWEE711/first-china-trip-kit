@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const isPreviewDeployment = process.env.VERCEL_ENV === "preview";
+
 const nextConfig = {
   reactStrictMode: true,
   devIndicators: false,
@@ -14,6 +16,9 @@ const nextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
           },
+          ...(isPreviewDeployment
+            ? [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }]
+            : []),
         ],
       },
       {

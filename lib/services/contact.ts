@@ -1,4 +1,5 @@
 import { siteConfig } from "@/lib/site";
+import { normalizeEmail, sanitizePlainText } from "@/lib/input";
 
 export type ContactMessageInput = {
   name: string;
@@ -23,6 +24,7 @@ type ContactMessageResult = {
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const providerTimeoutMs = 8_000;
 
 export async function saveContactMessage({
   name,
@@ -36,10 +38,11 @@ export async function saveContactMessage({
   preferredReplyMethod = "email",
   source = "contact-page",
 }: ContactMessageInput): Promise<ContactMessageResult> {
-  const cleanEmail = email.trim().toLowerCase();
-  const cleanQuestion = mainQuestion.trim();
+  const cleanName = sanitizePlainText(name, 120);
+  const cleanEmail = normalizeEmail(email);
+  const cleanQuestion = sanitizePlainText(mainQuestion, 5_000);
 
-  if (!name.trim()) {
+  if (!cleanName) {
     return { ok: false, message: "Please enter your name.", status: 400 };
   }
 
@@ -57,17 +60,17 @@ export async function saveContactMessage({
 
   if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
     return saveWithSupabase({
-      name: name.trim(),
+      name: cleanName,
       email: cleanEmail,
-      countryOrPassport: countryOrPassport.trim(),
-      travelMonth: travelMonth.trim(),
-      citiesConsidered: citiesConsidered.trim(),
-      tripLength: tripLength.trim(),
+      countryOrPassport: sanitizePlainText(countryOrPassport, 160),
+      travelMonth: sanitizePlainText(travelMonth, 80),
+      citiesConsidered: sanitizePlainText(citiesConsidered, 500),
+      tripLength: sanitizePlainText(tripLength, 80),
       mainQuestion: cleanQuestion,
       interestedInCustomItinerary,
       preferredReplyMethod:
         preferredReplyMethod === "whatsapp" ? "whatsapp" : "email",
-      source: source.trim() || "contact-page",
+      source: sanitizePlainText(source, 160) || "contact-page",
     });
   }
 
@@ -83,9 +86,11 @@ async function saveWithSupabase(
 ): Promise<ContactMessageResult> {
   const table = process.env.SUPABASE_CONTACT_TABLE || "contact_messages";
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/${table}`,
-    {
+  let response: Response;
+  try {
+    response = await fetchWithTimeout(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/${table}`,
+      {
       method: "POST",
       headers: {
         apikey: key,
@@ -107,8 +112,16 @@ async function saveWithSupabase(
         status: "new",
         created_at: new Date().toISOString(),
       }),
-    },
-  );
+      },
+    );
+  } catch {
+    return {
+      ok: false,
+      message: unavailableMessage,
+      provider: "supabase",
+      status: 503,
+    };
+  }
 
   if (!response.ok) {
     return {
@@ -124,4 +137,15 @@ async function saveWithSupabase(
     message: "Thanks! Your China trip question has been saved.",
     provider: "supabase",
   };
+}
+
+async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), providerTimeoutMs);
+
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
 }

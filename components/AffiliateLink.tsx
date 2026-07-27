@@ -61,27 +61,15 @@ export function AffiliateLink({
         aria-label={ariaLabel || `${linkLabel} (opens in a new tab)`}
         className={sharedClassName}
         onClick={() => {
-          trackEvent("affiliate_click", {
-            affiliate_partner: config.partner,
-            affiliate_category: config.category,
-            affiliate_campaign: campaign || config.campaign,
-            link_label: linkLabel,
-            link_position: placement,
-            page_location: window.location.href,
-            page_path: window.location.pathname,
+          trackEvent("affiliate_link_clicked", {
+            partner_name: config.partner,
+            destination_type: "affiliate",
+            offer_type: offerType || config.category,
+            offer_name: offerName || linkLabel,
             source_page: sourcePage,
-            destination_url: resolvedAffiliateUrl,
+            placement,
+            campaign: campaign || config.campaign,
           });
-          if (partner === "klook") {
-            trackEvent("affiliate_klook_clicked", {
-              partner: "klook",
-              source_page: sourcePage,
-              placement,
-              destination: resolvedAffiliateUrl,
-              offer_type: offerType || config.category,
-              offer_name: offerName || linkLabel,
-            });
-          }
         }}
       >
         {content}

@@ -1,3 +1,5 @@
+import { payhipUrls } from "@/lib/payhip";
+
 export type Product = {
   id: string;
   slug: string;
@@ -39,7 +41,7 @@ export const products: Product[] = [
     price: "$0+",
     status: "available",
     checkoutProvider: "payhip",
-    externalPurchaseUrl: process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL || "",
+    externalPurchaseUrl: payhipUrls.freeChecklist,
     localDownloadUrl: "/china-first-time-visitor-checklist.pdf",
     previewPdfUrl: "",
     refundNote:
@@ -72,12 +74,42 @@ export const products: Product[] = [
     price: "$7",
     status: "available",
     checkoutProvider: "payhip",
-    externalPurchaseUrl: process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "",
+    externalPurchaseUrl: payhipUrls.paymentGuide,
     previewPdfUrl: "",
     refundNote:
       "Digital delivery is handled by Payhip after purchase. Refunds may be limited after download.",
     updatedAt: "2026-07-09",
     isNextLaunch: true,
+  },
+  {
+    id: "china-arrival-setup-bundle",
+    slug: "china-arrival-setup-bundle",
+    title: "China Arrival Setup Bundle",
+    summary:
+      "A printable arrival-day kit with a command sheet, payment and app backups, hotel-address planning, transport checks and an emergency-ready offline plan.",
+    structuredDataDescription:
+      "A practical PDF bundle for first-time visitors preparing entry documents, payments, mobile data, transport, hotel details and arrival-day backups for China.",
+    bestFor:
+      "First-time visitors who want one printable, offline arrival plan after completing the free China Arrival Readiness Checker.",
+    includes: [
+      "Arrival-day command sheet",
+      "Entry and document preparation checklist",
+      "Payments and app setup checklist",
+      "Payment and data failure plan",
+      "Airport or station to hotel plan",
+      "Hotel address and transport backup sheet",
+      "Emergency and offline-folder checklist",
+      "Official verification reminders",
+    ],
+    price: "$19",
+    status: "available",
+    checkoutProvider: "payhip",
+    externalPurchaseUrl: payhipUrls.arrivalBundle,
+    localDownloadUrl: "/products/china-arrival-setup-bundle.pdf",
+    previewPdfUrl: "/products/previews/china-arrival-setup-bundle-preview.pdf",
+    refundNote:
+      "Digital delivery is handled by Payhip after purchase. Review the sample preview before buying; refunds may be limited after download.",
+    updatedAt: "2026-07-27",
   },
   {
     id: "shanghai-3-day-travel-kit",

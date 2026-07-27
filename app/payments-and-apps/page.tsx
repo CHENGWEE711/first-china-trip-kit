@@ -31,6 +31,7 @@ import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { TrackedLink } from "@/components/TrackedLink";
 import { buildMetadata, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
 import { absoluteUrl, siteConfig } from "@/lib/site";
+import { payhipUrls } from "@/lib/payhip";
 
 export const metadata: Metadata = buildMetadata({
   title: "China Payments & Essential Apps Hub | First Trip Setup",
@@ -268,7 +269,7 @@ function HubSectionHeading({
 }
 
 export default function PaymentsAndAppsPage() {
-  const paymentGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
+  const paymentGuideBuyUrl = payhipUrls.paymentGuide;
   const faqSchema = faqJsonLd([...faqs], "/payments-and-apps");
   const pageSchema = {
     "@context": "https://schema.org",
@@ -642,7 +643,7 @@ export default function PaymentsAndAppsPage() {
                     label="Buy securely on Payhip — $7"
                     productId="china-payment-apps-setup-guide"
                     placement="payment_hub_product"
-                    eventNames={["guide_buy_clicked", "payment_apps_guide_buy_clicked"]}
+                    eventNames={["guide_buy_clicked", "payment_apps_guide_buy_clicked", "payment_guide_buy_clicked"]}
                     analyticsParams={{ hub: "payments_and_apps" }}
                   />
                 ) : (

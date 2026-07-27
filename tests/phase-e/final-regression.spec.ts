@@ -142,12 +142,15 @@ test("all 17 legacy URLs are single-hop 301 and every sitemap URL is canonical 2
   expect(sitemapResponse.status()).toBe(200);
   const sitemap = await sitemapResponse.text();
   const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-  expect(urls).toHaveLength(53);
+  expect(urls).toHaveLength(64);
   expect(urls).toEqual(
     expect.arrayContaining([
       "https://www.firstchinatripkit.com/landing/pay-in-china",
       "https://www.firstchinatripkit.com/landing/china-visa-free",
       "https://www.firstchinatripkit.com/landing/china-checklist",
+      "https://www.firstchinatripkit.com/tools/china-arrival-readiness-checker",
+      "https://www.firstchinatripkit.com/products/china-arrival-setup-bundle",
+      "https://www.firstchinatripkit.com/guides/can-i-link-a-foreign-card-to-alipay-in-china",
     ]),
   );
   for (const url of urls) {

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { ProductActionButton } from "@/components/ProductActionButton";
+import { ProductPageView } from "@/components/ProductPageView";
 import { ProductCard } from "@/components/ProductCard";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
@@ -10,6 +11,7 @@ import { products } from "@/data/products";
 import { buildMetadata, productJsonLd } from "@/lib/seo";
 import { hasWhatsAppContact } from "@/lib/whatsapp";
 import { siteConfig } from "@/lib/site";
+import { payhipUrls } from "@/lib/payhip";
 
 export const metadata: Metadata = buildMetadata({
   title: "Printable China Travel Kits | First China Trip Kit Store",
@@ -190,13 +192,14 @@ const previewCards = [
 
 export default function StorePage() {
   const paymentGuide = products.find((product) => product.id === "china-payment-apps-setup-guide");
-  const paymentGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
-  const checklistPayhipUrl = process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL || "";
+  const paymentGuideBuyUrl = payhipUrls.paymentGuide;
+  const checklistPayhipUrl = payhipUrls.freeChecklist;
   const whatsappEnabled = hasWhatsAppContact();
   const productSchema = paymentGuide ? productJsonLd(paymentGuide, "/store") : null;
 
   return (
     <>
+      <ProductPageView eventName="payment_guide_viewed" productId="china-payment-apps-setup-guide" placement="store" />
       {productSchema ? <SEOJsonLd data={productSchema} /> : null}
       <section className="bg-sand px-4 py-14">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -214,7 +217,7 @@ export default function StorePage() {
               <ProductActionButton
                 canBuy
                 className="mt-0 w-full sm:w-auto"
-                eventName={checklistPayhipUrl ? "payhip_checklist_clicked" : "checklist_download_clicked"}
+                eventNames={checklistPayhipUrl ? ["checklist_download_clicked", "payhip_checklist_clicked"] : ["checklist_download_clicked"]}
                 href={checklistPayhipUrl || "/thank-you"}
                 isExternal={Boolean(checklistPayhipUrl)}
                 label="Download Free Checklist"
@@ -227,6 +230,7 @@ export default function StorePage() {
                   className="mt-0 border border-ink/12 !bg-paper !text-ink hover:border-ember/35 hover:!bg-paper hover:!text-ember"
                   href={paymentGuideBuyUrl}
                   isExternal
+                  eventNames={["payment_apps_guide_buy_clicked", "payment_guide_buy_clicked"]}
                   label="Buy Payment & Apps Guide — $7"
                   placement="store_hero"
                   productId="china-payment-apps-setup-guide"
@@ -558,6 +562,7 @@ export default function StorePage() {
                 className="mt-5"
                 href={paymentGuideBuyUrl}
                 isExternal
+                eventNames={["payment_apps_guide_buy_clicked", "payment_guide_buy_clicked"]}
                 label="Buy Payment & Apps Guide — $7"
                 placement="store_preview"
                 productId="china-payment-apps-setup-guide"

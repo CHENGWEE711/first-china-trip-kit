@@ -307,7 +307,9 @@ export function itineraryJsonLd(itinerary: Itinerary, path: string, faqs: FAQ[] 
 export function productJsonLd(product: Product, path: string) {
   const configuredPaymentAppsGuideBuyUrl =
     product.id === "china-payment-apps-setup-guide"
-      ? process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || ""
+      ? process.env.NEXT_PUBLIC_PAYHIP_PAYMENT_GUIDE_URL ||
+        process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL ||
+        ""
       : "";
   const purchaseUrl =
     configuredPaymentAppsGuideBuyUrl ||

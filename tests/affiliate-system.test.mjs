@@ -22,19 +22,19 @@ test("affiliate links use safe sponsored attributes and hide unverified destinat
   assert.match(source, /sponsored nofollow noopener noreferrer/);
   assert.match(source, /sponsored noopener noreferrer/);
   assert.match(source, /target="_blank"/);
-  assert.match(source, /trackEvent\("affiliate_click"/);
+  assert.match(source, /trackEvent\("affiliate_link_clicked"/);
   for (const field of [
-    "affiliate_partner",
-    "affiliate_category",
-    "affiliate_campaign",
-    "link_label",
-    "link_position",
-    "page_location",
-    "page_path",
-    "destination_url",
+    "partner_name",
+    "destination_type",
+    "offer_type",
+    "offer_name",
+    "source_page",
+    "placement",
+    "campaign",
   ]) {
     assert.match(source, new RegExp(field));
   }
+  assert.doesNotMatch(source, /destination_url|page_location|window\.location\.href/);
   assert.match(source, /return null;/);
   assert.doesNotMatch(source, /aria-disabled="true"/);
 });

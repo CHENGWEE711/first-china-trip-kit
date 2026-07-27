@@ -5,9 +5,10 @@ import { Download, X } from "lucide-react";
 import { CoffeeTipLink } from "@/components/CoffeeTipLink";
 import { PayhipChecklistLink } from "@/components/PayhipChecklistLink";
 import { trackEvent } from "@/lib/analytics";
+import { payhipUrls } from "@/lib/payhip";
 
 const coffeeTipUrl = process.env.NEXT_PUBLIC_COFFEE_TIP_URL || "";
-const payhipChecklistUrl = process.env.NEXT_PUBLIC_PAYHIP_CHECKLIST_URL || "";
+const payhipChecklistUrl = payhipUrls.freeChecklist;
 const storageKey = "first-china-trip-kit-coffee-tip-last-shown";
 const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
 

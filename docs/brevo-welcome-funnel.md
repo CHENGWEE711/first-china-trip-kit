@@ -1,211 +1,160 @@
-# Brevo welcome funnel
+# Phase 5 Brevo welcome sequence
 
-This document contains the production setup and English copy for the First China
-Trip Kit five-email welcome sequence.
+This is the production configuration and English copy for the 60-day Phase 5
+lead-nurture test. It supports both the free checklist and the China Arrival
+Readiness Checker. All links use controlled UTM parameters.
 
-## Brevo account structure
+## Configuration
 
-- List name: `China First Trip Checklist - Website`
-- Automation name: `First China Trip Welcome Series v1`
-- Trigger: `Contact added to list`
-- Re-entry: Off
-- Sender name: `First China Trip Kit`
-- Reply-to: a verified address controlled by First China Trip Kit
-- Unsubscribe: use Brevo's standard unsubscribe block in every message
-- Google Analytics tracking: On, with campaign name `welcome_series_v1`
+- List: `China First Trip Checklist - Website`
+- Automation: `First China Trip Arrival Series v2`
+- Trigger: contact added to the list
+- Re-entry: off
+- Sender: `First China Trip Kit`
+- Reply-to: verified site-owned mailbox
+- Unsubscribe: Brevo standard block in every message
+- Google Analytics tracking: on, campaign `arrival_series_v2`
+- Required contact attributes: `FIRSTNAME`, `LEAD_SOURCE`, `LEAD_MAGNET`,
+  `READINESS_SCORE` (number), `READINESS_RISK_LEVEL` (text), `UTM_SOURCE`,
+  `UTM_MEDIUM`, `UTM_CAMPAIGN`, `UTM_CONTENT`, `LANDING_PAGE`,
+  `CONSENT_TIMESTAMP`, plus the established `SIGNUP_PAGE` attribution field.
+  `EMAIL` is Brevo's standard contact email field, not a custom attribute.
+- Accepted lead-source values: `readiness_checker`, `free_checklist`, and
+  `itinerary_review`. Create the attributes in Brevo before activation with
+  the matching names and types.
 
-The website adds a subscriber to the list through `POST /v3/contacts` with
-`updateEnabled: true`. The automation must be active before a test subscriber is
-added. Brevo only enrolls contacts who meet the list trigger after activation.
+The website submits only email, consent, acquisition metadata and lead-magnet
+selection. It does not send passport numbers, bank card numbers or individual
+readiness-checker answers to Brevo.
 
-## Workflow timing
+For preview QA, make a separate Preview list and duplicate the automation with
+short waits. Restore the production waits below before any production
+activation; never point a Preview deployment at a production list.
 
-1. Contact added to `China First Trip Checklist - Website`
-2. Send Email 1 immediately
-3. Wait 2 days
-4. Send Email 2
-5. Wait 2 days
-6. Send Email 3
-7. Wait 3 days
-8. Send Email 4
-9. Wait 5 days
-10. Send Email 5
-11. End automation
+## Timing
 
-## Email 1: Deliver the checklist
+1. Immediately: Email 1
+2. Wait 2 days: Email 2
+3. Wait 2 days: Email 3
+4. Wait 3 days: Email 4
+5. Wait 3 days: Email 5
 
-**Internal name:** `Welcome 01 - Checklist delivery`
+## Email 1 - immediate delivery
 
-**Subject:** Your China First Trip Checklist is ready
+**Subject:** Your China arrival checklist is ready
 
-**Preview text:** Start with payment, apps, internet, hotel addresses, and arrival-day backups.
-
-**Body:**
+**Preview:** Start with entry, payment, apps, hotel details and an arrival-day backup.
 
 Welcome to First China Trip Kit.
 
-Your free China First Trip Checklist is ready. It is designed for first-time
-visitors who want the practical details sorted before the flight, without turning
-trip planning into a second job.
+Your free planning checklist is ready. If you used the China Arrival Readiness
+Checker, reopen it to see your score and personalised next steps; your answers
+stay in your browser and are not included in this email.
 
-Use the checklist to review:
+Before your flight, save your hotel name, Chinese address, phone number and
+booking confirmation in an offline folder. That one backup can make airport
+transfers, taxis and late check-in much easier.
 
-- payment and cash backups;
-- essential travel apps;
-- eSIM or roaming preparation;
-- your hotel address in Chinese;
-- transport confirmations;
-- food and emergency phrases.
+**Primary button:** Open your free checklist
 
-**Primary button:** Download the free checklist
+`https://www.firstchinatripkit.com/thank-you?utm_source=brevo&utm_medium=email&utm_campaign=arrival_series_v2&utm_content=day0_checklist`
 
-**URL:** `https://www.firstchinatripkit.com/thank-you?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day0_checklist`
+**Secondary link:** Run the China Arrival Readiness Checker
 
-Before you close the checklist, save your hotel name, Chinese address, and phone
-number in an offline screenshot folder. That one step can make airport transfers,
-taxis, and hotel check-in much easier.
+`https://www.firstchinatripkit.com/tools/china-arrival-readiness-checker?utm_source=brevo&utm_medium=email&utm_campaign=arrival_series_v2&utm_content=day0_checker`
 
-First China Trip Kit provides travel planning information only. Always verify
-current visa, entry, payment, and transport requirements with official sources.
+## Email 2 - day 2: payment setup
 
-## Email 2: Payment preparation
+**Subject:** Build a payment backup before you fly
 
-**Internal name:** `Welcome 02 - Payment stack`
+**Preview:** Do not depend on one wallet, one card or one internet connection.
 
-**Subject:** Set up your China payment backup before you fly
+Set up your primary payment option before departure, but keep a second card,
+physical card and a modest RMB cash backup. Card verification, limits and
+merchant acceptance can vary by app, issuer and transaction.
 
-**Preview text:** Do not rely on one app, one card, or one internet connection.
+Test one small purchase near your hotel before relying on your phone for a taxi
+or restaurant payment. If it fails, use the immediate backup and troubleshoot on
+stable Wi-Fi instead of repeatedly retrying at a counter.
 
-**Body:**
+**Primary button:** Read the payment guide
 
-Many first-time visitors focus on installing Alipay or WeChat Pay. The more useful
-goal is to build a payment stack with several layers.
+`https://www.firstchinatripkit.com/payments-and-apps?utm_source=brevo&utm_medium=email&utm_campaign=arrival_series_v2&utm_content=day2_payments`
 
-Prepare:
+**Secondary link:** Foreign-card setup guide
 
-1. Alipay with an international card, if supported.
-2. WeChat Pay as an optional backup, if setup works.
-3. A physical bank card for hotels and larger venues where accepted.
-4. A small amount of RMB cash for arrival-day problems.
+`https://www.firstchinatripkit.com/guides/can-i-link-a-foreign-card-to-alipay-in-china?utm_source=brevo&utm_medium=email&utm_campaign=arrival_series_v2&utm_content=day2_card_link`
 
-Card linking and payment-app support may vary by bank, card, account, merchant, and
-current verification rules. Test a small purchase after arrival before depending
-on mobile payment for taxis or dinner.
+## Email 3 - day 4: essential apps and internet
 
-**Primary button:** Read the foreign visitor payment guide
+**Subject:** Install the essential China apps before arrival
 
-**URL:** `https://www.firstchinatripkit.com/payments-and-apps?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day2_payment`
+**Preview:** Payment, maps, translation, data, rides and offline screenshots.
 
-Want the printable setup version? The $7 Payment & Apps Setup Guide includes a
-payment failure decision tree, setup checklists, phrase cards, and offline backup
-pages.
+Your phone is likely to be your wallet, map, translator, train folder and taxi
+backup. Install only the apps you will actually use, sign in while you have time
+to recover passwords, and save key hotel and transport information as screenshots.
 
-**Secondary link:** `https://www.firstchinatripkit.com/store?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day2_store`
+Choose an eSIM, roaming or local-data plan before arrival. Do not make the first
+airport hour the first time you discover whether your phone is unlocked or an
+app needs verification.
 
-## Email 3: Essential apps
+**Primary button:** Use the essential apps checklist
 
-**Internal name:** `Welcome 03 - Essential apps`
+`https://www.firstchinatripkit.com/tools/essential-apps-checklist?utm_source=brevo&utm_medium=email&utm_campaign=arrival_series_v2&utm_content=day4_apps_tool`
 
-**Subject:** Install these China travel tools before arrival
+**Secondary link:** Read the app stack guide
 
-**Preview text:** Payment, maps, translation, mobile data, trains, and offline backups.
+`https://www.firstchinatripkit.com/guides/which-china-travel-apps-should-i-install-before-flying?utm_source=brevo&utm_medium=email&utm_campaign=arrival_series_v2&utm_content=day4_apps_guide`
 
-**Body:**
+## Email 4 - day 7: itinerary and transport
 
-Your phone becomes your payment wallet, map, translator, train folder, and taxi
-backup in China. Install the core tools while you still have familiar internet and
-time to check passwords or card verification.
+**Subject:** Make your first transfer boring on purpose
 
-The practical pre-arrival stack is:
+**Preview:** Confirm the exact airport, station, hotel entrance and fallback route.
 
-- Alipay;
-- WeChat;
-- a translation app with offline language support;
-- a map option you can use in China;
-- eSIM or roaming access;
-- Trip.com or another train-booking support option;
-- an offline screenshot folder;
-- a charged power bank.
+The first arrival transfer should be simple. Confirm the exact airport terminal
+or railway station, save your hotel address in Chinese, choose a clear pickup
+point and note one fallback route. For trains, use the exact station name and
+the passport linked to the booking.
 
-You do not need every local app on day one. Add advanced tools only when they solve
-a real problem for your route.
+Leave room for queues, a wrong station entrance, jet lag and a low phone battery.
+A practical plan is more valuable than packing in one extra attraction.
 
-**Primary button:** Use the Essential Apps Checklist
+**Primary button:** Read the rail and transport guide
 
-**URL:** `https://www.firstchinatripkit.com/tools/essential-apps-checklist?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day4_apps_tool`
+`https://www.firstchinatripkit.com/guides/how-do-foreigners-book-trains-and-rides-in-china?utm_source=brevo&utm_medium=email&utm_campaign=arrival_series_v2&utm_content=day7_transport`
 
-**Secondary link:** `https://www.firstchinatripkit.com/guides/best-apps-for-traveling-in-china?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day4_apps_guide`
+**Secondary link:** Compare realistic routes
 
-## Email 4: Arrival-day plan
+`https://www.firstchinatripkit.com/itinerary-kits?utm_source=brevo&utm_medium=email&utm_campaign=arrival_series_v2&utm_content=day7_itineraries`
 
-**Internal name:** `Welcome 04 - Arrival day`
+## Email 5 - day 10: bundle offer
 
-**Subject:** Your first 90 minutes in China
+**Subject:** Want one printable plan for arrival day?
 
-**Preview text:** Test internet and payment before you are tired, hungry, or far from your hotel.
+**Preview:** A $19 offline bundle for the details that are easy to forget before a first China arrival.
 
-**Body:**
+If you want a single printable system rather than another open tab, the China
+Arrival Setup Bundle brings together the arrival-day command sheet, payment and
+app backups, hotel-address plan, transport check and emergency offline folder.
 
-Arrival day is not the best time to troubleshoot every app. Keep the first 90
-minutes simple.
+It is for travellers who want a calm first 90 minutes after landing. It is not a
+visa decision, payment guarantee or substitute for current official requirements.
 
-1. Connect your eSIM, roaming, airport Wi-Fi, or hotel Wi-Fi.
-2. Open your saved hotel address in Chinese.
-3. Confirm the correct airport, railway station, or pickup point.
-4. Reach your hotel and complete check-in.
-5. Make a small convenience-store purchase to test payment.
-6. Confirm the charge in your bank app.
-7. Keep cash and your physical card available until the test succeeds.
+**Primary button:** Preview the China Arrival Setup Bundle - $19
 
-If mobile data or payment fails, use your offline hotel card and ask airport or
-hotel staff for help. Do not upload passport or banking information through links
-sent by strangers.
+`https://www.firstchinatripkit.com/products/china-arrival-setup-bundle?utm_source=brevo&utm_medium=email&utm_campaign=arrival_series_v2&utm_content=day10_bundle`
 
-**Primary button:** Start with the first-trip planning page
+## Pre-activation evidence
 
-**URL:** `https://www.firstchinatripkit.com/start-here?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day7_start_here`
-
-## Email 5: Choose a realistic route
-
-**Internal name:** `Welcome 05 - City and route planning`
-
-**Subject:** Choose fewer China stops and make them work better
-
-**Preview text:** A realistic route leaves room for jet lag, station transfers, weather, and booking rules.
-
-**Body:**
-
-First-time China itineraries often become difficult because they include too many
-cities, not because they include too few attractions.
-
-As a starting point:
-
-- 1 to 3 days: choose one city base;
-- 4 to 5 days: one city plus a day trip, or two fast-paced cities;
-- 6 to 8 days: two or three nearby cities;
-- 9 to 12 days: a classic multi-city route becomes more realistic;
-- 13 or more days: add slower travel or a specialist food, nature, or southern route.
-
-Use the City Kits for hotel areas, local transport, food, and Chinese addresses.
-Use the Itinerary Kits to compare pacing and transfers.
-
-**Primary button:** Browse City Kits
-
-**URL:** `https://www.firstchinatripkit.com/city-kits?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day12_city_kits`
-
-**Secondary link:** `https://www.firstchinatripkit.com/itinerary-kits?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day12_itinerary_kits`
-
-Still unsure? Send your passport country, travel month, trip length, and cities.
-
-**Question link:** `https://www.firstchinatripkit.com/contact?utm_source=brevo&utm_medium=email&utm_campaign=welcome_series_v1&utm_content=day12_contact`
-
-## Pre-activation checklist
-
-- Verify the sender address in Brevo.
-- Confirm the list ID matches `BREVO_LIST_ID` in Vercel.
-- Confirm each email includes Brevo's unsubscribe block.
-- Send test emails to an address controlled by the site owner.
-- Check every button and UTM link.
-- Confirm Email 1 arrives and the PDF link opens.
-- Confirm the automation is active before testing a new subscriber.
-- Keep re-entry disabled for this welcome series.
+- Verify the sender and unsubscribe block.
+- Confirm `BREVO_LIST_ID` and the listed attributes match Brevo exactly.
+- Activate the automation before adding a new test contact.
+- Send a test to a controlled inbox and confirm all five UTM links.
+- Confirm Email 1 reaches both checklist and checker leads.
+- Confirm the visible unsubscribe link and that replies reach the verified
+  Reply-to mailbox.
+- Record the test contact, timestamps, delivery status and all clicked URLs in
+  the Phase 5.1 Preview Integration Report. Do not put a full email address in
+  that report.

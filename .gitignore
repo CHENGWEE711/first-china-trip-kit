@@ -15,4 +15,9 @@ output
 *.tsbuildinfo
 playwright-report
 test-results
+
+# Local Lighthouse artifacts
+.lighthouse/
+lighthouse-report*.json
+lighthouse-reports/
 tests/visual/diff

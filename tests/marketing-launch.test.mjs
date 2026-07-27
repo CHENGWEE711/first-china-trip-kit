@@ -36,14 +36,15 @@ test("UTM builder rejects missing required values", () => {
   );
 });
 
-test("Klook links emit the dedicated event without changing their destination", async () => {
+test("affiliate links emit the canonical event without leaking destination tokens", async () => {
   const affiliateLink = await readFile(new URL("components/AffiliateLink.tsx", root), "utf8");
 
-  assert.match(affiliateLink, /trackEvent\("affiliate_klook_clicked"/);
-  assert.match(affiliateLink, /destination: resolvedAffiliateUrl/);
+  assert.match(affiliateLink, /trackEvent\("affiliate_link_clicked"/);
+  assert.match(affiliateLink, /destination_type: "affiliate"/);
   assert.match(affiliateLink, /offer_type/);
   assert.match(affiliateLink, /offer_name/);
   assert.match(affiliateLink, /"sponsored noopener noreferrer"/);
+  assert.doesNotMatch(affiliateLink, /destination: resolvedAffiliateUrl|destination_url/);
 });
 
 test("Brevo newsletter attributes include complete launch attribution", async () => {

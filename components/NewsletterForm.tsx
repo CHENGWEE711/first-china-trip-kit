@@ -10,6 +10,7 @@ import {
   trackLandingEvent,
 } from "@/lib/landing/analytics";
 import { captureUtmAttribution } from "@/lib/utm";
+import { postWithTimeout } from "@/lib/client-request";
 
 type NewsletterFormProps = {
   source?: string;
@@ -61,13 +62,15 @@ export function NewsletterForm({
     formData.set("source_page", sourcePage);
     formData.set("placement", source);
     formData.set("lead_magnet", leadMagnet);
+    formData.set("lead_source", "free_checklist");
+    formData.set("landing_page", sourcePage);
     Object.entries(attribution).forEach(([key, value]) => formData.set(key, value));
 
     let response: Response;
     let data: { message?: string } = {};
 
     try {
-      response = await fetch("/api/newsletter", {
+      response = await postWithTimeout("/api/newsletter", {
         method: "POST",
         body: formData,
       });

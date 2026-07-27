@@ -1,8 +1,13 @@
-type SubscribeInput = {
+export type SubscribeInput = {
   email: string;
+  firstName?: string;
+  leadSource?: string;
   sourcePage?: string;
+  landingPage?: string;
   placement?: string;
   leadMagnet?: string;
+  readinessScore?: number;
+  readinessRiskLevel?: string;
   utmSource?: string;
   utmMedium?: string;
   utmCampaign?: string;
@@ -22,12 +27,18 @@ const successMessage =
   "Thanks! You're subscribed. Your China First Trip Checklist is ready on the next page.";
 const savedWithoutDeliveryMessage =
   "Thanks! Your email was saved. Automated email delivery is temporarily unavailable, so download the checklist on the next page.";
+const providerTimeoutMs = 8_000;
 
 export async function subscribeToNewsletter({
   email,
+  firstName = "",
+  leadSource = "free_checklist",
   sourcePage = "site",
+  landingPage = sourcePage,
   placement = "newsletter-form",
   leadMagnet = "China First Trip Checklist",
+  readinessScore,
+  readinessRiskLevel = "",
   utmSource = "",
   utmMedium = "",
   utmCampaign = "",
@@ -36,9 +47,14 @@ export async function subscribeToNewsletter({
 }: SubscribeInput): Promise<SubscribeResult> {
   const subscription = {
     email,
+    firstName,
+    leadSource,
     sourcePage,
+    landingPage,
     placement,
     leadMagnet,
+    readinessScore,
+    readinessRiskLevel,
     utmSource,
     utmMedium,
     utmCampaign,
@@ -64,10 +80,6 @@ export async function subscribeToNewsletter({
     if (brevoReady) {
       const delivered = await subscribeWithBrevo(subscription);
 
-      if (stored.status === 409) {
-        return stored;
-      }
-
       if (delivered.ok) {
         return {
           ok: true,
@@ -77,20 +89,25 @@ export async function subscribeToNewsletter({
         };
       }
 
-      if (delivered.status === 409) {
-        return delivered;
-      }
-
       return {
-        ok: true,
-        message: savedWithoutDeliveryMessage,
-        provider: "supabase",
+        ok: stored.status === 409,
+        message:
+          stored.status === 409
+            ? "You’re already subscribed. We could not refresh the email sequence right now."
+            : savedWithoutDeliveryMessage,
+        provider: stored.status === 409 ? "supabase+brevo" : "supabase",
         deliveryStatus: "failed",
+        status: stored.status === 409 ? undefined : delivered.status,
       };
     }
 
     if (stored.status === 409) {
-      return stored;
+      return {
+        ok: true,
+        message: successMessage,
+        provider: "supabase",
+        deliveryStatus: "not_configured",
+      };
     }
 
     return {
@@ -127,9 +144,11 @@ async function subscribeWithSupabase({
 }: SubscribeInput & { email: string; sourcePage: string }): Promise<SubscribeResult> {
   const table = process.env.SUPABASE_NEWSLETTER_TABLE || "newsletter_subscribers";
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/${table}`,
-    {
+  let response: Response;
+  try {
+    response = await fetchWithTimeout(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/${table}`,
+      {
       method: "POST",
       headers: {
         apikey: key || "",
@@ -143,8 +162,17 @@ async function subscribeWithSupabase({
         status: "subscribed",
         created_at: new Date().toISOString(),
       }),
-    },
-  );
+      },
+    );
+  } catch {
+    return {
+      ok: false,
+      message: "Subscription could not be saved. Please try again later.",
+      provider: "supabase",
+      deliveryStatus: "failed",
+      status: 503,
+    };
+  }
 
   if (response.status === 409) {
     return {
@@ -173,9 +201,14 @@ async function subscribeWithSupabase({
 
 async function subscribeWithBrevo({
   email,
+  firstName,
+  leadSource,
   sourcePage,
+  landingPage,
   placement,
   leadMagnet,
+  readinessScore,
+  readinessRiskLevel,
   utmSource,
   utmMedium,
   utmCampaign,
@@ -184,8 +217,10 @@ async function subscribeWithBrevo({
 }: SubscribeInput & { email: string; sourcePage: string }): Promise<SubscribeResult> {
   const listId = Number(process.env.BREVO_LIST_ID);
   const apiKey = process.env.BREVO_API_KEY || "";
-  const attributes = {
-    SIGNUP_SOURCE: placement || "newsletter-form",
+  const attributes: Record<string, string | number> = {
+    FIRSTNAME: firstName || "",
+    LEAD_SOURCE: leadSource || placement || "free_checklist",
+    LANDING_PAGE: landingPage || sourcePage,
     SIGNUP_PAGE: sourcePage,
     UTM_SOURCE: utmSource || "",
     UTM_MEDIUM: utmMedium || "",
@@ -194,6 +229,13 @@ async function subscribeWithBrevo({
     LEAD_MAGNET: leadMagnet || "China First Trip Checklist",
     CONSENT_TIMESTAMP: consentTimestamp || new Date().toISOString(),
   };
+
+  if (typeof readinessScore === "number" && Number.isFinite(readinessScore)) {
+    attributes.READINESS_SCORE = Math.max(0, Math.min(100, Math.round(readinessScore)));
+  }
+  if (readinessRiskLevel) {
+    attributes.READINESS_RISK_LEVEL = readinessRiskLevel;
+  }
 
   if (!Number.isInteger(listId) || listId <= 0) {
     return {
@@ -206,35 +248,36 @@ async function subscribeWithBrevo({
   }
 
   const contactUrl = `https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`;
-  const existingContact = await fetch(contactUrl, {
-    headers: {
-      Accept: "application/json",
-      "api-key": apiKey,
-    },
-  });
-
-  if (existingContact.ok) {
-    const contact = (await existingContact.json()) as { listIds?: number[] };
-
-    if (contact.listIds?.includes(listId)) {
-      return {
-        ok: false,
-        message: "You’re already subscribed.",
-        provider: "brevo",
-        deliveryStatus: "active",
-        status: 409,
-      };
-    }
-
-    const addToList = await fetch(contactUrl, {
-      method: "PUT",
+  let existingContact: Response;
+  try {
+    existingContact = await fetchWithTimeout(contactUrl, {
       headers: {
         Accept: "application/json",
         "api-key": apiKey,
-        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ listIds: [listId], attributes }),
     });
+  } catch {
+    return brevoUnavailableResult();
+  }
+
+  if (existingContact.ok) {
+    const contact = (await existingContact.json()) as { listIds?: number[] };
+    const listIds = [...new Set([...(contact.listIds || []), listId])];
+
+    let addToList: Response;
+    try {
+      addToList = await fetchWithTimeout(contactUrl, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "api-key": apiKey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ listIds, attributes }),
+      });
+    } catch {
+      return brevoUnavailableResult();
+    }
 
     if (!addToList.ok) {
       return {
@@ -264,20 +307,25 @@ async function subscribeWithBrevo({
     };
   }
 
-  const response = await fetch("https://api.brevo.com/v3/contacts", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "api-key": apiKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email,
-      listIds: [listId],
-      attributes,
-      updateEnabled: false,
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetchWithTimeout("https://api.brevo.com/v3/contacts", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        listIds: [listId],
+        attributes,
+        updateEnabled: true,
+      }),
+    });
+  } catch {
+    return brevoUnavailableResult();
+  }
 
   if (!response.ok) {
     const body = await response.text();
@@ -285,8 +333,8 @@ async function subscribeWithBrevo({
 
     if (response.status === 400 && normalizedBody.includes("already")) {
       return {
-        ok: false,
-        message: "You’re already subscribed.",
+        ok: true,
+        message: successMessage,
         provider: "brevo",
         deliveryStatus: "active",
         status: 409,
@@ -313,7 +361,7 @@ async function subscribeWithBrevo({
 async function subscribeWithMailchimp({
   email,
   sourcePage,
-}: Required<SubscribeInput>): Promise<SubscribeResult> {
+}: SubscribeInput & { email: string; sourcePage: string }): Promise<SubscribeResult> {
   const apiKey = process.env.MAILCHIMP_API_KEY || "";
   const listId = process.env.MAILCHIMP_LIST_ID || "";
   const datacenter = apiKey.split("-")[1];
@@ -343,10 +391,9 @@ async function subscribeWithMailchimp({
     const text = await response.text();
     if (response.status === 400 && text.toLowerCase().includes("already")) {
       return {
-        ok: false,
-        message: "You’re already subscribed.",
+        ok: true,
+        message: successMessage,
         provider: "mailchimp",
-        status: 409,
       };
     }
 
@@ -367,7 +414,7 @@ async function subscribeWithMailchimp({
 async function subscribeWithResend({
   email,
   sourcePage,
-}: Required<SubscribeInput>): Promise<SubscribeResult> {
+}: SubscribeInput & { email: string; sourcePage: string }): Promise<SubscribeResult> {
   const response = await fetch(
     `https://api.resend.com/audiences/${process.env.RESEND_AUDIENCE_ID}/contacts`,
     {
@@ -385,12 +432,11 @@ async function subscribeWithResend({
   );
 
   if (response.status === 409) {
-    return {
-      ok: false,
-      message: "You’re already subscribed.",
-      provider: "resend",
-      status: 409,
-    };
+      return {
+        ok: true,
+        message: successMessage,
+        provider: "resend",
+      };
   }
 
   if (!response.ok) {
@@ -407,4 +453,25 @@ async function subscribeWithResend({
     message: successMessage,
     provider: "resend",
   };
+}
+
+function brevoUnavailableResult(): SubscribeResult {
+  return {
+    ok: false,
+    message: "Your email could not be added to the welcome sequence yet.",
+    provider: "brevo",
+    deliveryStatus: "failed",
+    status: 503,
+  };
+}
+
+async function fetchWithTimeout(input: RequestInfo | URL, init: RequestInit = {}) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), providerTimeoutMs);
+
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
 }

@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/guides",
     "/tools",
     "/store",
+    "/products/china-arrival-setup-bundle",
     "/custom-itinerary",
     "/about",
     "/contact",

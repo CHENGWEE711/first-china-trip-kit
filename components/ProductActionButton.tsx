@@ -16,6 +16,7 @@ type ProductActionButtonProps = {
   eventName?: string;
   eventNames?: string[];
   isExternal?: boolean;
+  price?: string;
 };
 
 export function ProductActionButton({
@@ -30,6 +31,7 @@ export function ProductActionButton({
   productId,
   placement = "product_action",
   isExternal = false,
+  price,
 }: ProductActionButtonProps) {
   if (!canBuy) {
     return null;
@@ -59,16 +61,18 @@ export function ProductActionButton({
             ? "China Payment & Apps Setup Guide"
             : productId === "china-first-trip-checklist"
               ? "China First Trip Checklist"
-              : productId;
+              : productId === "china-arrival-setup-bundle"
+                ? "China Arrival Setup Bundle"
+                : productId;
 
         trackedEvents.forEach((trackedEvent) =>
           trackEvent(trackedEvent, {
             source_page: window.location.pathname,
-            destination_url: trackedHref,
+            destination_type: isExternal ? "payhip" : "internal",
             placement,
             product_id: productId,
             product,
-            ...(productId === "china-payment-apps-setup-guide" ? { price: "7" } : {}),
+            ...(price ? { price } : productId === "china-payment-apps-setup-guide" ? { price: "7" } : {}),
             ...getStoredUtmAttribution(),
             ...analyticsParams,
           }),

@@ -154,6 +154,14 @@ export const firstTripChecklist = [
 
 export const toolKits = [
   {
+    slug: "china-arrival-readiness-checker",
+    title: "China Arrival Readiness Checker",
+    summary:
+      "Check entry, payments, apps, internet, transport, hotel details and emergency backups before your first China arrival.",
+    bestFor: "First-time visitors who want a clear preparation score and personal next steps.",
+    type: "readiness",
+  },
+  {
     slug: "visa-free-eligibility-checker",
     title: "Visa-Free Eligibility Checker",
     summary:

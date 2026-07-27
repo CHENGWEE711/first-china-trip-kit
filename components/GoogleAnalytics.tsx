@@ -1,9 +1,13 @@
 import { GoogleAnalyticsPageView } from "@/components/GoogleAnalyticsPageView";
+import { isAnalyticsDebugEnabled, isPreviewDeployment, isProductionDeployment } from "@/lib/runtime";
 
 export function GoogleAnalytics() {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const enablePreviewDebug = isPreviewDeployment && isAnalyticsDebugEnabled;
+  const requiresPreviewDebug =
+    process.env.VERCEL_ENV !== "production" && !isProductionDeployment;
 
-  if (!gaId || process.env.VERCEL_ENV !== "production") {
+  if (!gaId || (requiresPreviewDebug && !enablePreviewDebug)) {
     return null;
   }
 
@@ -20,7 +24,7 @@ export function GoogleAnalytics() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${gaId}');
+          gtag('config', ${JSON.stringify(gaId)}, ${JSON.stringify(enablePreviewDebug ? { debug_mode: true } : {})});
         `,
         }}
       />

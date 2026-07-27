@@ -321,6 +321,15 @@ export const guideVisuals: Record<string, GuideVisuals> = {
       guideInline(airport, "before-details"),
     ],
   },
+  "can-i-link-a-foreign-card-to-alipay-in-china": { featuredImage: paymentTerminal, heroImage: paymentScene, inlineImages: [guideInline(paymentGuideCardSetup, "before-steps"), guideInline(paymentGuideBackupKit, "before-details")] },
+  "can-foreigners-use-wechat-pay-with-an-international-card": { featuredImage: qrPhone, heroImage: paymentScene, inlineImages: [guideInline(qrScan, "before-steps"), guideInline(paymentGuideBackupKit, "before-details")] },
+  "should-i-carry-cash-or-cards-in-china-as-a-tourist": { featuredImage: paymentGuideBackupKit, heroImage: paymentGuideMerchantScan, inlineImages: [guideInline(paymentTerminal, "before-steps"), guideInline(paymentGuideBackupKit, "before-details")] },
+  "which-china-travel-apps-should-i-install-before-flying": { featuredImage: airportPhone, heroImage: airportPhone, inlineImages: [guideInline(packing, "before-steps"), guideInline(qrPhone, "before-details")] },
+  "what-map-app-works-best-in-china-for-tourists": { featuredImage: cityImages.shanghai, heroImage: cityImages.shanghai, inlineImages: [guideInline(airportPhone, "before-steps"), guideInline(station, "before-details")] },
+  "how-do-foreigners-book-trains-and-rides-in-china": { featuredImage: train, heroImage: train, inlineImages: [guideInline(station, "before-steps"), guideInline(airportPhone, "before-details")] },
+  "what-counts-as-a-third-country-for-china-240-hour-transit": { featuredImage: boardingPass, heroImage: boardingPass, inlineImages: [guideInline(airport, "before-steps"), guideInline(passportLaptop, "before-details")] },
+  "when-does-china-240-hour-transit-period-start": { featuredImage: boardingPass, heroImage: airport, inlineImages: [guideInline(passportLaptop, "before-steps"), guideInline(airport, "before-details")] },
+  "which-ports-and-areas-work-for-china-240-hour-transit": { featuredImage: airport, heroImage: boardingPass, inlineImages: [guideInline(passportLaptop, "before-steps"), guideInline(cityImages.shanghai, "before-details")] },
 };
 
 const beijingStreet = image("/images/cities/details/beijing-hutong-street.webp", "Pedestrians, scooters and traditional buildings on a Beijing hutong street", "pexels-32067787");

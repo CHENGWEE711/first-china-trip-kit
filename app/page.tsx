@@ -34,6 +34,7 @@ import { publicPageImages } from "@/data/images";
 import { itineraries } from "@/data/itineraries";
 import { buildMetadata } from "@/lib/seo";
 import { absoluteUrl, siteConfig } from "@/lib/site";
+import { payhipUrls } from "@/lib/payhip";
 
 export const metadata: Metadata = buildMetadata({
   title: "First China Trip Kit | Visas, Payments, Apps & Itineraries",
@@ -186,7 +187,7 @@ const experienceLinks = [
 ] as const;
 
 export default function HomePage() {
-  const paymentGuideBuyUrl = process.env.NEXT_PUBLIC_PAYMENT_APPS_GUIDE_BUY_URL || "";
+  const paymentGuideBuyUrl = payhipUrls.paymentGuide;
   const featuredGuides = featuredGuideSlugs.flatMap((slug) =>
     guides.filter((guide) => guide.slug === slug),
   );

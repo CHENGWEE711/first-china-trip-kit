@@ -1437,5 +1437,19 @@
     "assetType": "internal",
     "sourceOwner": "First China Trip Kit",
     "generatedBy": "scripts/generate-checklist-share-card.py"
+  },
+  {
+    "creditId": "internal-arrival-setup-bundle-preview",
+    "localFile": "/products/previews/china-arrival-setup-bundle-preview-1.png",
+    "sourcePlatform": "First China Trip Kit",
+    "sourcePage": "scripts/generate-arrival-bundle-pdf.py",
+    "photographer": "First China Trip Kit",
+    "downloadDate": "2026-07-27",
+    "usage": "Rendered preview page for the China Arrival Setup Bundle PDF",
+    "license": "First-party generated product preview",
+    "licenseChecked": true,
+    "assetType": "internal",
+    "sourceOwner": "First China Trip Kit",
+    "generatedBy": "scripts/generate-arrival-bundle-pdf.py"
   }
 ]

@@ -1,3 +1,6 @@
+import { guideVisuals, type ContentImage } from "@/data/images";
+import { phase5GuideEntries } from "@/data/phase5-guides";
+
 export type GuideSection = {
   heading: string;
   body: string;
@@ -596,7 +599,7 @@ const guideEntries: GuideWithoutVisuals[] = [
   },
 ];
 
-export const guides: Guide[] = guideEntries.map((guide) => {
+export const guides: Guide[] = [...guideEntries, ...phase5GuideEntries].map((guide) => {
   const visuals = guideVisuals[guide.slug];
   if (!visuals) {
     throw new Error(`Missing explicit image configuration for guide: ${guide.slug}`);
@@ -607,4 +610,3 @@ export const guides: Guide[] = guideEntries.map((guide) => {
 export function getGuideBySlug(slug: string) {
   return guides.find((guide) => guide.slug === slug);
 }
-import { guideVisuals, type ContentImage } from "@/data/images";

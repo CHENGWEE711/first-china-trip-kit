@@ -5,6 +5,8 @@ import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { hasWhatsAppContact } from "@/lib/whatsapp";
 import { trackEvent } from "@/lib/analytics";
 import { siteConfig } from "@/lib/site";
+import { captureUtmAttribution } from "@/lib/utm";
+import { postWithTimeout } from "@/lib/client-request";
 
 type ContactFormProps = {
   source?: string;
@@ -36,6 +38,12 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       source_page: "/contact",
       placement: source,
     });
+    if (source === "custom-itinerary") {
+      trackEvent("itinerary_review_started", {
+        source_page: "/custom-itinerary",
+        placement: source,
+      });
+    }
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -48,6 +56,9 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
     const email = String(formData.get("email") || "").trim();
     const question = String(formData.get("main_question") || "").trim();
     const preferredReplyMethod = String(formData.get("preferred_reply_method") || "email");
+    const attribution = captureUtmAttribution();
+    formData.set("landing_page", window.location.pathname);
+    Object.entries(attribution).forEach(([key, value]) => formData.set(key, value));
     setContinueOnWhatsApp(false);
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -66,7 +77,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
     let data: { message?: string } = {};
 
     try {
-      response = await fetch("/api/contact", {
+      response = await postWithTimeout("/api/contact", {
         method: "POST",
         body: formData,
       });
@@ -91,6 +102,13 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
       interested_in_custom_itinerary:
         String(formData.get("interested_in_custom_itinerary") || "no") === "yes",
     });
+    if (source === "custom-itinerary") {
+      trackEvent("itinerary_review_submitted", {
+        source_page: "/custom-itinerary",
+        placement: source,
+        preferred_reply_method: preferredReplyMethod,
+      });
+    }
     setMessage(data.message || "Thanks! Your China trip question has been saved.");
     setContinueOnWhatsApp(preferredReplyMethod === "whatsapp" && whatsappEnabled);
     form.reset();
@@ -219,6 +237,11 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
           </label>
         </div>
       </fieldset>
+
+      <label className="flex min-h-11 items-start gap-3 rounded-md border border-ink/10 bg-mist px-4 py-3 text-sm leading-relaxed text-ink/72">
+        <input name="newsletter_opt_in" type="checkbox" value="yes" className="mt-1 h-4 w-4 shrink-0 accent-ember" />
+        <span>Send me the China arrival email sequence and product updates. I can unsubscribe in any email.</span>
+      </label>
 
       <button
         type="submit"

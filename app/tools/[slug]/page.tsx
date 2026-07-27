@@ -12,7 +12,7 @@ type PageProps = {
 };
 
 export function generateStaticParams() {
-  return toolKits.map((tool) => ({ slug: tool.slug }));
+  return toolKits.filter((tool) => tool.slug !== "china-arrival-readiness-checker").map((tool) => ({ slug: tool.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -35,6 +35,10 @@ export default async function ToolDetailPage({ params }: PageProps) {
   const tool = getToolBySlug(slug);
 
   if (!tool) {
+    notFound();
+  }
+
+  if (tool.type === "readiness") {
     notFound();
   }
 
