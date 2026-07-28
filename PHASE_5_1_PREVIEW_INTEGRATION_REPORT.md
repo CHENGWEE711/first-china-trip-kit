@@ -78,7 +78,7 @@ NEXT_PUBLIC_WHATSAPP_URL
 
 本轮重新进入真实 $19 Bundle 结账：商品、金额、国家选择和 PayPal/卡支付控件均正确。当前浏览器保存的是卖家侧 Payhip 会话，不能作为“与收款账户不同的受控买家”完成真实付款，也没有提交付款。
 
-**真实支付处理测试仍为 P0。** 需要一个不同于卖家收款账户、可接收交付邮件的受控买家邮箱与可用买家付款方式；到达最终 `Pay/Submit` 按钮后，必须由账户持有人针对该次 $19 扣款明确确认，才可提交。测试后是否退款也须由账户持有人决定。
+**Release Candidate Gate — 已延期。** **“Deferred to Release Candidate due to unavailable controlled buyer account.”** 当前 Phase 5.1 不再以真实扣款阻塞：三个产品入口、$19 商品、零金额订单、交付与 PDF 下载已经验收。完整真实支付步骤、不同于卖家收款账户的受控买家身份、最终 `Pay/Submit` 前的逐次明确确认，以及是否退款的决定均保留到 Release Candidate；不删除任何代码、测试或文档。
 
 ## 5. Brevo 联系人与表单验收
 
@@ -170,7 +170,6 @@ Tag Assistant 已连接 Preview，识别到唯一匹配的 Google tag，且已�
 
 1. **Brevo 五封自动化未完成。** Preview 工作流编辑器的第一方错误阻止动作保存和五封实际测试；工作流保持未启用。
 2. **GA4 DebugView 不稳定。** Tag Assistant 已验证真实 13 桌面 / 7 移动事件及无 PII，但 GA4 DebugView 未能稳定显示同一会话，缺少要求的最终证据。
-3. **真实 $19 支付处理测试未完成。** 结账页商品、金额和支付入口正确，但尚未使用不同于卖家收款账户的可收件买家身份；最终付款也未取得逐次明确确认。
 
 ### P1 — 生产授权前应补齐
 
@@ -182,6 +181,12 @@ Tag Assistant 已连接 Preview，识别到唯一匹配的 Google tag，且已�
 
 1. 等待 Brevo 对已提交的工作流编辑器错误支持请求作出回复；在修复前不启用或伪造自动化。
 2. 外部平台稳定后，比较 Preview 与本地 Lighthouse 差异。
+
+### Release Candidate Gate — 唯一延期付款门禁
+
+**真实 $19 支付测试：Deferred to Release Candidate due to unavailable controlled buyer account.**
+
+进入 Release Candidate 后，从 Preview/RC 页面开始，使用不同于卖家收款账户的受控买家邮箱和付款方式，复核 CTA 事件、结账、成功页、订单记录、交付邮件、PDF 下载与文件内容。到最终付款按钮时，必须重新取得账户持有人的单次明确扣款授权；不得自动提交。订单产生后是否退款由账户持有人按 Payhip 政策决定。
 
 ## 10. 回滚方案
 
@@ -195,6 +200,6 @@ Tag Assistant 已连接 Preview，识别到唯一匹配的 Google tag，且已�
 
 **不建议进入生产部署。**
 
-本轮已关闭 Supabase/Custom Itinerary 持久化 P0，确认 Payhip 三个产品入口和零金额交付，完成真实 Preview 事件触发的 Tag Assistant 证据，并通过所有本地质量门禁。Brevo 五封自动化、GA4 DebugView 稳定取证和真实 $19 付款仍为 P0。
+本轮已关闭 Supabase/Custom Itinerary 持久化 P0，确认 Payhip 三个产品入口和零金额交付，完成真实 Preview 事件触发的 Tag Assistant 证据，并通过所有本地质量门禁。当前仅 Brevo 五封自动化与 GA4 DebugView 稳定取证为 P0；真实 $19 付款已明确延期至 Release Candidate。
 
-等待人工审查、Brevo 平台修复、GA4 DebugView 复现，以及（仅在需要真实支付测试时）账户持有人的逐次付款确认。不得自动合并 `main`、部署 Production、修改正式域名或开始 Phase 6。
+若 Brevo 与 GA4 P0 全部关闭，结论只能是“进入 Release Candidate 付款门禁”，而不是部署 Production。等待 Brevo 平台修复、GA4 DebugView 复现及 Release Candidate 的逐次付款确认。不得自动合并 `main`、部署 Production、修改正式域名或开始 Phase 6。
