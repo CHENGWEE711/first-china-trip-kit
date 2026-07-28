@@ -12,7 +12,7 @@
 | 项目 | 证据 |
 | --- | --- |
 | 功能分支 | `feat/v3-phase4b-growth-platform-architecture` |
-| 当前分支 Commit | `cedb4bbc7b5c741ae07be0adc4b6c9ccdd5f9e25` — `fix: clarify inactive email automation delivery` |
+| Phase 5.1D 应用代码基线 Commit | `cedb4bbc7b5c741ae07be0adc4b6c9ccdd5f9e25` — `fix: clarify inactive email automation delivery` |
 | Preview 运行代码 Commit | `89853128e471181fc8fd3aa38647e88028f54d96` — `fix: fall back to Brevo when subscriber store is unavailable` |
 | 推送状态 | 当前功能分支已推送；本 Phase 5.1D 报告提交前，代码/测试基线为干净工作树。 |
 | Vercel 项目 | 既有项目 `chengwee711-4164s-projects/china-travel-kit`；未创建新项目。 |
