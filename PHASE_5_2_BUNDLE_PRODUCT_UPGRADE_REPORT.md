@@ -4,7 +4,7 @@
 **Assessment date:** 2026-07-29 (Asia/Shanghai)
 **Branch:** `feat/v3-phase4b-growth-platform-architecture`
 **Starting commit:** `22b41aafb704b2ba9b22659d462e3ded7e5f3fdd`
-**Final commit:** Pending the Phase 5.2A implementation commit
+**Final Bundle implementation commit:** `f01d5666af60e404933645c3286780f3c65de3ea` — `feat: upgrade arrival setup bundle product experience`
 **Working rule:** No `main` merge, Production deployment, `--prod`, domain/DNS change, Brevo activation, real $19 payment, refund, or Phase 6 work occurred in this phase.
 
 This report contains no environment-variable values, credentials, full test email addresses, payment details, Payhip order identifiers, or local user paths.
@@ -129,10 +129,12 @@ Before this P0 can close, the existing Payhip Bundle product must be opened in a
 
 | Item | Status |
 | --- | --- |
-| Existing project | Existing Vercel project only; no new project will be created. |
-| Preview source commit | Pending final implementation commit. |
-| Preview URL / Deployment ID | Pending Preview-only deployment. |
-| Preview noindex header / robots verification | Pending final Preview-only deployment. |
+| Existing project | Existing `chengwee711-4164s-projects/china-travel-kit`; no new project was created. |
+| Preview source commit | `f01d5666af60e404933645c3286780f3c65de3ea`. |
+| Preview URL | `https://china-travel-m916uirh7-chengwee711-4164s-projects.vercel.app` |
+| Deployment ID | `dpl_9Aoo6ho3V91t6yFtSH6pcqCjzgT8` |
+| Deployment result | Vercel Preview target, **Ready**; 603 output items generated. No `--prod`, promotion, alias, DNS or Production variable change. |
+| Preview noindex header / robots verification | Passed at the protected edge response: `X-Robots-Tag: noindex`; Preview is also Vercel SSO-protected. Direct unauthenticated retrieval of page HTML, `robots.txt` and sitemap therefore redirects to Vercel SSO, so remote HTML-only canonical/sitemap inspection is intentionally not claimed. Local production-build and browser regression cover the generated page contracts. |
 | Production | Unchanged by Phase 5.2A. |
 
 ## 9. Issues, rollback and release recommendation
@@ -140,7 +142,6 @@ Before this P0 can close, the existing Payhip Bundle product must be opened in a
 ### P0
 
 1. **Payhip multi-file delivery upload and single zero-amount end-to-end delivery verification are incomplete.** No authenticated, controllable Payhip dashboard session was available; no external product change has been made.
-2. **A fresh Phase 5.2A Preview has not yet been deployed/verified.** It follows the final commit and does not alter Production.
 
 ### P1
 
@@ -157,4 +158,4 @@ Before a Preview is created, return the feature branch to the recorded starting 
 
 ### Current recommendation
 
-**Not ready to recommend Release Candidate re-acceptance yet.** The implementation, PDF package and local quality gates pass, but the Payhip delivery P0 and refreshed Preview P0 must be closed first. No Production action is authorised by this report.
+**Not ready to recommend Release Candidate re-acceptance yet.** The implementation, PDF package, Preview deployment and local quality gates pass, but the Payhip delivery P0 must close first. No Production action is authorised by this report.
