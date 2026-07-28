@@ -1,8 +1,9 @@
-# Phase 5.1C — Final P0 Gate Closure（复验中，未获生产授权）
+# Phase 5.1D — External Platform Waiver Assessment & Release Candidate Preparation（未获生产授权）
 
 **项目：** First China Trip Kit<br>
 **验收日期：** 2026-07-28<br>
-**结论：** **不得合并 `main`，不得部署 Production。**
+**评估代码 Commit：** `cedb4bbc7b5c741ae07be0adc4b6c9ccdd5f9e25` — `fix: clarify inactive email automation delivery`<br>
+**当前结论：** **“Phase 5.1功能和技术门禁通过，允许进入Release Candidate最终验收；尚未授权生产部署。”** 不得合并 `main`，不得部署 Production。
 
 本报告仅记录实际观察与可重复的验证结果；不包含环境变量值、密钥、Token、测试邮箱、订单号、优惠码、支付链接或自由文本表单内容。
 
@@ -11,15 +12,17 @@
 | 项目 | 证据 |
 | --- | --- |
 | 功能分支 | `feat/v3-phase4b-growth-platform-architecture` |
-| 当前分支 Commit | `5854f68a82ea24a3cfa48d4f42025559448deb72` — `fix: restore itinerary review persistence` |
+| 当前分支 Commit | `cedb4bbc7b5c741ae07be0adc4b6c9ccdd5f9e25` — `fix: clarify inactive email automation delivery` |
 | Preview 运行代码 Commit | `89853128e471181fc8fd3aa38647e88028f54d96` — `fix: fall back to Brevo when subscriber store is unavailable` |
-| 推送状态 | 当前功能分支已推送；复验结束时工作树干净。 |
+| 推送状态 | 当前功能分支已推送；本 Phase 5.1D 报告提交前，代码/测试基线为干净工作树。 |
 | Vercel 项目 | 既有项目 `chengwee711-4164s-projects/china-travel-kit`；未创建新项目。 |
 | Preview URL | `https://china-travel-5co6kcyhi-chengwee711-4164s-projects.vercel.app` |
 | Deployment ID | `dpl_FxtmvEYAqog1qDatNB8QqrtS5KdC` |
 | 部署目标与状态 | `preview`，Vercel `Ready`；未使用 `--prod`、promote、alias、DNS 或正式域名变更。 |
 
 `5854f68` 只新增可审计的 Supabase 迁移与测试，不改变 Next.js 运行时代码、依赖、配置或 Vercel 变量。因此没有把它当作新的应用部署；现有 Preview 仍在验证正确的 Phase 5.1 运行代码，外部数据库状态已按该迁移补齐。
+
+`cedb4bb` 仅修正未启用 Brevo Workflow 时的用户可见交付措辞，并同步更新浏览器/单元测试；没有增加功能、改变外部环境变量，或创建新的 Preview / Production 部署。该提交已在本地生产构建和浏览器流中验证，进入 Release Candidate 时须作为待部署的候选版本复核。
 
 ### 本次最小可靠性修复
 
@@ -118,7 +121,17 @@ Preview QA 自动化保持未启用。2026-07-28 登录复验仍可见同一个 
 | 测试延时 3：行程与交通 | 未完成。 |
 | 测试延时 4：$19 Bundle | 未完成。 |
 
-**结果：P0。** 需先由 Brevo 修复其编辑器/动作保存错误，再以受控可收件邮箱使用短延时完成五封测试，随后恢复正式第 0、2、4、7、10 天节奏。
+**平台自动化结果：P1（书面豁免）。** 编辑器错误仍阻止五封实际送达验收，Workflow 保持 Inactive；但经以下核心交付依赖与页面承诺检查，它不再阻断用户在页面获得承诺的核心内容。支持工单仍处于等待状态，且没有获得支持单号。
+
+### Brevo 核心交付依赖与页面承诺核查（2026-07-28）
+
+| 路径 | 提交与数据保存证据 | 页面即时核心交付 | 是否依赖 Workflow | 页面承诺与失败处理 | 结论 |
+| --- | --- | --- | --- | --- | --- |
+| China Arrival Readiness Checker | Preview 已真实成功提交至 `/api/newsletter` 并写入 Brevo；重复联系人路径更新同一联系人。 | 12 题完成后，分数、红黄绿风险与待办直接显示；成功保存邮箱后页面直接显示 PDF 下载。 | 不依赖。结果在提交邮箱前已生成；PDF 为静态站内文件，不由五封 Workflow 交付。 | `cedb4bb` 已删除 “Check your inbox / follow-up sequence”；改为结果留在页面、立即下载 PDF、后续更新“when available”。Brevo/API 失败显示明确可重试错误，结果不消失。 | 通过。 |
+| Free Checklist | Preview Newsletter 成功与 Brevo 联系人写入已验证；Free Checklist Payhip 入口和零金额交付已验收。 | 成功后转至 `/thank-you`，其中直接显示免费清单；Payhip 的免费入口可独立获得清单。 | 不依赖。清单不是由 Workflow 邮件发放。 | 表单仅承诺清单在下一页打开；Provider 失败不跳转且显示安全失败信息。 | 通过。 |
+| Custom Itinerary Review | Preview 已从真实 UI 成功持久化至受 RLS 保护的 Supabase 表；可选订阅走服务端 Brevo 写入。 | 行程审核核心承诺是提交和保存，而非数字文件；保存成功后页面即时确认。 | 不依赖。核心提交先持久化，订阅是可选项。 | `cedb4bb` 将“email sequence is confirmed”改为记录“future travel updates”偏好；偏好写入失败时仍明确说明该偏好未保存，不把它伪装成成功。保留同意、隐私与每封邮件退订说明。 | 通过。 |
+
+降级条件逐项结论：Readiness 结果直接可见；Free Checklist 可从现有页面或 Payhip 获得；Itinerary 可真实持久化；没有核心产品依赖五封 Workflow；三页都没有承诺已发送邮件或必然收到五封邮件；联系人 API 仍可写入/更新 Brevo；失败状态与防重复提交已由代码和测试覆盖；2026-07-27T22:28:44Z 的去敏 Brevo 支持请求已记录；Workflow 继续 Inactive，未尝试启用。
 
 ## 7. GA4 DebugView 与事件验收
 
@@ -155,58 +168,84 @@ Tag Assistant 已连接 Preview，识别到唯一匹配的 Google tag，且已�
 
 这说明 Tag Assistant 的已发送命中不仅是应用数据层事件，而是带调试标记的真实 GA 收集请求；但它仍**不替代本阶段明确要求的 GA4 DebugView 最终截图/参数清单**。现有证据指向 GA4 平台摄取或 DebugView 展示不一致，而非网站未发出事件。
 
-**结果：P0。** 需解决 GA4 DebugView 的设备识别/展示不一致后，在同一 Preview 会话中重新截图并逐项登记实际参数、次数、桌面/移动结果和 PII 复核结论。
+**结果：P1（替代验收豁免）。** DebugView 不是事件派发、参数、PII 或去重检查的唯一证据，且它是唯一未通过的界面。以下替代证据包满足本阶段的事件派发验收；不将其表述为 DebugView 通过。
+
+### GA4 替代验收证据索引（2026-07-28）
+
+| 索引 | 证据与结论 |
+| --- | --- |
+| 1 | Tag Assistant 桌面端证据：上表全部 13 个事件从真实 Preview UI 各触发一次。 |
+| 2 | Tag Assistant 390px 移动端证据：`readiness_checker_started`、`readiness_checker_completed`、`readiness_result_email_submitted`、`payment_guide_viewed`、`payment_guide_buy_clicked`、`arrival_bundle_viewed`、`arrival_bundle_buy_clicked` 各验证。 |
+| 3 | 直接收集请求证据：真实 `g/collect` 请求已发送，非仅数据层推送。 |
+| 4 | 调试标记证据：同一请求带 `_dbg=1` 与 `debug_mode=true`。 |
+| 5 | 数据流匹配：Tag Assistant 中的 Measurement ID 与目标 GA4 网站数据流一致（不在报告写入该值）。 |
+| 6 | 数据流状态：目标数据流采集已启用。 |
+| 7 | 过滤器状态：仅发现处于 Testing 的 Internal Traffic 过滤器；没有 Active 的 Developer Traffic 排除过滤器。 |
+| 8 | 参数清单：桌面端各事件的 `source_page`、分数/状态/未解决数及批准的非 PII 业务参数已在 Tag Assistant 请求详情核对；完整事件名、触发动作与次数见本报告第 7 节表格。 |
+| 9 | 重复检查：13 个桌面事件及 7 个移动事件的受控动作均为一次触发；未发现明显重复。 |
+| 10 | PII 审计：请求和 Tag Assistant 参数不含邮箱、姓名、电话、WhatsApp 正文、行程自由文本、Brevo 标识或其他可识别信息。 |
+| 11 | DebugView 反证：2026-07-28 同一受控会话的 DebugView 持续显示“0 debug devices / 等待调试事件”；该截图及时间已在本次受控浏览器验收中保存。 |
+| 12 | 不一致说明：带有效调试标记的真实收集请求已命中正确数据流，但 DebugView 和数据流近期接收展示仍为空，指向 GA4 平台摄取/展示不一致，而非网站未派发命中。 |
+
+> “GA4 event dispatch was verified through Tag Assistant and direct collection-request evidence. DebugView device ingestion/display remained inconsistent despite valid debug-marked hits. This is accepted as a P1 observability limitation and must be rechecked through Realtime and standard event reports after controlled production deployment.”
 
 ## 8. 回归、构建与视口
 
 | 门禁 | 最新结果 |
 | --- | --- |
-| `npm test` | 通过，72/72。 |
+| `npm test` | 通过，73/73（包含 Workflow Inactive 时不承诺即时或序列邮件交付的防回归测试）。 |
 | `npm run lint` | 通过。 |
 | `npm run typecheck` | 通过。 |
 | 标准 production build | 通过，74 条应用路由。 |
 | 缺失关键环境变量 build | 通过；缺少 Payhip、GA、Brevo、Supabase 时安全失败。 |
-| 新工具浏览器回归 | `tests/phase5/arrival-readiness.spec.ts` Chromium Desktop 通过；覆盖完整 lead-flow mock、SEO/PII 与 390/768/1440/1920px。 |
+| 新工具浏览器回归 | `tests/phase5/arrival-readiness.spec.ts` Chromium Desktop 7/7 通过；覆盖完整 lead-flow mock、SEO/PII 与 390/768/1440/1920px。 |
 | 既有关键回归 | `tests/live/phase5-regression.spec.ts` Chromium Desktop 通过。 |
 | Preview 页面健康 | Readiness、Store、Bundle、Contact/Custom Itinerary 均渲染；未见应用自身 console error。 |
 | Lighthouse | 尚未在受保护 Preview 重跑和记录分数；P1。 |
 
 ## 9. P0 / P1 / P2 与已知问题
 
-### P0 — 阻止上线
+### P0 — 当前 Phase 5.1 豁免范围内无阻塞项
 
-1. **Brevo 五封自动化未完成。** Preview 工作流编辑器的第一方错误阻止动作保存和五封实际测试；工作流保持未启用。
-2. **GA4 DebugView 摄取/展示不一致。** Tag Assistant 已验证真实 13 桌面 / 7 移动事件及无 PII；新会话也确认已发送带 `_dbg=1` / `debug_mode=true` 的 GA 收集命中、正确数据流和启用的采集状态，但 DebugView 仍为 0 个设备，缺少要求的最终证据。
+Brevo 五封 Workflow 与 GA4 DebugView 已按第 6、7 节的限定理由从 P0 调整为 P1。真实 $19 付款仍是 **Release Candidate Gate**，不是 Production 部署授权；本阶段没有获得发布授权。
 
-### P1 — 生产授权前应补齐
+### P1 — 受控生产前必须跟踪或复核
 
-1. 在 Brevo 联系人 UI 中逐项复核三来源的 `LEAD_SOURCE`、`LEAD_MAGNET`、`READINESS_SCORE`、`READINESS_RISK_LEVEL`、`LANDING_PAGE` 与 UTM 值。
-2. 对 Vercel Preview 重跑 Lighthouse（性能、无障碍、最佳实践、SEO），并记录路由与分数。
-3. 对 Preview 全页面执行最终内部链接/404 检查并记录结果。
+1. **Brevo Workflow 平台错误。** 工作流继续 Inactive；等待已提交的支持请求恢复编辑/保存能力后，使用短延时补做五封送达、移动端、退订、回复地址和 UTM 验收。它不阻断当前页面核心交付。
+2. **GA4 DebugView 可观察性限制。** 不能宣称 DebugView 通过；受控生产部署后，必须在 Realtime 和标准事件报告再次核对摄取与参数。
+3. 在 Brevo 联系人 UI 中逐项复核三来源的 `LEAD_SOURCE`、`LEAD_MAGNET`、`READINESS_SCORE`、`READINESS_RISK_LEVEL`、`LANDING_PAGE` 与 UTM 值。
+4. 对承载 `cedb4bb` 的 Release Candidate Preview 重跑 Lighthouse（性能、无障碍、最佳实践、SEO）并记录路由与分数。
+5. 对该 Release Candidate Preview 全页面执行最终内部链接/404、sitemap、robots、canonical 与 response-header 检查并记录结果。
 
 ### P2 — 后续优化
 
-1. 等待 Brevo 对已提交的工作流编辑器错误支持请求作出回复；在修复前不启用或伪造自动化。
-2. 外部平台稳定后，比较 Preview 与本地 Lighthouse 差异。
+1. 外部平台稳定后，比较 Release Candidate Preview 与本地 Lighthouse 差异。
 
-### Release Candidate Gate — 唯一延期付款门禁
+## 10. Release Candidate Gate — 唯一剩余付款门禁
 
 **真实 $19 支付测试：Deferred to Release Candidate due to unavailable controlled buyer account.**
 
-进入 Release Candidate 后，从 Preview/RC 页面开始，使用不同于卖家收款账户的受控买家邮箱和付款方式，复核 CTA 事件、结账、成功页、订单记录、交付邮件、PDF 下载与文件内容。到最终付款按钮时，必须重新取得账户持有人的单次明确扣款授权；不得自动提交。订单产生后是否退款由账户持有人按 Payhip 政策决定。
+进入 Release Candidate 后，依序完成且仅在获得单次明确扣款授权后才提交付款：
 
-## 10. 回滚方案
+1. 从部署了 `cedb4bb` 的受控 RC 页面开始，使用不同于卖家收款账户的受控买家邮箱与付款方式。
+2. 完成一次真实 $19 Bundle 支付，验证 CTA 事件、结账、成功页、订单记录、支付状态、交付邮件、PDF 下载和文件内容。
+3. 按测试方案及 Payhip 政策决定并执行退款；不得在报告保存买方或订单个人数据。
+4. 重新执行最终生产回归、确认回滚 Commit，并取得单独的 Production 授权。
+
+该 Gate 没有被删除、自动批准或提前执行。完成它也不等于自动部署 Production。
+
+## 11. 回滚方案
 
 1. 保持功能分支未合并；不得以 promote 或 production deploy 处理当前 Preview。
-2. 如需撤回本次应用仓库改动，回滚目标为 `9f609b8f223c1f8360b627e5bbf30b6952b7fc44`，然后只创建新的 Preview 验证，不重写历史。
+2. 如需撤回本 Phase 5.1D 的最小文案与测试改动，回滚目标为 `724a89912c722d635bc85474bb9e16a4cc597f5c`，然后只创建新的 Preview / RC 验证，不重写历史。
 3. 本次数据库迁移是最小、加性且已有真实提交记录；不建议在没有数据保留决策时删除表或测试记录。任何数据库回退须单独审批并以可恢复方式执行。
 4. 如需撤销 Preview，只删除该 Preview deployment 与其 Preview 专用变量绑定；不改变 Production 域名、DNS、别名或 Production 变量。
 5. 真实付款测试产生订单后，是否退款由账户持有人决定，并按 Payhip 政策处理；不得把订单或买方数据写入本报告。
 
-## 11. 最终生产建议
+## 12. 当前生产建议
 
-**不建议进入生产部署。**
+**允许进入 Release Candidate 最终验收；尚未授权生产部署。**
 
-本轮已关闭 Supabase/Custom Itinerary 持久化 P0，确认 Payhip 三个产品入口和零金额交付，完成真实 Preview 事件触发的 Tag Assistant 证据，并通过所有本地质量门禁。当前仅 Brevo 五封自动化与 GA4 DebugView 稳定取证为 P0；真实 $19 付款已明确延期至 Release Candidate。
+本轮已关闭 Supabase/Custom Itinerary 持久化 P0，确认 Payhip 三个产品入口和零金额交付，完成真实 Preview 事件触发的 Tag Assistant 证据，并通过所有本地质量门禁。Brevo 五封自动化不影响三条页面核心交付，且页面现已移除无法兑现的即时/序列邮件承诺；GA4 已有真实 Tag Assistant 与收集请求替代验收包，但 DebugView 仍是 P1 可观察性限制。
 
-若 Brevo 与 GA4 P0 全部关闭，结论只能是“进入 Release Candidate 付款门禁”，而不是部署 Production。等待 Brevo 平台修复、GA4 DebugView 复现及 Release Candidate 的逐次付款确认。不得自动合并 `main`、部署 Production、修改正式域名或开始 Phase 6。
+因此当前结论为：**“Phase 5.1功能和技术门禁通过，允许进入Release Candidate最终验收；尚未授权生产部署。”** Release Candidate 仍必须完成真实 $19 付款、退款决策/执行、最终回归和单独授权。不得自动合并 `main`、部署 Production、修改正式域名或开始 Phase 6。
