@@ -106,7 +106,7 @@ NEXT_PUBLIC_WHATSAPP_URL
 
 ## 6. Brevo 五封自动化
 
-Preview QA 自动化保持未启用。登录复验可见同一个 Preview 工作流、正确的名单触发器和一个首封邮件节点，但该节点仍标为“需要定义并保存”。当打开其编辑操作时，Brevo 工作流前端再次稳定出现第一方 `TypeError: f?.map is not a function`；因此不能可靠编辑、保存、添加后续等待/邮件，或执行测试。
+Preview QA 自动化保持未启用。2026-07-28 登录复验仍可见同一个 Preview 工作流、正确的名单触发器和一个首封邮件节点，但该节点仍标为“需要定义并保存”。当打开其编辑操作时，Brevo 工作流前端再次稳定出现第一方 `TypeError: f?.map is not a function`；因此不能可靠编辑、保存、添加后续等待/邮件，或执行测试。
 
 已在 2026-07-27T22:28:44Z 向 Brevo Help Center 提交去敏支持请求；提交页未返回可记录的支持单号。为避免误发、重复发送或污染名单，未启用该自动化，也没有伪造发送、移动端、退订、回复地址或 UTM 送达证据。
 
@@ -146,7 +146,14 @@ Tag Assistant 已连接 Preview，识别到唯一匹配的 Google tag，且已�
 
 ### 未完成：稳定的 GA4 DebugView 取证
 
-登录的正确 GA4 媒体资源曾短暂显示 Preview 的 `page_view`、Checker 与 Bundle 事件；但重新载入后 DebugView 又显示 `0` 个调试设备及空事件面板，未能稳定保留或展示本轮全部 13 个桌面与 7 个移动端事件。因此 Tag Assistant 的已发送命中是强外部等价证据，但**不替代本阶段明确要求的 GA4 DebugView 最终截图/参数清单**。
+2026-07-28 已以全新的 Tag Assistant / Preview / GA4 会话再次复现：
+
+- Preview 向 GA 收集端点实际发送 `readiness_checker_started` 命中；命中含 `_dbg=1` 与 `debug_mode=true`，并包含预期的非 PII 参数。
+- Tag Assistant 识别的衡量 ID 与当前 GA4 网站数据流一致；数据流采集状态为已启用。
+- GA4 当前仅有 Internal Traffic 排除过滤器，状态为 Testing；未发现 Active 的开发者流量排除过滤器。
+- 但同一正确媒体资源的 DebugView 仍显示“等待调试事件 / 0 个调试设备”，网站数据流也显示近期未收到数据。
+
+这说明 Tag Assistant 的已发送命中不仅是应用数据层事件，而是带调试标记的真实 GA 收集请求；但它仍**不替代本阶段明确要求的 GA4 DebugView 最终截图/参数清单**。现有证据指向 GA4 平台摄取或 DebugView 展示不一致，而非网站未发出事件。
 
 **结果：P0。** 需解决 GA4 DebugView 的设备识别/展示不一致后，在同一 Preview 会话中重新截图并逐项登记实际参数、次数、桌面/移动结果和 PII 复核结论。
 
@@ -169,7 +176,7 @@ Tag Assistant 已连接 Preview，识别到唯一匹配的 Google tag，且已�
 ### P0 — 阻止上线
 
 1. **Brevo 五封自动化未完成。** Preview 工作流编辑器的第一方错误阻止动作保存和五封实际测试；工作流保持未启用。
-2. **GA4 DebugView 不稳定。** Tag Assistant 已验证真实 13 桌面 / 7 移动事件及无 PII，但 GA4 DebugView 未能稳定显示同一会话，缺少要求的最终证据。
+2. **GA4 DebugView 摄取/展示不一致。** Tag Assistant 已验证真实 13 桌面 / 7 移动事件及无 PII；新会话也确认已发送带 `_dbg=1` / `debug_mode=true` 的 GA 收集命中、正确数据流和启用的采集状态，但 DebugView 仍为 0 个设备，缺少要求的最终证据。
 
 ### P1 — 生产授权前应补齐
 
