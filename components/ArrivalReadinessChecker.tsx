@@ -35,6 +35,16 @@ export function ArrivalReadinessChecker() {
   const hasTrackedCompletion = useRef(false);
   const complete = Object.keys(answers).length === arrivalReadinessQuestions.length;
   const result = useMemo(() => getArrivalReadinessResult(answers), [answers]);
+  const bundleModules = useMemo(() => {
+    const missing = new Set(result.todos.map((item) => item.id));
+    const modules: string[] = [];
+    if (missing.has("primary-payment") || missing.has("payment-backup")) modules.push("Payment & Apps Setup Guide plus the payment decision tree");
+    if (missing.has("data-plan") || missing.has("arrival-apps") || missing.has("arrival-power")) modules.push("internet setup plan plus the No Mobile Internet flowchart");
+    if (missing.has("hotel-address")) modules.push("Mobile Address Card plus the fillable Arrival Sheet");
+    if (missing.has("airport-transfer") || missing.has("train-details")) modules.push("airport-or-station-to-hotel setup plus the station confusion flowchart");
+    if (missing.has("first-day-test") || missing.has("emergency-plan")) modules.push("first-24-hours timeline plus offline quick cards");
+    return modules;
+  }, [result.todos]);
 
   function setAnswer(questionId: string, value: boolean) {
     if (!hasTrackedStart.current) {
@@ -199,6 +209,18 @@ export function ArrivalReadinessChecker() {
             })}
           </div>
 
+          {bundleModules.length > 0 ? (
+            <section className="mt-6 rounded-lg border border-jade/30 bg-mist p-5">
+              <p className="text-sm font-bold uppercase tracking-wide text-jade">Targeted Bundle modules</p>
+              <h3 className="mt-2 text-2xl font-bold leading-tight text-ink">Your result shows gaps the Bundle is built to close.</h3>
+              <p className="mt-2 text-base leading-relaxed text-ink/68">The $19 Bundle includes the complete $7 Payment &amp; Apps Guide plus the offline tools for these areas. It is a planning aid, not a payment, entry or transport guarantee.</p>
+              <ul className="mt-4 grid gap-2 text-sm leading-relaxed text-ink/74">
+                {bundleModules.map((module) => <li key={module} className="border-l-2 border-jade/45 pl-3">{module}</li>)}
+              </ul>
+              <Link href="/products/china-arrival-setup-bundle" className="mt-5 inline-flex min-h-11 items-center font-semibold text-ember underline underline-offset-4 hover:text-ember-hover">Explore the Arrival Setup Bundle</Link>
+            </section>
+          ) : null}
+
           <section className="mt-6 rounded-lg bg-ink p-5 text-white">
             <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
               <div>
@@ -217,7 +239,7 @@ export function ArrivalReadinessChecker() {
             </form>
             {emailMessage ? <p role={emailStatus === "error" ? "alert" : "status"} className={`mt-3 text-sm ${emailStatus === "error" ? "text-[#ffb3aa]" : "text-mist"}`}>{emailMessage}</p> : null}
             {emailStatus === "success" ? (
-              <a href="/products/china-arrival-setup-bundle.pdf" download className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md border border-white/25 px-4 py-2 text-base font-semibold text-white hover:bg-white/10"><Download aria-hidden="true" size={18} />Download the PDF checklist</a>
+              <a href="/china-first-time-visitor-checklist.pdf" download className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md border border-white/25 px-4 py-2 text-base font-semibold text-white hover:bg-white/10"><Download aria-hidden="true" size={18} />Download the free PDF checklist</a>
             ) : null}
           </section>
         </section>

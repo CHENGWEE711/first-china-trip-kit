@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
 import { ProductActionButton } from "@/components/ProductActionButton";
 import type { Product } from "@/data/products";
@@ -46,8 +47,8 @@ export function ProductCard({ product }: ProductCardProps) {
     ? purchaseUrl
       ? "Download / Support on Payhip"
       : "Download Free Checklist"
-    : isArrivalBundle && !purchaseUrl
-      ? "View bundle details"
+    : isArrivalBundle
+      ? "View Bundle details"
     : isPaymentAppsGuide && purchaseUrl
       ? "Buy on Payhip — $7"
       : `Buy now — ${product.price}`;
@@ -97,6 +98,26 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         </a>
       ) : null}
+      {isArrivalBundle ? (
+        <Link
+          href="/products/china-arrival-setup-bundle#bundle-preview"
+          className="mt-4 overflow-hidden rounded-md border border-ink/10 bg-sand shadow-soft transition hover:border-ember/35"
+        >
+          <Image
+            src="/products/previews/arrival-bundle-v2-setup-routes.png"
+            alt="15, 30 and 60 minute setup route preview for the China Arrival Setup Bundle"
+            width={900}
+            height={1164}
+            loading="eager"
+            sizes="(min-width: 1024px) 30vw, 100vw"
+            className="h-auto w-full"
+          />
+          <span className="block border-t border-ink/10 p-4">
+            <span className="block text-sm font-bold uppercase text-ember">7 focused files included</span>
+            <span className="mt-1 block text-sm leading-relaxed text-ink/62">See genuine setup routes, offline cards, flowcharts and the fillable Arrival Sheet.</span>
+          </span>
+        </Link>
+      ) : null}
       <p className="mt-4 text-sm font-bold uppercase text-ink/48">Best for</p>
       <p className="mt-1 text-base text-ink/68">{product.bestFor}</p>
       {isPaymentAppsGuide ? (
@@ -129,7 +150,11 @@ export function ProductCard({ product }: ProductCardProps) {
       ) : null}
       <p className="mt-4 text-sm text-ink/58">{product.refundNote}</p>
       <div className="mt-auto pt-1">
-        {canBuy ? (
+        {hasProductPage ? (
+          <Link href="/products/china-arrival-setup-bundle" className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-5 py-3 text-center text-[15px] font-semibold text-white shadow-soft transition hover:bg-ember-hover sm:w-fit">
+            {actionLabel}
+          </Link>
+        ) : canBuy ? (
           <ProductActionButton
             href={actionHref}
             className="mt-5"
@@ -142,10 +167,6 @@ export function ProductCard({ product }: ProductCardProps) {
             productId={product.id}
             price={product.price.replace("$", "")}
           />
-        ) : hasProductPage ? (
-          <a href="/products/china-arrival-setup-bundle" className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-ember px-5 py-3 text-center text-[15px] font-semibold text-white shadow-soft transition hover:bg-ember-hover sm:w-fit">
-            {actionLabel}
-          </a>
         ) : (
           <div className="mt-5 rounded-md border border-ember/25 bg-sand p-4" role="status">
             <p className="font-bold text-ink">Secure checkout is temporarily unavailable.</p>

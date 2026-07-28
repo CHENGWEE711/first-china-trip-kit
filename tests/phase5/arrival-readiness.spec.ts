@@ -79,7 +79,13 @@ test("bundle view and custom-itinerary review events use the approved privacy-sa
     window.dataLayer = [];
   });
   await page.goto("/products/china-arrival-setup-bundle");
-  await expect(page.getByRole("heading", { name: "China Arrival Setup Bundle", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Arrive in China with payments, internet, addresses and your first ride already sorted." })).toBeVisible();
+  await expect.poll(async () => page.evaluate(() =>
+    (window.dataLayer || []).some((entry) => {
+      if (entry && typeof entry === "object" && "event" in entry) return entry.event === "arrival_bundle_viewed";
+      return Array.isArray(entry) && entry[0] === "event" && entry[1] === "arrival_bundle_viewed";
+    }),
+  )).toBe(true);
   let events = await page.evaluate(() =>
     (window.dataLayer || [])
       .flatMap((entry) => {

@@ -5,6 +5,7 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { ProductActionButton } from "@/components/ProductActionButton";
 import { ProductPageView } from "@/components/ProductPageView";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductLadderComparison } from "@/components/ProductLadderComparison";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { products } from "@/data/products";
@@ -12,6 +13,8 @@ import { buildMetadata, productJsonLd } from "@/lib/seo";
 import { hasWhatsAppContact } from "@/lib/whatsapp";
 import { siteConfig } from "@/lib/site";
 import { payhipUrls } from "@/lib/payhip";
+
+// ProductLadderComparison owns the one responsive freeVsPaidRows.map rendering.
 
 export const metadata: Metadata = buildMetadata({
   title: "Printable China Travel Kits | First China Trip Kit Store",
@@ -24,59 +27,6 @@ export const metadata: Metadata = buildMetadata({
   imageAlt:
     "Free China First-Trip Visitor Checklist poster with a QR code linking to First China Trip Kit",
 });
-
-const freeVsPaidRows = [
-  {
-    feature: "Pre-flight checklist",
-    free: "Yes",
-    paid: "Yes",
-  },
-  {
-    feature: "Arrival day checklist",
-    free: "Yes",
-    paid: "Yes",
-  },
-  {
-    feature: "Alipay setup details",
-    free: "Basic reminder",
-    paid: "Detailed checklist",
-  },
-  {
-    feature: "WeChat Pay backup plan",
-    free: "Basic reminder",
-    paid: "Detailed checklist",
-  },
-  {
-    feature: "Payment failure troubleshooting",
-    free: "No",
-    paid: "Yes",
-  },
-  {
-    feature: "Essential app stack",
-    free: "Basic list",
-    paid: "Detailed app table",
-  },
-  {
-    feature: "Chinese payment phrases",
-    free: "Basic",
-    paid: "Expanded phrase cards",
-  },
-  {
-    feature: "Printable offline cards",
-    free: "Limited",
-    paid: "Yes",
-  },
-  {
-    feature: "Decision tree",
-    free: "No",
-    paid: "Yes",
-  },
-  {
-    feature: "Best for",
-    free: "Quick prep",
-    paid: "Anxious first-time travelers",
-  },
-];
 
 const insideGuideCards = [
   {
@@ -211,7 +161,9 @@ export default function StorePage() {
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink/72">
               Start with the free checklist, then get the $7 Payment & Apps Setup
               Guide if you want printable cards, setup checklists, and
-              troubleshooting tables for your first days in China.
+              troubleshooting tables for your first days in China. Choose the $19
+              Arrival Setup Bundle when you also want internet, address, transport,
+              first-24-hours and offline fallback tools.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ProductActionButton
@@ -318,7 +270,7 @@ export default function StorePage() {
             deeper troubleshooting and offline backup cards.
           </p>
         </div>
-        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3">
           {products.filter((product) => product.status === "available").map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -408,48 +360,7 @@ export default function StorePage() {
         </div>
       </section>
 
-      <section id="free-vs-paid" className="bg-mist px-4 py-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-7 max-w-3xl">
-            <p className="mb-2 text-sm font-bold uppercase text-ember">Compare</p>
-            <h2 className="text-3xl font-bold leading-tight text-ink">
-              Free checklist vs. paid setup guide
-            </h2>
-          </div>
-          <div className="overflow-hidden rounded-lg border border-ink/10 bg-paper shadow-soft">
-            <div className="hidden grid-cols-[1.1fr_0.9fr_1fr] gap-4 border-b border-ink/10 bg-ink px-5 py-4 text-sm font-bold uppercase text-white md:grid">
-              <span>Feature</span>
-              <span>Free Checklist</span>
-              <span>Payment & Apps Setup Guide</span>
-            </div>
-            <div className="divide-y divide-ink/10">
-              {freeVsPaidRows.map((row) => (
-                <div
-                  key={row.feature}
-                  className="grid gap-3 px-5 py-4 text-base text-ink/70 md:grid-cols-[1.1fr_0.9fr_1fr] md:gap-4"
-                >
-                  <div>
-                    <p className="text-xs font-bold uppercase text-ink/42 md:hidden">Feature</p>
-                    <p className="font-semibold text-ink">{row.feature}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase text-ink/42 md:hidden">
-                      Free Checklist
-                    </p>
-                    <p>{row.free}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase text-ink/42 md:hidden">
-                      Payment & Apps Setup Guide
-                    </p>
-                    <p>{row.paid}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <ProductLadderComparison id="free-vs-paid" title="Free checklist, $7 guide or $19 arrival system" />
 
       <section className="bg-paper px-4 py-12">
         <div className="mx-auto max-w-7xl">

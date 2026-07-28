@@ -12,6 +12,7 @@ pnpm-debug.log*
 .DS_Store
 tmp
 output
+/product-assets/
 *.tsbuildinfo
 playwright-report
 test-results

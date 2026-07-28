@@ -22,7 +22,7 @@ from reportlab.platypus import (
 )
 
 
-OUTPUT_PATH = Path("public/products/china-payment-apps-setup-guide.pdf")
+OUTPUT_PATH = Path("product-assets/china-payment-apps-setup-guide.pdf")
 PREVIEW_DIR = Path("public/products/previews")
 TMP_PREVIEW_DIR = Path("tmp/pdfs/payment-apps-previews")
 FONT_PATH = Path("/System/Library/Fonts/Supplemental/Arial Unicode.ttf")
@@ -47,7 +47,8 @@ PINK = colors.HexColor("#F4E0DC")
 RAW_SITE_URL = os.environ.get("NEXT_PUBLIC_SITE_URL", "https://www.firstchinatripkit.com")
 DISPLAY_SITE_URL = RAW_SITE_URL.replace("https://", "").replace("http://", "").rstrip("/")
 CONTACT_EMAIL = "hello@firstchinatripkit.com"
-LAST_UPDATED = "July 2026"
+PRODUCT_VERSION = "1.1"
+LAST_UPDATED = "July 29, 2026"
 
 
 if FONT_PATH.exists():
@@ -603,7 +604,7 @@ def cover_page(story):
                 )
             ],
             [CoverGraphic()],
-            [p(f"{DISPLAY_SITE_URL}<br/>{CONTACT_EMAIL}<br/>Last updated: {LAST_UPDATED}", "CoverMeta")],
+            [p(f"Version {PRODUCT_VERSION} - Included in the China Arrival Setup Bundle<br/>{DISPLAY_SITE_URL}<br/>{CONTACT_EMAIL}<br/>Last reviewed: {LAST_UPDATED}", "CoverMeta")],
         ],
         colWidths=[CONTENT_WIDTH],
     )
