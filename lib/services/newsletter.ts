@@ -24,9 +24,9 @@ type SubscribeResult = {
 };
 
 const successMessage =
-  "Thanks! You're subscribed. Your China First Trip Checklist is ready on the next page.";
+  "Thanks! Your email preference was saved. Your China First Trip Checklist is ready on the next page.";
 const savedWithoutDeliveryMessage =
-  "Thanks! Your email was saved. Automated email delivery is temporarily unavailable, so download the checklist on the next page.";
+  "Thanks! Your email preference was saved. No automated email is scheduled right now, so download the checklist on the next page.";
 const providerTimeoutMs = 8_000;
 
 export async function subscribeToNewsletter({
@@ -105,7 +105,7 @@ export async function subscribeToNewsletter({
         ok: stored.status === 409,
         message:
           stored.status === 409
-            ? "You’re already subscribed. We could not refresh the email sequence right now."
+            ? "Your email preference is already saved. We could not refresh it right now."
             : savedWithoutDeliveryMessage,
         provider: stored.status === 409 ? "supabase+brevo" : "supabase",
         deliveryStatus: "failed",
@@ -294,7 +294,7 @@ async function subscribeWithBrevo({
     if (!addToList.ok) {
       return {
         ok: false,
-        message: "Your email could not be added to the welcome sequence yet.",
+        message: "We could not save your email preference for future travel updates. Please try again later.",
         provider: "brevo",
         deliveryStatus: "failed",
         status: addToList.status,
@@ -312,7 +312,7 @@ async function subscribeWithBrevo({
   if (existingContact.status !== 404) {
     return {
       ok: false,
-      message: "Your email could not be added to the welcome sequence yet.",
+      message: "We could not save your email preference for future travel updates. Please try again later.",
       provider: "brevo",
       deliveryStatus: "failed",
       status: existingContact.status,
@@ -355,7 +355,7 @@ async function subscribeWithBrevo({
 
     return {
       ok: false,
-      message: "Your email could not be added to the welcome sequence yet.",
+      message: "We could not save your email preference for future travel updates. Please try again later.",
       provider: "brevo",
       deliveryStatus: "failed",
       status: response.status,
@@ -470,7 +470,7 @@ async function subscribeWithResend({
 function brevoUnavailableResult(): SubscribeResult {
   return {
     ok: false,
-    message: "Your email could not be added to the welcome sequence yet.",
+    message: "We could not save your email preference for future travel updates. Please try again later.",
     provider: "brevo",
     deliveryStatus: "failed",
     status: 503,

@@ -90,7 +90,7 @@ export function NewsletterForm({
     setStatus("success");
     setMessage(
       data.message ||
-        "Thanks! You're subscribed. Your China First Trip Checklist is ready on the next page.",
+        "Thanks! Your email preference was saved. Your China First Trip Checklist is ready on the next page.",
     );
     if (analyticsVariant === "landing" && landingName) {
       trackLandingEvent("landing_newsletter_signup", {

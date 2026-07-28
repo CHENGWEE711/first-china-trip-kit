@@ -144,8 +144,8 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       message: subscription.ok
-        ? "Thanks! Your route details are saved and your email sequence is confirmed."
-        : "Thanks! Your route details are saved. The email sequence is temporarily unavailable.",
+        ? "Thanks! Your route details are saved. Your preference for future travel updates is recorded."
+        : "Thanks! Your route details are saved. We could not save your preference for future travel updates.",
       provider: result.provider,
       delivery_status: subscription.deliveryStatus || "failed",
     });

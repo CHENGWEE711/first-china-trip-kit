@@ -195,6 +195,27 @@ test("Preview integration keeps indexing, analytics debug, Payhip variables and 
   assert.equal(sanitizePlainText('<img src=x onerror="alert(1)"> First\u0000 traveler ', 120), "First traveler");
 });
 
+test("inactive Brevo automation does not promise immediate or sequenced email delivery", async () => {
+  const [checker, newsletterForm, contactForm, contactRoute, newsletterService] = await Promise.all([
+    readFile(new URL("components/ArrivalReadinessChecker.tsx", root), "utf8"),
+    readFile(new URL("components/NewsletterForm.tsx", root), "utf8"),
+    readFile(new URL("components/ContactForm.tsx", root), "utf8"),
+    readFile(new URL("app/api/contact/route.ts", root), "utf8"),
+    readFile(new URL("lib/services/newsletter.ts", root), "utf8"),
+  ]);
+
+  assert.match(checker, /Your full result stays on this page\./);
+  assert.match(checker, /Download your PDF checklist now\./);
+  assert.doesNotMatch(checker, /Check your inbox|follow-up preparation sequence/i);
+  assert.match(newsletterForm, /checklist opens on the next page/i);
+  assert.match(contactForm, /optional China travel tips and product updates when they are available/i);
+  assert.match(contactForm, /unsubscribe in any email/i);
+  assert.doesNotMatch(`${contactForm}\n${contactRoute}`, /email sequence is confirmed|email sequence is temporarily unavailable/i);
+  assert.match(contactRoute, /preference for future travel updates is recorded/i);
+  assert.match(newsletterService, /No automated email is scheduled right now/);
+  assert.doesNotMatch(newsletterService, /welcome sequence/i);
+});
+
 test("Itinerary Review has an auditable, browser-inaccessible contact-message migration", async () => {
   const migration = await readFile(
     new URL("supabase/migrations/20260728070000_create_contact_messages.sql", root),

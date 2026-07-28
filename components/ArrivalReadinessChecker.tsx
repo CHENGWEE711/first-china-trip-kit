@@ -65,7 +65,7 @@ export function ArrivalReadinessChecker() {
     const normalizedEmail = email.trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
       setEmailStatus("error");
-      setEmailMessage("Enter a valid email address to receive the full checklist.");
+      setEmailMessage("Enter a valid email address to receive optional travel updates.");
       return;
     }
 
@@ -95,7 +95,7 @@ export function ArrivalReadinessChecker() {
         return;
       }
       setEmailStatus("success");
-      setEmailMessage("Your full arrival checklist is ready below. Check your inbox for the follow-up sequence.");
+      setEmailMessage("Your arrival checklist remains on this page. Download your PDF checklist now. Optional travel updates may be sent when available.");
       trackEvent("readiness_result_email_submitted", {
         source_page: "/tools/china-arrival-readiness-checker",
         score: result.score,
@@ -202,9 +202,9 @@ export function ArrivalReadinessChecker() {
           <section className="mt-6 rounded-lg bg-ink p-5 text-white">
             <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
               <div>
-                <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-mist"><Mail aria-hidden="true" size={18} />Email the full result</p>
-                <h3 className="mt-2 text-2xl font-bold leading-tight">Get your complete checklist and arrival bundle recommendation</h3>
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/72">Receive the extended checklist, follow-up preparation sequence and a PDF copy. We only send your email and attribution to the mailing service, never your answers.</p>
+                <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-mist"><Mail aria-hidden="true" size={18} />Save your result for optional travel updates</p>
+                <h3 className="mt-2 text-2xl font-bold leading-tight">Download your complete checklist and keep your result</h3>
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/72">Your full result stays on this page. Save your email for optional China travel updates when they are available, then download a PDF copy below. We only send your email and attribution to the mailing service, never your answers.</p>
               </div>
               <ShieldCheck aria-hidden="true" className="hidden text-mist md:block" size={48} />
             </div>
@@ -212,7 +212,7 @@ export function ArrivalReadinessChecker() {
               <label className="sr-only" htmlFor="arrival-readiness-email">Email address</label>
               <input id="arrival-readiness-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} maxLength={254} autoComplete="email" placeholder="you@example.com" className="min-h-11 rounded-md border border-white/20 bg-white px-4 text-base text-ink outline-none focus:border-mist" disabled={emailStatus === "loading" || emailStatus === "success"} />
               <button type="submit" disabled={emailStatus === "loading" || emailStatus === "success"} className="min-h-11 rounded-md bg-ember px-5 py-3 text-base font-bold text-white transition hover:bg-ember-hover disabled:cursor-not-allowed disabled:opacity-60">
-                {emailStatus === "loading" ? "Sending..." : emailStatus === "success" ? "Checklist unlocked" : "Send my result"}
+                {emailStatus === "loading" ? "Saving..." : emailStatus === "success" ? "Checklist unlocked" : "Save my email"}
               </button>
             </form>
             {emailMessage ? <p role={emailStatus === "error" ? "alert" : "status"} className={`mt-3 text-sm ${emailStatus === "error" ? "text-[#ffb3aa]" : "text-mist"}`}>{emailMessage}</p> : null}

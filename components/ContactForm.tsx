@@ -240,7 +240,7 @@ export function ContactForm({ source = "contact-page" }: ContactFormProps) {
 
       <label className="flex min-h-11 items-start gap-3 rounded-md border border-ink/10 bg-mist px-4 py-3 text-sm leading-relaxed text-ink/72">
         <input name="newsletter_opt_in" type="checkbox" value="yes" className="mt-1 h-4 w-4 shrink-0 accent-ember" />
-        <span>Send me the China arrival email sequence and product updates. I can unsubscribe in any email.</span>
+        <span>I agree to receive optional China travel tips and product updates when they are available. I can unsubscribe in any email.</span>
       </label>
 
       <button

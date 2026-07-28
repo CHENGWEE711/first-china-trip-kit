@@ -20,7 +20,7 @@ test("China Arrival Readiness Checker completes the privacy-safe lead flow and e
   await expect(page.locator('[data-testid="arrival-readiness-result"]')).toBeVisible();
   await expect(page.locator('[data-testid="arrival-readiness-result"]')).toContainText("100");
   await page.locator("#arrival-readiness-email").fill("traveler@example.com");
-  await page.getByRole("button", { name: "Send my result" }).click();
+  await page.getByRole("button", { name: "Save my email" }).click();
   await expect(page.locator('[data-testid="arrival-readiness-result"]')).toContainText("Checklist unlocked");
 
   const events = await page.evaluate(() =>
