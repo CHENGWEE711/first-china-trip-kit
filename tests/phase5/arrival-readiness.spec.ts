@@ -44,6 +44,36 @@ test("China Arrival Readiness Checker completes the privacy-safe lead flow and e
   expect(JSON.stringify(events)).not.toMatch(/traveler@example\.com|passport number|card number/i);
 });
 
+test("China Arrival Readiness Checker maps payment, internet, address, transport and broad gaps to the right Bundle modules", { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium-desktop", "Recommendation scenarios run once in Chromium");
+
+  const scenarios = [
+    { missing: [] as number[], expected: [] as string[] },
+    { missing: [2, 3], expected: ["Payment & Apps Setup Guide plus the payment decision tree"] },
+    { missing: [4, 5], expected: ["internet setup plan plus the No Mobile Internet flowchart"] },
+    { missing: [8], expected: ["Mobile Address Card plus the fillable Arrival Sheet"] },
+    { missing: [6, 7], expected: ["airport-or-station-to-hotel setup plus the station confusion flowchart"] },
+    { missing: Array.from({ length: 12 }, (_, index) => index), expected: ["complete 60-minute Bundle setup route"] },
+  ];
+
+  for (const scenario of scenarios) {
+    await page.goto(route, { waitUntil: "domcontentloaded" });
+    const questions = page.locator('[data-testid="arrival-readiness-checker"] fieldset > div');
+    await expect(questions).toHaveCount(12);
+    for (let index = 0; index < 12; index += 1) {
+      await questions.nth(index).getByRole("button", { name: scenario.missing.includes(index) ? "Not ready yet" : "Yes, this is ready" }).click();
+    }
+
+    const recommendation = page.getByText("Targeted Bundle modules").locator("..");
+    if (scenario.expected.length === 0) {
+      await expect(page.getByText("Targeted Bundle modules")).toHaveCount(0);
+    } else {
+      await expect(recommendation).toBeVisible();
+      for (const expected of scenario.expected) await expect(recommendation).toContainText(expected);
+    }
+  }
+});
+
 for (const viewport of [390, 768, 1440, 1920]) {
   test(`China Arrival Readiness Checker is usable at ${viewport}px`, { tag: "@chromium-desktop-only" }, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium-desktop", "Viewport grid runs once in Chromium");

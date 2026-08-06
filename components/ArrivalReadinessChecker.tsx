@@ -38,6 +38,7 @@ export function ArrivalReadinessChecker() {
   const bundleModules = useMemo(() => {
     const missing = new Set(result.todos.map((item) => item.id));
     const modules: string[] = [];
+    if (result.todos.length >= 6) modules.push("complete 60-minute Bundle setup route");
     if (missing.has("primary-payment") || missing.has("payment-backup")) modules.push("Payment & Apps Setup Guide plus the payment decision tree");
     if (missing.has("data-plan") || missing.has("arrival-apps") || missing.has("arrival-power")) modules.push("internet setup plan plus the No Mobile Internet flowchart");
     if (missing.has("hotel-address")) modules.push("Mobile Address Card plus the fillable Arrival Sheet");
