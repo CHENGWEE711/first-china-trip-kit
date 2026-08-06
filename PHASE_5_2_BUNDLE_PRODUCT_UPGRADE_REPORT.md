@@ -1,7 +1,8 @@
 # Phase 5.2A — China Arrival Setup Bundle Product Value Upgrade
 
 **Project:** First China Trip Kit
-**Assessment date:** 2026-07-29 (Asia/Shanghai)
+**Implementation assessment date:** 2026-07-29 (Asia/Shanghai)
+**Payhip closure date:** 2026-08-06 (Asia/Shanghai)
 **Branch:** `feat/v3-phase4b-growth-platform-architecture`
 **Starting commit:** `22b41aafb704b2ba9b22659d462e3ded7e5f3fdd`
 **Final Bundle implementation commit:** `f01d5666af60e404933645c3286780f3c65de3ea` — `feat: upgrade arrival setup bundle product experience`
@@ -117,13 +118,44 @@ The 96 Best Practices score is expected on localhost because HTTPS/HSTS cannot b
 
 ## 7. Payhip delivery update and zero-amount verification
 
-### Status: P0 — not yet executed
+### Status: Passed — P0 closed
 
-The required Payhip actions are not claimed as complete. The public Bundle product link is unchanged, and no product URL, price, stock setting, checkout, real payment, refund, order or product content was modified during this phase.
+The existing Payhip product was updated in place. No duplicate product was created.
 
-The site-side preparation is complete: the precise seven files, current $7 Guide, real preview asset and product-page description are ready for one existing Bundle product at the unchanged **$19** price. However, the available in-app session redirected `/dashboard/` to Payhip login, and the alternative Chrome control session could enumerate existing tabs but timed out before it could create or navigate a Payhip administration tab. No upload was attempted, no duplicate product was created and no external product state was changed.
+| Check | Result |
+| --- | --- |
+| Product identity | `China Arrival Setup Bundle`; existing `/b/aHw81` URL retained. |
+| Price and visibility | **US$19.00**, Unlisted. |
+| Delivery package | Exactly the seven named Phase 5.2A PDFs are present, each with a Payhip download link. |
+| Previous delivery | The stale `china-arrival-setup-bundle.pdf` 6 KB file was removed after all seven replacement files had saved successfully. It is absent from the final editor and public delivery list. |
+| Complete $7 Guide | `02_PAYMENT_AND_APPS_SETUP_GUIDE.pdf` is included and its delivered bytes match the validated source package. |
+| Customer description | Updated to the outcome-led pre-arrival system, included files, audience, delivery, refund limitation and disclaimer. |
+| Product media | Five genuine inner-page previews were added to the existing cover, producing six public gallery slides. |
+| Inventory | No sales limit is enabled and the public page shows no abnormal inventory warning. |
 
-Before this P0 can close, the existing Payhip Bundle product must be opened in a controllable authenticated session and updated once with the seven named files, complete $7 guide, revised customer description and one real preview image. Then, using the established single zero-amount method only, the buyer delivery must be checked for file visibility, names, downloads, parseable PDFs and absence of stale one-file delivery. Do not perform a real $19 payment or refund.
+### Zero-amount order and delivery evidence
+
+A single additional controlled test order was completed with the existing 100% discount method. The coupon's test allowance was increased from one to two uses only for this verification and finished at **2/2 used**, preventing further use. No card, PayPal charge, real payment or refund occurred.
+
+- Checkout displayed the correct Bundle and **US$19.00** list price.
+- The 100% discount reduced the order total to **US$0.00**.
+- Payhip created the order record and displayed the buyer download page.
+- The download page stated that it had been emailed to the controlled account.
+- The received Payhip purchase email was verified in the controlled inbox; it showed the correct product, 100% discount, **US$0.00** total and a Payhip download link.
+- The download page contained exactly seven files with the required filenames and no stale 6 KB file.
+- All seven files downloaded successfully. Every downloaded file had a valid PDF header, reopened with `pdfinfo`, and matched the validated source package byte-for-byte by SHA-256.
+
+| Delivered file | Downloaded size | Pages | Delivery result |
+| --- | ---: | ---: | --- |
+| `00_READ_ME_FIRST.pdf` | 35,659 bytes | 2 | Passed; hash matches source. |
+| `01_CHINA_ARRIVAL_SETUP_GUIDE.pdf` | 79,968 bytes | 30 | Passed; hash matches source. |
+| `02_PAYMENT_AND_APPS_SETUP_GUIDE.pdf` | 89,686 bytes | 18 | Passed; hash matches source. |
+| `03_MOBILE_QUICK_CARDS.pdf` | 66,891 bytes | 10 | Passed; hash matches source. |
+| `04_MY_CHINA_ARRIVAL_SHEET.pdf` | 53,378 bytes | 2 | Passed; hash matches source. |
+| `05_TROUBLESHOOTING_DECISION_TREES.pdf` | 43,573 bytes | 6 | Passed; hash matches source. |
+| `06_OFFLINE_CHECKLIST_AND_SOURCES.pdf` | 39,728 bytes | 4 | Passed; hash matches source. |
+
+No full customer email address, order identifier, download token or local path is recorded in this report.
 
 ## 8. Preview deployment
 
@@ -141,7 +173,7 @@ Before this P0 can close, the existing Payhip Bundle product must be opened in a
 
 ### P0
 
-1. **Payhip multi-file delivery upload and single zero-amount end-to-end delivery verification are incomplete.** No authenticated, controllable Payhip dashboard session was available; no external product change has been made.
+None. The Payhip multi-file delivery and controlled zero-amount end-to-end verification are complete.
 
 ### P1
 
@@ -154,8 +186,8 @@ Before this P0 can close, the existing Payhip Bundle product must be opened in a
 
 ### Rollback
 
-Before a Preview is created, return the feature branch to the recorded starting commit `22b41aafb704b2ba9b22659d462e3ded7e5f3fdd` through a reviewed revert or branch reset process. For a later Payhip content update, retain the previous seven-file delivery list and replace only the existing product’s files; never create a duplicate product or change its canonical product URL.
+For code rollback, return the feature branch to the recorded starting commit `22b41aafb704b2ba9b22659d462e3ded7e5f3fdd` through a reviewed revert or branch reset process. For Payhip rollback, keep the same product, price and URL; re-upload the retained previous `china-arrival-setup-bundle.pdf` asset first, verify it, and only then remove the seven-file package. Never create a duplicate product or change the canonical product URL.
 
 ### Current recommendation
 
-**Not ready to recommend Release Candidate re-acceptance yet.** The implementation, PDF package, Preview deployment and local quality gates pass, but the Payhip delivery P0 must close first. No Production action is authorised by this report.
+**Ready to recommend Release Candidate re-acceptance.** The implementation, PDF package, Preview deployment, local quality gates, Payhip multi-file update and controlled zero-amount delivery verification pass, with **P0 = 0**. Brevo Workflow and GA4 DebugView remain the previously accepted P1 limitations and are not relabelled as passed. No Production action is authorised by this report.
