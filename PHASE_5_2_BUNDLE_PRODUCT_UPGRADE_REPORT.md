@@ -179,6 +179,7 @@ None. The Payhip multi-file delivery and controlled zero-amount end-to-end verif
 
 1. Brevo five-email workflow remains inactive due to the documented provider editor error; current pages do not promise this unavailable sequence.
 2. GA4 DebugView ingestion/display remains the earlier documented observability limitation. Tag Assistant and collection-request evidence must not be relabelled as DebugView passing.
+3. A real $19 processor charge and refund were not executed under the project owner's written waiver. This remains a P1 post-release verification and monitoring item; the zero-amount result must not be described as real-payment verification.
 
 ### P2
 
@@ -190,4 +191,4 @@ For code rollback, return the feature branch to the recorded starting commit `22
 
 ### Current recommendation
 
-**Ready to recommend Release Candidate re-acceptance.** The implementation, PDF package, Preview deployment, local quality gates, Payhip multi-file update and controlled zero-amount delivery verification pass, with **P0 = 0**. Brevo Workflow and GA4 DebugView remain the previously accepted P1 limitations and are not relabelled as passed. No Production action is authorised by this report.
+**Ready to recommend Release Candidate re-acceptance.** The implementation, PDF package, Preview deployment, local quality gates, Payhip multi-file update and controlled zero-amount delivery verification pass, with **P0 = 0**. Brevo Workflow, GA4 DebugView and the waived real-payment/refund test remain the previously accepted P1 limitations and are not relabelled as passed. No Production action is authorised by this report.
