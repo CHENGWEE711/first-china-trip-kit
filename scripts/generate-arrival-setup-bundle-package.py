@@ -323,6 +323,24 @@ def split_lines(text: str, count: int) -> list[str]:
     return lines[:3]
 
 
+def wrap_lines_by_width(text: str, font_name: str, font_size: float, max_width: float) -> list[str]:
+    """Wrap Latin words and unspaced CJK text using the actual PDF font width."""
+    tokens = text.split() if " " in text else list(text)
+    separator = " " if " " in text else ""
+    lines: list[str] = []
+    line = ""
+    for token in tokens:
+        attempt = f"{line}{separator if line else ''}{token}"
+        if line and pdfmetrics.stringWidth(attempt, font_name, font_size) > max_width:
+            lines.append(line)
+            line = token
+        else:
+            line = attempt
+    if line:
+        lines.append(line)
+    return lines
+
+
 TREE_DATA = [
     ("Alipay or WeChat Pay is not working", [
         ("START: Is phone data or trusted Wi-Fi working?", "If yes, continue. If no, use the No Mobile Internet tree first."),
@@ -405,19 +423,28 @@ def make_mobile_cards() -> None:
         c.setFont(BOLD_FONT, 16)
         c.drawString(26, height - 98, chinese_title)
         y = height - 158
+        card_height = 150
+        text_width = width - 80
         c.setFillColor(SAND)
-        c.roundRect(22, y - 120, width - 44, 120, 12, fill=1, stroke=0)
+        c.roundRect(22, y - card_height, width - 44, card_height, 12, fill=1, stroke=0)
         c.setFillColor(INK)
         c.setFont(BOLD_FONT, 12)
         c.drawString(40, y - 29, "SHOW THIS")
         c.setFont(BASE_FONT, 14)
-        for i, line in enumerate(split_lines(english, 41)):
+        english_lines = wrap_lines_by_width(english, BASE_FONT, 14, text_width)
+        if len(english_lines) > 3:
+            raise ValueError(f"Mobile card English copy needs more than three lines: {title}")
+        for i, line in enumerate(english_lines):
             c.drawString(40, y - 54 - i * 18, line)
         c.setFillColor(EMBER)
         c.setFont(BOLD_FONT, 17)
-        for i, line in enumerate(split_lines(chinese, 23)):
-            c.drawString(40, y - 89 - i * 21, line)
-        y -= 166
+        chinese_lines = wrap_lines_by_width(chinese, BOLD_FONT, 17, text_width)
+        if len(chinese_lines) > 3:
+            raise ValueError(f"Mobile card Chinese copy needs more than three lines: {title}")
+        chinese_y = y - 54 - (len(english_lines) - 1) * 18 - 26
+        for i, line in enumerate(chinese_lines):
+            c.drawString(40, chinese_y - i * 21, line)
+        y -= card_height + 46
         c.setFillColor(MUTED)
         c.setFont(BOLD_FONT, 10)
         c.drawString(26, y, "FILL IN BEFORE YOU FLY")
